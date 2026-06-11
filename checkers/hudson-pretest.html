@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometry Pre-Test — Miracle on the Hudson</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><h1>Trigonometry Pre-Test</h1><div class="sub">Miracle on the Hudson — Readiness Check</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main" id="main"></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-label.js"></script>
+<script src="../js/fig-triangle.js"></script>
+<script>
+// Ratio banks — defined once, referenced by every problem.
+var RATIOS = ['SIN','COS','TAN'];
+var INV    = ['SIN\u207B\u00B9','COS\u207B\u00B9','TAN\u207B\u00B9'];
+
+K.run([
+  { id:'q1', num:'Q1',
+    prompt:'A helium balloon is tied by a 14 ft string to a rock on the ground. The string makes a 58\u00B0 angle with the ground. How high off the ground is the balloon?',
+    pipeline:[
+      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+        figTriangle({ type:'elev', ratio:'sin', R:[255,175], LOW:[70,175], HIGH:[255,60] })),
+      { tool:'choice', label:'Step 2 \u2014 Which ratio?', ask:'You have the hypotenuse (14 ft) and want the opposite side. Which ratio?',
+        options:RATIOS, ch:193469871 },
+      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:11.87, tol:0.15, unit:'ft' }
+  ]},
+  { id:'q2', num:'Q2',
+    prompt:'You are floating 260 ft from a lighthouse that stands 107 ft tall. At what angle must you look up to see the tip?',
+    pipeline:[
+      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+        figTriangle({ type:'elev', ratio:'tan', R:[85,175], LOW:[270,175], HIGH:[85,60] })),
+      { tool:'choice', label:'Step 2 \u2014 Which function?', ask:'You have the opposite (107) and adjacent (260) and need the angle. Which inverse?',
+        options:INV, ch:236465020 },
+      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:22.37, tol:0.5, unit:'\u00B0' }
+  ]},
+  { id:'q3', num:'Q3',
+    prompt:'Ted\u2019s eye level is 16 ft above the ground; he spots his dog below at a 40\u00B0 angle of depression. The dog must walk to a spot directly beneath Ted. How far does the dog walk?',
+    pipeline:[
+      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+        figTriangle({ type:'depr', ratio:'tan', R:[255,60], LOW:[255,175], HIGH:[70,60] })),
+      { tool:'choice', label:'Step 2 \u2014 Which ratio?', ask:'You have the opposite (16 ft) and want the adjacent side. Which ratio?',
+        options:RATIOS, ch:193470696 },
+      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:19.07, tol:0.2, unit:'ft' }
+  ]},
+  { id:'q4', num:'Q4',
+    prompt:'Ducky aims at a clay pigeon 25 ft away horizontally; he shoots it at its apex, 50 ft from him in a straight line. At what angle did he shoot?',
+    pipeline:[
+      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+        figTriangle({ type:'elev', ratio:'cos', R:[255,175], LOW:[70,175], HIGH:[255,60] })),
+      { tool:'choice', label:'Step 2 \u2014 Which function?', ask:'You have the adjacent (25) and hypotenuse (50) and need the angle. Which inverse?',
+        options:INV, ch:216812926 },
+      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:60, tol:0.5, unit:'\u00B0' }
+  ]}
+]);
+</script>
+</body>
+</html>

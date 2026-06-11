@@ -22,52 +22,62 @@
 <header class="hdr">
   <div class="hdr-left"><h1>Geometry 1</h1><div class="sub">Checkers &amp; Tools</div></div>
 </header>
-<main class="main"><div id="hub"></div></main>
-<script>
-var SECTIONS=[
- {title:'Projects',cards:[
-   {tag:'Project',title:'Miracle on the Hudson',desc:'Trig readiness pre-test \u2014 balloon, lighthouse, depression, clay pigeon. Set up the triangle, pick the ratio, solve.',href:'checkers/hudson.html',status:'live'}
- ]},
- {title:'Toolkit',cards:[
-   {tag:'Demo',title:'Checker Primitives',desc:'All seven engines in one page \u2014 numeric, choice, label, solve, match, order, plot.',href:'demo.html',status:'live'}
- ]},
- {title:'Unit 1 \u2014 Transformations',cards:[
-   {tag:'U1 \u00B7 D1',title:'Translations',status:'soon'},
-   {tag:'U1 \u00B7 D2',title:'Reflections',status:'soon'},
-   {tag:'U1 \u00B7 D3',title:'Rotations',status:'soon'},
-   {tag:'U1 \u00B7 D4',title:'Composition of Isometries',status:'soon'}
- ]},
- {title:'Unit 2 \u2014 Lines &amp; Angles',cards:[
-   {tag:'U2 \u00B7 D1',title:'Transversals &amp; Angles',status:'soon'},
-   {tag:'U2 \u00B7 D2',title:'Slope &amp; Slope-Intercept',status:'soon'},
-   {tag:'U2 \u00B7 D3',title:'Writing Equations / Point-Slope',status:'soon'},
-   {tag:'U2 \u00B7 D4',title:'Parallel &amp; Perpendicular',status:'soon'}
- ]},
- {title:'Unit 3 \u2014 Right Triangles &amp; Trig',cards:[
-   {tag:'U3 \u00B7 D1',title:'Pythagorean Theorem',status:'soon'},
-   {tag:'U3 \u00B7 D2',title:'Trig Ratios &amp; Missing Sides',status:'soon'},
-   {tag:'U3 \u00B7 D3',title:'Inverse Trig',status:'soon'},
-   {tag:'U3 \u00B7 D4',title:'Elevation &amp; Depression',status:'soon'}
- ]},
- {title:'Unit 4 \u2014 Area, Surface Area &amp; Volume',cards:[
-   {tag:'U4 \u00B7 D1',title:'Area Formulas',status:'soon'},
-   {tag:'U4 \u00B7 D2',title:'SA: Prisms &amp; Cylinders',status:'soon'},
-   {tag:'U4 \u00B7 D3',title:'SA: Pyramids, Cones, Spheres',status:'soon'},
-   {tag:'U4 \u00B7 D4',title:'Volume',status:'soon'}
- ]}
-];
-var hub=document.getElementById('hub');
-SECTIONS.forEach(function(sec){
-  var h=document.createElement('div');h.className='sec-title';h.innerHTML=sec.title;hub.appendChild(h);
-  var g=document.createElement('div');g.className='hub-grid';
-  sec.cards.forEach(function(c){
-    var soon=c.status!=='live';
-    var a=document.createElement('a');a.className='hub-card'+(soon?' hub-soon':'');a.href=soon?'#':c.href;
-    a.innerHTML='<div class="tag">'+c.tag+(soon?' \u00B7 soon':'')+'</div><h3>'+c.title+'</h3>'+(c.desc?'<p>'+c.desc+'</p>':'');
-    g.appendChild(a);
-  });
-  hub.appendChild(g);
-});
-</script>
+
+<!-- Static hub. To activate a checker: drop the `hub-soon` class and set its href. No JS needed. -->
+<main class="main">
+
+  <div class="sec-title">Projects</div>
+  <div class="hub-grid">
+    <a class="hub-card" href="checkers/hudson-project.html">
+      <div class="tag">Project</div><h3>Miracle on the Hudson &mdash; Project</h3>
+      <p>Reconstruct the flight path from the NTSB data &mdash; eight scaffolded problems across the ascent, the descent, and the bridge clearance.</p>
+    </a>
+    <a class="hub-card" href="checkers/hudson-pretest.html">
+      <div class="tag">Pre-Test</div><h3>Miracle on the Hudson &mdash; Pre-Test</h3>
+      <p>Four-problem readiness check &mdash; balloon, lighthouse, depression, clay pigeon. Set up the triangle, pick the ratio, solve.</p>
+    </a>
+  </div>
+
+  <div class="sec-title">Toolkit</div>
+  <div class="hub-grid">
+    <a class="hub-card" href="demo.html">
+      <div class="tag">Demo</div><h3>Checker Primitives</h3>
+      <p>All seven engines in one page &mdash; numeric, choice, label, solve, match, order, plot.</p>
+    </a>
+  </div>
+
+  <div class="sec-title">Unit 1 &mdash; Transformations</div>
+  <div class="hub-grid">
+    <a class="hub-card hub-soon" href="#"><div class="tag">U1 &middot; D1 &middot; soon</div><h3>Translations</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U1 &middot; D2 &middot; soon</div><h3>Reflections</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U1 &middot; D3 &middot; soon</div><h3>Rotations</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U1 &middot; D4 &middot; soon</div><h3>Composition of Isometries</h3></a>
+  </div>
+
+  <div class="sec-title">Unit 2 &mdash; Lines &amp; Angles</div>
+  <div class="hub-grid">
+    <a class="hub-card hub-soon" href="#"><div class="tag">U2 &middot; D1 &middot; soon</div><h3>Transversals &amp; Angles</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U2 &middot; D2 &middot; soon</div><h3>Slope &amp; Slope-Intercept</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U2 &middot; D3 &middot; soon</div><h3>Writing Equations / Point-Slope</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U2 &middot; D4 &middot; soon</div><h3>Parallel &amp; Perpendicular</h3></a>
+  </div>
+
+  <div class="sec-title">Unit 3 &mdash; Right Triangles &amp; Trig</div>
+  <div class="hub-grid">
+    <a class="hub-card hub-soon" href="#"><div class="tag">U3 &middot; D1 &middot; soon</div><h3>Pythagorean Theorem</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U3 &middot; D2 &middot; soon</div><h3>Trig Ratios &amp; Missing Sides</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U3 &middot; D3 &middot; soon</div><h3>Inverse Trig</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U3 &middot; D4 &middot; soon</div><h3>Elevation &amp; Depression</h3></a>
+  </div>
+
+  <div class="sec-title">Unit 4 &mdash; Area, Surface Area &amp; Volume</div>
+  <div class="hub-grid">
+    <a class="hub-card hub-soon" href="#"><div class="tag">U4 &middot; D1 &middot; soon</div><h3>Area Formulas</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U4 &middot; D2 &middot; soon</div><h3>SA: Prisms &amp; Cylinders</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U4 &middot; D3 &middot; soon</div><h3>SA: Pyramids, Cones, Spheres</h3></a>
+    <a class="hub-card hub-soon" href="#"><div class="tag">U4 &middot; D4 &middot; soon</div><h3>Volume</h3></a>
+  </div>
+
+</main>
 </body>
 </html>
