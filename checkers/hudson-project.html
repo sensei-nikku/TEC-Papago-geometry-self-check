@@ -16,6 +16,7 @@
 
 <script src="../js/checker-kit.js"></script>
 <script src="../js/tool-label.js"></script>
+<script src="../js/tool-solve.js"></script>
 <script src="../js/fig-triangle.js"></script>
 <script>
 var RATIOS = ['SIN','COS','TAN'];
@@ -29,7 +30,12 @@ K.run([
       Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
         figTriangle({ type:'elev', ratio:'sin', R:[255,175], LOW:[70,175], HIGH:[255,60] })),
       { tool:'choice', label:'Step 2 \u2014 Which ratio?', ask:'You have the hypotenuse (path) and want the opposite (height). Which ratio?', options:RATIOS, ch:193469871 },
-      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:2829.8, tol:15, unit:'ft' }
+      { tool:'solve', label:'Step 3 \u2014 Isolate x',
+        start:'sin(7.7\u00B0) = x / 21120',
+        steps:[ { instruction:'x is multiplied by 1/21120. Multiply both sides by which inverse to free it?',
+                  options:['\u00D721120','\u00D71/21120','\u00D7sin 7.7\u00B0','\u00D71/sin 7.7\u00B0'], ch:17343186,
+                  then:'21120 \u00B7 sin(7.7\u00B0) = x' } ] },
+      { tool:'numeric', label:'Step 4 \u2014 Calculator form', answer:2829.8, tol:15, unit:'ft' }
   ]},
   { id:'q2', num:'Q2',
     prompt:'It then climbed at 2\u00B0 to a maximum altitude of 3,060 ft. Subtract your Q1 height from 3,060 ft to get the extra altitude climbed, then find how far the plane traveled during that climb.',
@@ -58,7 +64,12 @@ K.run([
       Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
         figTriangle({ type:'depr', ratio:'tan', R:[255,60], LOW:[255,175], HIGH:[70,60] })),
       { tool:'choice', label:'Step 2 \u2014 Which function?', ask:'You have the opposite (1,390) and adjacent (2,640) and need the angle. Which inverse?', options:INV, ch:236465020 },
-      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:27.77, tol:0.5, unit:'\u00B0' }
+      { tool:'solve', label:'Step 3 \u2014 Isolate \u03B8',
+        start:'tan(\u03B8) = 1390 / 2640',
+        steps:[ { instruction:'\u03B8 is locked inside tan. Apply which function to both sides to free it?',
+                  options:['tan\u207B\u00B9','sin\u207B\u00B9','cos\u207B\u00B9','tan'], ch:275599324,
+                  then:'\u03B8 = tan\u207B\u00B9(1390 / 2640)' } ] },
+      { tool:'numeric', label:'Step 4 \u2014 Calculator form', answer:27.77, tol:0.5, unit:'\u00B0' }
   ]},
   // STAGE 3 — THE APPROACH
   { id:'q6', num:'Q6',

@@ -8,7 +8,7 @@ function A(c,m){if(!c){console.log('FAIL:',m);process.exit(1)}console.log('ok:',
 function loadChecker(file){
   const dom=new JSDOM('<!DOCTYPE html><body><div id="hdrDots"></div><main id="main"></main></body>',{runScripts:'dangerously'});
   const w=dom.window; w.scrollTo=()=>{};
-  ['js/checker-kit.js','js/tool-label.js','js/fig-triangle.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
+  ['js/checker-kit.js','js/tool-label.js','js/tool-solve.js','js/fig-triangle.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const inline=html.split('fig-triangle.js"></script>')[1].split('<script>')[1].split('</script>')[0];
   w.eval(inline); return w.document;

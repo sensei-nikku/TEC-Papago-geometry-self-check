@@ -118,7 +118,10 @@
       var p=PROBLEMS[i], s=S[p.id], card=document.createElement('div');
       if(s.done){
         card.className='card done';
-        card.innerHTML='<div class="qn">'+esc(p.num)+'<span class="done-check">\u2713 Complete</span></div>';
+        var hd='<div class="qn">'+esc(p.num)+'<span class="done-check">\u2713 Complete</span></div>'+
+               '<div class="qp">'+esc(p.prompt)+'</div>';
+        for(var jd=0;jd<p.pipeline.length;jd++) hd+=renderStep(p, jd);   // all steps completed -> their answer summaries stay
+        card.innerHTML=hd;
       } else if(i===activeP){
         card.className='card v';
         var h='<div class="qn">'+esc(p.num)+'</div><div class="qp">'+esc(p.prompt)+'</div>';
