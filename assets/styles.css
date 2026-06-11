@@ -203,3 +203,10 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 .work-step-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);margin-bottom:7px}
 .work-answer{display:inline-block;border:2px solid var(--ok);color:var(--ok);font-weight:700;border-radius:8px;padding:6px 14px;font-family:'JetBrains Mono',monospace}
 .btn-work{background:var(--accent-lt);color:var(--accent);border:1px solid var(--accent);font-weight:600}
+
+/* ---- orientation picker (2x2 quadrant candidates) ---- */
+.orient-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:300px}
+.orient-card{border:2px solid var(--border);border-radius:10px;padding:6px;cursor:pointer;background:var(--surface);transition:border-color .12s,background .12s}
+.orient-card:hover{border-color:var(--accent)}
+.orient-card.sel{border-color:var(--accent);background:var(--accent-lt)}
+.orient-card svg{width:100%;display:block}

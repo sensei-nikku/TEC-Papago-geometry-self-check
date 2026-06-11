@@ -21,6 +21,8 @@
 <script src="js/tool-match.js"></script>
 <script src="js/tool-order.js"></script>
 <script src="js/tool-plot.js"></script>
+<script src="js/fig-orientations.js"></script>
+<script src="js/tool-orient.js"></script>
 <script>
 // A checker is just data. Two steps in P1 proves intra-problem locking;
 // P2 proves the runner advances to the next problem.
@@ -118,6 +120,11 @@ K.run([
         range:6,
         preimage:[ {x:1,y:1,label:'A'}, {x:3,y:1,label:'B'}, {x:1,y:3,label:'C'} ],
         targets:[ {label:'A\u2032', ch:2088355844}, {label:'B\u2032', ch:2088427718}, {label:'C\u2032', ch:2088355842} ] }
+  ]},
+  { id:'p10', num:'P-10', prompt:'An observer on the ground looks up at a target to their upper-right. Pick the matching triangle orientation.', pipeline:[
+      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
+        prompt:'The right angle sits where the height meets the ground \u2014 directly below the target. Pick that orientation.',
+        candidates: figOrientations(), ch:5862169 }
   ]}
 ]);
 </script>
