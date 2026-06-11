@@ -23,8 +23,13 @@
       '<path d="'+raMark(R,A,B)+'" style="fill:none;stroke:var(--text)" stroke-width="1.6"/>'+
       '</svg>';
   }
+  // Placement follows the coordinate-quadrant convention: the angle vertex
+  // (origin) meets at the grid center and each triangle fans into its quadrant,
+  // so the right angle (foot on the axis) lands toward the center line.
+  // cell = id with the vertical half flipped:  BL->TL, BR->TR, TL->BL, TR->BR.
+  function quadCell(id){ return (id.charAt(0)==='B'?'T':'B') + id.charAt(1); }
   function figOrientations(){
-    return ['BL','BR','TL','TR'].map(function(id){ return { id:id, svg:svg(DEFS[id]) }; });
+    return ['BL','BR','TL','TR'].map(function(id){ return { id:id, cell:quadCell(id), svg:svg(DEFS[id]) }; });
   }
   global.figOrientations = figOrientations;
 })(typeof window!=='undefined'?window:this);

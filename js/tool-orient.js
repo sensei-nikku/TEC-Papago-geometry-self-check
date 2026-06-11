@@ -12,6 +12,13 @@
   K.tool('orient', {
     state: function (step) {
       var idx = step.candidates.map(function (_, i) { return i; });
+      // If every candidate declares a home cell, lay them out by quadrant (no shuffle):
+      // row-major order TL, TR, BL, BR over a 2-col grid puts each in its corner.
+      if (step.candidates.every(function (c) { return c.cell; })) {
+        var seq = ['TL', 'TR', 'BL', 'BR'];
+        idx.sort(function (a, b) { return seq.indexOf(step.candidates[a].cell) - seq.indexOf(step.candidates[b].cell); });
+        return { sel:null, order:idx };
+      }
       for (var i = idx.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
       return { sel:null, order:idx };
     },

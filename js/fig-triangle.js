@@ -19,7 +19,16 @@
   function lMid(s){return[(s[0][0]+s[1][0])/2,(s[0][1]+s[1][1])/2];}
   function lCen(c){return[(c.R[0]+c.LOW[0]+c.HIGH[0])/3,(c.R[1]+c.LOW[1]+c.HIGH[1])/3];}
   function lOff(p,g,d){var dx=p[0]-g[0],dy=p[1]-g[1],n=Math.hypot(dx,dy)||1;return[p[0]+dx/n*d,p[1]+dy/n*d];}
-  function lSeg(c,k){if(k==='opp')return[c.R,c.HIGH];if(k==='adj')return[c.R,c.LOW];return[c.LOW,c.HIGH];}
+  function lSeg(c,k){
+    // Working angle sits at LOW for both cases: elevation marks it interior at the
+    // base; depression marks the decline OUTSIDE at the top, and uses its equal
+    // interior partner at LOW (alternate interior angles). Either way:
+    //   opp = R-HIGH (the vertical: rise or drop), adj = R-LOW (the horizontal run),
+    //   hyp = LOW-HIGH (the slope / line of sight).
+    if(k==='opp') return [c.R,c.HIGH];
+    if(k==='adj') return [c.R,c.LOW];
+    return [c.LOW,c.HIGH];
+  }
   function lThetaBox(c){return c.type==='elev'?'in_LOW':'out_HIGH';}
   function lBis(u1,u2){var x=u1[0]+u2[0],y=u1[1]+u2[1],n=Math.hypot(x,y)||1;return[x/n,y/n];}
   function lPlace(V,d,b){return[V[0]+b[0]*d,V[1]+b[1]*d];}

@@ -17,10 +17,10 @@ A(/lab-zone filled/.test(lwork) && /opposite/.test(lwork) && /hypotenuse/.test(l
 function pick(txt){const b=[...d.querySelectorAll('.ratio-btn')].find(x=>x.textContent.trim()===txt);return [...d.querySelectorAll('.ratio-btn')].indexOf(b);}
 K.run([{id:'p',num:'Q1',prompt:'Find x.',pipeline:[
   {tool:'choice',label:'Which ratio?',options:['SIN','COS','TAN'],ch:K._djb2('SIN')},
-  {tool:'solve',label:'Isolate x',start:'sin(30) = x / 10',steps:[{instruction:'multiply by?',options:['\u00D710','\u00D71/10'],ch:K._djb2('\u00D710'),then:'10 \u00B7 sin(30) = x'}]},
+  {tool:'solve',label:'Isolate x',start:'sin(30) = x / 10',moves:[{ask:'free x',opCh:K._djb2('\u00D7'),valCh:K._djb2('10'),then:'10 \u00B7 sin(30) = x'}]},
   {tool:'numeric',label:'Calculator form',answer:5,tol:0.1,unit:'ft'}]}]);
 w.K.act('p',0,'pick',pick('SIN')); w.K.act('p',0,'check');
-w.K.act('p',1,'pick',pick('\u00D710')); w.K.act('p',1,'check');
+w.K.act('p',1,'check','\u00D7'); w.K.input('p',1,'10'); w.K.act('p',1,'check');
 w.K.input('p',2,'5'); w.K.act('p',2,'check');
 A(d.querySelector('.btn-work'),'Show Work button on completed problem');
 w.K.showWork('p'); const mt=d.querySelector('.work-modal').textContent;

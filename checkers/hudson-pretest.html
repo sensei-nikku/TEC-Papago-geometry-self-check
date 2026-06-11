@@ -17,6 +17,9 @@
 <script src="../js/checker-kit.js"></script>
 <script src="../js/tool-label.js"></script>
 <script src="../js/fig-triangle.js"></script>
+<script src="../js/tool-solve.js"></script>
+<script src="../js/tool-orient.js"></script>
+<script src="../js/fig-orientations.js"></script>
 <script>
 // Ratio banks — defined once, referenced by every problem.
 var RATIOS = ['SIN','COS','TAN'];
@@ -26,38 +29,73 @@ K.run([
   { id:'q1', num:'Q1',
     prompt:'A helium balloon is tied by a 14 ft string to a rock on the ground. The string makes a 58\u00B0 angle with the ground. How high off the ground is the balloon?',
     pipeline:[
-      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
+        prompt:'The string runs up and to the right, from the rock to the balloon. The right angle sits directly below the balloon, where its height meets the ground. Pick that orientation.',
+        candidates: figOrientations(), ch:5862169 },
+      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' },
         figTriangle({ type:'elev', ratio:'sin', R:[255,175], LOW:[70,175], HIGH:[255,60] })),
-      { tool:'choice', label:'Step 2 \u2014 Which ratio?', ask:'You have the hypotenuse (14 ft) and want the opposite side. Which ratio?',
+      { tool:'choice', label:'Step 3 \u2014 Which ratio?', ask:'You have the hypotenuse (14 ft) and want the opposite side. Which ratio?',
         options:RATIOS, ch:193469871 },
-      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:11.87, tol:0.15, unit:'ft' }
+      { tool:'solve', label:'Step 4 \u2014 Isolate x',
+        start:'sin(58\u00B0) = x / 14',
+        moves:[ { ask:'x is multiplied by 1/14. Which operation frees it?',
+                  opCh:177788, valCh:5861578,
+                  then:'14 \u00B7 sin(58\u00B0) = x' } ] },
+      { tool:'numeric', label:'Step 5 \u2014 Calculator form', answer:11.87, tol:0.15, unit:'ft' }
   ]},
   { id:'q2', num:'Q2',
     prompt:'You are floating 260 ft from a lighthouse that stands 107 ft tall. At what angle must you look up to see the tip?',
     pipeline:[
-      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
+        prompt:'The lighthouse stands up and to the left; you look up at its tip. The right angle is at its base, lower left, where the tower meets the ground. Pick that orientation.',
+        candidates: figOrientations(), ch:5862163 },
+      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' },
         figTriangle({ type:'elev', ratio:'tan', R:[85,175], LOW:[270,175], HIGH:[85,60] })),
-      { tool:'choice', label:'Step 2 \u2014 Which function?', ask:'You have the opposite (107) and adjacent (260) and need the angle. Which inverse?',
+      { tool:'choice', label:'Step 3 \u2014 Which function?', ask:'You have the opposite (107) and adjacent (260) and need the angle. Which inverse?',
         options:INV, ch:236465020 },
-      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:22.37, tol:0.5, unit:'\u00B0' }
+      { tool:'solve', label:'Step 4 \u2014 Isolate \u03B8',
+        start:'tan(\u03B8) = 107 / 260',
+        moves:[ { ask:'\u03B8 is wrapped inside tan. Which operation frees it?',
+                  opCh:193762655,
+                  then:'\u03B8 = tan\u207B\u00B9(107 / 260)' } ] },
+      { tool:'numeric', label:'Step 5 \u2014 Calculator form', answer:22.37, tol:0.5, unit:'\u00B0' }
   ]},
   { id:'q3', num:'Q3',
     prompt:'Ted\u2019s eye level is 16 ft above the ground; he spots his dog below at a 40\u00B0 angle of depression. The dog must walk to a spot directly beneath Ted. How far does the dog walk?',
     pipeline:[
-      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
-        figTriangle({ type:'depr', ratio:'tan', R:[255,60], LOW:[255,175], HIGH:[70,60] })),
-      { tool:'choice', label:'Step 2 \u2014 Which ratio?', ask:'You have the opposite (16 ft) and want the adjacent side. Which ratio?',
+      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
+        prompt:'Ted looks down to his dog. His angle of depression sits OUTSIDE the triangle \u2014 off the horizontal at his eye level, top-left. The triangle drops straight down on the left to the ground, then runs across to the dog; the right angle is the foot, bottom-left. Pick that orientation.',
+        candidates: figOrientations(), ch:5862163 },
+      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' },
+        figTriangle({ type:'depr', ratio:'tan', R:[70,175], LOW:[255,175], HIGH:[70,60] })),
+      { tool:'choice', label:'Step 3 \u2014 Which ratio?', ask:'You have the opposite (16 ft) and want the adjacent side. Which ratio?',
         options:RATIOS, ch:193470696 },
-      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:19.07, tol:0.2, unit:'ft' }
+      { tool:'solve', label:'Step 4 \u2014 Isolate x (it\u2019s in the denominator)',
+        start:'tan(40\u00B0) = 16 / x',
+        moves:[ { ask:'x is in the denominator. Which operation lifts it out?',
+                  opCh:177788, valCh:177693,
+                  then:'x \u00B7 tan(40\u00B0) = 16' },
+                { ask:'Now x is multiplied by tan(40\u00B0). Which operation frees it?',
+                  opCh:177788, valCh:900848108,
+                  then:'x = 16 / tan(40\u00B0)' } ] },
+      { tool:'numeric', label:'Step 5 \u2014 Calculator form', answer:19.07, tol:0.2, unit:'ft' }
   ]},
   { id:'q4', num:'Q4',
     prompt:'Ducky aims at a clay pigeon 25 ft away horizontally; he shoots it at its apex, 50 ft from him in a straight line. At what angle did he shoot?',
     pipeline:[
-      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
+        prompt:'Ducky shoots up and to the right at the pigeon\u2019s apex. The right angle is directly below the pigeon, lower right. Pick that orientation.',
+        candidates: figOrientations(), ch:5862169 },
+      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' },
         figTriangle({ type:'elev', ratio:'cos', R:[255,175], LOW:[70,175], HIGH:[255,60] })),
-      { tool:'choice', label:'Step 2 \u2014 Which function?', ask:'You have the adjacent (25) and hypotenuse (50) and need the angle. Which inverse?',
+      { tool:'choice', label:'Step 3 \u2014 Which function?', ask:'You have the adjacent (25) and hypotenuse (50) and need the angle. Which inverse?',
         options:INV, ch:216812926 },
-      { tool:'numeric', label:'Step 3 \u2014 Solve', answer:60, tol:0.5, unit:'\u00B0' }
+      { tool:'solve', label:'Step 4 \u2014 Isolate \u03B8',
+        start:'cos(\u03B8) = 25 / 50',
+        moves:[ { ask:'\u03B8 is wrapped inside cos. Which operation frees it?',
+                  opCh:193762655,
+                  then:'\u03B8 = cos\u207B\u00B9(25 / 50)' } ] },
+      { tool:'numeric', label:'Step 5 \u2014 Calculator form', answer:60, tol:0.5, unit:'\u00B0' }
   ]}
 ]);
 </script>

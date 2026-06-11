@@ -16,7 +16,8 @@ function loadChecker(file){
 
 let d=loadChecker('checkers/hudson-pretest.html');
 A(d.querySelectorAll('.qd').length===4,'Pre-Test: 4 problems');
-A(d.querySelector('.lab-stage svg polygon'),'Pre-Test: Q1 triangle mounts');
+A(d.querySelector('.orient-grid .orient-card svg polygon'),'Pre-Test: Q1 orient grid mounts');
+A(d.querySelectorAll('.orient-card').length===4,'Pre-Test: Q1 has 4 orientation candidates');
 
 d=loadChecker('checkers/hudson-project.html');
 A(d.querySelectorAll('.qd').length===8,'Project: 8 problems');
