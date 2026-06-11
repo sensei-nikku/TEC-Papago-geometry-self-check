@@ -121,11 +121,13 @@
         var hd='<div class="qn">'+esc(p.num)+'<span class="done-check">\u2713 Complete</span></div>'+
                '<div class="qp">'+esc(p.prompt)+'</div>';
         for(var jd=0;jd<p.pipeline.length;jd++) hd+=renderStep(p, jd);   // all steps completed -> their answer summaries stay
+        hd+='<div style="margin-top:14px"><button class="btn btn-work" onclick="K.showWork(\''+p.id+'\')">Show Work</button></div>';
         card.innerHTML=hd;
       } else if(i===activeP){
         card.className='card v';
         var h='<div class="qn">'+esc(p.num)+'</div><div class="qp">'+esc(p.prompt)+'</div>';
         for(var j=0;j<p.pipeline.length;j++) h+=renderStep(p, j);
+        if(s.stepIdx>=1) h+='<div style="margin-top:14px"><button class="btn btn-work" onclick="K.showWork(\''+p.id+'\')">Show Work</button></div>';
         card.innerHTML=h;
       } else continue;
       m.appendChild(card);
@@ -143,8 +145,30 @@
     }
   }
 
+  // ---- "Show Work" popup (a model of how the solution should look on paper) ----
+  function showWork(pid){
+    var p=pById(pid), s=S[pid];
+    var body='<p class="work-prompt">'+esc(p.prompt)+'</p>', any=false;
+    for(var j=0;j<p.pipeline.length && j<s.stepIdx; j++){
+      any=true;
+      var step=p.pipeline[j], st=s.steps[j], t=TOOLS[step.tool];
+      var w = t.work ? t.work(step, st, {esc:esc})
+                     : '<div class="work-answer">'+esc(t.summary?t.summary(step,st):'done')+'</div>';
+      body+='<div class="work-step"><div class="work-step-label">'+esc(step.label||('Step '+(j+1)))+'</div>'+w+'</div>';
+    }
+    if(!any) body='<p class="work-prompt">Start working and your steps show up here \u2014 this is how it should look on your paper.</p>';
+    var modal=document.createElement('div'); modal.className='work-backdrop'; modal.id='workModal';
+    modal.addEventListener('click', closeWork);
+    modal.innerHTML='<div class="work-modal"><div class="work-head"><h3>Your work \u2014 '+esc(p.num)+'</h3>'+
+      '<button class="work-close" onclick="K.closeWork()">\u2715</button></div><div class="work-body">'+body+'</div></div>';
+    modal.querySelector('.work-modal').addEventListener('click', function(e){ e.stopPropagation(); });
+    document.body.appendChild(modal);
+  }
+  function closeWork(){ var m=document.getElementById('workModal'); if(m) m.parentNode.removeChild(m); }
+
   // ---- public surface ----
   global.K = { run:run, tool:tool, act:act, input:input, set:set, navTo:navTo,
+               showWork:showWork, closeWork:closeWork,
                _esc:esc, _djb2:djb2 };
 
 })(window);

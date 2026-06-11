@@ -55,6 +55,14 @@
       return { fb:null, tier:'soft' };                            // intermediate line -> re-render, no strike
     },
 
+    work: function (step, st, ctx) {
+      var lines = (st.chain && st.chain.length) ? st.chain : [step.start];
+      var h = '<div style="font-family:\'JetBrains Mono\',ui-monospace,monospace;font-size:.92rem;line-height:1.9;' +
+              'background:var(--accent-lt);border-left:3px solid var(--accent);border-radius:6px;padding:10px 14px">';
+      lines.forEach(function (line, i) { h += '<div>' + (i>0 ? '<span style="color:var(--accent);font-weight:700">\u27FA</span> ' : '') + ctx.esc(line) + '</div>'; });
+      return h + '</div>';
+    },
+
     summary: function (step, st) { return st.chain[st.chain.length - 1]; }
   });
 

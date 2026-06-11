@@ -76,6 +76,15 @@
       var host=document.getElementById('lab-'+ctx.p+'-'+ctx.s); if(!host) return;
       mountFigure(host, step, st, ctx);
     },
+    work: function(step, st, ctx){
+      var h='<div class="lab-stage" style="max-width:300px;margin:0 auto">'+step.figure;
+      (step.zones||[]).forEach(function(z){
+        var cid=null; for(var k in (st.placed||{})) if(st.placed[k]===z.id) cid=k;
+        if(cid){ var txt=''; (step.chips||[]).forEach(function(c){ if(c.id===cid) txt=c.text; });
+          h+='<div class="lab-zone filled'+(z.ang?' ang':'')+'" style="left:'+z.x+'%;top:'+z.y+'%">'+ctx.esc(txt)+'</div>'; }
+      });
+      return h+'</div>';
+    },
     summary: function(){ return 'Figure labeled'; }
   });
 
