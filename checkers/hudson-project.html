@@ -9,7 +9,7 @@
 </head>
 <body>
 <header class="hdr">
-  <div class="hdr-left"><h1>Miracle on the Hudson</h1><div class="sub">Trig Project — Answer Checker</div></div>
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Miracle on the Hudson</h1><div class="sub">Trig Project — Answer Checker</div></div>
   <div class="hdr-dots" id="hdrDots"></div>
 </header>
 <main class="main" id="main"></main>
@@ -18,6 +18,8 @@
 <script src="../js/tool-label.js"></script>
 <script src="../js/tool-solve.js"></script>
 <script src="../js/fig-triangle.js"></script>
+<script src="../js/tool-orient.js"></script>
+<script src="../js/fig-orientations.js"></script>
 <script>
 var RATIOS = ['SIN','COS','TAN'];
 var INV    = ['SIN\u207B\u00B9','COS\u207B\u00B9','TAN\u207B\u00B9'];
@@ -27,15 +29,18 @@ K.run([
   { id:'q1', num:'Q1',
     prompt:'The plane ascended at 7.7\u00B0 and had traveled 4 miles (21,120 ft) along its flight path when it struck the birds. How high above the ground was it?',
     pipeline:[
-      Object.assign({ tool:'label', label:'Step 1 \u2014 Set up the triangle' },
+      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
+        prompt:'The plane climbs from the ground, up and to the right. The right angle sits where the height drops straight down to the ground \u2014 directly below the plane. Pick that orientation.',
+        candidates: figOrientations(), ch:5862169 },
+      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' },
         figTriangle({ type:'elev', ratio:'sin', R:[255,175], LOW:[70,175], HIGH:[255,60] })),
-      { tool:'choice', label:'Step 2 \u2014 Which ratio?', ask:'You have the hypotenuse (path) and want the opposite (height). Which ratio?', options:RATIOS, ch:193469871 },
-      { tool:'solve', label:'Step 3 \u2014 Isolate x',
+      { tool:'choice', label:'Step 3 \u2014 Which ratio?', ask:'You have the hypotenuse (path) and want the opposite (height). Which ratio?', options:RATIOS, ch:193469871 },
+      { tool:'solve', label:'Step 4 \u2014 Isolate x',
         start:'sin(7.7\u00B0) = x / 21120',
         steps:[ { instruction:'x is multiplied by 1/21120. Multiply both sides by which inverse to free it?',
                   options:['\u00D721120','\u00D71/21120','\u00D7sin 7.7\u00B0','\u00D71/sin 7.7\u00B0'], ch:17343186,
                   then:'21120 \u00B7 sin(7.7\u00B0) = x' } ] },
-      { tool:'numeric', label:'Step 4 \u2014 Calculator form', answer:2829.8, tol:15, unit:'ft' }
+      { tool:'numeric', label:'Step 5 \u2014 Calculator form', answer:2829.8, tol:15, unit:'ft' }
   ]},
   { id:'q2', num:'Q2',
     prompt:'It then climbed at 2\u00B0 to a maximum altitude of 3,060 ft. Subtract your Q1 height from 3,060 ft to get the extra altitude climbed, then find how far the plane traveled during that climb.',

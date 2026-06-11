@@ -210,3 +210,7 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 .orient-card:hover{border-color:var(--accent)}
 .orient-card.sel{border-color:var(--accent);background:var(--accent-lt)}
 .orient-card svg{width:100%;display:block}
+
+/* ---- back-to-hub link in checker headers ---- */
+.hdr-back{display:inline-block;font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;margin-bottom:5px}
+.hdr-back:hover{color:var(--accent)}

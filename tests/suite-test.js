@@ -8,7 +8,7 @@ function A(c,m){if(!c){console.log('FAIL:',m);process.exit(1)}console.log('ok:',
 function loadChecker(file){
   const dom=new JSDOM('<!DOCTYPE html><body><div id="hdrDots"></div><main id="main"></main></body>',{runScripts:'dangerously'});
   const w=dom.window; w.scrollTo=()=>{};
-  ['js/checker-kit.js','js/tool-label.js','js/tool-solve.js','js/fig-triangle.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
+  ['js/checker-kit.js','js/tool-label.js','js/tool-solve.js','js/fig-triangle.js','js/tool-orient.js','js/fig-orientations.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
   const html=fs.readFileSync(path.join(root,file),'utf8');
   const inline=html.split('fig-triangle.js"></script>')[1].split('<script>')[1].split('</script>')[0];
   w.eval(inline); return w.document;
@@ -20,7 +20,8 @@ A(d.querySelector('.lab-stage svg polygon'),'Pre-Test: Q1 triangle mounts');
 
 d=loadChecker('checkers/hudson-project.html');
 A(d.querySelectorAll('.qd').length===8,'Project: 8 problems');
-A(d.querySelector('.lab-stage svg polygon'),'Project: Q1 triangle mounts');
+A(d.querySelector('.orient-grid .orient-card svg polygon'),'Project: Q1 orient grid mounts');
+A(d.querySelectorAll('.orient-card').length===4,'Project: Q1 has 4 orientation candidates');
 
 // hub, JS OFF (no runScripts) — static cards must link both checkers
 const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
