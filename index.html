@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometry 1 — Checkers</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+.sec-title{font-size:.74rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+.hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.hub-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;text-decoration:none;color:var(--text);display:block;transition:transform .15s,box-shadow .15s,border-color .15s}
+.hub-card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.18);border-color:var(--accent)}
+.hub-card .tag{font-family:'JetBrains Mono',monospace;font-size:.64rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.07em}
+.hub-card h3{font-size:1rem;font-weight:700;margin:6px 0 5px}
+.hub-card p{font-size:.83rem;color:var(--muted);line-height:1.5;margin:0}
+.hub-soon{opacity:.45;pointer-events:none}
+.hub-soon .tag{color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><h1>Geometry 1</h1><div class="sub">Checkers &amp; Tools</div></div>
+</header>
+<main class="main"><div id="hub"></div></main>
+<script>
+var SECTIONS=[
+ {title:'Projects',cards:[
+   {tag:'Project',title:'Miracle on the Hudson',desc:'Trig readiness pre-test \u2014 balloon, lighthouse, depression, clay pigeon. Set up the triangle, pick the ratio, solve.',href:'checkers/hudson.html',status:'live'}
+ ]},
+ {title:'Toolkit',cards:[
+   {tag:'Demo',title:'Checker Primitives',desc:'All seven engines in one page \u2014 numeric, choice, label, solve, match, order, plot.',href:'demo.html',status:'live'}
+ ]},
+ {title:'Unit 1 \u2014 Transformations',cards:[
+   {tag:'U1 \u00B7 D1',title:'Translations',status:'soon'},
+   {tag:'U1 \u00B7 D2',title:'Reflections',status:'soon'},
+   {tag:'U1 \u00B7 D3',title:'Rotations',status:'soon'},
+   {tag:'U1 \u00B7 D4',title:'Composition of Isometries',status:'soon'}
+ ]},
+ {title:'Unit 2 \u2014 Lines &amp; Angles',cards:[
+   {tag:'U2 \u00B7 D1',title:'Transversals &amp; Angles',status:'soon'},
+   {tag:'U2 \u00B7 D2',title:'Slope &amp; Slope-Intercept',status:'soon'},
+   {tag:'U2 \u00B7 D3',title:'Writing Equations / Point-Slope',status:'soon'},
+   {tag:'U2 \u00B7 D4',title:'Parallel &amp; Perpendicular',status:'soon'}
+ ]},
+ {title:'Unit 3 \u2014 Right Triangles &amp; Trig',cards:[
+   {tag:'U3 \u00B7 D1',title:'Pythagorean Theorem',status:'soon'},
+   {tag:'U3 \u00B7 D2',title:'Trig Ratios &amp; Missing Sides',status:'soon'},
+   {tag:'U3 \u00B7 D3',title:'Inverse Trig',status:'soon'},
+   {tag:'U3 \u00B7 D4',title:'Elevation &amp; Depression',status:'soon'}
+ ]},
+ {title:'Unit 4 \u2014 Area, Surface Area &amp; Volume',cards:[
+   {tag:'U4 \u00B7 D1',title:'Area Formulas',status:'soon'},
+   {tag:'U4 \u00B7 D2',title:'SA: Prisms &amp; Cylinders',status:'soon'},
+   {tag:'U4 \u00B7 D3',title:'SA: Pyramids, Cones, Spheres',status:'soon'},
+   {tag:'U4 \u00B7 D4',title:'Volume',status:'soon'}
+ ]}
+];
+var hub=document.getElementById('hub');
+SECTIONS.forEach(function(sec){
+  var h=document.createElement('div');h.className='sec-title';h.innerHTML=sec.title;hub.appendChild(h);
+  var g=document.createElement('div');g.className='hub-grid';
+  sec.cards.forEach(function(c){
+    var soon=c.status!=='live';
+    var a=document.createElement('a');a.className='hub-card'+(soon?' hub-soon':'');a.href=soon?'#':c.href;
+    a.innerHTML='<div class="tag">'+c.tag+(soon?' \u00B7 soon':'')+'</div><h3>'+c.title+'</h3>'+(c.desc?'<p>'+c.desc+'</p>':'');
+    g.appendChild(a);
+  });
+  hub.appendChild(g);
+});
+</script>
+</body>
+</html>

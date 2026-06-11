@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checker Kit — Numeric demo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><h1>Checker Kit \u2014 Numeric</h1><div class="sub">spine + 1 tool, running</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main" id="main"></main>
+
+<script src="js/checker-kit.js"></script>
+<script src="js/tool-label.js"></script>
+<script src="js/fig-triangle.js"></script>
+<script src="js/tool-solve.js"></script>
+<script src="js/tool-match.js"></script>
+<script src="js/tool-order.js"></script>
+<script src="js/tool-plot.js"></script>
+<script>
+// A checker is just data. Two steps in P1 proves intra-problem locking;
+// P2 proves the runner advances to the next problem.
+K.run([
+  { id:'p1', num:'P-1', prompt:'A rectangle is 14 m by 9 m.', pipeline:[
+      { tool:'numeric', label:'Step 1 \u2014 Area', answer:126, unit:'m\u00B2' },
+      { tool:'numeric', label:'Step 2 \u2014 Perimeter', answer:46, unit:'m' }
+  ]},
+  { id:'p2', num:'P-2', prompt:'A triangle has base 16 in. and height 11 in.', pipeline:[
+      { tool:'choice', label:'Step 1 \u2014 Which formula?', ask:'Pick the area formula for a triangle.',
+        options:['bh','\u00BDbh','\u00BDh(b\u2081+b\u2082)','\u03C0r\u00B2'], ch:193586156 },
+      { tool:'numeric', label:'Step 2 \u2014 Area', answer:88, unit:'in\u00B2' }
+  ]},
+  { id:'p3', num:'P-3', prompt:'This square has sides of 6 cm. Label its four sides, then find its perimeter.', pipeline:[
+      { tool:'label', label:'Step 1 \u2014 Label the square',
+        prompt:'Drag a side length onto each side of the square.',
+        figure:'<svg viewBox="0 0 340 250" preserveAspectRatio="xMidYMid meet"><rect x="90" y="45" width="160" height="160" rx="2" style="fill:var(--bg);stroke:var(--text);stroke-width:2.5"/></svg>',
+        zones:[
+          { id:'top',    x:50,    y:18, accepts:['side'] },
+          { id:'right',  x:73.53, y:50, accepts:['side'] },
+          { id:'bottom', x:50,    y:82, accepts:['side'] },
+          { id:'left',   x:26.47, y:50, accepts:['side'] }
+        ],
+        chips:[
+          { id:'s1', text:'6 cm', type:'side' },
+          { id:'s2', text:'6 cm', type:'side' },
+          { id:'s3', text:'6 cm', type:'side' },
+          { id:'s4', text:'6 cm', type:'side' },
+          { id:'d',  text:'hypotenuse', type:'hyp' }
+        ],
+        badger:'A square has no hypotenuse \u2014 that\u2019s a right-triangle word. Leave it in the tray.' },
+      { tool:'numeric', label:'Step 2 \u2014 Perimeter', answer:24, unit:'cm' }
+  ]},
+  { id:'p4', num:'P-4', prompt:'Label the length and width of this rectangle.', pipeline:[
+      { tool:'label', label:'Step 1 \u2014 Label the rectangle',
+        prompt:'Long sides are the length; short sides are the width.',
+        figure:'<svg viewBox="0 0 340 250" preserveAspectRatio="xMidYMid meet"><rect x="70" y="70" width="200" height="110" rx="2" style="fill:var(--bg);stroke:var(--text);stroke-width:2.5"/></svg>',
+        zones:[
+          { id:'top',    x:50,    y:28, accepts:['length'] },
+          { id:'bottom', x:50,    y:72, accepts:['length'] },
+          { id:'left',   x:20.59, y:50, accepts:['width'] },
+          { id:'right',  x:79.41, y:50, accepts:['width'] }
+        ],
+        chips:[
+          { id:'l1', text:'8 m', type:'length' },
+          { id:'l2', text:'8 m', type:'length' },
+          { id:'w1', text:'5 m', type:'width' },
+          { id:'w2', text:'5 m', type:'width' }
+        ] }
+  ]},
+  { id:'p5', num:'P-5', prompt:'Set up this right triangle (a ramp rising over the ground at angle \u03B8).', pipeline:[
+      Object.assign({ tool:'label', label:'Step 1 \u2014 Label the triangle' },
+        figTriangle({ type:'elev', ratio:'tan', R:[70,200], LOW:[280,200], HIGH:[70,60] }))
+  ]},
+  { id:'p6', num:'P-6', prompt:'A triangle has area 90 cm\u00B2 and base 15 cm. Solve for its height h.', pipeline:[
+      { tool:'solve', label:'Step 1 \u2014 Isolate h',
+        start:'90 = \u00BD\u00B715\u00B7h',
+        steps:[
+          { instruction:'Undo the \u00BD. Multiply both sides by which inverse?',
+            options:['\u00D72','\u00D7\u00BD','\u00D715','\u00D71/15'], ch:5867054, then:'2\u00B790 = 15\u00B7h' },
+          { instruction:'Undo the 15. Multiply both sides by which inverse?',
+            options:['\u00D715','\u00D71/15','\u00D72','\u00D7\u00BD'], ch:390939010, then:'(1/15)\u00B72\u00B790 = h' }
+        ] },
+      { tool:'numeric', label:'Step 2 \u2014 Calculator form', answer:12, unit:'cm' }
+  ]},
+  { id:'p7', num:'P-7', prompt:'Match each line to its equation.', pipeline:[
+      { tool:'match', label:'Step 1 \u2014 Match the lines',
+        prompt:'Drag each equation onto the line it describes. One equation matches none of them.',
+        targets:[
+          { id:'t1', text:'slope 2, through (0, 3)',   ch:375495939 },
+          { id:'t2', text:'slope \u22121, through (0, 4)', ch:179818975 },
+          { id:'t3', text:'slope \u00BD, through (0, \u22122)', ch:1520350447 }
+        ],
+        items:[
+          { id:'a', text:'y = 2x + 3' },
+          { id:'b', text:'y = -x + 4' },
+          { id:'c', text:'y = \u00BDx - 2' },
+          { id:'d', text:'y = 2x - 1' }
+        ] }
+  ]},
+  { id:'p8', num:'P-8', prompt:'Put the steps for finding a missing side with trig in order.', pipeline:[
+      { tool:'order', label:'Step 1 \u2014 Order the steps',
+        prompt:'Tap the steps in the order you would do them.',
+        items:[
+          { id:'s1', text:'Label opposite, adjacent, hypotenuse' },
+          { id:'s2', text:'Pick the ratio (SOH-CAH-TOA)' },
+          { id:'s3', text:'Set up the equation' },
+          { id:'s4', text:'Solve for the unknown' }
+        ],
+        seq:[3271053374, 3889240081, 3459945885, 4178664390] }
+  ]},
+  { id:'p9', num:'P-9', prompt:'Triangle ABC has vertices A(1,1), B(3,1), C(1,3). Plot its image after the translation (x, y) \u2192 (x+2, y\u22124).', pipeline:[
+      { tool:'plot', label:'Step 1 \u2014 Plot the image',
+        prompt:'Apply the rule to each vertex, then tap the grid to plot A\u2032, B\u2032, C\u2032.',
+        range:6,
+        preimage:[ {x:1,y:1,label:'A'}, {x:3,y:1,label:'B'}, {x:1,y:3,label:'C'} ],
+        targets:[ {label:'A\u2032', ch:2088355844}, {label:'B\u2032', ch:2088427718}, {label:'C\u2032', ch:2088355842} ] }
+  ]}
+]);
+</script>
+</body>
+</html>
