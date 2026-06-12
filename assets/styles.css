@@ -59,7 +59,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 .card.v{display:block}
 .card.done{display:block;padding:10px 18px;background:var(--ok-lt);border-color:var(--ok)}
 .card.done .qn{margin-bottom:0;color:var(--ok)}
-.card.done .qp,.card.done .step,.card.done .fb,.card.done .result-box,.card.done .btn{display:none}
+.card.done .qp,.card.done .step,.card.done .fb,.card.done .result-box,.card.done .btn:not(.btn-work){display:none}
+.card.done .btn-work{display:inline-block;margin-top:0}
 .done-check{color:var(--ok);font-weight:600;font-size:.82rem;display:inline;margin-left:8px}
 .card.skipped{display:block;padding:10px 18px;background:var(--warn-lt);border-color:var(--warn);cursor:pointer}
 .card.skipped .qn{margin-bottom:0;color:var(--warn)}

@@ -20,7 +20,7 @@ A(d.querySelector('.orient-grid .orient-card svg polygon'),'Pre-Test: Q1 orient 
 A(d.querySelectorAll('.orient-card').length===4,'Pre-Test: Q1 has 4 orientation candidates');
 
 d=loadChecker('checkers/hudson-project.html');
-A(d.querySelectorAll('.qd').length===8,'Project: 8 problems');
+A(d.querySelectorAll('.qd').length===6,'Project: 6 problems (conceptual Q3/Q4 moved to worksheet)');
 A(d.querySelector('.orient-grid .orient-card svg polygon'),'Project: Q1 orient grid mounts');
 A(d.querySelectorAll('.orient-card').length===4,'Project: Q1 has 4 orientation candidates');
 

@@ -62,18 +62,6 @@ K.run([
       { tool:'numeric', label:'Step 5 \u2014 Calculator form', answer:6596, tol:250, unit:'ft' }
   ]},
   // STAGE 2 — THE DESCENT
-  { id:'q3', num:'Q3',
-    prompt:'The plane dropped 1,390 ft while covering 0.5 miles horizontally.',
-    pipeline:[
-      { tool:'choice', label:'Compare', ask:'Was the actual distance traveled greater than, less than, or equal to 0.5 miles?',
-        options:['Greater than 0.5 miles','Less than 0.5 miles','Equal to 0.5 miles'], ch:1846527719 }
-  ]},
-  { id:'q4', num:'Q4',
-    prompt:'You said the flight path was longer than 0.5 miles. How do you know?',
-    pipeline:[
-      { tool:'choice', label:'Reason', ask:'Pick the reason.',
-        options:['The hypotenuse is always longer than either leg','The angle was steep so it went farther','The plane was moving fast'], ch:173942290 }
-  ]},
   { id:'q5', num:'Q5',
     prompt:'The plane dropped 1,390 ft over a horizontal distance of 0.5 miles (2,640 ft). At what angle did it descend?',
     pipeline:[

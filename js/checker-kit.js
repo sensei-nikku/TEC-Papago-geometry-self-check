@@ -106,7 +106,7 @@
     for(var i=0;i<PROBLEMS.length;i++){
       var s=S[PROBLEMS[i].id], d=document.createElement('div'); d.className='qd';
       if(s.done) d.classList.add('done'); else if(i===activeP) d.classList.add('active');
-      d.textContent=(i+1);
+      d.textContent=((PROBLEMS[i].num||'').match(/\d+/)||[String(i+1)])[0];
       (function(idx){d.addEventListener('click',function(){navTo(idx);});})(i);
       c.appendChild(d);
     }
