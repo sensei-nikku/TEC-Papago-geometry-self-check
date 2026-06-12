@@ -69,6 +69,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);lin
 
 .qn{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
 .qp{font-size:1rem;font-weight:600;margin-bottom:18px;line-height:1.5}
+.q-figure{display:flex;justify-content:center;margin:2px 0 20px}
+.q-figure svg{max-width:100%;height:auto}
 
 /* Steps */
 .step{display:none;margin-bottom:16px;animation:fadeIn .3s ease}

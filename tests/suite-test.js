@@ -24,9 +24,23 @@ A(d.querySelectorAll('.qd').length===6,'Project: 6 problems (conceptual Q3/Q4 mo
 A(d.querySelector('.orient-grid .orient-card svg polygon'),'Project: Q1 orient grid mounts');
 A(d.querySelectorAll('.orient-card').length===4,'Project: Q1 has 4 orientation candidates');
 
-// hub, JS OFF (no runScripts) — static cards must link both checkers
+// Unit 4 Day 1 area checker — mounts on the kit with persistent figures
+(function(){
+  const dom=new JSDOM('<!DOCTYPE html><body><div id="hdrDots"></div><main id="main"></main></body>',{runScripts:'dangerously'});
+  const w=dom.window; w.scrollTo=()=>{};
+  ['js/checker-kit.js','js/fig-area.js','js/tool-solve.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
+  const html=fs.readFileSync(path.join(root,'checkers/unit4-day1-area.html'),'utf8');
+  const inline=html.split('tool-solve.js"></script>')[1].split('<script>')[1].split('</script>')[0];
+  w.eval(inline); const ad=w.document;
+  A(ad.querySelectorAll('.qd').length===9,'Area: 9 problems mount');
+  A(ad.querySelector('.q-figure svg'),'Area: persistent figure renders');
+  A(ad.querySelectorAll('.ratio-btn').length===4,'Area: formula step shows 4 options');
+})();
+
+// hub, JS OFF (no runScripts) — static cards must link the live checkers
 const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
 const hrefs=[...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href'));
 A(hrefs.includes('checkers/hudson-project.html'),'Hub: Project card live + linked');
 A(hrefs.includes('checkers/hudson-pretest.html'),'Hub: Pre-Test card live + linked');
+A(hrefs.includes('checkers/unit4-day1-area.html'),'Hub: Area card live + linked');
 console.log('SUITE TEST PASSED');

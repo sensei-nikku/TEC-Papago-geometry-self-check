@@ -126,6 +126,7 @@
       } else if(i===activeP){
         card.className='card v';
         var h='<div class="qn">'+esc(p.num)+'</div><div class="qp">'+esc(p.prompt)+'</div>';
+        if(p.figure) h+='<div class="q-figure">'+p.figure+'</div>';   // persistent diagram, raw SVG
         for(var j=0;j<p.pipeline.length;j++) h+=renderStep(p, j);
         if(s.stepIdx>=1) h+='<div style="margin-top:14px"><button class="btn btn-work" onclick="K.showWork(\''+p.id+'\')">Show Work</button></div>';
         card.innerHTML=h;
@@ -198,6 +199,8 @@ K.tool('numeric', {
     if(diff <= tol) return {pass:true};
     var band = step.closeBand!=null ? step.closeBand : 0.15;
     if(diff <= Math.abs(step.answer)*band) return {fb:{t:'warn',m:'Close \u2014 check your arithmetic or rounding.'}};
+    if(step.traps){ for(var ti=0;ti<step.traps.length;ti++){ var tr=step.traps[ti];
+      if(Math.abs(v-tr.near) <= (tr.tol!=null?tr.tol:0.5)) return {fb:{t:'err',m:tr.msg}}; } }   // common-error nudges
     return {fb:{t:'err',m:'Not quite. Check your setup and try again.'}};
   },
   summary: function(step){ return step.answer + (step.unit?(' '+step.unit):''); }
@@ -233,7 +236,7 @@ K.tool('choice', {
   check: function(step, st, ctx){
     if(st.selIdx==null) return {fb:{t:'err',m:'Tap an option first.'}, tier:'soft'};
     if(ctx.djb2(st.options[st.selIdx])===step.ch) return {pass:true};
-    return {fb:{t:'err',m:'Not that one — try again.'}};
+    return {fb:{t:'err',m: step.nudge || 'Not that one \u2014 try again.'}};
   },
   summary: function(step, st){ return st.options[st.selIdx]; }
 });

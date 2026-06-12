@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 4, Day 1 — Area Formulas Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Area Formulas</h1><div class="sub">Unit 4 · Day 1 — Answer Checker</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main" id="main"></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/fig-area.js"></script>
+<script src="../js/tool-solve.js"></script>
+<script>
+// ── Formula choice: same options pool, distractors are other-shape areas + perimeter/circumference ──
+var FORMULA_NUDGE = 'That\u2019s a perimeter/circumference formula or another shape\u2019s area \u2014 pick the AREA formula for THIS figure.';
+var FOPTS = {
+  rect : { options:['A = bh','A = \u00BDbh','A = \u00BDh(b\u2081 + b\u2082)','P = 2l + 2w'], ch:2716036621 },
+  pgram: { options:['A = bh','A = \u00BDbh','A = \u00BDh(b\u2081 + b\u2082)','C = 2\u03C0r'],  ch:2716036621 },
+  tri  : { options:['A = \u00BDbh','A = bh','A = \u00BDh(b\u2081 + b\u2082)','P = a + b + c'], ch:3729961578 },
+  trap : { options:['A = \u00BDh(b\u2081 + b\u2082)','A = bh','A = \u00BDbh','C = 2\u03C0r'],  ch:2621009419 },
+  circ : { options:['A = \u03C0r\u00B2','C = 2\u03C0r','A = bh','A = \u00BDbh'],            ch:3730801799 }
+};
+function formulaStep(shape){
+  var f = FOPTS[shape];
+  return { tool:'choice', label:'Step 1 \u2014 Which area formula?',
+           ask:'Which formula gives the AREA of this figure?',
+           options:f.options, ch:f.ch, shuffle:true, nudge:FORMULA_NUDGE };
+}
+function pid(num){ return num.toLowerCase().replace(/[^a-z0-9]/g,''); }
+
+// forward: figure -> formula -> numeric (with optional traps)
+function fwd(num, shape, dims, prompt, ans, unit, tol, traps){
+  return { id:pid(num), num:num, prompt:prompt, figure:figArea({shape:shape, dims:dims}),
+    pipeline:[ formulaStep(shape),
+      { tool:'numeric', label:'Step 2 \u2014 Solve on paper, then enter the area',
+        answer:ans, unit:unit, tol:tol, traps:traps||[] } ] };
+}
+// backward: figure -> formula -> typed solve (multiplicative inverse) -> numeric
+function bwd(num, shape, dims, eqStart, moves, ans, unit){
+  return { id:pid(num), num:num, prompt:'Find the missing dimension.', figure:figArea({shape:shape, dims:dims}),
+    pipeline:[ formulaStep(shape),
+      { tool:'solve', label:'Step 2 \u2014 Solve the equation', start:eqStart, moves:moves },
+      { tool:'numeric', label:'Step 3 \u2014 Calculator form', answer:ans, unit:unit, tol:0.2 } ] };
+}
+
+K.run([
+  // ---- FORWARD: find the area (one per shape, complex cases included) ----
+  fwd('P-1','rect', {b:'14 m', h:'9 m'},  'Find the area of the rectangle.',      126, 'm\u00B2',  0.5),
+  fwd('P-2','tri',  {b:'16 in.', h:'11 in.'}, 'Find the area of the triangle.',    88,  'in\u00B2', 0.5,
+      [{near:176, tol:1, msg:'Did you forget the \u00BD? A triangle is \u00BDbh, not bh.'}]),
+  fwd('P-3','pgram',{b:'20 cm', h:'11 cm'}, 'Find the area of the parallelogram.', 220, 'cm\u00B2', 0.5),
+  fwd('P-4','trap', {b1:'6 ft', b2:'14 ft', h:'8 ft'}, 'Find the area of the trapezoid.', 80, 'ft\u00B2', 0.5),
+  fwd('P-5','circ', {r:'7 ft'}, 'Find the area of the circle. Round to the nearest tenth.', 153.9, 'ft\u00B2', 0.15,
+      [{near:22, tol:1, msg:'Square the radius \u2014 \u03C0r\u00B2, not \u03C0r.'},
+       {near:44, tol:1, msg:'That\u2019s the circumference (2\u03C0r). You want the area, \u03C0r\u00B2.'}]),
+  fwd('P-6','circ', {d:'16 in.'}, 'Find the area of the circle. Round to the nearest tenth.', 201.1, 'in\u00B2', 0.15,
+      [{near:804.2, tol:2, msg:'Did you use the diameter as the radius? First find r = d \u00F7 2.'}]),
+
+  // ---- BACKWARD: area given, find a missing dimension (typed multiplicative-inverse solve) ----
+  bwd('P-7','rect', {b:'8 ft', h:'?', A:'72 ft\u00B2'},
+      '72 = 8h',
+      [ { ask:'h is multiplied by 8. Which operation frees it?', opCh:177788, valCh:193431965, then:'(1/8) \u00B7 72 = h' } ],
+      9, 'ft'),
+  bwd('P-8','tri', {b:'15 m', h:'?', A:'90 m\u00B2'},
+      '90 = \u00BD(15)h',
+      [ { ask:'Undo the \u00BD first. Which operation?', opCh:177788, valCh:177623, then:'2 \u00B7 90 = 15h' },
+        { ask:'Now h is multiplied by 15. Which operation frees it?', opCh:177788, valCh:2088287371, then:'(1/15) \u00B7 2 \u00B7 90 = h' } ],
+      12, 'm'),
+  bwd('P-9','circ', {r:'?', A:'64\u03C0 ft\u00B2'},
+      '64\u03C0 = \u03C0r\u00B2',
+      [ { ask:'Both sides carry a \u03C0. Which operation clears it?', opCh:177788, valCh:193432869, then:'64 = r\u00B2' },
+        { ask:'r is squared. Apply the inverse to free it.', opCh:193762655, then:'r = \u221A64' } ],
+      8, 'ft')
+]);
+</script>
+</body>
+</html>
