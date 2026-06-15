@@ -17,6 +17,7 @@
 <script src="../js/checker-kit.js"></script>
 <script src="../js/fig-area.js"></script>
 <script src="../js/tool-solve.js"></script>
+<script src="../js/tool-explain.js"></script>
 <script>
 // ── Formula choice: same options pool, distractors are other-shape areas + perimeter/circumference ──
 var FORMULA_NUDGE = 'That\u2019s a perimeter/circumference formula or another shape\u2019s area \u2014 pick the AREA formula for THIS figure.';
@@ -77,7 +78,21 @@ K.run([
       '64\u03C0 = \u03C0r\u00B2',
       [ { ask:'Both sides carry a \u03C0. Which operation clears it?', opCh:177788, valCh:193432869, then:'64 = r\u00B2' },
         { ask:'r is squared. Apply the inverse to free it.', opCh:193762655, then:'r = \u221A64' } ],
-      8, 'ft')
+      8, 'ft'),
+
+  // ---- CONCEPTUAL: write the reasoning, then check it against a model ----
+  { id:'cr1', num:'CR-1', prompt:'Same base, same height \u2014 same area?',
+    pipeline:[ { tool:'explain', label:'Explain your reasoning',
+      ask:'A rectangle and a parallelogram both have base 10 cm and height 6 cm. Do they have the same area? Explain why or why not.',
+      key:'Yes \u2014 both use A = bh, so both equal 60 cm\u00B2. The slant of the parallelogram doesn\u2019t change its area; the height is the perpendicular distance to the base in both shapes.' } ] },
+  { id:'cr2', num:'CR-2', prompt:'Does doubling the radius double the area?',
+    pipeline:[ { tool:'explain', label:'Test it, then explain',
+      ask:'Marcus says: \u201CI doubled the radius, so the area doubled.\u201D Is he right? Work out the area for r = 3, then for r = 6, and explain what really happens.',
+      key:'No. r = 3 \u2192 A = 9\u03C0 \u2248 28.3. r = 6 \u2192 A = 36\u03C0 \u2248 113.1. The area is \u00D74, not \u00D72 \u2014 because squaring the doubled radius gives (2r)\u00B2 = 4r\u00B2.' } ] },
+  { id:'cr3', num:'CR-3', prompt:'Find the total area of a composite figure.',
+    pipeline:[ { tool:'explain', label:'Split it, then total it',
+      ask:'A rectangle 12 ft wide and 6 ft tall has a triangle sitting on top of it (base 12 ft, height 5 ft). What is the total area? Show how you split the figure.',
+      key:'Split it into the rectangle and the triangle. Rectangle: 12 \u00D7 6 = 72 ft\u00B2. Triangle: \u00BD(12)(5) = 30 ft\u00B2. Total = 72 + 30 = 102 ft\u00B2. (This is exactly the move the Unit 4 project needs.)' } ] }
 ]);
 </script>
 </body>

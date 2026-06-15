@@ -28,11 +28,11 @@ A(d.querySelectorAll('.orient-card').length===4,'Project: Q1 has 4 orientation c
 (function(){
   const dom=new JSDOM('<!DOCTYPE html><body><div id="hdrDots"></div><main id="main"></main></body>',{runScripts:'dangerously'});
   const w=dom.window; w.scrollTo=()=>{};
-  ['js/checker-kit.js','js/fig-area.js','js/tool-solve.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
+  ['js/checker-kit.js','js/fig-area.js','js/tool-solve.js','js/tool-explain.js'].forEach(f=>w.eval(fs.readFileSync(path.join(root,f),'utf8')));
   const html=fs.readFileSync(path.join(root,'checkers/unit4-day1-area.html'),'utf8');
   const inline=html.split('tool-solve.js"></script>')[1].split('<script>')[1].split('</script>')[0];
   w.eval(inline); const ad=w.document;
-  A(ad.querySelectorAll('.qd').length===9,'Area: 9 problems mount');
+  A(ad.querySelectorAll('.qd').length===12,'Area: 12 problems mount (incl. 3 conceptual)');
   A(ad.querySelector('.q-figure svg'),'Area: persistent figure renders');
   A(ad.querySelectorAll('.ratio-btn').length===4,'Area: formula step shows 4 options');
 })();

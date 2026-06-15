@@ -106,7 +106,7 @@
     for(var i=0;i<PROBLEMS.length;i++){
       var s=S[PROBLEMS[i].id], d=document.createElement('div'); d.className='qd';
       if(s.done) d.classList.add('done'); else if(i===activeP) d.classList.add('active');
-      d.textContent=((PROBLEMS[i].num||'').match(/\d+/)||[String(i+1)])[0];
+      d.textContent=(PROBLEMS[i].num!=null?PROBLEMS[i].num:(i+1));
       (function(idx){d.addEventListener('click',function(){navTo(idx);});})(i);
       c.appendChild(d);
     }
@@ -149,7 +149,10 @@
   // ---- "Show Work" popup (a model of how the solution should look on paper) ----
   function showWork(pid){
     var p=pById(pid), s=S[pid];
-    var body='<p class="work-prompt">'+esc(p.prompt)+'</p>', any=false;
+    var head='<p class="work-prompt">'+esc(p.prompt)+'</p>';
+    if(p.figure) head+='<div class="work-figure">'+p.figure+'</div>';
+    head+='<div class="work-reminder">\u270D First, rewrite the problem on your paper \u2014 copy the figure and label its numbers. That copying IS the first part of showing your work.</div>';
+    var body='', any=false;
     for(var j=0;j<p.pipeline.length && j<s.stepIdx; j++){
       any=true;
       var step=p.pipeline[j], st=s.steps[j], t=TOOLS[step.tool];
@@ -157,11 +160,11 @@
                      : '<div class="work-answer">'+esc(t.summary?t.summary(step,st):'done')+'</div>';
       body+='<div class="work-step"><div class="work-step-label">'+esc(step.label||('Step '+(j+1)))+'</div>'+w+'</div>';
     }
-    if(!any) body='<p class="work-prompt">Start working and your steps show up here \u2014 this is how it should look on your paper.</p>';
+    if(!any) body='<p class="work-note">Then work it out step by step \u2014 your steps will show up here too.</p>';
     var modal=document.createElement('div'); modal.className='work-backdrop'; modal.id='workModal';
     modal.addEventListener('click', closeWork);
     modal.innerHTML='<div class="work-modal"><div class="work-head"><h3>Your work \u2014 '+esc(p.num)+'</h3>'+
-      '<button class="work-close" onclick="K.closeWork()">\u2715</button></div><div class="work-body">'+body+'</div></div>';
+      '<button class="work-close" onclick="K.closeWork()">\u2715</button></div><div class="work-body">'+head+body+'</div></div>';
     modal.querySelector('.work-modal').addEventListener('click', function(e){ e.stopPropagation(); });
     document.body.appendChild(modal);
   }
