@@ -223,3 +223,11 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 /* ---- back-to-hub link in checker headers ---- */
 .hdr-back{display:inline-block;font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;margin-bottom:5px}
 .hdr-back:hover{color:var(--accent)}
+
+/* ── Stacked prose options (choice with stack:true) ── */
+.opt-stack{display:flex;flex-direction:column;gap:8px;max-width:520px;margin-bottom:12px}
+.opt-row{font-family:'DM Sans',sans-serif;font-size:.92rem;font-weight:500;line-height:1.45;
+  text-align:left;width:100%;min-height:44px;padding:11px 15px;border:2px solid var(--border);
+  border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;transition:.15s}
+.opt-row:hover{border-color:var(--accent);background:var(--accent-lt)}
+.opt-row.sel{border-color:var(--accent);background:var(--accent-lt);font-weight:700}
