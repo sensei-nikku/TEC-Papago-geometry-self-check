@@ -8,7 +8,7 @@
 (function (global) {
   'use strict';
 
-  var ENGINE_VERSION = '1.1.0';   // 1.1.0: completed steps render as locked-in rows (tool.entry)
+  var ENGINE_VERSION = '1.2.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout
   var TOOLS = {};          // tool registry:  name -> tool definition
   var PROBLEMS = [];       // the loaded checker (set by run())
   var S = {};              // run-time state, keyed by problem id
@@ -235,11 +235,20 @@ K.tool('choice', {
   render: function(step, st, ref){
     var h='';
     if(step.ask) h+='<div class="step-text">'+ref.esc(step.ask)+'</div>';
-    h+='<div class="ratio-row" style="gap:8px">';
+    // `stack:true` -> full-width, left-aligned, prose font. The default row of
+    // centred monospace pills is right for short math tokens (A = bh, sin-1)
+    // and unreadable for sentence-length options.
+    var stack = !!step.stack;
+    h+= stack ? '<div class="opt-stack">' : '<div class="ratio-row" style="gap:8px">';
     for(var i=0;i<st.options.length;i++){
       var on = st.selIdx===i;
-      h+='<button class="ratio-btn'+(on?' inv':'')+'" style="min-width:auto'+(on?'':';background:var(--surface);color:var(--text);border-color:var(--border)')+'" '+
-         'onclick="K.act(\''+ref.p+'\','+ref.s+',\'pick\','+i+')">'+ref.esc(st.options[i])+'</button>';
+      if(stack){
+        h+='<button class="opt-row'+(on?' sel':'')+'" '+
+           'onclick="K.act(\''+ref.p+'\','+ref.s+',\'pick\','+i+')">'+ref.esc(st.options[i])+'</button>';
+      }else{
+        h+='<button class="ratio-btn'+(on?' inv':'')+'" style="min-width:auto'+(on?'':';background:var(--surface);color:var(--text);border-color:var(--border)')+'" '+
+           'onclick="K.act(\''+ref.p+'\','+ref.s+',\'pick\','+i+')">'+ref.esc(st.options[i])+'</button>';
+      }
     }
     h+='</div>';
     if(st.selIdx!=null) h+='<div style="margin-top:10px"><button class="btn btn-go" onclick="K.act(\''+ref.p+'\','+ref.s+',\'check\')">Check</button></div>';
