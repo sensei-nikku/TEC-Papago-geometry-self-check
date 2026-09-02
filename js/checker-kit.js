@@ -8,6 +8,7 @@
 (function (global) {
   'use strict';
 
+  var ENGINE_VERSION = '1.1.0';   // 1.1.0: completed steps render as locked-in rows (tool.entry)
   var TOOLS = {};          // tool registry:  name -> tool definition
   var PROBLEMS = [];       // the loaded checker (set by run())
   var S = {};              // run-time state, keyed by problem id
@@ -87,10 +88,17 @@
 
   function renderStep(p, si){
     var step=p.pipeline[si], st=S[p.id].steps[si], t=TOOLS[step.tool], cur=S[p.id].stepIdx;
-    if(si<cur){ // completed → collapsed summary
-      var sum = t.summary ? t.summary(step, st) : 'done';
+    if(si<cur){ // completed -> LOCKED-IN row showing what the student entered.
+      // `entry` is what they actually put in; `summary` is the model value.
+      // Falls back to summary for tools that have not defined entry yet.
+      var sum = (t.entry ? t.entry(step, st) : (t.summary ? t.summary(step, st) : 'done'));
+      if(sum==null || sum==='') sum = 'done';
       return '<div class="step show"><div class="step-label">'+esc(step.label||('Step '+(si+1)))+'</div>'+
-             '<div class="fb ok show">\u2713 '+esc(sum)+'</div></div>';
+             '<div class="locked-in" style="min-height:40px;display:flex;align-items:center;gap:8px;'+
+             'padding:9px 14px;border:2px solid var(--ok);border-radius:8px;background:var(--ok-lt);'+
+             'font-size:.9rem;font-weight:600;color:var(--ok)">'+
+             '<span aria-hidden="true">\u2713</span><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Answered: </span>'+
+             '<span style="color:var(--text)">'+esc(sum)+'</span></div></div>';
     }
     if(si>cur) return ''; // locked → hidden
     // active step
@@ -172,6 +180,7 @@
 
   // ---- public surface ----
   global.K = { run:run, tool:tool, act:act, input:input, set:set, navTo:navTo,
+               VERSION:ENGINE_VERSION,
                showWork:showWork, closeWork:closeWork,
                _esc:esc, _djb2:djb2 };
 
@@ -206,7 +215,8 @@ K.tool('numeric', {
       if(Math.abs(v-tr.near) <= (tr.tol!=null?tr.tol:0.5)) return {fb:{t:'err',m:tr.msg}}; } }   // common-error nudges
     return {fb:{t:'err',m:'Not quite. Check your setup and try again.'}};
   },
-  summary: function(step){ return step.answer + (step.unit?(' '+step.unit):''); }
+  summary: function(step){ return step.answer + (step.unit?(' '+step.unit):''); },
+  entry: function(step, st){ return (st.val===''||st.val==null) ? null : (st.val + (step.unit?(' '+step.unit):'')); }
 });
 
 
@@ -241,5 +251,6 @@ K.tool('choice', {
     if(ctx.djb2(st.options[st.selIdx])===step.ch) return {pass:true};
     return {fb:{t:'err',m: step.nudge || 'Not that one \u2014 try again.'}};
   },
-  summary: function(step, st){ return st.options[st.selIdx]; }
+  summary: function(step, st){ return st.options[st.selIdx]; },
+  entry: function(step, st){ return st.selIdx==null ? null : st.options[st.selIdx]; }
 });
