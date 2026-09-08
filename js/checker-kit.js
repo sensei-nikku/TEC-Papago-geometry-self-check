@@ -3,19 +3,34 @@
    A checker is data: PROBLEMS = [ {id, num, prompt, pipeline:[step...]} ]
    Each step = { tool:'numeric', ...config }.  Tools register themselves.
    The runner walks the pipeline; each passed step unlocks the next.
-   No localStorage. Pointer-event tools come later (Label/Match/Plot).
+   No localStorage.
+
+   SCAFFOLDING MODEL (v1.4.0) — coarse first, ladder on demand.
+   A step may carry `sub:[step...]`, a ladder of smaller moves that gets
+   you to the same place.  Nothing in the ladder is on screen at the
+   start: the student is asked the BIG move and given room to just do it.
+   On the first miss the ladder splits open, one rung at a time, and
+   finishing it settles the parent.  Scaffolding is a response to a miss,
+   never a precondition for trying.
+
+   STEP CODES.  Handlers address a step by an integer code so that tool
+   contracts stay untouched (tools interpolate ref.s straight into
+   onclick).  A parent step is its own index.  A rung is encoded
+   (parentIndex+1)*1000 + (rungIndex+1) — so 1a is 1001, 3c is 3003.
    =================================================================== */
 (function (global) {
   'use strict';
 
-  var ENGINE_VERSION = '1.3.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
-                                  // 1.3.0 split shell (rail + work surface), per-step miss limits,
-                                  //       two-level nudges (broad -> specific)
+  var ENGINE_VERSION = '1.4.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
+                                  // 1.3.0 split shell, per-step miss limits, two-level nudges;
+                                  // 1.4.0 coarse-first sub-step ladders (step.sub)
   var LAYOUT = 'stack';    // 'stack' (one scrolling column) | 'split' (left rail + right surface)
   var TOOLS = {};          // tool registry:  name -> tool definition
   var PROBLEMS = [];       // the loaded checker (set by run())
   var S = {};              // run-time state, keyed by problem id
   var activeP = 0;         // index of the open problem
+  var SUBBASE = 1000;
+  var LETTERS = 'abcdefghijklmn';
 
   // ---- shared helpers (the bits every tool reuses) ----
   function esc(s){return (s==null?'':''+s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -26,6 +41,19 @@
   // ---- registration: a tool is { state, render, check, summary } ----
   function tool(name, def){ TOOLS[name] = def; }
 
+  // ---- state construction ----
+  function stateFor(step){
+    var t = TOOLS[step.tool];
+    if(!t){ throw new Error('Unknown tool: '+step.tool); }
+    var st = t.state ? t.state(step) : {};
+    st.misses = 0; st.fb = null; st.redirect = false;
+    if(step.sub && step.sub.length){
+      st.exp = false; st.subIdx = 0; st.subs = [];
+      for(var j=0;j<step.sub.length;j++) st.subs.push(stateFor(step.sub[j]));
+    }
+    return st;
+  }
+
   // ---- lifecycle ----
   function run(problems, opts){
     LAYOUT = (opts && opts.layout) ? opts.layout : 'stack';
@@ -33,12 +61,7 @@
     S = {};
     for (var i=0;i<PROBLEMS.length;i++){
       var p=PROBLEMS[i], steps=[];
-      for (var j=0;j<p.pipeline.length;j++){
-        var t=TOOLS[p.pipeline[j].tool];
-        if(!t){throw new Error('Unknown tool: '+p.pipeline[j].tool);}
-        steps.push(t.state ? t.state(p.pipeline[j]) : {});
-        steps[j].misses=0; steps[j].fb=null; steps[j].redirect=false;
-      }
+      for (var j=0;j<p.pipeline.length;j++) steps.push(stateFor(p.pipeline[j]));
       S[p.id]={stepIdx:0, done:false, steps:steps};
     }
     activeP=0;
@@ -46,29 +69,61 @@
     render();
   }
 
-  // ---- runner actions (single global entry point for inline handlers) ----
-  function input(pid, si, val){ var st=S[pid].steps[si]; st.val=val; st.fb=null; }      // generic text/number capture
-  function set(pid, si, key, val){ var st=S[pid].steps[si]; st[key]=val; st.fb=null; render(); }
+  // ---- code <-> step resolution ----
+  function isSub(code){ return code >= SUBBASE; }
+  function parentOf(code){ return isSub(code) ? Math.floor(code/SUBBASE)-1 : code; }
+  function rungOf(code){ return isSub(code) ? (code % SUBBASE)-1 : -1; }
+  function subCode(si, sj){ return (si+1)*SUBBASE + (sj+1); }
 
-  function act(pid, si, action, payload){
-    var p=pById(pid), step=p.pipeline[si], st=S[pid].steps[si], t=TOOLS[step.tool];
-    if(action==='skip'){ st.redirect=false; st.fb=null; advance(pid); render(); return; }   // teacher-helped continue
+  function resolve(pid, code){
+    var p=pById(pid), si=parentOf(code), sj=rungOf(code);
+    var pstep=p.pipeline[si], pst=S[pid].steps[si];
+    if(sj>=0){
+      var step=pstep.sub[sj];
+      return {p:p, si:si, sj:sj, step:step, st:pst.subs[sj], parent:pstep, pst:pst, tool:TOOLS[step.tool]};
+    }
+    return {p:p, si:si, sj:-1, step:pstep, st:pst, parent:null, pst:pst, tool:TOOLS[pstep.tool]};
+  }
+
+  // The one step the student can act on right now: the active parent, or,
+  // if that parent's ladder is open, the active rung of the ladder.
+  function liveCode(pid){
+    var s=S[pid]; if(s.done) return -1;
+    var si=s.stepIdx, st=s.steps[si];
+    return (st.exp) ? subCode(si, st.subIdx) : si;
+  }
+
+  // ---- runner actions (single global entry point for inline handlers) ----
+  function input(pid, code, val){ var r=resolve(pid, code); r.st.val=val; r.st.fb=null; }
+  function set(pid, code, key, val){ var r=resolve(pid, code); r.st[key]=val; r.st.fb=null; render(); }
+
+  function act(pid, code, action, payload){
+    var r=resolve(pid, code), st=r.st, step=r.step, t=r.tool;
+    if(action==='skip'){ st.redirect=false; st.fb=null; pass(pid, code); render(); return; }  // teacher-helped continue
     if(action==='check'){
-      var r=t.check(step, st, {djb2:djb2}, payload);   // payload: tap index for order-style tools; ignored by others
-      if(r.pass){ st.fb=null; st.redirect=false; advance(pid); }
-      else if(r.tier==='soft'){ st.fb=r.fb;                            // prompt, not a wrong answer — no strike
-        if(r.progress) st.misses=0;                                    // a step with several decisions (solve) gives
-      }                                                                // each decision its own allowance
-      else { st.misses++;
-        // Miss limit is per step: step.limit overrides the tool's default, which
-        // overrides 3.  (pedagogy_context: orientation 2, ratio 3, algebra move 2, answer 3.)
-        var lim = (step.limit!=null) ? step.limit : (t.limit!=null ? t.limit : 3);
-        if(st.misses>=lim){ st.redirect=true; st.fb=null; }
-        else st.fb = nudgeFor(step, st, r);
+      var res=t.check(step, st, {djb2:djb2}, payload);   // payload: tap index / op token; ignored by others
+      if(res.pass){ st.fb=null; st.redirect=false; pass(pid, code); render(); return; }
+      if(res.tier==='soft'){ st.fb=res.fb; if(res.progress) st.misses=0; render(); return; }  // prompt, not a wrong answer
+      st.misses++;
+      // FIRST MISS ON A PARENT THAT CARRIES A LADDER: split it open rather
+      // than spending a strike. The rungs are the help.
+      if(r.sj<0 && step.sub && step.sub.length && !st.exp){
+        st.exp=true; st.subIdx=0; st.misses=0;
+        st.fb={t:'warn', m:splitNotice(r.si, step, res)};
+        render(); return;
       }
+      var lim = (step.limit!=null) ? step.limit : (t.limit!=null ? t.limit : 3);
+      if(st.misses>=lim){ st.redirect=true; st.fb=null; }
+      else st.fb = nudgeFor(step, st, res);
       render(); return;
     }
-    if(t.act){ t.act(step, st, action, payload, {render:render, djb2:djb2}); render(); }     // tool-specific actions
+    if(t.act){ t.act(step, st, action, payload, {render:render, djb2:djb2}); render(); }   // tool-specific actions
+  }
+
+  function splitNotice(si, step, res){
+    var n=step.sub.length, range=(si+1)+'a through '+(si+1)+LETTERS[n-1];
+    var diag = (res && res.fb && res.fb.diag) ? res.fb.m+' ' : '';
+    return diag+'Let\u2019s take this one move at a time \u2014 steps '+range+'. Finish them and this step is done.';
   }
 
   // Two-level nudge: first miss gets the broad conceptual prompt (step.nudges[0]);
@@ -82,7 +137,18 @@
     if(st.misses===1 && nd) return {t:'warn', m:nd[0]};
     if(r.fb) return r.fb;
     if(nd) return {t:'err', m:nd[Math.min(st.misses-1, nd.length-1)]};
-    return {t:'err', m:'Not quite — try again.'};
+    return {t:'err', m:'Not quite \u2014 try again.'};
+  }
+
+  // ---- advancing ----
+  function pass(pid, code){
+    if(isSub(code)){
+      var si=parentOf(code), pst=S[pid].steps[si], n=pById(pid).pipeline[si].sub.length;
+      pst.subIdx++;
+      if(pst.subIdx>=n) advance(pid);      // walked the whole ladder -> the parent is settled
+      return;
+    }
+    advance(pid);
   }
 
   function advance(pid){
@@ -95,7 +161,7 @@
   }
   function scrollToWork(){
     if(LAYOUT==='split'){ return; }        // split: the rail scrolls itself in renderSplit()
-    window.scrollTo({top:0,behavior:'smooth'});
+    if(typeof window!=='undefined' && window.scrollTo) window.scrollTo({top:0,behavior:'smooth'});
   }
 
   function navTo(i){ if(i>=0&&i<PROBLEMS.length){activeP=i; render(); scrollToWork();} }
@@ -107,37 +173,64 @@
     var icon = fb.t==='warn'?'\u26A0 ':(fb.t==='ok'?'\u2713 ':'\u2717 ');
     return '<div class="fb '+cls+' show" style="margin-top:10px">'+icon+esc(fb.m)+'</div>';
   }
-  function redirectHtml(pid, si){
+  function redirectHtml(pid, code){
     return '<div class="hint-text" style="border-left-color:var(--warn);background:var(--warn-lt);color:var(--warn);font-style:normal;font-weight:600">'+
       '\u270B Bring your work to your teacher and show them this step. It\u2019s okay to ask for help.</div>'+
-      '<div style="margin-top:8px"><button class="btn btn-reset" onclick="K.act(\''+pid+'\','+si+',\'skip\')">Teacher helped \u2014 continue</button></div>';
+      '<div style="margin-top:8px"><button class="btn btn-reset" onclick="K.act(\''+pid+'\','+code+',\'skip\')">Teacher helped \u2014 continue</button></div>';
+  }
+  function lockedRow(step, st, t){
+    var sum = (t.entry ? t.entry(step, st) : (t.summary ? t.summary(step, st) : 'done'));
+    if(sum==null || sum==='') sum='done';
+    return '<div class="locked-in" style="min-height:40px;display:flex;align-items:center;gap:8px;'+
+           'padding:9px 14px;border:2px solid var(--ok);border-radius:8px;background:var(--ok-lt);'+
+           'font-size:.9rem;font-weight:600;color:var(--ok)">'+
+           '<span aria-hidden="true">\u2713</span><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Answered: </span>'+
+           '<span style="color:var(--text)">'+esc(sum)+'</span></div>';
+  }
+  function bodyFor(pid, code, step, st, t){
+    if(st.redirect) return redirectHtml(pid, code);
+    if(LAYOUT==='split' && t.pane==='surface'){
+      // The manipulable lives in the work surface; the rail keeps the place in line.
+      return '<div class="rail-pointer">'+esc(t.railText || 'Work on the panel to the right, then check your answer there.')+'</div>';
+    }
+    return t.render(step, st, {p:pid, s:code, esc:esc}) + fbHtml(st.fb);
+  }
+
+  // one rung of an open ladder
+  function renderRung(p, si, sj){
+    var pstep=p.pipeline[si], pst=S[p.id].steps[si];
+    var step=pstep.sub[sj], st=pst.subs[sj], t=TOOLS[step.tool];
+    var tag='Step '+(si+1)+LETTERS[sj];
+    var lbl=step.label ? (tag+' \u2014 '+step.label) : tag;
+    if(sj < pst.subIdx)
+      return '<div class="step sub show"><div class="step-label">'+esc(lbl)+'</div>'+lockedRow(step, st, t)+'</div>';
+    if(sj > pst.subIdx) return '';                       // later rungs are not rendered at all
+    return '<div class="step sub show live"><div class="step-label">'+esc(lbl)+'</div>'+
+           bodyFor(p.id, subCode(si,sj), step, st, t)+'</div>';
   }
 
   function renderStep(p, si){
     var step=p.pipeline[si], st=S[p.id].steps[si], t=TOOLS[step.tool], cur=S[p.id].stepIdx;
+    var lbl=step.label||('Step '+(si+1));
     if(si<cur){ // completed -> LOCKED-IN row showing what the student entered.
-      // `entry` is what they actually put in; `summary` is the model value.
-      // Falls back to summary for tools that have not defined entry yet.
-      var sum = (t.entry ? t.entry(step, st) : (t.summary ? t.summary(step, st) : 'done'));
-      if(sum==null || sum==='') sum = 'done';
-      return '<div class="step show"><div class="step-label">'+esc(step.label||('Step '+(si+1)))+'</div>'+
-             '<div class="locked-in" style="min-height:40px;display:flex;align-items:center;gap:8px;'+
-             'padding:9px 14px;border:2px solid var(--ok);border-radius:8px;background:var(--ok-lt);'+
-             'font-size:.9rem;font-weight:600;color:var(--ok)">'+
-             '<span aria-hidden="true">\u2713</span><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Answered: </span>'+
-             '<span style="color:var(--text)">'+esc(sum)+'</span></div></div>';
+      var h='<div class="step show"><div class="step-label">'+esc(lbl)+'</div>';
+      if(st.exp){                                        // a walked ladder stays on screen
+        h+='<div class="ladder-done">';
+        for(var j=0;j<step.sub.length;j++) h+=renderRung(p, si, j);
+        h+='</div>';
+      } else h+=lockedRow(step, st, t);
+      return h+'</div>';
     }
-    if(si>cur) return ''; // locked → hidden
+    if(si>cur) return ''; // locked -> hidden
     // active step
-    var h='<div class="step show live"><div class="step-label">'+esc(step.label||('Step '+(si+1)))+'</div>';
-    if(st.redirect){ h+=redirectHtml(p.id, si); }
-    else if(LAYOUT==='split' && t.pane==='surface'){
-      // The manipulable lives in the work surface; the rail keeps the place in line.
-      h+='<div class="rail-pointer">'+esc(t.railText || 'Work on the panel to the right, then check your answer there.')+'</div>';
+    var a='<div class="step show'+(st.exp?'':' live')+'"><div class="step-label">'+esc(lbl)+'</div>';
+    if(st.exp){
+      a+=fbHtml(st.fb);                                  // the split notice
+      for(var k=0;k<step.sub.length;k++) a+=renderRung(p, si, k);
+    } else {
+      a+=bodyFor(p.id, si, step, st, t);
     }
-    else { h+=t.render(step, st, {p:p.id, s:si, esc:esc}); h+=fbHtml(st.fb); }
-    h+='</div>';
-    return h;
+    return a+'</div>';
   }
 
   function renderDots(){
@@ -178,29 +271,44 @@
       if(p.want) h+='<div class="g-want">Looking for: <strong>'+esc(p.want)+'</strong></div>';
       h+='</div>';
     }
-    var live=null;
-    if(!s.done){
-      var ci=s.stepIdx, cstep=p.pipeline[ci], ctool=TOOLS[cstep.tool], cst=s.steps[ci];
-      if(ctool && ctool.pane==='surface' && !cst.redirect) live={i:ci, step:cstep, tool:ctool, st:cst};
+    var code=liveCode(p.id), live=null;
+    if(code>=0){
+      var r=resolve(p.id, code);
+      if(r.tool && r.tool.pane==='surface' && !r.st.redirect) live=r;
     }
     if(live){
       h+='<div class="surf-block live"><div class="surf-label">'+esc(live.step.label||'Your turn')+'</div>'+
-         live.tool.render(live.step, live.st, {p:p.id, s:live.i, esc:esc})+fbHtml(live.st.fb)+'</div>';
+         live.tool.render(live.step, live.st, {p:p.id, s:code, esc:esc})+fbHtml(live.st.fb)+'</div>';
     } else {
-      // No live manipulable: keep the most recent surface tool’s finished state on
+      // No live manipulable: keep the most recent surface tool's finished state on
       // screen (the labelled triangle), falling back to the plain figure.
-      var kept=null;
-      for(var b=(s.done?p.pipeline.length:s.stepIdx)-1; b>=0; b--){
-        var bt=TOOLS[p.pipeline[b].tool];
-        if(bt && bt.pane==='surface' && bt.work){ kept=bt.work(p.pipeline[b], s.steps[b], {esc:esc}); break; }
-      }
-      if(kept){ h+='<div class="surf-block"><div class="surf-label">Your figure</div><div class="surf-fig">'+kept+'</div></div>'; }
-      else if(p.figure){
-        h+='<div class="surf-block"><div class="surf-fig">'+p.figure+'</div></div>';
-      }
+      var kept=keptSurface(p, s);
+      if(kept) h+='<div class="surf-block"><div class="surf-label">Your figure</div><div class="surf-fig">'+kept+'</div></div>';
+      else if(p.figure) h+='<div class="surf-block"><div class="surf-fig">'+p.figure+'</div></div>';
     }
     if(p.reference) h+='<div class="surf-block ref">'+p.reference+'</div>';
     return h;
+  }
+
+  // walk backwards through everything already answered — rungs included — for the
+  // last surface tool that can draw its finished state.
+  function keptSurface(p, s){
+    var last=(s.done?p.pipeline.length:s.stepIdx+1)-1;
+    for(var i=last;i>=0;i--){
+      var step=p.pipeline[i], st=s.steps[i];
+      if(st.exp){
+        var upto=(i<s.stepIdx||s.done) ? step.sub.length-1 : st.subIdx-1;
+        for(var j=upto;j>=0;j--){
+          var rt=TOOLS[step.sub[j].tool];
+          if(rt && rt.pane==='surface' && rt.work) return rt.work(step.sub[j], st.subs[j], {esc:esc});
+        }
+        continue;
+      }
+      if(i>=s.stepIdx && !s.done) continue;              // the live parent has not been answered
+      var t=TOOLS[step.tool];
+      if(t && t.pane==='surface' && t.work) return t.work(step, st, {esc:esc});
+    }
+    return null;
   }
 
   function renderSplit(){
@@ -219,16 +327,16 @@
     mountLive();
   }
 
-  // afterRender mount pass — tools that need imperative DOM (drag/canvas) provide mount();
-  // tools without it (numeric, choice) are unaffected.  Location-agnostic: the tool looks
-  // its host up by id, so it works in the rail or in the surface.
+  // afterRender mount pass — tools that need imperative DOM (drag/canvas) provide
+  // mount(); tools without it (numeric, choice) are unaffected. Location-agnostic:
+  // the tool looks its host up by id, so it works in the rail or in the surface.
   function mountLive(){
-    var ap=PROBLEMS[activeP];
-    if(!ap || S[ap.id].done) return;
-    var ci=S[ap.id].stepIdx, cstep=ap.pipeline[ci], ctool=TOOLS[cstep.tool], cst=S[ap.id].steps[ci];
-    if(ctool && ctool.mount && !cst.redirect){
-      ctool.mount(cstep, cst, { p:ap.id, s:ci, esc:esc, djb2:djb2,
-        rerender:render, pass:function(){ advance(ap.id); render(); } });
+    var ap=PROBLEMS[activeP]; if(!ap) return;
+    var code=liveCode(ap.id); if(code<0) return;
+    var r=resolve(ap.id, code);
+    if(r.tool && r.tool.mount && !r.st.redirect){
+      r.tool.mount(r.step, r.st, { p:ap.id, s:code, esc:esc, djb2:djb2,
+        rerender:render, pass:function(){ pass(ap.id, code); render(); } });
     }
   }
 
@@ -241,7 +349,7 @@
         card.className='card done';
         var hd='<div class="qn">'+esc(p.num)+'<span class="done-check">\u2713 Complete</span></div>'+
                '<div class="qp">'+esc(p.prompt)+'</div>';
-        for(var jd=0;jd<p.pipeline.length;jd++) hd+=renderStep(p, jd);   // all steps completed -> their answer summaries stay
+        for(var jd=0;jd<p.pipeline.length;jd++) hd+=renderStep(p, jd);
         hd+='<div style="margin-top:14px"><button class="btn btn-work" onclick="K.showWork(\''+p.id+'\')">Show Work</button></div>';
         card.innerHTML=hd;
       } else if(i===activeP){
@@ -259,6 +367,11 @@
   }
 
   // ---- "Show Work" popup (a model of how the solution should look on paper) ----
+  function workBlock(step, st, t, label){
+    var w = t.work ? t.work(step, st, {esc:esc})
+                   : '<div class="work-answer">'+esc(t.summary?t.summary(step,st):'done')+'</div>';
+    return '<div class="work-step"><div class="work-step-label">'+esc(label)+'</div>'+w+'</div>';
+  }
   function showWork(pid){
     var p=pById(pid), s=S[pid];
     var head='<p class="work-prompt">'+esc(p.prompt)+'</p>';
@@ -266,11 +379,14 @@
     head+='<div class="work-reminder">\u270D First, rewrite the problem on your paper \u2014 copy the figure and label its numbers. That copying IS the first part of showing your work.</div>';
     var body='', any=false;
     for(var j=0;j<p.pipeline.length && j<s.stepIdx; j++){
-      any=true;
       var step=p.pipeline[j], st=s.steps[j], t=TOOLS[step.tool];
-      var w = t.work ? t.work(step, st, {esc:esc})
-                     : '<div class="work-answer">'+esc(t.summary?t.summary(step,st):'done')+'</div>';
-      body+='<div class="work-step"><div class="work-step-label">'+esc(step.label||('Step '+(j+1)))+'</div>'+w+'</div>';
+      if(st.exp){                                   // the ladder is the work for this step
+        for(var k=0;k<step.sub.length;k++){
+          var rs=step.sub[k], rt=TOOLS[rs.tool];
+          body+=workBlock(rs, st.subs[k], rt, 'Step '+(j+1)+LETTERS[k]+(rs.label?(' \u2014 '+rs.label):''));
+          any=true;
+        }
+      } else { body+=workBlock(step, st, t, step.label||('Step '+(j+1))); any=true; }
     }
     if(!any) body='<p class="work-note">Then work it out step by step \u2014 your steps will show up here too.</p>';
     var modal=document.createElement('div'); modal.className='work-backdrop'; modal.id='workModal';
@@ -286,7 +402,7 @@
   global.K = { run:run, tool:tool, act:act, input:input, set:set, navTo:navTo,
                VERSION:ENGINE_VERSION, layout:function(){return LAYOUT;},
                showWork:showWork, closeWork:closeWork,
-               _esc:esc, _djb2:djb2 };
+               _esc:esc, _djb2:djb2, _live:liveCode, _sub:subCode, _S:function(){return S;} };
 
 })(window);
 
