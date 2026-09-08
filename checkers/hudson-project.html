@@ -21,187 +21,174 @@
 <script src="../js/tool-orient.js"></script>
 <script src="../js/fig-orientations.js"></script>
 <script>
-/* Miracle on the Hudson — project checker.  Engine v1.3.0, split layout:
-   LEFT rail  = the pipeline (prompt, locked-in answers, one live step).
-   RIGHT pane = the work surface (what you know, the figure / digital tool,
-                and the SOH-CAH-TOA reference, on screen the whole problem).
-   Scaffolding per problem: orient -> label -> HAVE/WANT -> ratio -> iff-chain
-   -> calculator form.  Every wrong answer gets a broad nudge first, then the
-   specific diagnosis, then the teacher redirect (2 tries on orientation and on
-   each algebra move, 3 on ratio and on the answer). */
+/* Miracle on the Hudson — project checker.  Engine v1.4.0.
+
+   COARSE FIRST.  Each question is ONE step: the big move, asked straight.
+   No orientation picker, no labelling, no ratio menu on screen — the
+   student is expected to just do it, on paper, the way the packet asks.
+   Miss it once and the ladder splits open (1a...1f): convert the units,
+   orient the triangle, label the sides, pick the ratio, run the iff-chain,
+   then the calculator form.  Walking the ladder settles the question.
+   Scaffolding answers a miss; it never precedes the attempt.
+
+   No figure is shown before the labelling rung, on purpose: finding the
+   right triangle in the flight profile is part of the work.
+
+   Numbering, wording and units match the printed packet exactly —
+   miles in the prompts, feet in the answers, conversion is student work. */
 var RATIOS = ['SIN','COS','TAN'];
 var INV    = ['SIN\u207B\u00B9','COS\u207B\u00B9','TAN\u207B\u00B9'];
 
-// The HAVE/WANT bank is the same four lines in every problem, shuffled — the
-// repetition is the point: it is the one discrimination the whole unit rests on.
-var HW = [
-  'Have: the hypotenuse and the angle  \u2192  Want: the opposite side',
-  'Have: the adjacent side and the angle  \u2192  Want: the opposite side',
-  'Have: the opposite side and the angle  \u2192  Want: the hypotenuse',
-  'Have: the opposite side and the adjacent side  \u2192  Want: the angle'
-];
+var REF = '<div class="surf-label">Reference \u2014 stays on screen</div><div class="ref-row"><div class="ref-cell"><div class="rc-t">SOH</div><div class="rc-s">sin \u03B8 = opp / hyp</div></div><div class="ref-cell"><div class="rc-t">CAH</div><div class="rc-s">cos \u03B8 = adj / hyp</div></div><div class="ref-cell"><div class="rc-t">TOA</div><div class="rc-s">tan \u03B8 = opp / adj</div></div></div><div class="ref-row" style="margin-top:8px"><div class="ref-cell"><div class="rc-t">1 mile = 5,280 ft</div><div class="rc-s">answers in feet unless the question says otherwise</div></div><div class="ref-cell"><div class="rc-t">two sides \u2192 angle</div><div class="rc-s">\u03B8 = sin\u207B\u00B9, cos\u207B\u00B9, tan\u207B\u00B9 of the ratio</div></div></div><div class="ref-note">Calculator in DEGREE mode. One side + one angle \u2192 a side. Two sides \u2192 an angle.</div>';
 
-var REF = '<div class="surf-label">Reference \u2014 stays on screen</div><div class="ref-row"><div class="ref-cell"><div class="rc-t">SOH</div><div class="rc-s">sin \u03B8 = opp / hyp</div></div><div class="ref-cell"><div class="rc-t">CAH</div><div class="rc-s">cos \u03B8 = adj / hyp</div></div><div class="ref-cell"><div class="rc-t">TOA</div><div class="rc-s">tan \u03B8 = opp / adj</div></div></div><div class="ref-row" style="margin-top:8px"><div class="ref-cell"><div class="rc-t">two sides \u2192 angle</div><div class="rc-s">\u03B8 = sin\u207B\u00B9, cos\u207B\u00B9, tan\u207B\u00B9 of the ratio</div></div></div><div class="ref-note">Calculator in DEGREE mode. One side + one angle \u2192 a side. Two sides \u2192 an angle.</div>';
-
-// Figures are built once so the same triangle can sit in the label step AND stay
-// on the work surface for the ratio, algebra and answer steps.
+// One figure per question, built once, so the labelling rung and the
+// "your figure" panel that follows it show the same triangle.
 var T1 = figTriangle({ type:'elev', ratio:'sin', R:[255,175], LOW:[70,175], HIGH:[255,60] });
 var T2 = figTriangle({ type:'elev', ratio:'sin', R:[255,175], LOW:[70,175], HIGH:[255,60] });
+var T3 = figTriangle({ type:'depr', ratio:'tan', R:[70,175],  LOW:[255,175], HIGH:[70,60] });
+var T4 = figTriangle({ type:'depr', ratio:'tan', R:[70,175],  LOW:[255,175], HIGH:[70,60] });
 var T5 = figTriangle({ type:'depr', ratio:'tan', R:[70,175],  LOW:[255,175], HIGH:[70,60] });
-var T6 = figTriangle({ type:'depr', ratio:'tan', R:[70,175],  LOW:[255,175], HIGH:[70,60] });
-var T7 = figTriangle({ type:'depr', ratio:'tan', R:[70,175],  LOW:[255,175], HIGH:[70,60] });
 
 K.run([
   // STAGE 1 — THE ASCENT
   { id:'q1', num:'Q1',
-    prompt:'The plane ascended at 7.7\u00B0 and had traveled 4 miles (21,120 ft) along its flight path when it struck the birds. How high above the ground was it?',
-    given:[{v:'7.7°', k:'angle of ascent'}, {v:'21,120 ft', k:'along the flight path'}],
-    want:'the height of the plane above the ground',
-    reference:REF, figure:T1.figure,
+    prompt:'The plane was ascending at an angle of 7.7\u00B0 and had traveled four miles when it struck the flock of birds. Calculate the plane\u2019s height above the ground at that moment.',
+    given:[{v:'7.7°', k:'angle of ascent'}, {v:'4 miles', k:'distance traveled'}],
+    want:'the height of the plane above the ground, in feet',
+    reference:REF,
     pipeline:[
-      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
-        prompt:'The plane climbs from the ground, up and to the right. The right angle sits where the height drops straight down to the ground \u2014 directly below the plane. Pick that orientation.',
-        candidates: figOrientations(), ch:5862169 },
-      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' }, T1),
-      { tool:'choice', label:'Step 3 \u2014 What do you have, what do you want?', stack:true, shuffle:true,
-        options:HW, ch:1093527282, limit:2,
-        nudges:['Start at the angle you know. Which side is across from it, which side touches it, and which side is across from the square corner?',
-                'The flight path IS the hypotenuse — it is the slanted line the plane travels along. The height is across from your angle.'] },
-      { tool:'choice', label:'Step 4 \u2014 Which ratio?', ask:'Which ratio uses exactly the two sides you just named?',
-        options:RATIOS, ch:193469871,
-        nudges:['Look at the reference card. Find the row whose two letters are the two sides you just named.',
-                'The ratio you picked needs a side this problem never gives you.'] },
-      { tool:'solve', label:'Step 5 \u2014 Isolate x',
-        start:'sin(7.7\u00B0) = x / 21120',
-        moves:[ { ask:'x is multiplied by 1/21120. Which operation frees it?',
-                  opCh:177788, valCh:195264251,
-                  then:'21120 \u00B7 sin(7.7\u00B0) = x' } ] },
-      { tool:'numeric', label:'Step 6 \u2014 Calculator form', answer:2829.8, tol:15, unit:'ft',
-        traps:[{near:2855.54, tol:12.00, msg:'That is the TAN answer. TAN works between the two legs — you have the hypotenuse.'}, {near:20870.11, tol:200.00, msg:'Your calculator is in RADIAN mode. Switch it to DEGREE and re-enter.'}],
-        nudges:['Enter the whole expression in one line, then check the mode indicator on your calculator.'] }
+      { tool:'numeric', label:'The height above the ground', answer:2829.8, tol:15, unit:'ft',
+        traps:[{near:2855.54, tol:12.00, msg:'That is the TAN answer. TAN works between the two legs, and the four miles the plane flew is the hypotenuse.'}, {near:20870.11, tol:200.00, msg:'Your calculator is in RADIAN mode. Switch it to DEGREE and re-enter.'}, {near:0.54, tol:0.04, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}],
+        sub:[
+        { tool:'numeric', label:'Four miles is how many feet?', answer:21120, tol:1, unit:'ft',
+          nudges:['One mile is 5,280 feet. Are you multiplying or are you going the other way?'],
+          traps:[{near:0.54, tol:0.01, msg:'That is the distance in miles \u2014 the number you started with.'}] },
+        { tool:'orient', label:'Orient the triangle', prompt:'The plane climbs away from the airport, up and to the right. Its height drops straight down to the ground directly below it, and that is where the right angle sits. Pick that orientation.',
+          candidates: figOrientations(), ch:5862169 },
+        Object.assign({ tool:'label', label:'Label the sides and the angle' }, T1),
+        { tool:'choice', label:'Which ratio?', ask:'Which ratio uses exactly the two sides you just labelled?', options:RATIOS, ch:193469871,
+          nudges:['Look at the reference card. Find the row whose two letters are the two sides you just labelled.',
+                  'The ratio you picked needs a side this problem never gives you.'] },
+        { tool:'solve', label:'Isolate x', start:'sin(7.7°) = x / 21120',
+          moves:[{ ask:'x is multiplied by 1/21120. Which operation frees it?', opCh:177788, valCh:195264251, then:'21120 · sin(7.7°) = x' }] },
+        { tool:'numeric', label:'Calculator form', answer:2829.8, tol:15, unit:'ft',
+          traps:[{near:2855.54, tol:12.00, msg:'That is the TAN answer. TAN works between the two legs, and the four miles the plane flew is the hypotenuse.'}, {near:20870.11, tol:200.00, msg:'Your calculator is in RADIAN mode. Switch it to DEGREE and re-enter.'}, {near:0.54, tol:0.04, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}], nudges:['Enter the whole expression in one line, then check the mode indicator on your calculator.'] }
+      ] }
   ]},
   { id:'q2', num:'Q2',
-    prompt:'It then climbed at 2\u00B0 to a maximum altitude of 3,060 ft. Take the additive inverse of your Q1 height from 3,060 ft to get the extra altitude climbed, then find how far the plane traveled during that climb.',
-    given:[{v:'2°', k:'angle of climb'}, {v:'3,060 ft', k:'maximum altitude'}, {v:'your Q1', k:'height at bird strike'}],
-    want:'the distance flown along this second climb',
-    reference:REF, figure:T2.figure,
+    prompt:'After the bird strike the plane kept climbing for 19 more seconds at an angle of 2\u00B0, reaching a maximum height of 3,060 feet. How much further was the plane able to travel during those 19 seconds?',
+    given:[{v:'2°', k:'angle of climb'}, {v:'3,060 ft', k:'maximum height'}, {v:'your Q1', k:'height at bird strike'}],
+    want:'the distance flown during the second climb, in feet',
+    reference:REF,
     pipeline:[
-      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
-        prompt:'The plane keeps climbing, up and to the right. The right angle sits directly below the plane, where its height meets the ground \u2014 bottom-right. Pick that orientation.',
-        candidates: figOrientations(), ch:5862169 },
-      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' }, T2),
-      { tool:'choice', label:'Step 3 \u2014 What do you have, what do you want?', stack:true, shuffle:true,
-        options:HW, ch:3063317042, limit:2,
-        nudges:['Start at the angle you know. Which side is across from it, which side touches it, and which side is across from the square corner?',
-                'The extra altitude is the vertical side — across from the angle. The distance flown is the slanted path, so it is the hypotenuse.'] },
-      { tool:'choice', label:'Step 4 \u2014 Which ratio?', ask:'Which ratio uses exactly the two sides you just named?',
-        options:RATIOS, ch:193469871,
-        nudges:['Look at the reference card. Find the row whose two letters are the two sides you just named.',
-                'The ratio you picked needs a side this problem never gives you.'] },
-      { tool:'solve', label:'Step 5 \u2014 Isolate d (it\u2019s in the denominator)',
-        start:'sin(2\u00B0) = 230.2 / d',
-        moves:[ { ask:'d is in the denominator. Which operation lifts it out?',
-                  opCh:177788, valCh:177673,
-                  then:'d \u00B7 sin(2\u00B0) = 230.2' },
-                { ask:'Now d is multiplied by sin(2\u00B0). Which operation frees it?',
-                  opCh:177788, valCh:2109679585,
-                  then:'d = 230.2 \u00B7 (1 / sin(2\u00B0))' } ] },
-      { tool:'numeric', label:'Step 6 \u2014 Calculator form', answer:6596, tol:250, unit:'ft',
-        traps:[{near:8.03, tol:3.00, msg:'You multiplied BY sin(2°). The unknown is in the denominator, so you multiply by its multiplicative inverse instead.'}, {near:87680.35, tol:3000.00, msg:'You used the full 3,060 ft. Only the part ABOVE your Q1 height was climbed here.'}],
-        nudges:['Two things to check: the extra altitude you started from, and whether sin(2°) ended up on top or on the bottom.'] }
+      { tool:'numeric', label:'The distance flown during the climb', answer:6596, tol:250, unit:'ft',
+        traps:[{near:8.03, tol:3.00, msg:'You multiplied BY sin(2°). The unknown is in the denominator, so you multiply by its multiplicative inverse instead.'}, {near:87680.35, tol:3000.00, msg:'You used the full 3,060 ft. Only the part ABOVE the bird-strike height was climbed here.'}, {near:1.25, tol:0.08, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}],
+        sub:[
+          { tool:'numeric', label:'How much altitude was still left to climb?', answer:230.2, tol:5, unit:'ft',
+            nudges:['3,060 ft is measured from the ground, not from where the birds hit. How much of that had the plane already gained?'],
+            traps:[{near:3060, tol:5, msg:'That is the height above the GROUND. The second triangle only spans the part above your Q1 height.'},
+                   {near:2829.8, tol:15, msg:'That is your Q1 height, which is the bottom of this climb, not its rise.'}] },
+        { tool:'orient', label:'Orient the triangle', prompt:'The plane is still climbing, up and to the right. The right angle sits directly below the plane, where its height meets the ground. Pick that orientation.',
+          candidates: figOrientations(), ch:5862169 },
+        Object.assign({ tool:'label', label:'Label the sides and the angle' }, T2),
+        { tool:'choice', label:'Which ratio?', ask:'The rise you just found is one side and the distance flown is the other. Which ratio connects them?', options:RATIOS, ch:193469871,
+          nudges:['Look at the reference card. Find the row whose two letters are the two sides you just labelled.',
+                  'The ratio you picked needs a side this problem never gives you.'] },
+        { tool:'solve', label:'Isolate d (it’s in the denominator)', start:'sin(2°) = 230.2 / d',
+          moves:[{ ask:'d is in the denominator. Which operation lifts it out?', opCh:177788, valCh:177673, then:'d · sin(2°) = 230.2' }, { ask:'Now d is multiplied by sin(2°). Which operation frees it?', opCh:177788, valCh:2109679585, then:'d = 230.2 · (1 / sin(2°))' }] },
+        { tool:'numeric', label:'Calculator form', answer:6596, tol:250, unit:'ft',
+          traps:[{near:8.03, tol:3.00, msg:'You multiplied BY sin(2°). The unknown is in the denominator, so you multiply by its multiplicative inverse instead.'}, {near:87680.35, tol:3000.00, msg:'You used the full 3,060 ft. Only the part ABOVE the bird-strike height was climbed here.'}, {near:1.25, tol:0.08, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}], nudges:['Two things to check: the rise you started from, and whether sin(2°) ended up on top or on the bottom.'] }
+      ] }
   ]},
   // STAGE 2 — THE DESCENT
-  { id:'q5', num:'Q5',
-    prompt:'The plane dropped 1,390 ft over a horizontal distance of 0.5 miles (2,640 ft). At what angle did it descend?',
-    given:[{v:'1,390 ft', k:'drop in altitude'}, {v:'2,640 ft', k:'horizontal distance'}],
-    want:'the angle of descent',
-    reference:REF, figure:T5.figure,
+  { id:'q3', num:'Q3',
+    prompt:'From its maximum height the plane began to descend. In less than a minute it had dropped 1,390 feet, covering a horizontal distance of 0.5 miles. At what angle did the plane descend?',
+    given:[{v:'1,390 ft', k:'drop in altitude'}, {v:'0.5 miles', k:'horizontal distance'}],
+    want:'the angle of descent, to the nearest hundredth of a degree',
+    reference:REF,
     pipeline:[
-      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
-        prompt:'The plane descends to the right. Its angle of decline sits OUTSIDE the triangle \u2014 off the horizontal at the high point, top-left. The triangle drops straight down on the left, then runs across the bottom to the target; the right angle is the foot, bottom-left. Pick that orientation.',
-        candidates: figOrientations(), ch:5862163 },
-      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' }, T5),
-      { tool:'choice', label:'Step 3 \u2014 What do you have, what do you want?', stack:true, shuffle:true,
-        options:HW, ch:2954878429, limit:2,
-        nudges:['Start at the angle you know. Which side is across from it, which side touches it, and which side is across from the square corner?',
-                'Both numbers here are sides — one vertical, one horizontal. Nothing in this problem gives you an angle; the angle is what you are hunting.'] },
-      { tool:'choice', label:'Step 4 \u2014 Which function?', ask:'You have two sides and need the angle. Which inverse function recovers it?',
-        options:INV, ch:236465020,
-        nudges:['Look at the reference card. Find the row whose two letters are the two sides you just named.',
-                'That inverse belongs to a different pair of sides. Check the reference card.'] },
-      { tool:'solve', label:'Step 5 \u2014 Isolate \u03B8',
-        start:'tan(\u03B8) = 1390 / 2640',
-        moves:[ { ask:'\u03B8 is wrapped inside tan. Which operation frees it?',
-                  opCh:193762655,
-                  then:'\u03B8 = tan\u207B\u00B9(1390 / 2640)' } ] },
-      { tool:'numeric', label:'Step 6 \u2014 Calculator form', answer:27.77, tol:0.5, unit:'°',
-        traps:[{near:62.23, tol:0.60, msg:'You inverted the ratio. TAN is opposite over adjacent — the drop goes on top.'}, {near:0.48, tol:0.05, msg:'That is the radian answer. Switch your calculator to DEGREE mode.'}],
-        nudges:['Which number goes on top of the ratio, and is your calculator in degree mode?'] }
+      { tool:'numeric', label:'The angle of descent', answer:27.77, tol:0.5, unit:'°',
+        traps:[{near:62.23, tol:0.60, msg:'You inverted the ratio. TAN is opposite over adjacent, so the drop goes on top.'}, {near:0.48, tol:0.05, msg:'That is the radian answer. Switch your calculator to DEGREE mode.'}],
+        sub:[
+        { tool:'numeric', label:'Half a mile is how many feet?', answer:2640, tol:1, unit:'ft',
+          nudges:['One mile is 5,280 feet. Are you multiplying or are you going the other way?'],
+          traps:[{near:0.5, tol:0.01, msg:'That is the distance in miles \u2014 the number you started with.'}] },
+        { tool:'orient', label:'Orient the triangle', prompt:'The plane comes down to the right. Its angle of decline sits OUTSIDE the triangle, off the horizontal at the high point. The triangle drops straight down on the left and runs across the bottom to the target, so the right angle is the foot at bottom-left. Pick that orientation.',
+          candidates: figOrientations(), ch:5862163 },
+        Object.assign({ tool:'label', label:'Label the sides and the angle' }, T3),
+        { tool:'choice', label:'Which function?', ask:'You have two sides and you need the angle. Which inverse function hands it back?', options:INV, ch:236465020,
+          nudges:['Look at the reference card. Find the row whose two letters are the two sides you just labelled.',
+                  'That inverse belongs to a different pair of sides. Check the reference card.'] },
+        { tool:'solve', label:'Isolate θ', start:'tan(θ) = 1390 / 2640',
+          moves:[{ ask:'θ is wrapped inside tan. Which operation frees it?', opCh:193762655, then:'θ = tan⁻¹(1390 / 2640)' }] },
+        { tool:'numeric', label:'Calculator form', answer:27.77, tol:0.5, unit:'°',
+          traps:[{near:62.23, tol:0.60, msg:'You inverted the ratio. TAN is opposite over adjacent, so the drop goes on top.'}, {near:0.48, tol:0.05, msg:'That is the radian answer. Switch your calculator to DEGREE mode.'}], nudges:['Which number belongs on top of the ratio, and is your calculator in degree mode?'] }
+      ] }
   ]},
   // STAGE 3 — THE APPROACH
+  { id:'q4', num:'Q4',
+    prompt:'At the Decision Point the airplane leveled off to an angle of descent of 3\u00B0 and covered two miles of horizontal distance. How many feet did it drop in altitude over that stretch?',
+    given:[{v:'3°', k:'angle of descent'}, {v:'2 miles', k:'horizontal distance'}],
+    want:'the altitude lost over that stretch, in feet',
+    reference:REF,
+    pipeline:[
+      { tool:'numeric', label:'The altitude lost', answer:553.4, tol:10, unit:'ft',
+        traps:[{near:201496.80, tol:2000.00, msg:'You put 10,560 on the bottom. Read your chain again — x was multiplied by 1/10560.'}, {near:-1505.29, tol:300.00, msg:'A negative drop is a radian-mode answer. Switch to DEGREE and re-enter.'}, {near:0.10, tol:0.02, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}],
+        sub:[
+        { tool:'numeric', label:'Two miles is how many feet?', answer:10560, tol:1, unit:'ft',
+          nudges:['One mile is 5,280 feet. Are you multiplying or are you going the other way?'],
+          traps:[{near:2, tol:0.01, msg:'That is the distance in miles \u2014 the number you started with.'}] },
+        { tool:'orient', label:'Orient the triangle', prompt:'Still gliding down to the right from the high point on the left. The angle of decline sits OUTSIDE the triangle, off the horizontal at the top, and the right angle is the foot at bottom-left. Pick that orientation.',
+          candidates: figOrientations(), ch:5862163 },
+        Object.assign({ tool:'label', label:'Label the sides and the angle' }, T4),
+        { tool:'choice', label:'Which ratio?', ask:'Which ratio uses exactly the two sides you just labelled?', options:RATIOS, ch:193470696,
+          nudges:['Look at the reference card. Find the row whose two letters are the two sides you just labelled.',
+                  'The ratio you picked needs the hypotenuse, and this problem never gives it to you.'] },
+        { tool:'solve', label:'Isolate x', start:'tan(3°) = x / 10560',
+          moves:[{ ask:'x is multiplied by 1/10560. Which operation frees it?', opCh:177788, valCh:194046881, then:'10560 · tan(3°) = x' }] },
+        { tool:'numeric', label:'Calculator form', answer:553.4, tol:10, unit:'ft',
+          traps:[{near:201496.80, tol:2000.00, msg:'You put 10,560 on the bottom. Read your chain again — x was multiplied by 1/10560.'}, {near:-1505.29, tol:300.00, msg:'A negative drop is a radian-mode answer. Switch to DEGREE and re-enter.'}, {near:0.10, tol:0.02, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}], nudges:['Read your last chain line, then enter it in one go.'] }
+      ] }
+  ]},
+  { id:'q5', num:'Q5',
+    prompt:'The George Washington Bridge sits 6 miles of horizontal distance from the point where the plane landed in the Hudson. Over that final stretch the plane was descending at 2\u00B0. How high was the plane flying when it passed over the bridge?',
+    given:[{v:'2°', k:'angle of descent'}, {v:'6 miles', k:'horizontal distance to the landing'}],
+    want:'the height of the plane over the bridge, in feet',
+    reference:REF,
+    pipeline:[
+      { tool:'numeric', label:'The height over the bridge', answer:1106.3, tol:15, unit:'ft',
+        traps:[{near:907196.50, tol:20000.00, msg:'You put 31,680 on the bottom. Your chain says to multiply by it.'}, {near:-69222.06, tol:5000.00, msg:'That is a radian-mode answer. Switch to DEGREE and re-enter.'}, {near:0.21, tol:0.03, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}],
+        sub:[
+        { tool:'numeric', label:'Six miles is how many feet?', answer:31680, tol:1, unit:'ft',
+          nudges:['One mile is 5,280 feet. Are you multiplying or are you going the other way?'],
+          traps:[{near:6, tol:0.01, msg:'That is the distance in miles \u2014 the number you started with.'}] },
+        { tool:'orient', label:'Orient the triangle', prompt:'Coming down to the right toward the water from the high point on the left. The angle of decline sits OUTSIDE the triangle, off the horizontal at the top, and the right angle is the foot at bottom-left. Pick that orientation.',
+          candidates: figOrientations(), ch:5862163 },
+        Object.assign({ tool:'label', label:'Label the sides and the angle' }, T5),
+        { tool:'choice', label:'Which ratio?', ask:'Which ratio uses exactly the two sides you just labelled?', options:RATIOS, ch:193470696,
+          nudges:['Look at the reference card. Find the row whose two letters are the two sides you just labelled.',
+                  'The ratio you picked needs the hypotenuse, and this problem never gives it to you.'] },
+        { tool:'solve', label:'Isolate x', start:'tan(2°) = x / 31680',
+          moves:[{ ask:'x is multiplied by 1/31680. Which operation frees it?', opCh:177788, valCh:196455815, then:'31680 · tan(2°) = x' }] },
+        { tool:'numeric', label:'Calculator form', answer:1106.3, tol:15, unit:'ft',
+          traps:[{near:907196.50, tol:20000.00, msg:'You put 31,680 on the bottom. Your chain says to multiply by it.'}, {near:-69222.06, tol:5000.00, msg:'That is a radian-mode answer. Switch to DEGREE and re-enter.'}, {near:0.21, tol:0.03, msg:'That is the answer in miles. The question asks for feet — one mile is 5,280 feet.'}], nudges:['Read your last chain line, then enter it in one go.'] }
+      ] }
+  ]},
   { id:'q6', num:'Q6',
-    prompt:'The plane leveled to a 3\u00B0 descent and covered 2 more miles (10,560 ft) of ground. How many feet did it drop in altitude?',
-    given:[{v:'3°', k:'angle of descent'}, {v:'10,560 ft', k:'distance over the ground'}],
-    want:'the drop in altitude',
-    reference:REF, figure:T6.figure,
-    pipeline:[
-      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
-        prompt:'Still gliding down to the right from its high point on the left. The angle of decline sits OUTSIDE the triangle, off the horizontal at the top. The triangle drops down on the left and runs across the bottom; the right angle is the foot, bottom-left. Pick that orientation.',
-        candidates: figOrientations(), ch:5862163 },
-      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' }, T6),
-      { tool:'choice', label:'Step 3 \u2014 What do you have, what do you want?', stack:true, shuffle:true,
-        options:HW, ch:603469981, limit:2,
-        nudges:['Start at the angle you know. Which side is across from it, which side touches it, and which side is across from the square corner?',
-                'Ground distance runs alongside the angle, so it is the adjacent side. The altitude drop is the vertical side, across from the angle.'] },
-      { tool:'choice', label:'Step 4 \u2014 Which ratio?', ask:'Which ratio uses exactly the two sides you just named?',
-        options:RATIOS, ch:193470696,
-        nudges:['Look at the reference card. Find the row whose two letters are the two sides you just named.',
-                'The ratio you picked needs the hypotenuse, and this problem never gives it to you.'] },
-      { tool:'solve', label:'Step 5 \u2014 Isolate x',
-        start:'tan(3\u00B0) = x / 10560',
-        moves:[ { ask:'x is multiplied by 1/10560. Which operation frees it?',
-                  opCh:177788, valCh:194046881,
-                  then:'10560 \u00B7 tan(3\u00B0) = x' } ] },
-      { tool:'numeric', label:'Step 6 \u2014 Calculator form', answer:553.4, tol:10, unit:'ft',
-        traps:[{near:201496.80, tol:2000.00, msg:'You put 10,560 on the bottom. Solve the chain again — x was multiplied by 1/10560.'}, {near:-1505.29, tol:300.00, msg:'A negative drop is a radian-mode answer. Switch to DEGREE and re-enter.'}],
-        nudges:['Re-read your last chain line, then enter it in one go.'] }
-  ]},
-  { id:'q7', num:'Q7',
-    prompt:'The George Washington Bridge is 6 miles (31,680 ft) from where the plane landed on the Hudson (altitude 0). Descending at 2\u00B0, how high was the plane when it passed over the bridge?',
-    given:[{v:'2°', k:'angle of descent'}, {v:'31,680 ft', k:'ground distance to the splashdown'}],
-    want:'the height of the plane over the bridge',
-    reference:REF, figure:T7.figure,
-    pipeline:[
-      { tool:'orient', label:'Step 1 \u2014 Orient the triangle',
-        prompt:'Coming down to the right toward the water from its high point on the left. The angle of decline sits OUTSIDE the triangle, off the horizontal at the top. The triangle drops down on the left and runs across the bottom; the right angle is the foot, bottom-left. Pick that orientation.',
-        candidates: figOrientations(), ch:5862163 },
-      Object.assign({ tool:'label', label:'Step 2 \u2014 Set up the triangle' }, T7),
-      { tool:'choice', label:'Step 3 \u2014 What do you have, what do you want?', stack:true, shuffle:true,
-        options:HW, ch:603469981, limit:2,
-        nudges:['Start at the angle you know. Which side is across from it, which side touches it, and which side is across from the square corner?',
-                'The 31,680 ft runs along the ground next to the angle — adjacent. The height you want is vertical, across from the angle.'] },
-      { tool:'choice', label:'Step 4 \u2014 Which ratio?', ask:'Which ratio uses exactly the two sides you just named?',
-        options:RATIOS, ch:193470696,
-        nudges:['Look at the reference card. Find the row whose two letters are the two sides you just named.',
-                'The ratio you picked needs the hypotenuse, and this problem never gives it to you.'] },
-      { tool:'solve', label:'Step 5 \u2014 Isolate x',
-        start:'tan(2\u00B0) = x / 31680',
-        moves:[ { ask:'x is multiplied by 1/31680. Which operation frees it?',
-                  opCh:177788, valCh:196455815,
-                  then:'31680 \u00B7 tan(2\u00B0) = x' } ] },
-      { tool:'numeric', label:'Step 6 \u2014 Calculator form', answer:1106.3, tol:15, unit:'ft',
-        traps:[{near:907196.50, tol:20000.00, msg:'You put 31,680 on the bottom. Your chain says to multiply by it.'}, {near:-69222.06, tol:5000.00, msg:'That is a radian-mode answer. Switch to DEGREE and re-enter.'}],
-        nudges:['Re-read your last chain line, then enter it in one go.'] }
-  ]},
-  { id:'q8', num:'Q8',
-    prompt:'The George Washington Bridge is 212 ft tall. Using your Q7 height, by how many feet did the plane clear the bridge?',
-    given:[{v:'your Q7', k:'height over the bridge'}, {v:'212 ft', k:'height of the bridge'}],
+    prompt:'The George Washington Bridge is 212 feet tall. Using your Q5 height, by how many feet did the plane clear the bridge?',
+    given:[{v:'your Q5', k:'height over the bridge'}, {v:'212 ft', k:'height of the bridge'}],
     want:'the clearance between the plane and the bridge deck',
     reference:REF,
     pipeline:[
-      { tool:'numeric', label:'Step 1 \u2014 Clearance = Q7 height + the additive inverse of 212 ft \u2014 Calculator form', answer:894.3, tol:30, unit:'ft',
-        traps:[{near:1318.29, tol:25.00, msg:'You added 212. Clearance is what is LEFT over the bridge, so add the additive inverse of 212.'}, {near:212.00, tol:3.00, msg:'That is the height of the bridge itself, not the gap above it.'}],
-        nudges:['Which is bigger — the plane’s height or the bridge? The clearance is the gap between them.'] }
+      { tool:'numeric', label:'The clearance above the bridge', answer:894.3, tol:30, unit:'ft',
+        traps:[{near:1318.29, tol:25.00, msg:'You added 212. Clearance is the gap LEFT above the bridge, so add the additive inverse of 212.'}, {near:212.00, tol:3.00, msg:'That is the height of the bridge itself, not the gap above it.'}],
+        sub:[
+          { tool:'numeric', label:'How high was the plane over the bridge?', answer:1106.3, tol:15, unit:'ft',
+            nudges:['This one is your Q5 answer — nothing new to work out.'] },
+          { tool:'numeric', label:'Now add the additive inverse of 212 ft', answer:894.3, tol:30, unit:'ft',
+            traps:[{near:1318.29, tol:25.00, msg:'You added 212. Clearance is the gap LEFT above the bridge, so add the additive inverse of 212.'}, {near:212.00, tol:3.00, msg:'That is the height of the bridge itself, not the gap above it.'}],
+            nudges:['Which is bigger, the plane’s height or the bridge? The clearance is the gap between them.'] }
+      ] }
   ]}
 ], { layout:'split' });
 </script>
