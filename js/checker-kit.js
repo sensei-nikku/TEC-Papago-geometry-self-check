@@ -8,7 +8,10 @@
 (function (global) {
   'use strict';
 
-  var ENGINE_VERSION = '1.2.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout
+  var ENGINE_VERSION = '1.3.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
+                                  // 1.3.0 split shell (rail + work surface), per-step miss limits,
+                                  //       two-level nudges (broad -> specific)
+  var LAYOUT = 'stack';    // 'stack' (one scrolling column) | 'split' (left rail + right surface)
   var TOOLS = {};          // tool registry:  name -> tool definition
   var PROBLEMS = [];       // the loaded checker (set by run())
   var S = {};              // run-time state, keyed by problem id
@@ -24,7 +27,8 @@
   function tool(name, def){ TOOLS[name] = def; }
 
   // ---- lifecycle ----
-  function run(problems){
+  function run(problems, opts){
+    LAYOUT = (opts && opts.layout) ? opts.layout : 'stack';
     PROBLEMS = problems;
     S = {};
     for (var i=0;i<PROBLEMS.length;i++){
@@ -52,14 +56,33 @@
     if(action==='check'){
       var r=t.check(step, st, {djb2:djb2}, payload);   // payload: tap index for order-style tools; ignored by others
       if(r.pass){ st.fb=null; st.redirect=false; advance(pid); }
-      else if(r.tier==='soft'){ st.fb=r.fb; }                          // prompt, not a wrong answer — no strike
+      else if(r.tier==='soft'){ st.fb=r.fb;                            // prompt, not a wrong answer — no strike
+        if(r.progress) st.misses=0;                                    // a step with several decisions (solve) gives
+      }                                                                // each decision its own allowance
       else { st.misses++;
-        if(st.misses>=3){ st.redirect=true; st.fb=null; }
-        else st.fb=r.fb || {t:'err',m:'Not quite — try again.'};
+        // Miss limit is per step: step.limit overrides the tool's default, which
+        // overrides 3.  (pedagogy_context: orientation 2, ratio 3, algebra move 2, answer 3.)
+        var lim = (step.limit!=null) ? step.limit : (t.limit!=null ? t.limit : 3);
+        if(st.misses>=lim){ st.redirect=true; st.fb=null; }
+        else st.fb = nudgeFor(step, st, r);
       }
       render(); return;
     }
     if(t.act){ t.act(step, st, action, payload, {render:render, djb2:djb2}); render(); }     // tool-specific actions
+  }
+
+  // Two-level nudge: first miss gets the broad conceptual prompt (step.nudges[0]);
+  // later misses prefer the tool's own diagnostic (a trap message, a wrong-operation
+  // message) because that one names the specific error.  Neither states the answer.
+  function nudgeFor(step, st, r){
+    var nd = step.nudges && step.nudges.length ? step.nudges : null;
+    // A matched diagnosis (a trap, a wrong-operation message) outranks the broad
+    // nudge even on the first miss: we already know exactly what they did.
+    if(r.fb && r.fb.diag) return r.fb;
+    if(st.misses===1 && nd) return {t:'warn', m:nd[0]};
+    if(r.fb) return r.fb;
+    if(nd) return {t:'err', m:nd[Math.min(st.misses-1, nd.length-1)]};
+    return {t:'err', m:'Not quite — try again.'};
   }
 
   function advance(pid){
@@ -68,10 +91,14 @@
     if(s.stepIdx>=p.pipeline.length){ s.done=true;
       var i=pIndex(pid); if(i<PROBLEMS.length-1) activeP=i+1;
     }
+    scrollToWork();
+  }
+  function scrollToWork(){
+    if(LAYOUT==='split'){ return; }        // split: the rail scrolls itself in renderSplit()
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function navTo(i){ if(i>=0&&i<PROBLEMS.length){activeP=i; render(); window.scrollTo({top:0,behavior:'smooth'});} }
+  function navTo(i){ if(i>=0&&i<PROBLEMS.length){activeP=i; render(); scrollToWork();} }
 
   // ---- rendering ----
   function fbHtml(fb){
@@ -102,8 +129,12 @@
     }
     if(si>cur) return ''; // locked → hidden
     // active step
-    var h='<div class="step show"><div class="step-label">'+esc(step.label||('Step '+(si+1)))+'</div>';
+    var h='<div class="step show live"><div class="step-label">'+esc(step.label||('Step '+(si+1)))+'</div>';
     if(st.redirect){ h+=redirectHtml(p.id, si); }
+    else if(LAYOUT==='split' && t.pane==='surface'){
+      // The manipulable lives in the work surface; the rail keeps the place in line.
+      h+='<div class="rail-pointer">'+esc(t.railText || 'Work on the panel to the right, then check your answer there.')+'</div>';
+    }
     else { h+=t.render(step, st, {p:p.id, s:si, esc:esc}); h+=fbHtml(st.fb); }
     h+='</div>';
     return h;
@@ -120,7 +151,89 @@
     }
   }
 
+  // ---- SPLIT SHELL ----------------------------------------------------
+  // Left rail  = the pipeline: prompt, locked-in answers, the one live step.
+  // Right pane = the work surface: what you know, the figure / digital tool,
+  //              and the reference that stays on screen the whole problem.
+  // Tool contracts are untouched; a tool opts in with pane:'surface'.
+  function ensureShell(){
+    var m=document.getElementById('main'); if(!m) return false;
+    if(!document.getElementById('ckRail')){
+      m.innerHTML='<div class="split">'+
+        '<div class="pane rail" id="ckRail"></div>'+
+        '<div class="pane surf" id="ckSurf"></div></div>';
+    }
+    return true;
+  }
+
+  function surfaceHtml(p, s){
+    var h='';
+    if(p.given && p.given.length){
+      h+='<div class="surf-block"><div class="surf-label">What you know</div><div class="given-list">';
+      for(var i=0;i<p.given.length;i++){
+        var g=p.given[i];
+        h+='<div class="g-chip"><span class="g-val">'+esc(g.v)+'</span><span class="g-k">'+esc(g.k)+'</span></div>';
+      }
+      h+='</div>';
+      if(p.want) h+='<div class="g-want">Looking for: <strong>'+esc(p.want)+'</strong></div>';
+      h+='</div>';
+    }
+    var live=null;
+    if(!s.done){
+      var ci=s.stepIdx, cstep=p.pipeline[ci], ctool=TOOLS[cstep.tool], cst=s.steps[ci];
+      if(ctool && ctool.pane==='surface' && !cst.redirect) live={i:ci, step:cstep, tool:ctool, st:cst};
+    }
+    if(live){
+      h+='<div class="surf-block live"><div class="surf-label">'+esc(live.step.label||'Your turn')+'</div>'+
+         live.tool.render(live.step, live.st, {p:p.id, s:live.i, esc:esc})+fbHtml(live.st.fb)+'</div>';
+    } else {
+      // No live manipulable: keep the most recent surface tool’s finished state on
+      // screen (the labelled triangle), falling back to the plain figure.
+      var kept=null;
+      for(var b=(s.done?p.pipeline.length:s.stepIdx)-1; b>=0; b--){
+        var bt=TOOLS[p.pipeline[b].tool];
+        if(bt && bt.pane==='surface' && bt.work){ kept=bt.work(p.pipeline[b], s.steps[b], {esc:esc}); break; }
+      }
+      if(kept){ h+='<div class="surf-block"><div class="surf-label">Your figure</div><div class="surf-fig">'+kept+'</div></div>'; }
+      else if(p.figure){
+        h+='<div class="surf-block"><div class="surf-fig">'+p.figure+'</div></div>';
+      }
+    }
+    if(p.reference) h+='<div class="surf-block ref">'+p.reference+'</div>';
+    return h;
+  }
+
+  function renderSplit(){
+    if(!ensureShell()) return;
+    var rail=document.getElementById('ckRail'), surf=document.getElementById('ckSurf');
+    var p=PROBLEMS[activeP], s=S[p.id];
+    var h='<div class="qn">'+esc(p.num)+(s.done?'<span class="done-check">\u2713 Complete</span>':'')+'</div>'+
+          '<div class="qp">'+esc(p.prompt)+'</div>';
+    for(var j=0;j<p.pipeline.length;j++) h+=renderStep(p, j);
+    if(s.done || s.stepIdx>=1) h+='<div style="margin-top:14px"><button class="btn btn-work" onclick="K.showWork(\''+p.id+'\')">Show Work</button></div>';
+    rail.innerHTML=h;
+    surf.innerHTML=surfaceHtml(p, s);
+    renderDots();
+    var liveEl=rail.querySelector('.step.live');
+    if(liveEl && liveEl.scrollIntoView) liveEl.scrollIntoView({block:'nearest'});
+    mountLive();
+  }
+
+  // afterRender mount pass — tools that need imperative DOM (drag/canvas) provide mount();
+  // tools without it (numeric, choice) are unaffected.  Location-agnostic: the tool looks
+  // its host up by id, so it works in the rail or in the surface.
+  function mountLive(){
+    var ap=PROBLEMS[activeP];
+    if(!ap || S[ap.id].done) return;
+    var ci=S[ap.id].stepIdx, cstep=ap.pipeline[ci], ctool=TOOLS[cstep.tool], cst=S[ap.id].steps[ci];
+    if(ctool && ctool.mount && !cst.redirect){
+      ctool.mount(cstep, cst, { p:ap.id, s:ci, esc:esc, djb2:djb2,
+        rerender:render, pass:function(){ advance(ap.id); render(); } });
+    }
+  }
+
   function render(){
+    if(LAYOUT==='split') return renderSplit();
     var m=document.getElementById('main'); if(!m) return; m.innerHTML='';
     for(var i=0;i<PROBLEMS.length;i++){
       var p=PROBLEMS[i], s=S[p.id], card=document.createElement('div');
@@ -142,16 +255,7 @@
       m.appendChild(card);
     }
     renderDots();
-    // afterRender mount pass — tools that need imperative DOM (drag/canvas) provide mount();
-    // tools without it (numeric, choice) are unaffected.
-    var ap=PROBLEMS[activeP];
-    if(ap && !S[ap.id].done){
-      var ci=S[ap.id].stepIdx, cstep=ap.pipeline[ci], ctool=TOOLS[cstep.tool], cst=S[ap.id].steps[ci];
-      if(ctool && ctool.mount && !cst.redirect){
-        ctool.mount(cstep, cst, { p:ap.id, s:ci, esc:esc, djb2:djb2,
-          rerender:render, pass:function(){ advance(ap.id); render(); } });
-      }
-    }
+    mountLive();
   }
 
   // ---- "Show Work" popup (a model of how the solution should look on paper) ----
@@ -180,7 +284,7 @@
 
   // ---- public surface ----
   global.K = { run:run, tool:tool, act:act, input:input, set:set, navTo:navTo,
-               VERSION:ENGINE_VERSION,
+               VERSION:ENGINE_VERSION, layout:function(){return LAYOUT;},
                showWork:showWork, closeWork:closeWork,
                _esc:esc, _djb2:djb2 };
 
@@ -193,6 +297,7 @@
    Tiered feedback: exact→pass, close→nudge, 3 misses→teacher redirect.
    =================================================================== */
 K.tool('numeric', {
+  limit: 3,                        // answer step: three tries before the teacher redirect
   state: function(){ return {val:''}; },
   render: function(step, st, ref){
     var unit = step.unit ? '<span style="font-size:.85rem;color:var(--muted);font-weight:500">'+ref.esc(step.unit)+'</span>' : '';
@@ -209,10 +314,12 @@ K.tool('numeric', {
     var tol = step.tol!=null ? step.tol : 0.5;
     var diff = Math.abs(v - step.answer);
     if(diff <= tol) return {pass:true};
+    // Traps are tested FIRST: a known misconception that happens to land near the
+    // right answer must be named, not softened into "close, check your arithmetic".
+    if(step.traps){ for(var ti=0;ti<step.traps.length;ti++){ var tr=step.traps[ti];
+      if(Math.abs(v-tr.near) <= (tr.tol!=null?tr.tol:0.5)) return {fb:{t:'err',m:tr.msg,diag:true}}; } }   // common-error nudges
     var band = step.closeBand!=null ? step.closeBand : 0.15;
     if(diff <= Math.abs(step.answer)*band) return {fb:{t:'warn',m:'Close \u2014 check your arithmetic or rounding.'}};
-    if(step.traps){ for(var ti=0;ti<step.traps.length;ti++){ var tr=step.traps[ti];
-      if(Math.abs(v-tr.near) <= (tr.tol!=null?tr.tol:0.5)) return {fb:{t:'err',m:tr.msg}}; } }   // common-error nudges
     return {fb:{t:'err',m:'Not quite. Check your setup and try again.'}};
   },
   summary: function(step){ return step.answer + (step.unit?(' '+step.unit):''); },
@@ -227,6 +334,7 @@ K.tool('numeric', {
    readable in page source. Tap to select, Check to commit.
    =================================================================== */
 K.tool('choice', {
+  limit: 3,                        // formula / ratio step
   state: function(step){
     var opts = step.options.slice();
     if(step.shuffle){ for(var i=opts.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=opts[i];opts[i]=opts[j];opts[j]=t;} }
