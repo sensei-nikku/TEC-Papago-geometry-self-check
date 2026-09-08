@@ -284,3 +284,11 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
   .pane.rail,.pane.surf{max-height:none;overflow:visible;position:static}
   .pane.surf{order:-1}
 }
+
+/* ── SUB-STEP LADDER (engine v1.4.0) ──
+   A ladder only exists after a miss, so it is indented and tinted to read
+   as help rather than as the original question. */
+.step.sub{margin-left:14px;padding-left:12px;border-left:2px dashed var(--accent)}
+.step.sub .step-label{color:var(--accent)}
+.pane.rail .step.sub.live{border-left:2px solid var(--accent)}
+.ladder-done{opacity:.85}
