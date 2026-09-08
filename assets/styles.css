@@ -231,3 +231,56 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
   border-radius:8px;background:var(--surface);color:var(--text);cursor:pointer;transition:.15s}
 .opt-row:hover{border-color:var(--accent);background:var(--accent-lt)}
 .opt-row.sel{border-color:var(--accent);background:var(--accent-lt);font-weight:700}
+
+/* ══════════════════════════════════════════════════════════════════
+   SPLIT SHELL  (engine v1.3.0, opt-in: K.run(P,{layout:'split'}))
+   Left rail  = the pipeline. Right surface = figure / digital tool /
+   reference, on screen for the whole problem.
+   ══════════════════════════════════════════════════════════════════ */
+.main.wide{max-width:1180px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:16px;align-items:start}
+.pane{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+.pane.rail{max-height:calc(100vh - 130px);overflow-y:auto}
+.pane.surf{position:sticky;top:88px;max-height:calc(100vh - 130px);overflow-y:auto}
+.pane.rail .card,.pane.surf .card{background:none;border:0;padding:0;margin:0}
+
+/* rail: the step that is live gets a left edge so the eye finds it */
+.pane.rail .step.live{border-left:3px solid var(--accent);padding-left:12px;margin-left:-2px}
+.rail-pointer{font-size:.84rem;color:var(--accent);background:var(--accent-lt);
+  border-left:3px solid var(--accent);border-radius:6px;padding:9px 12px;font-weight:600}
+
+/* surface blocks */
+.surf-block{margin-bottom:16px}
+.surf-block:last-child{margin-bottom:0}
+.surf-block.live{background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:14px}
+.surf-label{font-size:.66rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:8px}
+.surf-fig{display:flex;justify-content:center}
+.surf-fig svg{max-width:100%;height:auto}
+
+/* "What you know" — givens pulled out of the prompt so they are not held in the head */
+.given-list{display:flex;flex-wrap:wrap;gap:8px}
+.g-chip{display:flex;flex-direction:column;gap:1px;background:var(--raised);border:1px solid var(--border);
+  border-radius:8px;padding:7px 11px;min-width:84px}
+.g-val{font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:var(--text)}
+.g-k{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.g-want{margin-top:9px;font-size:.82rem;color:var(--text);background:var(--accent-lt);
+  border-left:3px solid var(--accent);border-radius:6px;padding:8px 11px}
+.g-want strong{color:var(--accent)}
+
+/* persistent reference card */
+.surf-block.ref{border-top:1px solid var(--border);padding-top:14px}
+.ref-row{display:flex;gap:8px;flex-wrap:wrap}
+.ref-cell{flex:1;min-width:96px;background:var(--raised);border:1px solid var(--border);border-radius:8px;
+  padding:9px 10px;text-align:center}
+.ref-cell .rc-t{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:700;color:var(--accent)}
+.ref-cell .rc-s{font-size:.66rem;color:var(--muted);margin-top:2px}
+.ref-note{font-size:.74rem;color:var(--warn);background:var(--warn-lt);border-left:3px solid var(--warn);
+  border-radius:6px;padding:7px 10px;margin-top:9px;font-weight:600}
+
+/* Chromebook / tablet portrait: one column, work surface first */
+@media (max-width:900px){
+  .split{grid-template-columns:1fr}
+  .pane.rail,.pane.surf{max-height:none;overflow:visible;position:static}
+  .pane.surf{order:-1}
+}
