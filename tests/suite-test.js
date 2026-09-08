@@ -20,9 +20,13 @@ A(d.querySelector('.orient-grid .orient-card svg polygon'),'Pre-Test: Q1 orient 
 A(d.querySelectorAll('.orient-card').length===4,'Pre-Test: Q1 has 4 orientation candidates');
 
 d=loadChecker('checkers/hudson-project.html');
-A(d.querySelectorAll('.qd').length===6,'Project: 6 problems (conceptual Q3/Q4 moved to worksheet)');
-A(d.querySelector('.orient-grid .orient-card svg polygon'),'Project: Q1 orient grid mounts');
-A(d.querySelectorAll('.orient-card').length===4,'Project: Q1 has 4 orientation candidates');
+A(d.querySelectorAll('.qd').length===6,'Project: 6 problems, Q1-Q6, matching the packet');
+A(d.getElementById('hdrDots').textContent==='Q1Q2Q3Q4Q5Q6','Project: numbering matches the packet');
+// Coarse first: the project checker asks the big move and shows NO scaffolding
+// until a miss opens the ladder. The orientation picker is rung b, not step 1.
+A(!d.querySelector('.orient-grid'),'Project: no orientation grid before a miss');
+A(!d.querySelector('.lab-stage'),'Project: no triangle before a miss');
+A(/The height above the ground/.test(d.getElementById('ckRail').textContent),'Project: Q1 asks the big move');
 
 // Unit 4 Day 1 area checker — mounts on the kit with persistent figures
 (function(){

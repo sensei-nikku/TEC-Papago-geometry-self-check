@@ -1,4 +1,5 @@
-/* Behavioural test — engine v1.3.0 split shell + the Hudson project checker.
+/* Behavioural test — engine v1.4.0: split shell + coarse-first sub-step ladders,
+   then the Hudson project checker walked end to end.
    node tests/split-test.js   (needs jsdom; see package.json) */
 const fs = require('fs'), path = require('path');
 const { JSDOM, VirtualConsole } = require('jsdom');
@@ -6,7 +7,7 @@ const ROOT = path.join(__dirname, '..');
 let fails = 0;
 function ok(name, cond, extra) {
   if (cond) console.log('  \u2713 ' + name);
-  else { fails++; console.log('  \u2717 ' + name + (extra ? '  -> ' + extra : '')); }
+  else { fails++; console.log('  \u2717 ' + name + (extra ? '  -> ' + String(extra).slice(0, 260) : '')); }
 }
 function boot(inlineScript, files) {
   const vc = new VirtualConsole();
@@ -26,8 +27,8 @@ function boot(inlineScript, files) {
   return { dom, w: dom.window, err: () => err };
 }
 
-/* ---------- 1. engine: split shell, limits, two-level nudges ---------- */
-console.log('\nengine v1.3.0 — split shell');
+/* ---------- 1. split shell ---------- */
+console.log('\nengine v1.4.0 — split shell');
 {
   const inline = `
     K.run([
@@ -45,45 +46,94 @@ console.log('\nengine v1.3.0 — split shell');
     ], { layout:'split' });`;
   const { w, err } = boot(inline, ['js/checker-kit.js']);
   const doc = w.document;
-  ok('no load error', !err(), err() && String(err().detail || err()));
-  ok('version is 1.3.0', w.K.VERSION === '1.3.0', w.K.VERSION);
-  ok('layout reported as split', w.K.layout() === 'split');
-  ok('rail pane rendered', !!doc.getElementById('ckRail'));
-  ok('surface pane rendered', !!doc.getElementById('ckSurf'));
   const rail = () => doc.getElementById('ckRail').innerHTML;
   const surf = () => doc.getElementById('ckSurf').innerHTML;
-  ok('prompt is in the rail, not the surface', /A prompt\./.test(rail()) && !/A prompt\./.test(surf()));
-  ok('givens are on the surface', /What you know/.test(surf()) && /12 ft/.test(surf()) && /base/.test(surf()));
-  ok('"looking for" is on the surface', /the height/.test(surf()));
-  ok('reference is on the surface', /DEGREE mode/.test(surf()));
+  ok('no load error', !err(), err() && (err().detail || err()));
+  ok('version is 1.4.0', w.K.VERSION === '1.4.0', w.K.VERSION);
+  ok('layout reported as split', w.K.layout() === 'split');
+  ok('both panes rendered', !!doc.getElementById('ckRail') && !!doc.getElementById('ckSurf'));
+  ok('prompt in the rail only', /A prompt\./.test(rail()) && !/A prompt\./.test(surf()));
+  ok('givens on the surface', /What you know/.test(surf()) && /12 ft/.test(surf()));
+  ok('reference on the surface', /DEGREE mode/.test(surf()));
   ok('plain figure falls through to the surface', /plainFig/.test(surf()));
-  ok('choice step (no surface pane) renders in the rail', /S1/.test(rail()) && /&gt;A&lt;|>A</.test(rail()));
   ok('only the active problem is in the rail', /P1/.test(rail()) && !/Second\./.test(rail()));
 
-  // two-level nudges: broad on miss 1, specific on miss 2 is pre-empted by limit:2
-  w.K.act('p1', 0, 'pick', 1);            // wrong option
+  w.K.act('p1', 0, 'pick', 1); w.K.act('p1', 0, 'check');
+  ok('miss 1 on a ladderless step gives the BROAD nudge', /BROAD first/.test(rail()));
   w.K.act('p1', 0, 'check');
-  ok('miss 1 gives the BROAD nudge', /BROAD first/.test(rail()), rail().slice(0, 200));
-  w.K.act('p1', 0, 'check');
-  ok('limit:2 sends to the teacher on miss 2', /Bring your work to your teacher/.test(rail()));
-  ok('teacher-redirect hides the tool', !/BROAD first/.test(rail()));
-  w.K.act('p1', 0, 'skip');               // teacher helped
-  ok('skip advances to step 2', /S2/.test(rail()));
-
-  // numeric: trap fires ahead of the close band, three tries before redirect
+  ok('limit:2 sends to the teacher', /Bring your work to your teacher/.test(rail()));
+  w.K.act('p1', 0, 'skip');
+  ok('skip advances', /S2/.test(rail()));
   w.K.input('p1', 1, '20'); w.K.act('p1', 1, 'check');
-  ok('trap message beats "close"', /TRAP-DOUBLED/.test(rail()), rail().slice(0, 200));
-  w.K.input('p1', 1, '99'); w.K.act('p1', 1, 'check');
-  w.K.input('p1', 1, '98'); w.K.act('p1', 1, 'check');
-  ok('numeric default limit is 3', /Bring your work to your teacher/.test(rail()));
-  w.K.act('p1', 1, 'skip');
-  ok('problem 2 becomes active after p1 finishes', /Second\./.test(doc.getElementById('ckRail').innerHTML));
+  ok('trap beats the close band', /TRAP-DOUBLED/.test(rail()));
+  w.K.input('p1', 1, '10'); w.K.act('p1', 1, 'check');
+  ok('problem 2 becomes active', /Second\./.test(rail()));
   w.K.navTo(0);
-  ok('navigating back shows the finished problem', /Complete/.test(doc.getElementById('ckRail').innerHTML));
-  ok('finished problem keeps its locked-in rows', /S1/.test(doc.getElementById('ckRail').innerHTML));
+  ok('finished problem shows as complete', /Complete/.test(rail()));
 }
 
-/* ---------- 2. the Hudson checker itself ---------- */
+/* ---------- 2. ladder mechanics ---------- */
+console.log('\nengine v1.4.0 — coarse-first ladder');
+{
+  const inline = `
+    K.run([
+      { id:'L', num:'L1', prompt:'Big ask.',
+        pipeline:[
+          { tool:'numeric', label:'The big move', answer:100, tol:1, unit:'ft',
+            traps:[{near:50, tol:1, msg:'HALVED-IT'}],
+            sub:[
+              { tool:'numeric', label:'convert', answer:10, tol:0.5 },
+              { tool:'choice',  label:'pick',    options:['A','B'], ch:K._djb2('A') },
+              { tool:'numeric', label:'finish',  answer:100, tol:1, unit:'ft' }
+            ] },
+          { tool:'numeric', label:'After', answer:7, tol:0.5 }
+      ]}
+    ], { layout:'split' });`;
+  const { w, err } = boot(inline, ['js/checker-kit.js']);
+  const doc = w.document;
+  const rail = () => doc.getElementById('ckRail').innerHTML;
+  ok('no load error', !err(), err() && (err().detail || err()));
+  ok('the big move is asked first', /The big move/.test(rail()));
+  ok('no ladder on screen before a miss', !/Step 1a/.test(rail()) && !/convert/.test(rail()));
+  ok('later parents still hidden', !/After/.test(rail()));
+
+  w.K.input('L', 0, '100'); w.K.act('L', 0, 'check');
+  ok('a correct big move skips the ladder entirely', !/Step 1a/.test(rail()) && /After/.test(rail()));
+
+  const b = boot(inline, ['js/checker-kit.js']);
+  const r2 = () => b.w.document.getElementById('ckRail').innerHTML;
+  b.w.K.input('L', 0, '50'); b.w.K.act('L', 0, 'check');
+  ok('first miss opens the ladder', /Step 1a/.test(r2()));
+  ok('split notice explains itself', /one move at a time/.test(r2()));
+  ok('split notice names the range 1a through 1c', /steps 1a through 1c/.test(r2()));
+  ok('the trap diagnosis rides along with the split', /HALVED-IT/.test(r2()));
+  ok('only the first rung is live', /Step 1a/.test(r2()) && !/Step 1b/.test(r2()));
+  ok('a miss that opens a ladder spends no strike', b.w.K._S()['L'].steps[0].misses === 0);
+  ok('live step is now the rung', b.w.K._live('L') === b.w.K._sub(0, 0), b.w.K._live('L'));
+
+  const c1 = b.w.K._sub(0, 0), c2 = b.w.K._sub(0, 1), c3 = b.w.K._sub(0, 2);
+  b.w.K.input('L', c1, '10'); b.w.K.act('L', c1, 'check');
+  ok('rung 1b appears after 1a', /Step 1b/.test(r2()));
+  ok('1a persists as locked-in', (r2().match(/locked-in/g) || []).length >= 1);
+  ok('rung 1c still hidden', !/Step 1c/.test(r2()));
+  b.w.K.act('L', c2, 'pick', 0); b.w.K.act('L', c2, 'check');
+  ok('rung 1c appears after 1b', /Step 1c/.test(r2()));
+  b.w.K.input('L', c3, '100'); b.w.K.act('L', c3, 'check');
+  ok('finishing the ladder settles the parent', b.w.K._S()['L'].stepIdx === 1);
+  ok('next parent is live', /After/.test(r2()));
+  ok('the walked ladder stays on screen', /Step 1a/.test(r2()) && /Step 1c/.test(r2()));
+
+  const d = boot(inline, ['js/checker-kit.js']);
+  const r3 = () => d.w.document.getElementById('ckRail').innerHTML;
+  d.w.K.input('L', 0, '50'); d.w.K.act('L', 0, 'check');
+  const rc = d.w.K._sub(0, 0);
+  for (let i = 0; i < 3; i++) { d.w.K.input('L', rc, '999'); d.w.K.act('L', rc, 'check'); }
+  ok('a rung reaches the teacher redirect after 3 misses', /Bring your work to your teacher/.test(r3()));
+  d.w.K.act('L', rc, 'skip');
+  ok('teacher-helped continues to the next rung', /Step 1b/.test(r3()));
+}
+
+/* ---------- 3. the Hudson checker ---------- */
 console.log('\nhudson-project.html');
 {
   const html = fs.readFileSync(path.join(ROOT, 'checkers/hudson-project.html'), 'utf8');
@@ -93,55 +143,64 @@ console.log('\nhudson-project.html');
   const doc = w.document;
   const rail = () => doc.getElementById('ckRail').innerHTML;
   const surf = () => doc.getElementById('ckSurf').innerHTML;
-  ok('no load error', !err(), err() && String(err().detail || err()));
-  ok('runs in split layout', w.K.layout() === 'split');
-  ok('Q1 prompt in the rail', /21,120 ft\) along its flight path/.test(rail()));
-  ok('Q1 givens on the surface', /angle of ascent/.test(surf()) && /21,120 ft/.test(surf()));
-  ok('SOH-CAH-TOA reference on the surface', /SOH/.test(surf()) && /TOA/.test(surf()));
-  ok('DEGREE-mode reminder on the surface', /DEGREE mode/.test(surf()));
-  ok('orientation grid is on the surface, not the rail', /orient-grid/.test(surf()) && !/orient-grid/.test(rail()));
-  ok('rail keeps the place with a pointer', /rail-pointer/.test(rail()));
-  ok('dots rendered for all 6 problems', doc.getElementById('hdrDots').children.length === 6,
-     String(doc.getElementById('hdrDots').children.length));
+  const S = i => w.K._sub(0, i);
+  ok('no load error', !err(), err() && (err().detail || err()));
+  ok('six problems, numbered Q1 to Q6', doc.getElementById('hdrDots').textContent === 'Q1Q2Q3Q4Q5Q6',
+     doc.getElementById('hdrDots').textContent);
+  ok('prompt gives miles, not feet', /traveled four miles/.test(rail()) && !/21,120/.test(rail()));
+  ok('Q1 opens on the big move only', /The height above the ground/.test(rail()));
+  ok('no orientation picker before a miss', !/orient-grid/.test(surf()) && !/orient-grid/.test(rail()));
+  ok('no triangle on screen before a miss', !/lab-stage/.test(surf()) && !/<svg/.test(surf()));
+  ok('reference and conversion factor on the surface', /SOH/.test(surf()) && /5,280 ft/.test(surf()));
 
-  // walk Q1: orient -> (skip the drag step) -> HAVE/WANT -> ratio -> chain -> answer
+  w.K.input('q1', 0, '2829.8'); w.K.act('q1', 0, 'check');
+  ok('a correct Q1 needs no scaffolding at all',
+     !/Step 1a/.test(rail()) && /kept climbing for 19 more seconds/.test(rail()));
+
+  w.K.input('q2', 0, '1.25'); w.K.act('q2', 0, 'check');
+  ok('an answer in miles is named as such', /answer in miles/.test(rail()));
+  ok('the miss opened the Q2 ladder', /Step 1a/.test(rail()));
+  w.K.input('q2', S(0), '3060'); w.K.act('q2', S(0), 'check');
+  ok('using 3,060 as the rise is caught', /height above the GROUND/.test(rail()));
+  w.K.input('q2', S(0), '230.2'); w.K.act('q2', S(0), 'check');
+  ok('rung b is the orientation picker, on the surface', /orient-grid/.test(surf()));
   const cands = w.figOrientations();
-  const wrong = cands.findIndex(c => c.id !== 'BR'), right = cands.findIndex(c => c.id === 'BR');
-  w.K.act('q1', 0, 'pick', wrong); w.K.act('q1', 0, 'check');
-  ok('wrong orientation is nudged, not passed', /Not that one/.test(surf()));
-  w.K.act('q1', 0, 'check');
-  ok('orient limit is 2', /Bring your work to your teacher/.test(rail()) || /Bring your work/.test(surf()));
-  w.K.act('q1', 0, 'skip');
-  w.K.act('q1', 0, 'pick', right); // (state reset not needed; step already advanced)
-  ok('label step is surface-hosted', /lab-wrap|lab-stage/.test(surf()), surf().slice(0, 120));
-  w.K.act('q1', 1, 'skip');        // stand in for the drag
-  ok('labelled figure is kept on the surface', /Your figure/.test(surf()));
-  // HAVE/WANT — options are shuffled, so find the right one by hash
-  const st = w.K._state ? null : null;
-  const opts = Array.from(doc.querySelectorAll('#ckRail .opt-row')).map(b => b.textContent);
-  ok('HAVE/WANT renders as a full-width stack', opts.length === 4, String(opts.length));
-  const target = 'Have: the hypotenuse and the angle  \u2192  Want: the opposite side';
-  const idx = opts.findIndex(t => t === target);
-  const bad = opts.findIndex(t => t !== target);
-  w.K.act('q1', 2, 'pick', bad); w.K.act('q1', 2, 'check');
-  ok('HAVE/WANT miss 1 is the broad nudge', /Start at the angle you know/.test(rail()));
-  w.K.act('q1', 2, 'pick', idx); w.K.act('q1', 2, 'check');
-  ok('correct HAVE/WANT advances', /Which ratio/.test(rail()));
-  ok('ratio ask no longer names the sides', !/hypotenuse \(path\)/.test(rail()));
-  // ratio: SIN is index 0 of RATIOS (not shuffled)
-  w.K.act('q1', 3, 'pick', 2); w.K.act('q1', 3, 'check');   // TAN
-  ok('wrong ratio nudged with the reference card', /reference card/.test(rail()));
-  w.K.act('q1', 3, 'pick', 0); w.K.act('q1', 3, 'check');   // SIN
-  ok('SIN advances to the iff-chain', /Isolate x/.test(rail()));
-  w.K.act('q1', 4, 'check', '+');
-  ok('wrong operation is nudged', /multiplied here/.test(rail()));
-  w.K.act('q1', 4, 'check', '\u00D7');
-  w.K.input('q1', 4, '21120'); w.K.act('q1', 4, 'check');
-  ok('chain closes and the answer step opens', /Calculator form/.test(rail()));
-  w.K.input('q1', 5, '2855.5'); w.K.act('q1', 5, 'check');
-  ok('the TAN answer is named as the TAN answer', /TAN answer/.test(rail()), rail().slice(-300));
-  w.K.input('q1', 5, '2829.8'); w.K.act('q1', 5, 'check');
-  ok('correct answer completes Q1', /Q2/.test(rail()) || /maximum altitude of 3,060/.test(rail()));
+  w.K.act('q2', S(1), 'pick', cands.findIndex(c => c.id === 'BR'));
+  w.K.act('q2', S(1), 'check');
+  ok('rung c is the labeller, on the surface', /lab-wrap|lab-stage/.test(surf()));
+  w.K.act('q2', S(2), 'skip');
+  ok('the labelled figure is kept on the surface', /Your figure/.test(surf()));
+  w.K.act('q2', S(3), 'pick', 2); w.K.act('q2', S(3), 'check');
+  ok('wrong ratio points at the reference card', /reference card/.test(rail()));
+  w.K.act('q2', S(3), 'pick', 0); w.K.act('q2', S(3), 'check');
+  ok('rung e is the iff-chain', /denominator/.test(rail()));
+  w.K.act('q2', S(4), 'check', '+');
+  ok('wrong operation is diagnosed', /multiplied here/.test(rail()));
+  w.K.act('q2', S(4), 'check', '\u00D7');
+  w.K.input('q2', S(4), 'd'); w.K.act('q2', S(4), 'check');
+  w.K.act('q2', S(4), 'check', '\u00D7');
+  w.K.input('q2', S(4), '1/sin(2\u00B0)'); w.K.act('q2', S(4), 'check');
+  ok('chain closes onto the calculator rung', /Calculator form/.test(rail()));
+  w.K.input('q2', S(5), '8'); w.K.act('q2', S(5), 'check');
+  ok('multiplying by sin instead of its inverse is named', /multiplied BY sin/.test(rail()));
+  w.K.input('q2', S(5), '6596'); w.K.act('q2', S(5), 'check');
+  ok('walking the ladder settles Q2', w.K._S()['q2'].done === true);
+  ok('Q3 is now live', /dropped 1,390 feet/.test(rail()));
+
+  w.K.input('q3', 0, '0.48'); w.K.act('q3', 0, 'check');
+  ok('the radian answer is named on Q3', /radian answer/.test(rail()));
+  w.K.input('q3', 0, '27.77'); w.K.act('q3', 0, 'check');
+  ok('Q3 accepts the correct angle', /leveled off/.test(rail()));
+
+  w.K.input('q4', 0, '553.4'); w.K.act('q4', 0, 'check');
+  w.K.input('q5', 0, '1106.3'); w.K.act('q5', 0, 'check');
+  ok('Q6 is live after Q5', /212 feet tall/.test(rail()));
+  w.K.input('q6', 0, '1318.3'); w.K.act('q6', 0, 'check');
+  ok('adding 212 instead is named', /You added 212/.test(rail()));
+  ok('Q6 ladder opened', /Step 1a/.test(rail()));
+  w.K.input('q6', S(0), '1106.3'); w.K.act('q6', S(0), 'check');
+  w.K.input('q6', S(1), '894.3'); w.K.act('q6', S(1), 'check');
+  ok('the whole checker completes', Object.keys(w.K._S()).every(k => w.K._S()[k].done));
 }
 
 console.log(fails ? `\n${fails} FAILED` : '\nall passed');
