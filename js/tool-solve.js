@@ -30,6 +30,7 @@
   }
 
   K.tool('solve', {
+    limit: 2,          // algebra move: two tries, then the teacher redirect
     state: function (step) { return { i:0, phase:'op', op:null, val:'', chain:[step.start], fb:null }; },
 
     render: function (step, st, ref) {
@@ -64,20 +65,20 @@
         if (payload == null) return { fb:{t:'err', m:'Tap the operation.'}, tier:'soft' };
         if (ctx.djb2(payload) === mv.opCh) {
           st.op = payload;
-          if (mv.valCh != null) { st.phase='val'; st.val=''; return { fb:null, tier:'soft' }; }   // need a value next
+          if (mv.valCh != null) { st.phase='val'; st.val=''; return { fb:null, tier:'soft', progress:true }; }   // need a value next
           st.chain.push(mv.then); st.i++; st.phase='op'; st.val='';                                // f\u207B\u00B9: no value
-          return st.i >= step.moves.length ? { pass:true } : { fb:null, tier:'soft' };
+          return st.i >= step.moves.length ? { pass:true } : { fb:null, tier:'soft', progress:true };
         }
-        return { fb:{t:'err', m: opNudge(mv.opCh)} };                                              // wrong op -> strike
+        return { fb:{t:'err', m: opNudge(mv.opCh), diag:true} };                                              // wrong op -> strike
       }
       var typed = (st.val||'').toString();
       if (typed.trim()==='') return { fb:{t:'err', m: st.op+' both sides by what? Type the value.'}, tier:'soft' };
       if (ctx.djb2(norm(typed)) === mv.valCh) {
         st.chain.push(mv.then); st.i++; st.phase='op'; st.val='';
-        return st.i >= step.moves.length ? { pass:true } : { fb:null, tier:'soft' };
+        return st.i >= step.moves.length ? { pass:true } : { fb:null, tier:'soft', progress:true };
       }
       st.val='';                                                                                  // clear entry on a miss
-      return { fb:{t:'err', m:'Not that value \u2014 which multiplicative inverse frees it?'} };   // strike
+      return { fb:{t:'err', m:'Not that value \u2014 which multiplicative inverse frees it?', diag:true} };   // strike
     },
 
     work: function (step, st, ctx) {

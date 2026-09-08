@@ -70,6 +70,8 @@
   }
 
   K.tool('label', {
+    pane: 'surface',      // drag-onto-figure is a manipulable -> right-hand work surface
+    railText: 'Drag each label onto the figure on the right. This step advances on its own.',
     state: function(){ return { placed:{} }; },
     render: function(step, st, ref){ return '<div class="lab-wrap" id="lab-'+ref.p+'-'+ref.s+'"></div>'; },
     mount: function(step, st, ctx){

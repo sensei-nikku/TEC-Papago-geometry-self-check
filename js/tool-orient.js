@@ -10,6 +10,9 @@
   'use strict';
 
   K.tool('orient', {
+    pane: 'surface',      // the candidate grid is a manipulable -> right-hand work surface
+    railText: 'Pick the orientation that matches the situation on the panel to the right.',
+    limit: 2,             // orientation step: two tries, then bring it to the teacher
     state: function (step) {
       var idx = step.candidates.map(function (_, i) { return i; });
       // If every candidate declares a home cell, lay them out by quadrant (no shuffle):
