@@ -6,94 +6,175 @@
 <title>Week 1, Lesson 2 — Probability from Counts Checker</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
+<style>
+/* two-way table on the work surface */
+.pt{border-collapse:collapse;font-size:.92rem;text-align:center}
+.pt caption{font-weight:700;padding-bottom:6px}
+.pt th,.pt td{padding:5px 12px}
+.pt th:first-child{text-align:left}
+.pt .tot{border-left:2px solid currentColor}
+.pt tr.first th,.pt tr.first td,.pt tr.last th,.pt tr.last td{border-top:2px solid currentColor}
+.pt tr.last .tot{font-weight:700}
+</style>
 </head>
 <body>
 <header class="hdr">
   <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Probability from Counts</h1><div class="sub">Week 1 · Lesson 2 — Learning Lab</div></div>
   <div class="hdr-dots" id="hdrDots"></div>
 </header>
-<main class="main" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
 
 <script src="../js/checker-kit.js"></script>
+<script src="../js/tool-fraction.js"></script>
 <script>
-// Week 1 Lesson 2 Learning Lab. Together T-1 to T-3, Alone A-1 to A-4, essential to complex.
-// Steps match the Probability Plan on the handout (Step 0 Omega, 1 rule, 2 top, 3 bottom, 4 fraction).
-// Step 5 (say it in words) is done on paper. Choice answers are stored as djb2 hashes (ch).
+/* Week 1 Lesson 2 Learning Lab.  Engine v1.4.0, split layout.
+   Together T-1 to T-3, Alone A-1 to A-4, essential to complex.
+   COARSE FIRST: each problem asks for the answer straight. Miss it once
+   and the ladder opens, following the Probability Plan on the handout:
+   (Step 0 list Omega), which rule, top, bottom, the fraction.
+   Right pane: the table and the Plan stay on screen the whole problem.
+   Step 5 (say it in words) stays on paper.  Choice answers are djb2 hashes. */
 K.run([
  {
   "id": "t1",
   "num": "T-1",
   "prompt": "Flip two coins. Find ℙ(exactly one head).",
+  "given": [
+   {
+    "v": "2 coins",
+    "k": "flipped once each"
+   },
+   {
+    "v": "no table",
+    "k": "list Ω yourself"
+   }
+  ],
+  "want": "ℙ(exactly one head), as a simplified fraction",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "numeric",
-    "label": "Step 0 — No table: list Ω. How many outcomes?",
-    "answer": 4,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
-     {
-      "near": 3,
-      "tol": 0,
-      "msg": "HT and TH are different outcomes: the first coin and the second coin are different coins. List both."
-     }
-    ]
-   },
-   {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(one head) = |one head| / |Ω|",
-     "ℙ(one head) = |one head| / |heads|",
-     "ℙ(one head) = |Ω| / |one head|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     1,
+     2
     ],
-    "ch": 3926778396,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 2,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 1,
-      "tol": 0,
-      "msg": "HT and TH both have exactly one head. Count them separately."
-     }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 4,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
+      "f": [
+       1,
+       3
+      ],
+      "msg": "HT and TH are different outcomes: the first coin and the second coin are different coins."
+     },
      {
-      "near": 3,
-      "tol": 0,
-      "msg": "HT and TH are different outcomes, so Ω has more than 3."
+      "f": [
+       1,
+       4
+      ],
+      "msg": "HT and TH both have exactly one head. Count them both."
      }
-    ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "1/2",
-     "1/3",
-     "1/4",
-     "2/3"
     ],
-    "ch": 193431959,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "numeric",
+      "label": "List Ω. How many outcomes?",
+      "answer": 4,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 3,
+        "tol": 0,
+        "msg": "HT and TH are different outcomes: the first coin and the second coin are different coins. List both."
+       }
+      ],
+      "nudges": [
+       "Write every result for coin 1, then coin 2: HH, HT, ..."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(one head) = |one head| / |Ω|",
+       "ℙ(one head) = |one head| / |heads|",
+       "ℙ(one head) = |Ω| / |one head|"
+      ],
+      "ch": 3926778396,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 2,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 1,
+        "tol": 0,
+        "msg": "HT and TH both have exactly one head. Count them separately."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 4,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 3,
+        "tol": 0,
+        "msg": "HT and TH are different outcomes, so Ω has more than 3."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       1,
+       2
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         3
+        ],
+        "msg": "HT and TH are different outcomes: the first coin and the second coin are different coins."
+       },
+       {
+        "f": [
+         1,
+         4
+        ],
+        "msg": "HT and TH both have exactly one head. Count them both."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
+     }
+    ]
    }
   ]
  },
@@ -101,73 +182,132 @@ K.run([
   "id": "t2",
   "num": "T-2",
   "prompt": "Find ℙ(job ∩ evening).",
-  "figure": "<table style=\"border-collapse:collapse;font-size:.92rem;text-align:center\"><caption style=\"font-weight:700;padding-bottom:6px\">60 students</caption><tr><th style=\"padding:4px 10px\"></th><th style=\"padding:4px 10px\">Job</th><th style=\"padding:4px 10px\">No job</th><th style=\"padding:4px 10px;border-left:2px solid currentColor\">Total</th></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Morning</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">15</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">25</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;\">40</td></tr><tr><th style=\"padding:4px 10px;text-align:left;\">Evening</th><td style=\"padding:4px 10px;\">18</td><td style=\"padding:4px 10px;\">2</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;\">20</td></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Total</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">33</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">27</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;font-weight:700\">60</td></tr></table>",
+  "given": [
+   {
+    "v": "60",
+    "k": "students in the table"
+   }
+  ],
+  "want": "ℙ(job ∩ evening), as a simplified fraction",
+  "figure": "<table class=\"pt\"><caption>60 students</caption><tr><th></th><th>Job</th><th>No job</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Morning</th><td>15</td><td>25</td><td class=\"tot\">40</td></tr><tr><th>Evening</th><td>18</td><td>2</td><td class=\"tot\">20</td></tr><tr class=\"last\"><th>Total</th><td>33</td><td>27</td><td class=\"tot\">60</td></tr></table>",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(job ∩ evening) = |job ∩ evening| / |Ω|",
-     "ℙ(job ∩ evening) = |job ∩ evening| / |job|",
-     "ℙ(job ∩ evening) = |job ∩ evening| / |evening|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     3,
+     10
     ],
-    "ch": 1783198996,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 18,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 33,
-      "tol": 0,
-      "msg": "33 is every student with a job. ∩ means BOTH: the one cell where job and evening meet."
+      "f": [
+       9,
+       10
+      ],
+      "msg": "You used the evening row (20) as the bottom. There is no “given,” so the bottom is all 60 students."
      },
      {
-      "near": 20,
-      "tol": 0,
-      "msg": "20 is every evening student. ∩ means BOTH: the one cell where job and evening meet."
+      "f": [
+       6,
+       11
+      ],
+      "msg": "You used the job column (33) as the bottom. There is no “given,” so the bottom is all 60 students."
      }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 60,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
-     {
-      "near": 33,
-      "tol": 0,
-      "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
-     },
-     {
-      "near": 20,
-      "tol": 0,
-      "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
-     }
-    ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "3/10",
-     "9/10",
-     "6/11",
-     "18/60"
     ],
-    "ch": 2088359240,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(job ∩ evening) = |job ∩ evening| / |Ω|",
+       "ℙ(job ∩ evening) = |job ∩ evening| / |job|",
+       "ℙ(job ∩ evening) = |job ∩ evening| / |evening|"
+      ],
+      "ch": 1783198996,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 18,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 33,
+        "tol": 0,
+        "msg": "33 is every student with a job. ∩ means BOTH: the one cell where job and evening meet."
+       },
+       {
+        "near": 20,
+        "tol": 0,
+        "msg": "20 is every evening student. ∩ means BOTH: the one cell where job and evening meet."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 60,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 33,
+        "tol": 0,
+        "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+       },
+       {
+        "near": 20,
+        "tol": 0,
+        "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       3,
+       10
+      ],
+      "traps": [
+       {
+        "f": [
+         9,
+         10
+        ],
+        "msg": "You used the evening row (20) as the bottom. There is no “given,” so the bottom is all 60 students."
+       },
+       {
+        "f": [
+         6,
+         11
+        ],
+        "msg": "You used the job column (33) as the bottom. There is no “given,” so the bottom is all 60 students."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
+     }
+    ]
    }
   ]
  },
@@ -175,73 +315,132 @@ K.run([
   "id": "t3",
   "num": "T-3",
   "prompt": "Find ℙ(evening | job).",
-  "figure": "<table style=\"border-collapse:collapse;font-size:.92rem;text-align:center\"><caption style=\"font-weight:700;padding-bottom:6px\">60 students</caption><tr><th style=\"padding:4px 10px\"></th><th style=\"padding:4px 10px\">Job</th><th style=\"padding:4px 10px\">No job</th><th style=\"padding:4px 10px;border-left:2px solid currentColor\">Total</th></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Morning</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">15</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">25</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;\">40</td></tr><tr><th style=\"padding:4px 10px;text-align:left;\">Evening</th><td style=\"padding:4px 10px;\">18</td><td style=\"padding:4px 10px;\">2</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;\">20</td></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Total</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">33</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">27</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;font-weight:700\">60</td></tr></table>",
+  "given": [
+   {
+    "v": "60",
+    "k": "students in the table"
+   }
+  ],
+  "want": "ℙ(evening | job), as a simplified fraction",
+  "figure": "<table class=\"pt\"><caption>60 students</caption><tr><th></th><th>Job</th><th>No job</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Morning</th><td>15</td><td>25</td><td class=\"tot\">40</td></tr><tr><th>Evening</th><td>18</td><td>2</td><td class=\"tot\">20</td></tr><tr class=\"last\"><th>Total</th><td>33</td><td>27</td><td class=\"tot\">60</td></tr></table>",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(evening | job) = |evening ∩ job| / |job|",
-     "ℙ(evening | job) = |evening ∩ job| / |evening|",
-     "ℙ(evening | job) = |evening ∩ job| / |Ω|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     6,
+     11
     ],
-    "ch": 1672202873,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 18,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 33,
-      "tol": 0,
-      "msg": "33 is the whole job group — that is the bottom. The top is the cell where evening and job meet."
-     },
-     {
-      "near": 20,
-      "tol": 0,
-      "msg": "20 is every evening student. The top is the cell where evening and job meet."
-     }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 33,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
-     {
-      "near": 20,
-      "tol": 0,
+      "f": [
+       9,
+       10
+      ],
       "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
      },
      {
-      "near": 60,
-      "tol": 0,
+      "f": [
+       3,
+       10
+      ],
       "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
      }
-    ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "6/11",
-     "9/10",
-     "3/10",
-     "11/6"
     ],
-    "ch": 2088467052,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(evening | job) = |evening ∩ job| / |job|",
+       "ℙ(evening | job) = |evening ∩ job| / |evening|",
+       "ℙ(evening | job) = |evening ∩ job| / |Ω|"
+      ],
+      "ch": 1672202873,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 18,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 33,
+        "tol": 0,
+        "msg": "33 is the whole job group — that is the bottom. The top is the cell where evening and job meet."
+       },
+       {
+        "near": 20,
+        "tol": 0,
+        "msg": "20 is every evening student. The top is the cell where evening and job meet."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 33,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 20,
+        "tol": 0,
+        "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
+       },
+       {
+        "near": 60,
+        "tol": 0,
+        "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       6,
+       11
+      ],
+      "traps": [
+       {
+        "f": [
+         9,
+         10
+        ],
+        "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
+       },
+       {
+        "f": [
+         3,
+         10
+        ],
+        "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
+     }
+    ]
    }
   ]
  },
@@ -249,68 +448,113 @@ K.run([
   "id": "a1",
   "num": "A-1",
   "prompt": "Find ℙ(sportsᶜ).",
-  "figure": "<table style=\"border-collapse:collapse;font-size:.92rem;text-align:center\"><caption style=\"font-weight:700;padding-bottom:6px\">150 streaming subscribers</caption><tr><th style=\"padding:4px 10px\"></th><th style=\"padding:4px 10px\">Watches sports</th><th style=\"padding:4px 10px\">No sports</th><th style=\"padding:4px 10px;border-left:2px solid currentColor\">Total</th></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Under 30</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">24</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">36</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;\">60</td></tr><tr><th style=\"padding:4px 10px;text-align:left;\">30 and over</th><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;\">90</td></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Total</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">69</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">81</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;font-weight:700\">150</td></tr></table>",
+  "given": [
+   {
+    "v": "150",
+    "k": "subscribers in the table"
+   }
+  ],
+  "want": "ℙ(sportsᶜ), as a simplified fraction",
+  "figure": "<table class=\"pt\"><caption>150 streaming subscribers</caption><tr><th></th><th>Sports</th><th>No sports</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Under 30</th><td>24</td><td>36</td><td class=\"tot\">60</td></tr><tr><th>30 and over</th><td>45</td><td>45</td><td class=\"tot\">90</td></tr><tr class=\"last\"><th>Total</th><td>69</td><td>81</td><td class=\"tot\">150</td></tr></table>",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(sportsᶜ) = |sportsᶜ| / |Ω|",
-     "ℙ(sportsᶜ) = |sports| / |Ω|",
-     "ℙ(sportsᶜ) = |sportsᶜ| / |sports|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     27,
+     50
     ],
-    "ch": 3231602626,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 81,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 69,
-      "tol": 0,
-      "msg": "69 is the sports count. ᶜ means NOT: count everything else."
+      "f": [
+       23,
+       50
+      ],
+      "msg": "That is ℙ(sports). ᶜ means NOT: count everything else."
      }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 150,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
+    ],
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
      {
-      "near": 69,
-      "tol": 0,
-      "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(sportsᶜ) = |sportsᶜ| / |Ω|",
+       "ℙ(sportsᶜ) = |sports| / |Ω|",
+       "ℙ(sportsᶜ) = |sportsᶜ| / |sports|"
+      ],
+      "ch": 3231602626,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
      },
      {
-      "near": 81,
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 81,
       "tol": 0,
-      "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 69,
+        "tol": 0,
+        "msg": "69 is the sports count. ᶜ means NOT: count everything else."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 150,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 69,
+        "tol": 0,
+        "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+       },
+       {
+        "near": 81,
+        "tol": 0,
+        "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       27,
+       50
+      ],
+      "traps": [
+       {
+        "f": [
+         23,
+         50
+        ],
+        "msg": "That is ℙ(sports). ᶜ means NOT: count everything else."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
      }
     ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "27/50",
-     "23/50",
-     "27/23",
-     "3/5"
-    ],
-    "ch": 195477794,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
    }
   ]
  },
@@ -318,73 +562,132 @@ K.run([
   "id": "a2",
   "num": "A-2",
   "prompt": "Find ℙ(under 30 ∪ sports).",
-  "figure": "<table style=\"border-collapse:collapse;font-size:.92rem;text-align:center\"><caption style=\"font-weight:700;padding-bottom:6px\">150 streaming subscribers</caption><tr><th style=\"padding:4px 10px\"></th><th style=\"padding:4px 10px\">Watches sports</th><th style=\"padding:4px 10px\">No sports</th><th style=\"padding:4px 10px;border-left:2px solid currentColor\">Total</th></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Under 30</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">24</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">36</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;\">60</td></tr><tr><th style=\"padding:4px 10px;text-align:left;\">30 and over</th><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;\">90</td></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Total</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">69</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">81</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;font-weight:700\">150</td></tr></table>",
+  "given": [
+   {
+    "v": "150",
+    "k": "subscribers in the table"
+   }
+  ],
+  "want": "ℙ(under 30 ∪ sports), as a simplified fraction",
+  "figure": "<table class=\"pt\"><caption>150 streaming subscribers</caption><tr><th></th><th>Sports</th><th>No sports</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Under 30</th><td>24</td><td>36</td><td class=\"tot\">60</td></tr><tr><th>30 and over</th><td>45</td><td>45</td><td class=\"tot\">90</td></tr><tr class=\"last\"><th>Total</th><td>69</td><td>81</td><td class=\"tot\">150</td></tr></table>",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(under 30 ∪ sports) = |under 30 ∪ sports| / |Ω|",
-     "ℙ(under 30 ∪ sports) = |under 30 ∪ sports| / |under 30|",
-     "ℙ(under 30 ∪ sports) = |under 30 ∪ sports| / |sports|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     7,
+     10
     ],
-    "ch": 2514578272,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 105,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 129,
-      "tol": 0,
+      "f": [
+       43,
+       50
+      ],
       "msg": "You counted the overlap twice. The 24 under-30 sports fans are in both groups — count them once."
      },
      {
-      "near": 24,
-      "tol": 0,
-      "msg": "24 is ∩ (both). ∪ means either one: count every cell in the under-30 row or the sports column, each once."
+      "f": [
+       4,
+       25
+      ],
+      "msg": "That is ∩ (both). ∪ means either one."
      }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 150,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
+    ],
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
      {
-      "near": 60,
-      "tol": 0,
-      "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(under 30 ∪ sports) = |under 30 ∪ sports| / |Ω|",
+       "ℙ(under 30 ∪ sports) = |under 30 ∪ sports| / |under 30|",
+       "ℙ(under 30 ∪ sports) = |under 30 ∪ sports| / |sports|"
+      ],
+      "ch": 2514578272,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
      },
      {
-      "near": 69,
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 105,
       "tol": 0,
-      "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 129,
+        "tol": 0,
+        "msg": "You counted the overlap twice. The 24 under-30 sports fans are in both groups — count them once."
+       },
+       {
+        "near": 24,
+        "tol": 0,
+        "msg": "24 is ∩ (both). ∪ means either one: count every cell in the under-30 row or the sports column, each once."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 150,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 60,
+        "tol": 0,
+        "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+       },
+       {
+        "near": 69,
+        "tol": 0,
+        "msg": "There is no “given,” so the bottom is all of Ω: the grand total."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       7,
+       10
+      ],
+      "traps": [
+       {
+        "f": [
+         43,
+         50
+        ],
+        "msg": "You counted the overlap twice. The 24 under-30 sports fans are in both groups — count them once."
+       },
+       {
+        "f": [
+         4,
+         25
+        ],
+        "msg": "That is ∩ (both). ∪ means either one."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
      }
     ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "7/10",
-     "43/50",
-     "4/25",
-     "2/5"
-    ],
-    "ch": 2088502988,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
    }
   ]
  },
@@ -392,73 +695,132 @@ K.run([
   "id": "a3",
   "num": "A-3",
   "prompt": "Find ℙ(sports | under 30).",
-  "figure": "<table style=\"border-collapse:collapse;font-size:.92rem;text-align:center\"><caption style=\"font-weight:700;padding-bottom:6px\">150 streaming subscribers</caption><tr><th style=\"padding:4px 10px\"></th><th style=\"padding:4px 10px\">Watches sports</th><th style=\"padding:4px 10px\">No sports</th><th style=\"padding:4px 10px;border-left:2px solid currentColor\">Total</th></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Under 30</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">24</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">36</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;\">60</td></tr><tr><th style=\"padding:4px 10px;text-align:left;\">30 and over</th><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;\">90</td></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Total</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">69</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">81</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;font-weight:700\">150</td></tr></table>",
+  "given": [
+   {
+    "v": "150",
+    "k": "subscribers in the table"
+   }
+  ],
+  "want": "ℙ(sports | under 30), as a simplified fraction",
+  "figure": "<table class=\"pt\"><caption>150 streaming subscribers</caption><tr><th></th><th>Sports</th><th>No sports</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Under 30</th><td>24</td><td>36</td><td class=\"tot\">60</td></tr><tr><th>30 and over</th><td>45</td><td>45</td><td class=\"tot\">90</td></tr><tr class=\"last\"><th>Total</th><td>69</td><td>81</td><td class=\"tot\">150</td></tr></table>",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(sports | under 30) = |sports ∩ under 30| / |under 30|",
-     "ℙ(sports | under 30) = |sports ∩ under 30| / |sports|",
-     "ℙ(sports | under 30) = |sports ∩ under 30| / |Ω|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     2,
+     5
     ],
-    "ch": 1323866537,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 24,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 69,
-      "tol": 0,
-      "msg": "69 is every sports watcher. The top is the cell where sports and under 30 meet."
-     },
-     {
-      "near": 60,
-      "tol": 0,
-      "msg": "60 is the whole under-30 group — that is the bottom. The top is the cell where sports and under 30 meet."
-     }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 60,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
-     {
-      "near": 69,
-      "tol": 0,
+      "f": [
+       8,
+       23
+      ],
       "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
      },
      {
-      "near": 150,
-      "tol": 0,
+      "f": [
+       4,
+       25
+      ],
       "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
      }
-    ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "2/5",
-     "8/23",
-     "4/25",
-     "5/2"
     ],
-    "ch": 193433051,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(sports | under 30) = |sports ∩ under 30| / |under 30|",
+       "ℙ(sports | under 30) = |sports ∩ under 30| / |sports|",
+       "ℙ(sports | under 30) = |sports ∩ under 30| / |Ω|"
+      ],
+      "ch": 1323866537,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 24,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 69,
+        "tol": 0,
+        "msg": "69 is every sports watcher. The top is the cell where sports and under 30 meet."
+       },
+       {
+        "near": 60,
+        "tol": 0,
+        "msg": "60 is the whole under-30 group — that is the bottom. The top is the cell where sports and under 30 meet."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 60,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 69,
+        "tol": 0,
+        "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
+       },
+       {
+        "near": 150,
+        "tol": 0,
+        "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       2,
+       5
+      ],
+      "traps": [
+       {
+        "f": [
+         8,
+         23
+        ],
+        "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
+       },
+       {
+        "f": [
+         4,
+         25
+        ],
+        "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
+     }
+    ]
    }
   ]
  },
@@ -466,77 +828,136 @@ K.run([
   "id": "a4",
   "num": "A-4",
   "prompt": "Find ℙ(30 and over | no sports).",
-  "figure": "<table style=\"border-collapse:collapse;font-size:.92rem;text-align:center\"><caption style=\"font-weight:700;padding-bottom:6px\">150 streaming subscribers</caption><tr><th style=\"padding:4px 10px\"></th><th style=\"padding:4px 10px\">Watches sports</th><th style=\"padding:4px 10px\">No sports</th><th style=\"padding:4px 10px;border-left:2px solid currentColor\">Total</th></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Under 30</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">24</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">36</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;\">60</td></tr><tr><th style=\"padding:4px 10px;text-align:left;\">30 and over</th><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;\">45</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;\">90</td></tr><tr><th style=\"padding:4px 10px;text-align:left;border-top:2px solid currentColor;\">Total</th><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">69</td><td style=\"padding:4px 10px;border-top:2px solid currentColor;\">81</td><td style=\"padding:4px 10px;border-left:2px solid currentColor;border-top:2px solid currentColor;font-weight:700\">150</td></tr></table>",
+  "given": [
+   {
+    "v": "150",
+    "k": "subscribers in the table"
+   }
+  ],
+  "want": "ℙ(30+ | no sports), as a simplified fraction",
+  "figure": "<table class=\"pt\"><caption>150 streaming subscribers</caption><tr><th></th><th>Sports</th><th>No sports</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Under 30</th><td>24</td><td>36</td><td class=\"tot\">60</td></tr><tr><th>30 and over</th><td>45</td><td>45</td><td class=\"tot\">90</td></tr><tr class=\"last\"><th>Total</th><td>69</td><td>81</td><td class=\"tot\">150</td></tr></table>",
+  "reference": "<div class=\"surf-label\">The Probability Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Table?</div><div class=\"rc-s\">No table? List Ω.</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rule</div><div class=\"rc-s\">“given”? Yes: |A ∩ B| / |A|. No: |E| / |Ω|</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Top</div><div class=\"rc-s\">count the outcomes that count</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Bottom</div><div class=\"rc-s\">count the group you are inside</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Fraction</div><div class=\"rc-s\">write the fraction, simplify</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">both</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">either, count once</div></div><div class=\"ref-cell\"><div class=\"rc-t\">ᶜ not</div><div class=\"rc-s\">everything else</div></div><div class=\"ref-cell\"><div class=\"rc-t\">| given</div><div class=\"rc-s\">the group after the bar</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
   "pipeline": [
    {
-    "tool": "choice",
-    "stack": true,
-    "label": "Step 1 — Which rule?",
-    "ask": "Does it say “given”? Pick the rule that fits.",
-    "options": [
-     "ℙ(30+ | no sports) = |30+ ∩ no sports| / |no sports|",
-     "ℙ(30+ | no sports) = |30+ ∩ no sports| / |30+|",
-     "ℙ(30+ | no sports) = |30+ ∩ no sports| / |Ω|"
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     5,
+     9
     ],
-    "ch": 3912656548,
-    "shuffle": true,
-    "nudge": "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω."
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 2 — Top: count the outcomes that count",
-    "answer": 45,
-    "tol": 0,
-    "closeBand": 0,
     "traps": [
      {
-      "near": 81,
-      "tol": 0,
-      "msg": "81 is the whole no-sports group — that is the bottom. The top is the cell where 30+ and no sports meet."
-     },
-     {
-      "near": 90,
-      "tol": 0,
-      "msg": "90 is every subscriber 30 and over. The top is the cell where 30+ and no sports meet."
-     }
-    ]
-   },
-   {
-    "tool": "numeric",
-    "label": "Step 3 — Bottom: count the group",
-    "answer": 81,
-    "tol": 0,
-    "closeBand": 0,
-    "traps": [
-     {
-      "near": 90,
-      "tol": 0,
+      "f": [
+       1,
+       2
+      ],
       "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
      },
      {
-      "near": 150,
-      "tol": 0,
+      "f": [
+       3,
+       10
+      ],
       "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
      }
-    ]
-   },
-   {
-    "tool": "choice",
-    "label": "Step 4 — Write the fraction. Simplify.",
-    "ask": "Which is your fraction, simplified?",
-    "options": [
-     "5/9",
-     "1/2",
-     "3/10",
-     "9/5"
     ],
-    "ch": 193436322,
-    "shuffle": true,
-    "nudge": "Check your top and bottom from Steps 2 and 3, then simplify."
+    "nudges": [
+     "Top over bottom from the steps above, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Does it say “given”? Pick the rule that fits.",
+      "options": [
+       "ℙ(30+ | no sports) = |30+ ∩ no sports| / |no sports|",
+       "ℙ(30+ | no sports) = |30+ ∩ no sports| / |30+|",
+       "ℙ(30+ | no sports) = |30+ ∩ no sports| / |Ω|"
+      ],
+      "ch": 3912656548,
+      "shuffle": true,
+      "nudges": [
+       "Look for the word “given” (the bar |). If it is there, the bottom is the group AFTER the bar. If not, the bottom is all of Ω.",
+       "Check the reference card, Step 1."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Top: count the outcomes that count",
+      "answer": 45,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 81,
+        "tol": 0,
+        "msg": "81 is the whole no-sports group — that is the bottom. The top is the cell where 30+ and no sports meet."
+       },
+       {
+        "near": 90,
+        "tol": 0,
+        "msg": "90 is every subscriber 30 and over. The top is the cell where 30+ and no sports meet."
+       }
+      ],
+      "nudges": [
+       "Find the cell, row, or column that matches the event before the bar (or the whole event if there is no bar)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: count the group",
+      "answer": 81,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 90,
+        "tol": 0,
+        "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
+       },
+       {
+        "near": 150,
+        "tol": 0,
+        "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
+       }
+      ],
+      "nudges": [
+       "Which group are you inside? With a “given,” it is the event after the bar. Without one, it is everybody."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Write the fraction. Simplify.",
+      "answer": [
+       5,
+       9
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         2
+        ],
+        "msg": "You flipped the “given.” The event AFTER the bar is the group you are inside — its total is the bottom."
+       },
+       {
+        "f": [
+         3,
+         10
+        ],
+        "msg": "There IS a “given,” so the group shrinks to that row or column. Use its total."
+       }
+      ],
+      "nudges": [
+       "Top over bottom from the steps above, then simplify."
+      ]
+     }
+    ]
    }
   ]
  }
-]);
+], { layout:'split' });
 </script>
 </body>
 </html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1, Lesson 3 — Probability Rules &amp; Independence Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+.pt{border-collapse:collapse;font-size:.92rem;text-align:center}
+.pt caption{font-weight:700;padding-bottom:6px}
+.pt th,.pt td{padding:5px 12px}
+.pt th:first-child{text-align:left}
+.pt .tot{border-left:2px solid currentColor}
+.pt tr.first th,.pt tr.first td,.pt tr.last th,.pt tr.last td{border-top:2px solid currentColor}
+.pt tr.last .tot{font-weight:700}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Probability Rules &amp; Independence</h1><div class="sub">Week 1 · Lesson 3 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-fraction.js"></script>
+<script>
+/* Week 1 Lesson 3 Learning Lab.  Engine v1.4.0, split layout, coarse first.
+   Together T-1 to T-3, Alone A-1 to A-4, easy to hard.
+   Answer straight; a miss opens the ladder (the Rules Plan, one move at a time).
+   Contexts are new to this lab (store, residents, apartments, flu, employees).
+   Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "40% of a store’s customers order online. Of the online customers, 3/4 pay by card. Find ℙ(online ∩ card).",
+  "given": [
+   {
+    "v": "40%",
+    "k": "order online"
+   },
+   {
+    "v": "3/4",
+    "k": "of online customers pay by card"
+   }
+  ],
+  "want": "ℙ(online ∩ card), as a simplified fraction",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     3,
+     10
+    ],
+    "traps": [
+     {
+      "f": [
+       3,
+       4
+      ],
+      "msg": "That is only ℙ(card | online), the second factor. “And” needs both factors multiplied."
+     },
+     {
+      "f": [
+       23,
+       20
+      ],
+      "msg": "“And” is a product, not a sum. Multiply the two pieces."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Which rule connects the pieces?",
+      "options": [
+       "ℙ(A ∩ B) = ℙ(A)·ℙ(B | A)  (product rule)",
+       "ℙ(A ∪ B) = ℙ(A) + ℙ(B) − ℙ(A ∩ B)  (addition rule)",
+       "ℙ(A ∩ B) = ℙ(A) + ℙ(B)"
+      ],
+      "ch": 1729397485,
+      "shuffle": true,
+      "nudges": [
+       "“And” (∩) is a product. “Or” (∪) is the addition rule. Which symbol is in the question — or in what you were given?",
+       "Check the reference card: and / or / independent?"
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "First factor: ℙ(online) as a fraction",
+      "answer": [
+       2,
+       5
+      ],
+      "traps": [],
+      "nudges": [
+       "40% means 40 out of 100. Simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Second factor: ℙ(card | online)",
+      "answer": [
+       3,
+       4
+      ],
+      "traps": [],
+      "nudges": [
+       "“Of the online customers” is a given: it is already in the problem."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Multiply. Simplify.",
+      "answer": [
+       3,
+       10
+      ],
+      "traps": [
+       {
+        "f": [
+         23,
+         20
+        ],
+        "msg": "“And” is a product, not a sum. Multiply the two pieces."
+       }
+      ],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "For a random resident, ℙ(pet) = 2/5, ℙ(garden) = 1/4, and ℙ(pet ∩ garden) = 1/10. Find ℙ(pet ∪ garden).",
+  "given": [
+   {
+    "v": "2/5",
+    "k": "ℙ(pet)"
+   },
+   {
+    "v": "1/4",
+    "k": "ℙ(garden)"
+   },
+   {
+    "v": "1/10",
+    "k": "ℙ(pet ∩ garden)"
+   }
+  ],
+  "want": "ℙ(pet ∪ garden), as a simplified fraction",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     11,
+     20
+    ],
+    "traps": [
+     {
+      "f": [
+       13,
+       20
+      ],
+      "msg": "You counted the overlap twice. Take ℙ(A ∩ B) away once."
+     },
+     {
+      "f": [
+       1,
+       10
+      ],
+      "msg": "That is ∩ (both), which was given. ∪ means either one."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Which rule connects the pieces?",
+      "options": [
+       "ℙ(A ∩ B) = ℙ(A)·ℙ(B | A)  (product rule)",
+       "ℙ(A ∪ B) = ℙ(A) + ℙ(B) − ℙ(A ∩ B)  (addition rule)",
+       "ℙ(A ∩ B) = ℙ(A) + ℙ(B)"
+      ],
+      "ch": 2719745400,
+      "shuffle": true,
+      "nudges": [
+       "“And” (∩) is a product. “Or” (∪) is the addition rule. Which symbol is in the question — or in what you were given?",
+       "Check the reference card: and / or / independent?"
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(pet) + ℙ(garden)",
+      "answer": [
+       13,
+       20
+      ],
+      "traps": [],
+      "nudges": [
+       "Common bottom: 20. 2/5 = 8/20, 1/4 = 5/20."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Take away the overlap. Simplify.",
+      "answer": [
+       11,
+       20
+      ],
+      "traps": [
+       {
+        "f": [
+         13,
+         20
+        ],
+        "msg": "You counted the overlap twice. Take ℙ(A ∩ B) away once."
+       }
+      ],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Are pet and ground floor independent?",
+  "figure": "<table class=\"pt\"><caption>120 apartment residents</caption><tr><th></th><th>Pet</th><th>No pet</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Ground floor</th><td>10</td><td>30</td><td class=\"tot\">40</td></tr><tr><th>Upper floor</th><td>20</td><td>60</td><td class=\"tot\">80</td></tr><tr class=\"last\"><th>Total</th><td>30</td><td>90</td><td class=\"tot\">120</td></tr></table>",
+  "given": [
+   {
+    "v": "120",
+    "k": "residents in the table"
+   }
+  ],
+  "want": "compare ℙ(pet | ground) with ℙ(pet)",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "ℙ(pet | ground), simplified",
+    "answer": [
+     1,
+     4
+    ],
+    "traps": [
+     {
+      "f": [
+       1,
+       3
+      ],
+      "msg": "You flipped the “given.” The event AFTER the bar is the group — its total is the bottom."
+     },
+     {
+      "f": [
+       1,
+       12
+      ],
+      "msg": "There IS a “given,” so the group shrinks to that row. Use its total."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "numeric",
+      "label": "Top: ground floor and pet",
+      "answer": 10,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 30,
+        "tol": 0,
+        "msg": "30 is every pet owner. The top is the one cell: ground floor and pet."
+       }
+      ],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: the ground-floor group",
+      "answer": 40,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 30,
+        "tol": 0,
+        "msg": "You flipped the “given.” The event AFTER the bar is the group — its total is the bottom."
+       },
+       {
+        "near": 120,
+        "tol": 0,
+        "msg": "There IS a “given,” so the group shrinks to that row. Use its total."
+       }
+      ],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "The fraction. Simplify.",
+      "answer": [
+       1,
+       4
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "ℙ(pet), simplified",
+    "answer": [
+     1,
+     4
+    ],
+    "traps": [
+     {
+      "f": [
+       1,
+       3
+      ],
+      "msg": "Bottom should be everybody (120), not one row."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "numeric",
+      "label": "Top: all pet owners",
+      "answer": 30,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: everybody",
+      "answer": 120,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 40,
+        "tol": 0,
+        "msg": "No “given,” so the bottom is everybody: the grand total."
+       },
+       {
+        "near": 80,
+        "tol": 0,
+        "msg": "No “given,” so the bottom is everybody: the grand total."
+       }
+      ],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "The fraction. Simplify.",
+      "answer": [
+       1,
+       4
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Decide",
+    "ask": "Equal or different?",
+    "options": [
+     "Independent: knowing one does not change the other",
+     "Not independent: knowing one changes the other"
+    ],
+    "ch": 364033329,
+    "shuffle": false,
+    "nudges": [
+     "Compare your two fractions. Same value means independent."
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Use the product rule to find ℙ(vaccinated ∩ flu). Then check it against the table.",
+  "figure": "<table class=\"pt\"><caption>120 adults, one flu season</caption><tr><th></th><th>Flu</th><th>No flu</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Vaccinated</th><td>12</td><td>68</td><td class=\"tot\">80</td></tr><tr><th>Not vaccinated</th><td>18</td><td>22</td><td class=\"tot\">40</td></tr><tr class=\"last\"><th>Total</th><td>30</td><td>90</td><td class=\"tot\">120</td></tr></table>",
+  "given": [
+   {
+    "v": "120",
+    "k": "adults in the table"
+   }
+  ],
+  "want": "ℙ(vaccinated ∩ flu), as a simplified fraction",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     1,
+     10
+    ],
+    "traps": [
+     {
+      "f": [
+       3,
+       20
+      ],
+      "msg": "That is only ℙ(flu | vaccinated). Multiply by ℙ(vaccinated) too."
+     },
+     {
+      "f": [
+       49,
+       60
+      ],
+      "msg": "“And” is a product, not a sum. Multiply the two pieces."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Which rule connects the pieces?",
+      "options": [
+       "ℙ(A ∩ B) = ℙ(A)·ℙ(B | A)  (product rule)",
+       "ℙ(A ∪ B) = ℙ(A) + ℙ(B) − ℙ(A ∩ B)  (addition rule)",
+       "ℙ(A ∩ B) = ℙ(A) + ℙ(B)"
+      ],
+      "ch": 1729397485,
+      "shuffle": true,
+      "nudges": [
+       "“And” (∩) is a product. “Or” (∪) is the addition rule. Which symbol is in the question — or in what you were given?",
+       "Check the reference card: and / or / independent?"
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(vaccinated)",
+      "answer": [
+       2,
+       3
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         3
+        ],
+        "msg": "That is the not-vaccinated row. Use the vaccinated row total over everybody."
+       }
+      ],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(flu | vaccinated)",
+      "answer": [
+       3,
+       20
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         5
+        ],
+        "msg": "You flipped the “given.” The event AFTER the bar is the group — its total is the bottom."
+       },
+       {
+        "f": [
+         1,
+         10
+        ],
+        "msg": "There IS a “given,” so the group shrinks to that row. Use its total."
+       }
+      ],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Multiply. Simplify.",
+      "answer": [
+       1,
+       10
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "Use the addition rule to find ℙ(vaccinated ∪ flu).",
+  "figure": "<table class=\"pt\"><caption>120 adults, one flu season</caption><tr><th></th><th>Flu</th><th>No flu</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Vaccinated</th><td>12</td><td>68</td><td class=\"tot\">80</td></tr><tr><th>Not vaccinated</th><td>18</td><td>22</td><td class=\"tot\">40</td></tr><tr class=\"last\"><th>Total</th><td>30</td><td>90</td><td class=\"tot\">120</td></tr></table>",
+  "given": [
+   {
+    "v": "120",
+    "k": "adults in the table"
+   }
+  ],
+  "want": "ℙ(vaccinated ∪ flu), as a simplified fraction",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Your answer, as a simplified fraction",
+    "answer": [
+     49,
+     60
+    ],
+    "traps": [
+     {
+      "f": [
+       11,
+       12
+      ],
+      "msg": "You counted the overlap twice. Take ℙ(A ∩ B) away once. The 12 vaccinated adults with flu are in both groups."
+     },
+     {
+      "f": [
+       1,
+       10
+      ],
+      "msg": "That is ∩ (both). ∪ means either one."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Which rule connects the pieces?",
+      "options": [
+       "ℙ(A ∩ B) = ℙ(A)·ℙ(B | A)  (product rule)",
+       "ℙ(A ∪ B) = ℙ(A) + ℙ(B) − ℙ(A ∩ B)  (addition rule)",
+       "ℙ(A ∩ B) = ℙ(A) + ℙ(B)"
+      ],
+      "ch": 2719745400,
+      "shuffle": true,
+      "nudges": [
+       "“And” (∩) is a product. “Or” (∪) is the addition rule. Which symbol is in the question — or in what you were given?",
+       "Check the reference card: and / or / independent?"
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(vaccinated)",
+      "answer": [
+       2,
+       3
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(flu)",
+      "answer": [
+       1,
+       4
+      ],
+      "traps": [
+       {
+        "f": [
+         3,
+         20
+        ],
+        "msg": "No “given,” so the bottom is everybody: the grand total."
+       }
+      ],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(vaccinated ∩ flu)",
+      "answer": [
+       1,
+       10
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Add the first two, take away the overlap. Simplify.",
+      "answer": [
+       49,
+       60
+      ],
+      "traps": [
+       {
+        "f": [
+         11,
+         12
+        ],
+        "msg": "You counted the overlap twice. Take ℙ(A ∩ B) away once."
+       }
+      ],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "Are vaccinated and flu independent? Then find how many vaccinated adults would have flu if they were independent.",
+  "figure": "<table class=\"pt\"><caption>120 adults, one flu season</caption><tr><th></th><th>Flu</th><th>No flu</th><th class=\"tot\">Total</th></tr><tr class=\"first\"><th>Vaccinated</th><td>12</td><td>68</td><td class=\"tot\">80</td></tr><tr><th>Not vaccinated</th><td>18</td><td>22</td><td class=\"tot\">40</td></tr><tr class=\"last\"><th>Total</th><td>30</td><td>90</td><td class=\"tot\">120</td></tr></table>",
+  "given": [
+   {
+    "v": "120",
+    "k": "adults in the table"
+   }
+  ],
+  "want": "compare ℙ(flu | vaccinated) with ℙ(flu); then the count if independent",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "ℙ(flu | vaccinated), simplified",
+    "answer": [
+     3,
+     20
+    ],
+    "traps": [
+     {
+      "f": [
+       2,
+       5
+      ],
+      "msg": "You flipped the “given.” The event AFTER the bar is the group — its total is the bottom."
+     },
+     {
+      "f": [
+       1,
+       10
+      ],
+      "msg": "There IS a “given,” so the group shrinks to that row. Use its total."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "numeric",
+      "label": "Top: vaccinated and flu",
+      "answer": 12,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: the vaccinated group",
+      "answer": 80,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 30,
+        "tol": 0,
+        "msg": "You flipped the “given.” The event AFTER the bar is the group — its total is the bottom."
+       },
+       {
+        "near": 120,
+        "tol": 0,
+        "msg": "There IS a “given,” so the group shrinks to that row. Use its total."
+       }
+      ],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "The fraction. Simplify.",
+      "answer": [
+       3,
+       20
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "ℙ(flu), simplified",
+    "answer": [
+     1,
+     4
+    ],
+    "traps": [
+     {
+      "f": [
+       3,
+       20
+      ],
+      "msg": "No “given,” so the bottom is everybody: the grand total."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "numeric",
+      "label": "Top: everybody with flu",
+      "answer": 30,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Bottom: everybody",
+      "answer": 120,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 80,
+        "tol": 0,
+        "msg": "No “given,” so the bottom is everybody: the grand total."
+       }
+      ],
+      "nudges": [
+       "Find it in the table."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "The fraction. Simplify.",
+      "answer": [
+       1,
+       4
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Decide",
+    "ask": "Equal or different?",
+    "options": [
+     "Independent: knowing one does not change the other",
+     "Not independent: knowing one changes the other"
+    ],
+    "ch": 3290973017,
+    "shuffle": false,
+    "nudges": [
+     "3/20 and 1/4: write both with a bottom of 20, then compare."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Count check: if they were independent, how many vaccinated adults would have flu?",
+    "answer": 20,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 12,
+      "tol": 0,
+      "msg": "12 is what the table shows. The question asks what independence would predict: 120 · ℙ(vaccinated) · ℙ(flu)."
+     }
+    ],
+    "nudges": [
+     "If independent, ℙ(vaccinated ∩ flu) = ℙ(vaccinated)·ℙ(flu). Multiply that by 120."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "ℙ(vaccinated)·ℙ(flu)",
+      "answer": [
+       1,
+       6
+      ],
+      "traps": [],
+      "nudges": [
+       "2/3 · 1/4. Simplify."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Multiply by 120 people.",
+      "answer": 20,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 12,
+        "tol": 0,
+        "msg": "12 is what the table shows, not the prediction."
+       }
+      ],
+      "nudges": [
+       "Find it in the table."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "For a random employee, ℙ(weekend) = 3/10, ℙ(bus) = 1/2, and ℙ(weekend ∪ bus) = 3/5. Find ℙ(weekend ∩ bus), then ℙ(bus | weekend). Are weekend and bus independent?",
+  "given": [
+   {
+    "v": "3/10",
+    "k": "ℙ(weekend)"
+   },
+   {
+    "v": "1/2",
+    "k": "ℙ(bus)"
+   },
+   {
+    "v": "3/5",
+    "k": "ℙ(weekend ∪ bus)"
+   }
+  ],
+  "want": "ℙ(weekend ∩ bus), then independent or not",
+  "reference": "<div class=\"surf-label\">The Rules Plan — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">∩ and</div><div class=\"rc-s\">ℙ(A)·ℙ(B | A)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">∪ or</div><div class=\"rc-s\">ℙ(A) + ℙ(B) − ℙ(A ∩ B)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">independent?</div><div class=\"rc-s\">ℙ(B | A) = ℙ(B) ?</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Group &amp; count</div><div class=\"rc-s\">top over the group (the bottom)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing piece</div><div class=\"rc-s\">product: × reciprocal · sum: add the inverse</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Equal?</div><div class=\"rc-s\">yes: independent · no: not</div></div></div><div class=\"ref-note\">Saying it in words (Step 5 on the handout) goes on your paper.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "ℙ(weekend ∩ bus), simplified",
+    "answer": [
+     1,
+     5
+    ],
+    "traps": [
+     {
+      "f": [
+       7,
+       5
+      ],
+      "msg": "You added all three. Start from the addition rule and isolate ℙ(weekend ∩ bus)."
+     },
+     {
+      "f": [
+       2,
+       5
+      ],
+      "msg": "Check your common bottom: 3/10 + 1/2 = 8/10 = 4/5."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Which rule?",
+      "ask": "Which rule connects the pieces?",
+      "options": [
+       "ℙ(A ∩ B) = ℙ(A)·ℙ(B | A)  (product rule)",
+       "ℙ(A ∪ B) = ℙ(A) + ℙ(B) − ℙ(A ∩ B)  (addition rule)",
+       "ℙ(A ∩ B) = ℙ(A) + ℙ(B)"
+      ],
+      "ch": 2719745400,
+      "shuffle": true,
+      "nudges": [
+       "“And” (∩) is a product. “Or” (∪) is the addition rule. Which symbol is in the question — or in what you were given?",
+       "Check the reference card: and / or / independent?"
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "ℙ(weekend) + ℙ(bus)",
+      "answer": [
+       4,
+       5
+      ],
+      "traps": [],
+      "nudges": [
+       "Common bottom 10: 3/10 + 5/10."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Isolate the overlap: 4/5 + (− 3/5). Simplify.",
+      "answer": [
+       1,
+       5
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "ℙ(bus | weekend), simplified",
+    "answer": [
+     2,
+     3
+    ],
+    "traps": [
+     {
+      "f": [
+       3,
+       50
+      ],
+      "msg": "You multiplied 1/5 by 3/10. The missing piece is ℙ(bus | weekend): multiply by the reciprocal of ℙ(weekend)."
+     },
+     {
+      "f": [
+       2,
+       5
+      ],
+      "msg": "Use ℙ(weekend) = 3/10 as the first factor."
+     }
+    ],
+    "nudges": [
+     "Top over bottom, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Product rule: 1/5 = 3/10 · ℙ(bus | weekend). Reciprocal of 3/10?",
+      "answer": [
+       10,
+       3
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "1/5 · 10/3. Simplify.",
+      "answer": [
+       2,
+       3
+      ],
+      "traps": [],
+      "nudges": [
+       "Top over bottom, then simplify."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Decide",
+    "ask": "Equal or different?",
+    "options": [
+     "Independent: knowing one does not change the other",
+     "Not independent: knowing one changes the other"
+    ],
+    "ch": 3290973017,
+    "shuffle": false,
+    "nudges": [
+     "Compare ℙ(bus | weekend) with ℙ(bus) = 1/2."
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
