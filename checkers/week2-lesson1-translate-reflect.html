@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2, Lesson 1 — Translations &amp; Reflections Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Translations &amp; Reflections</h1><div class="sub">Week 2 · Lesson 1 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-point.js"></script>
+<script src="../js/tool-plot.js"></script>
+<script>
+/* Week 2 Lesson 1 Learning Lab. Split layout, coarse first.
+   A miss opens the Transformation Plan one step at a time:
+   1 formula group, 2 formula, 3 collect, 4 maps to, 5 substitute, 6a/6b solve.
+   Reflections stop at Step 5 (nothing to simplify). Working backward uses
+   change sides, change signs. Choice answers and plotted points are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Translate the point (2, −3) by the vector ⟨3, 4⟩.",
+  "given": [
+   {
+    "v": "(2, −3)",
+    "k": "the point"
+   },
+   {
+    "v": "⟨3, 4⟩",
+    "k": "right 3, up 4"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     5,
+     1
+    ],
+    "traps": [
+     {
+      "p": [
+       -1,
+       -7
+      ],
+      "msg": "You moved the wrong way. Right and up add; left and down add a negative."
+     }
+    ],
+    "nudges": [
+     "Write the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Formula group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 721265847,
+      "shuffle": true,
+      "nudges": [
+       "Every point moves the same way: a slide. A mirror over a line: a flip."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "T⟨a, b⟩: translation by a vector",
+       "r x-axis: reflection over the x-axis",
+       "r y-axis: reflection over the y-axis",
+       "r y = x: reflection over the line y = x"
+      ],
+      "ch": 2076040145,
+      "shuffle": true,
+      "nudges": [
+       "Check the Formula Box on the right. Which line, or is it a vector?"
+      ]
+     },
+     {
+      "tool": "point",
+      "label": "Plan 3: Collect the parameters a, b",
+      "answer": [
+       3,
+       4
+      ],
+      "traps": [],
+      "nudges": [
+       "a is across, b is up or down."
+      ],
+      "vec": true
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (x + a, y + b)",
+       "(x, y) ↦ (x, −y)",
+       "(x, y) ↦ (−x, y)",
+       "(x, y) ↦ (y, x)"
+      ],
+      "ch": 3860653536,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: Solve for x′: 2 + 3",
+      "answer": 5,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "One coordinate at a time."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: Solve for y′: −3 + 4",
+      "answer": 1,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": -7,
+        "tol": 0,
+        "msg": "Up 4 adds 4: −3 + 4."
+       }
+      ],
+      "nudges": [
+       "One coordinate at a time."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Reflect the point (−4, 2) over the y-axis.",
+  "given": [
+   {
+    "v": "(−4, 2)",
+    "k": "the point"
+   },
+   {
+    "v": "y-axis",
+    "k": "the line"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     4,
+     2
+    ],
+    "traps": [
+     {
+      "p": [
+       -4,
+       -2
+      ],
+      "msg": "That is the x-axis rule. Over the y-axis, x becomes its opposite and y stays."
+     }
+    ],
+    "nudges": [
+     "Write the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Formula group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 1932414797,
+      "shuffle": true,
+      "nudges": [
+       "Every point moves the same way: a slide. A mirror over a line: a flip."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "T⟨a, b⟩: translation by a vector",
+       "r x-axis: reflection over the x-axis",
+       "r y-axis: reflection over the y-axis",
+       "r y = x: reflection over the line y = x"
+      ],
+      "ch": 2184547279,
+      "shuffle": true,
+      "nudges": [
+       "Check the Formula Box on the right. Which line, or is it a vector?"
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (x + a, y + b)",
+       "(x, y) ↦ (x, −y)",
+       "(x, y) ↦ (−x, y)",
+       "(x, y) ↦ (y, x)"
+      ],
+      "ch": 4013897497,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "point",
+      "label": "Plan 5: Substitute: the opposite of −4, and y stays. (Step 6: nothing to simplify.)",
+      "answer": [
+       4,
+       2
+      ],
+      "traps": [],
+      "nudges": [
+       "Write the maps-to, substitute, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Reflect the point (5, −1) over the line y = x.",
+  "given": [
+   {
+    "v": "(5, −1)",
+    "k": "the point"
+   },
+   {
+    "v": "y = x",
+    "k": "the line"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     -1,
+     5
+    ],
+    "traps": [
+     {
+      "p": [
+       1,
+       -5
+      ],
+      "msg": "Over y = x the coordinates swap and keep their signs."
+     },
+     {
+      "p": [
+       5,
+       1
+      ],
+      "msg": "That is the x-axis rule. Over y = x, swap."
+     }
+    ],
+    "nudges": [
+     "Write the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Formula group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 1932414797,
+      "shuffle": true,
+      "nudges": [
+       "Every point moves the same way: a slide. A mirror over a line: a flip."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "T⟨a, b⟩: translation by a vector",
+       "r x-axis: reflection over the x-axis",
+       "r y-axis: reflection over the y-axis",
+       "r y = x: reflection over the line y = x"
+      ],
+      "ch": 255909277,
+      "shuffle": true,
+      "nudges": [
+       "Check the Formula Box on the right. Which line, or is it a vector?"
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (x + a, y + b)",
+       "(x, y) ↦ (x, −y)",
+       "(x, y) ↦ (−x, y)",
+       "(x, y) ↦ (y, x)"
+      ],
+      "ch": 2543386119,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "point",
+      "label": "Plan 5: Substitute: swap. (Step 6: nothing to simplify.)",
+      "answer": [
+       -1,
+       5
+      ],
+      "traps": [],
+      "nudges": [
+       "Write the maps-to, substitute, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "A game piece at (−2, −5) moves left 4 and up 7. Where does it land?",
+  "given": [
+   {
+    "v": "(−2, −5)",
+    "k": "start"
+   },
+   {
+    "v": "left 4, up 7",
+    "k": "the move"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "Where it lands",
+    "answer": [
+     -6,
+     2
+    ],
+    "traps": [
+     {
+      "p": [
+       2,
+       2
+      ],
+      "msg": "Left is negative. Left 4 is a = −4."
+     },
+     {
+      "p": [
+       2,
+       -12
+      ],
+      "msg": "You moved the wrong way. Right and up add; left and down add a negative."
+     }
+    ],
+    "nudges": [
+     "Write the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Formula group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 721265847,
+      "shuffle": true,
+      "nudges": [
+       "Every point moves the same way: a slide. A mirror over a line: a flip."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "T⟨a, b⟩: translation by a vector",
+       "r x-axis: reflection over the x-axis",
+       "r y-axis: reflection over the y-axis",
+       "r y = x: reflection over the line y = x"
+      ],
+      "ch": 2076040145,
+      "shuffle": true,
+      "nudges": [
+       "Check the Formula Box on the right. Which line, or is it a vector?"
+      ]
+     },
+     {
+      "tool": "point",
+      "label": "Plan 3: Collect the parameters a, b",
+      "answer": [
+       -4,
+       7
+      ],
+      "traps": [
+       {
+        "p": [
+         4,
+         7
+        ],
+        "msg": "Left is negative."
+       }
+      ],
+      "nudges": [
+       "Left 4 is −4. Up 7 is +7."
+      ],
+      "vec": true
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (x + a, y + b)",
+       "(x, y) ↦ (x, −y)",
+       "(x, y) ↦ (−x, y)",
+       "(x, y) ↦ (y, x)"
+      ],
+      "ch": 3860653536,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: Solve for x′: −2 + (−4)",
+      "answer": -6,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 2,
+        "tol": 0,
+        "msg": "Adding a negative moves left: −2 + (−4)."
+       }
+      ],
+      "nudges": [
+       "One coordinate at a time."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: Solve for y′: −5 + 7",
+      "answer": 2,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "One coordinate at a time."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "Reflect the point (−3, −6) over the x-axis.",
+  "given": [
+   {
+    "v": "(−3, −6)",
+    "k": "the point"
+   },
+   {
+    "v": "x-axis",
+    "k": "the line"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     -3,
+     6
+    ],
+    "traps": [
+     {
+      "p": [
+       3,
+       -6
+      ],
+      "msg": "That is the y-axis rule. Over the x-axis, x stays and y becomes its opposite."
+     },
+     {
+      "p": [
+       3,
+       6
+      ],
+      "msg": "Only y changes. x stays −3."
+     }
+    ],
+    "nudges": [
+     "Write the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Formula group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 1932414797,
+      "shuffle": true,
+      "nudges": [
+       "Every point moves the same way: a slide. A mirror over a line: a flip."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "T⟨a, b⟩: translation by a vector",
+       "r x-axis: reflection over the x-axis",
+       "r y-axis: reflection over the y-axis",
+       "r y = x: reflection over the line y = x"
+      ],
+      "ch": 1202724621,
+      "shuffle": true,
+      "nudges": [
+       "Check the Formula Box on the right. Which line, or is it a vector?"
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (x + a, y + b)",
+       "(x, y) ↦ (x, −y)",
+       "(x, y) ↦ (−x, y)",
+       "(x, y) ↦ (y, x)"
+      ],
+      "ch": 2297598169,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "point",
+      "label": "Plan 5: Substitute: x stays, the opposite of −6. (Step 6: nothing to simplify.)",
+      "answer": [
+       -3,
+       6
+      ],
+      "traps": [],
+      "nudges": [
+       "Write the maps-to, substitute, then simplify."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "The rule (x, y) ↦ (x − 2, y + 5) sends a point Q to Q′(1, −4). Find Q.",
+  "given": [
+   {
+    "v": "(x − 2, y + 5)",
+    "k": "the rule"
+   },
+   {
+    "v": "(1, −4)",
+    "k": "the image Q′"
+   }
+  ],
+  "want": "Q, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The point Q",
+    "answer": [
+     3,
+     -9
+    ],
+    "traps": [
+     {
+      "p": [
+       -1,
+       1
+      ],
+      "msg": "You ran the rule forward on the image. Work backward: x + (−2) = 1."
+     }
+    ],
+    "nudges": [
+     "Write the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Formula group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 721265847,
+      "shuffle": true,
+      "nudges": [
+       "Every point moves the same way: a slide. A mirror over a line: a flip."
+      ]
+     },
+     {
+      "tool": "point",
+      "label": "Plan 3: Collect the parameters a, b",
+      "answer": [
+       -2,
+       5
+      ],
+      "traps": [],
+      "nudges": [
+       "x − 2 is x + (−2), so a = −2."
+      ],
+      "vec": true
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (x + a, y + b)",
+       "(x, y) ↦ (x, −y)",
+       "(x, y) ↦ (−x, y)",
+       "(x, y) ↦ (y, x)"
+      ],
+      "ch": 3860653536,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: x + (−2) = 1. Change sides, change signs. x = ?",
+      "answer": 3,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": -1,
+        "tol": 0,
+        "msg": "Change sides, change signs: x = 1 + 2."
+       }
+      ],
+      "nudges": [
+       "One coordinate at a time."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: y + 5 = −4. Change sides, change signs. y = ?",
+      "answer": -9,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [
+       {
+        "near": 1,
+        "tol": 0,
+        "msg": "Change sides, change signs: y = −4 + (−5)."
+       }
+      ],
+      "nudges": [
+       "One coordinate at a time."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "Reflect triangle ABC over the x-axis: A(−4, 1), B(−1, 1), C(−1, 4). Plot A′, B′, C′.",
+  "given": [
+   {
+    "v": "A(−4, 1)",
+    "k": ""
+   },
+   {
+    "v": "B(−1, 1)",
+    "k": ""
+   },
+   {
+    "v": "C(−1, 4)",
+    "k": ""
+   }
+  ],
+  "want": "the image triangle, plotted",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Translate ⟨a, b⟩</div><div class=\"rc-s\">(x, y) ↦ (x + a, y + b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the x-axis</div><div class=\"rc-s\">(x, y) ↦ (x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Over the y-axis</div><div class=\"rc-s\">(x, y) ↦ (−x, y)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Over y = x</div><div class=\"rc-s\">(x, y) ↦ (y, x): swap</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">right/up +, left/down −</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Working backward</div><div class=\"rc-s\">change sides, change signs</div></div></div><div class=\"ref-note\">Plan: 1 formula group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve (6a x′, 6b y′). −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 4: Maps to",
+    "ask": "Which maps-to line goes with that formula?",
+    "options": [
+     "(x, y) ↦ (x + a, y + b)",
+     "(x, y) ↦ (x, −y)",
+     "(x, y) ↦ (−x, y)",
+     "(x, y) ↦ (y, x)"
+    ],
+    "ch": 2297598169,
+    "shuffle": true,
+    "nudges": [
+     "Copy the maps-to line from the Formula Box."
+    ]
+   },
+   {
+    "tool": "plot",
+    "label": "Plot the image",
+    "prompt": "Tap to place each image vertex. Same distance below the x-axis as its partner is above it.",
+    "range": 6,
+    "preimage": [
+     {
+      "x": -4,
+      "y": 1,
+      "label": "A"
+     },
+     {
+      "x": -1,
+      "y": 1,
+      "label": "B"
+     },
+     {
+      "x": -1,
+      "y": 4,
+      "label": "C"
+     }
+    ],
+    "targets": [
+     {
+      "label": "A′",
+      "ch": 189436848
+     },
+     {
+      "label": "B′",
+      "ch": 189329037
+     },
+     {
+      "label": "C′",
+      "ch": 189329040
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
