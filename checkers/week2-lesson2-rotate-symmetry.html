@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2, Lesson 2 — Rotations &amp; Symmetry Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Rotations &amp; Symmetry</h1><div class="sub">Week 2 · Lesson 2 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-point.js"></script>
+<script src="../js/tool-plot.js"></script>
+<script>
+/* Week 2 Lesson 2 Learning Lab. Split layout, coarse first.
+   A miss opens the Transformation Plan: group, formula (cw -> ccw), maps to, 6a/6b.
+   Choice answers and plotted points are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Rotate the point (3, −2) by 90° about the origin.",
+  "given": [
+   {
+    "v": "(3, −2)",
+    "k": "the point"
+   },
+   {
+    "v": "90°",
+    "k": "counterclockwise"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     2,
+     3
+    ],
+    "traps": [
+     {
+      "p": [
+       -2,
+       -3
+      ],
+      "msg": "That is the clockwise answer. Counterclockwise unless the problem says clockwise."
+     },
+     {
+      "p": [
+       -3,
+       -2
+      ],
+      "msg": "For 90°: swap, and the new FIRST coordinate is the opposite of y."
+     }
+    ],
+    "nudges": [
+     "Copy the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 694305616,
+      "shuffle": true,
+      "nudges": [
+       "Turning about the origin: a rotation."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "R 90° (counterclockwise)",
+       "R 180°",
+       "R 270° (counterclockwise)"
+      ],
+      "ch": 3461239813,
+      "shuffle": true,
+      "nudges": [
+       "Match the degrees to the Formula Box."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (−y, x)",
+       "(x, y) ↦ (−x, −y)",
+       "(x, y) ↦ (y, −x)"
+      ],
+      "ch": 4015083385,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: x′ = the opposite of −2",
+      "answer": 2,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: y′ = the old x",
+      "answer": 3,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Rotate the point (−4, 1) by 180° about the origin.",
+  "given": [
+   {
+    "v": "(−4, 1)",
+    "k": "the point"
+   },
+   {
+    "v": "180°",
+    "k": "a half turn"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     4,
+     -1
+    ],
+    "traps": [
+     {
+      "p": [
+       4,
+       1
+      ],
+      "msg": "180° changes BOTH signs."
+     },
+     {
+      "p": [
+       -4,
+       -1
+      ],
+      "msg": "180° changes BOTH signs."
+     },
+     {
+      "p": [
+       -1,
+       -4
+      ],
+      "msg": "180° does not swap."
+     }
+    ],
+    "nudges": [
+     "Copy the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 694305616,
+      "shuffle": true,
+      "nudges": [
+       "Turning about the origin: a rotation."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "R 90° (counterclockwise)",
+       "R 180°",
+       "R 270° (counterclockwise)"
+      ],
+      "ch": 3380931616,
+      "shuffle": true,
+      "nudges": [
+       "Match the degrees to the Formula Box."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (−y, x)",
+       "(x, y) ↦ (−x, −y)",
+       "(x, y) ↦ (y, −x)"
+      ],
+      "ch": 3618967691,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: x′ = the opposite of −4",
+      "answer": 4,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: y′ = the opposite of 1",
+      "answer": -1,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Rotate the point (2, 6) by 270° counterclockwise about the origin.",
+  "given": [
+   {
+    "v": "(2, 6)",
+    "k": "the point"
+   },
+   {
+    "v": "270°",
+    "k": "three quarter turns"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     6,
+     -2
+    ],
+    "traps": [
+     {
+      "p": [
+       -6,
+       2
+      ],
+      "msg": "That is the 90° answer. 270° maps to (y, −x)."
+     }
+    ],
+    "nudges": [
+     "Copy the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 694305616,
+      "shuffle": true,
+      "nudges": [
+       "Turning about the origin: a rotation."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "R 90° (counterclockwise)",
+       "R 180°",
+       "R 270° (counterclockwise)"
+      ],
+      "ch": 469944149,
+      "shuffle": true,
+      "nudges": [
+       "Match the degrees to the Formula Box."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (−y, x)",
+       "(x, y) ↦ (−x, −y)",
+       "(x, y) ↦ (y, −x)"
+      ],
+      "ch": 2336733529,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: x′ = the old y",
+      "answer": 6,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: y′ = the opposite of 2",
+      "answer": -2,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Rotate the point (−5, −3) by 90° about the origin.",
+  "given": [
+   {
+    "v": "(−5, −3)",
+    "k": "the point"
+   },
+   {
+    "v": "90°",
+    "k": "counterclockwise"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     3,
+     -5
+    ],
+    "traps": [
+     {
+      "p": [
+       -3,
+       5
+      ],
+      "msg": "That is the clockwise answer. Counterclockwise unless the problem says clockwise."
+     }
+    ],
+    "nudges": [
+     "Copy the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 694305616,
+      "shuffle": true,
+      "nudges": [
+       "Turning about the origin: a rotation."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "Which formula?",
+      "options": [
+       "R 90° (counterclockwise)",
+       "R 180°",
+       "R 270° (counterclockwise)"
+      ],
+      "ch": 3461239813,
+      "shuffle": true,
+      "nudges": [
+       "Match the degrees to the Formula Box."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (−y, x)",
+       "(x, y) ↦ (−x, −y)",
+       "(x, y) ↦ (y, −x)"
+      ],
+      "ch": 4015083385,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: x′ = the opposite of −3",
+      "answer": 3,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: y′ = the old x",
+      "answer": -5,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "Rotate the point (1, −6) by 90° CLOCKWISE about the origin.",
+  "given": [
+   {
+    "v": "(1, −6)",
+    "k": "the point"
+   },
+   {
+    "v": "90° clockwise",
+    "k": "change it first"
+   }
+  ],
+  "want": "the image, as (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "point",
+    "label": "The image",
+    "answer": [
+     -6,
+     -1
+    ],
+    "traps": [
+     {
+      "p": [
+       6,
+       1
+      ],
+      "msg": "That is the counterclockwise answer. 90° clockwise is 270° counterclockwise."
+     }
+    ],
+    "nudges": [
+     "Copy the maps-to, substitute, then simplify."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 1: Group",
+      "ask": "Slide, flip, or turn?",
+      "options": [
+       "translation (a slide)",
+       "reflection (a flip)",
+       "rotation (a turn)"
+      ],
+      "ch": 694305616,
+      "shuffle": true,
+      "nudges": [
+       "Turning about the origin: a rotation."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Formula",
+      "ask": "It says clockwise. Which counterclockwise formula matches?",
+      "options": [
+       "R 90° (counterclockwise)",
+       "R 180°",
+       "R 270° (counterclockwise)"
+      ],
+      "ch": 469944149,
+      "shuffle": true,
+      "nudges": [
+       "90° clockwise is 270° counterclockwise."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Maps to",
+      "ask": "Which maps-to line goes with that formula?",
+      "options": [
+       "(x, y) ↦ (−y, x)",
+       "(x, y) ↦ (−x, −y)",
+       "(x, y) ↦ (y, −x)"
+      ],
+      "ch": 2336733529,
+      "shuffle": true,
+      "nudges": [
+       "Copy the maps-to line from the Formula Box."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6a: x′ = the old y",
+      "answer": -6,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6b: y′ = the opposite of 1",
+      "answer": -1,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "A stop sign is a regular octagon (8 equal sides). How many lines of symmetry? What is the smallest turn that lands it on itself?",
+  "given": [
+   {
+    "v": "8",
+    "k": "equal sides and angles"
+   }
+  ],
+  "want": "lines, then the smallest turn in degrees",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Lines of symmetry",
+    "answer": 8,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 4,
+      "tol": 0,
+      "msg": "Count the folds through corners AND through the middles of sides."
+     }
+    ],
+    "nudges": [
+     "A regular polygon has one line of symmetry per side."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Smallest turn, in degrees",
+    "answer": 45,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 8,
+      "tol": 0,
+      "msg": "That is n. The turn is 360 · 1/8."
+     },
+     {
+      "near": 90,
+      "tol": 0,
+      "msg": "90° works, but there is a smaller turn."
+     }
+    ],
+    "nudges": [
+     "360 · 1/n with n = 8."
+    ],
+    "sub": [
+     {
+      "tool": "numeric",
+      "label": "Count: matching positions, n",
+      "answer": 8,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Substitute and solve: 360 · 1/8",
+      "answer": 45,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Say “the opposite of …” before you write the number."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "Rotate triangle ABC by 180° about the origin: A(1, 2), B(4, 2), C(4, 5). Plot A′, B′, C′.",
+  "given": [
+   {
+    "v": "A(1, 2)",
+    "k": ""
+   },
+   {
+    "v": "B(4, 2)",
+    "k": ""
+   },
+   {
+    "v": "C(4, 5)",
+    "k": ""
+   }
+  ],
+  "want": "the image triangle, plotted",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 90°</div><div class=\"rc-s\">(x, y) ↦ (−y, x)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 180°</div><div class=\"rc-s\">(x, y) ↦ (−x, −y)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Rotate 270°</div><div class=\"rc-s\">(x, y) ↦ (y, −x)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Clockwise?</div><div class=\"rc-s\">90° cw = 270° ccw</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Smallest turn</div><div class=\"rc-s\">360 · 1/n</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Forget a rule?</div><div class=\"rc-s\">apply 90° again</div></div></div><div class=\"ref-note\">Plan: 1 group · 2 formula · 3 collect · 4 maps to · 5 substitute · 6 solve. Counterclockwise unless it says clockwise. −x means the opposite of x.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 4: Maps to",
+    "ask": "Which maps-to line goes with that formula?",
+    "options": [
+     "(x, y) ↦ (−y, x)",
+     "(x, y) ↦ (−x, −y)",
+     "(x, y) ↦ (y, −x)"
+    ],
+    "ch": 3618967691,
+    "shuffle": true,
+    "nudges": [
+     "Copy the maps-to line from the Formula Box."
+    ]
+   },
+   {
+    "tool": "plot",
+    "label": "Plot the image",
+    "prompt": "Tap to place each image vertex. Both coordinates become their opposites.",
+    "range": 6,
+    "preimage": [
+     {
+      "x": 1,
+      "y": 2,
+      "label": "A"
+     },
+     {
+      "x": 4,
+      "y": 2,
+      "label": "B"
+     },
+     {
+      "x": 4,
+      "y": 5,
+      "label": "C"
+     }
+    ],
+    "targets": [
+     {
+      "label": "A′",
+      "ch": 189329038
+     },
+     {
+      "label": "B′",
+      "ch": 189436849
+     },
+     {
+      "label": "C′",
+      "ch": 189436852
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
