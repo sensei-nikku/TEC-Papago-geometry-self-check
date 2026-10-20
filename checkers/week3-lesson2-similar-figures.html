@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 3, Lesson 2 — Similar Figures Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Similar Figures</h1><div class="sub">Week 3 · Lesson 2 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-fraction.js"></script>
+<script>
+/* Week 3 Lesson 2 Learning Lab. Split layout, coarse first.
+   A miss opens the Problem-Solving Plan one step at a time:
+   2 goal, 3 facts, 4 subgoals, 5a k from the matched pair, 5b use k.
+   Same units only. No working backward. Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "△ABC ∼ △DEF. AB = 2, DE = 10, BC = 3. Find EF.",
+  "given": [
+   {
+    "v": "AB = 2, DE = 10",
+    "k": "a matched pair"
+   },
+   {
+    "v": "BC = 3",
+    "k": "a starting side"
+   }
+  ],
+  "want": "EF",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "EF",
+    "answer": 15,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 11,
+      "tol": 0,
+      "msg": "You added the difference. Similar sides multiply: start · k = target."
+     },
+     {
+      "near": 0.6,
+      "tol": 0.01,
+      "msg": "That k is start over target. k = target over start."
+     }
+    ],
+    "nudges": [
+     "Multiply the matching starting side by k."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Goal",
+      "ask": "What are you finding?",
+      "options": [
+       "a missing side",
+       "the scale factor k",
+       "whether they are similar"
+      ],
+      "ch": 137739973,
+      "shuffle": true,
+      "nudges": [
+       "Read the last sentence of the problem again."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Which side matches BC?",
+      "options": [
+       "EF",
+       "DE",
+       "DF"
+      ],
+      "ch": 5862256,
+      "shuffle": true,
+      "nudges": [
+       "Use the letter positions: 1st with 1st, 2nd with 2nd, 3rd with 3rd."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoals",
+      "ask": "Which subgoals?",
+      "options": [
+       "5a find k from the matched pair, then 5b multiply the matching starting side by k",
+       "add the difference of the matched pair",
+       "5a find k, then 5b divide by k"
+      ],
+      "ch": 3256886067,
+      "shuffle": true,
+      "nudges": [
+       "Similar sides multiply. Find k first, then use it."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: 2 · k = 10, so k = ?",
+      "answer": [
+       5,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         5
+        ],
+        "msg": "That k is start over target. k = target over start."
+       }
+      ],
+      "nudges": [
+       "k = target over start."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: EF = 5 · 3",
+      "answer": 15,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Multiply the matching starting side by k."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "A photo is 6 in wide and 10 in tall. It is enlarged to 9 in wide. How tall is it now?",
+  "given": [
+   {
+    "v": "6 in wide, 10 in tall",
+    "k": "the original"
+   },
+   {
+    "v": "9 in wide",
+    "k": "the new width"
+   }
+  ],
+  "want": "the new height, in inches",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "New height (in)",
+    "answer": 15,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 13,
+      "tol": 0,
+      "msg": "You added the difference. Similar sides multiply: start · k = target."
+     },
+     {
+      "near": 6.67,
+      "tol": 0.05,
+      "msg": "That k is start over target. k = target over start."
+     }
+    ],
+    "nudges": [
+     "Multiply the matching starting side by k."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Goal",
+      "ask": "What are you finding?",
+      "options": [
+       "a missing side",
+       "the scale factor k",
+       "whether they are similar"
+      ],
+      "ch": 137739973,
+      "shuffle": true,
+      "nudges": [
+       "Read the last sentence of the problem again."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Which one is the start?",
+      "options": [
+       "the original photo",
+       "the enlarged photo"
+      ],
+      "ch": 4018000613,
+      "shuffle": true,
+      "nudges": [
+       "In a similarity statement, the first figure is the start. In a resize, the original is the start."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoals",
+      "ask": "Which subgoals?",
+      "options": [
+       "5a find k from the matched pair, then 5b multiply the matching starting side by k",
+       "add the difference of the matched pair",
+       "5a find k, then 5b divide by k"
+      ],
+      "ch": 3256886067,
+      "shuffle": true,
+      "nudges": [
+       "Similar sides multiply. Find k first, then use it."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: 6 · k = 9, so k = ?",
+      "answer": [
+       3,
+       2
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         3
+        ],
+        "msg": "That k is start over target. k = target over start."
+       }
+      ],
+      "nudges": [
+       "k = target over start."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: height = 3/2 · 10",
+      "answer": 15,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Multiply the matching starting side by k."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "△JKL ∼ △MNP. JK = 6, MN = 4, KL = 9. Find NP.",
+  "given": [
+   {
+    "v": "JK = 6, MN = 4",
+    "k": "a matched pair"
+   },
+   {
+    "v": "KL = 9",
+    "k": "a starting side"
+   }
+  ],
+  "want": "NP",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "NP",
+    "answer": 6,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 13.5,
+      "tol": 0.01,
+      "msg": "That k is start over target. The target is smaller here, so k must be less than 1."
+     },
+     {
+      "near": 7,
+      "tol": 0,
+      "msg": "You added the difference. Similar sides multiply: start · k = target."
+     }
+    ],
+    "nudges": [
+     "Multiply the matching starting side by k."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Goal",
+      "ask": "What are you finding?",
+      "options": [
+       "a missing side",
+       "the scale factor k",
+       "whether they are similar"
+      ],
+      "ch": 137739973,
+      "shuffle": true,
+      "nudges": [
+       "Read the last sentence of the problem again."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Which side matches KL?",
+      "options": [
+       "NP",
+       "MN",
+       "MP"
+      ],
+      "ch": 5862563,
+      "shuffle": true,
+      "nudges": [
+       "Use the letter positions: 1st with 1st, 2nd with 2nd, 3rd with 3rd."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoals",
+      "ask": "Which subgoals?",
+      "options": [
+       "5a find k from the matched pair, then 5b multiply the matching starting side by k",
+       "add the difference of the matched pair",
+       "5a find k, then 5b divide by k"
+      ],
+      "ch": 3256886067,
+      "shuffle": true,
+      "nudges": [
+       "Similar sides multiply. Find k first, then use it."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: 6 · k = 4, so k = ?",
+      "answer": [
+       2,
+       3
+      ],
+      "traps": [
+       {
+        "f": [
+         3,
+         2
+        ],
+        "msg": "That k is start over target. k = target over start."
+       }
+      ],
+      "nudges": [
+       "k = target over start."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: NP = 2/3 · 9",
+      "answer": 6,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Multiply the matching starting side by k."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "△ABC ∼ △DEF. AB = 4, DE = 10, AC = 8. Find DF.",
+  "given": [
+   {
+    "v": "AB = 4, DE = 10",
+    "k": "a matched pair"
+   },
+   {
+    "v": "AC = 8",
+    "k": "a starting side"
+   }
+  ],
+  "want": "DF",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "DF",
+    "answer": 20,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 14,
+      "tol": 0,
+      "msg": "You added the difference. Similar sides multiply: start · k = target."
+     },
+     {
+      "near": 3.2,
+      "tol": 0.01,
+      "msg": "That k is start over target. k = target over start."
+     }
+    ],
+    "nudges": [
+     "Multiply the matching starting side by k."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Goal",
+      "ask": "What are you finding?",
+      "options": [
+       "a missing side",
+       "the scale factor k",
+       "whether they are similar"
+      ],
+      "ch": 137739973,
+      "shuffle": true,
+      "nudges": [
+       "Read the last sentence of the problem again."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Which side matches AC?",
+      "options": [
+       "DF",
+       "DE",
+       "EF"
+      ],
+      "ch": 5862223,
+      "shuffle": true,
+      "nudges": [
+       "Use the letter positions: 1st with 1st, 2nd with 2nd, 3rd with 3rd."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoals",
+      "ask": "Which subgoals?",
+      "options": [
+       "5a find k from the matched pair, then 5b multiply the matching starting side by k",
+       "add the difference of the matched pair",
+       "5a find k, then 5b divide by k"
+      ],
+      "ch": 3256886067,
+      "shuffle": true,
+      "nudges": [
+       "Similar sides multiply. Find k first, then use it."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: 4 · k = 10, so k = ?",
+      "answer": [
+       5,
+       2
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         5
+        ],
+        "msg": "That k is start over target. k = target over start."
+       }
+      ],
+      "nudges": [
+       "k = target over start."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: DF = 5/2 · 8",
+      "answer": 20,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Multiply the matching starting side by k."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "△RST ∼ △XYZ. Name the partner of each side.",
+  "given": [
+   {
+    "v": "△RST ∼ △XYZ",
+    "k": "the statement"
+   }
+  ],
+  "want": "the matching sides",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 3: Facts",
+    "ask": "Which side matches ST?",
+    "options": [
+     "YZ",
+     "XY",
+     "XZ"
+    ],
+    "ch": 5862936,
+    "shuffle": true,
+    "nudges": [
+     "Use the letter positions: 1st with 1st, 2nd with 2nd, 3rd with 3rd."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 3: Facts",
+    "ask": "Which side matches RT?",
+    "options": [
+     "XZ",
+     "XY",
+     "YZ"
+    ],
+    "ch": 5862903,
+    "shuffle": true,
+    "nudges": [
+     "Use the letter positions: 1st with 1st, 2nd with 2nd, 3rd with 3rd."
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "A poster is 8 in wide and 12 in tall. It is shrunk to 6 in wide. How tall is it now?",
+  "given": [
+   {
+    "v": "8 in wide, 12 in tall",
+    "k": "the original"
+   },
+   {
+    "v": "6 in wide",
+    "k": "the new width"
+   }
+  ],
+  "want": "the new height, in inches",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "New height (in)",
+    "answer": 9,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [
+     {
+      "near": 10,
+      "tol": 0,
+      "msg": "You took away the difference. Similar sides multiply: start · k = target."
+     },
+     {
+      "near": 16,
+      "tol": 0,
+      "msg": "That k is start over target. k = target over start."
+     }
+    ],
+    "nudges": [
+     "Multiply the matching starting side by k."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Goal",
+      "ask": "What are you finding?",
+      "options": [
+       "a missing side",
+       "the scale factor k",
+       "whether they are similar"
+      ],
+      "ch": 137739973,
+      "shuffle": true,
+      "nudges": [
+       "Read the last sentence of the problem again."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Which one is the start?",
+      "options": [
+       "the original poster",
+       "the shrunk poster"
+      ],
+      "ch": 3753446328,
+      "shuffle": true,
+      "nudges": [
+       "In a similarity statement, the first figure is the start. In a resize, the original is the start."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoals",
+      "ask": "Which subgoals?",
+      "options": [
+       "5a find k from the matched pair, then 5b multiply the matching starting side by k",
+       "add the difference of the matched pair",
+       "5a find k, then 5b divide by k"
+      ],
+      "ch": 3256886067,
+      "shuffle": true,
+      "nudges": [
+       "Similar sides multiply. Find k first, then use it."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: 8 · k = 6, so k = ?",
+      "answer": [
+       3,
+       4
+      ],
+      "traps": [
+       {
+        "f": [
+         4,
+         3
+        ],
+        "msg": "That k is start over target. k = target over start."
+       }
+      ],
+      "nudges": [
+       "k = target over start."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: height = 3/4 · 12",
+      "answer": 9,
+      "tol": 0,
+      "closeBand": 0,
+      "traps": [],
+      "nudges": [
+       "Multiply the matching starting side by k."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "Is a 2 by 5 rectangle similar to a 6 by 14 rectangle?",
+  "given": [
+   {
+    "v": "2 by 5",
+    "k": "the start"
+   },
+   {
+    "v": "6 by 14",
+    "k": "the other rectangle"
+   }
+  ],
+  "want": "similar or not similar",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Scale factor</div><div class=\"rc-s\">k = target / start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing side</div><div class=\"rc-s\">target = k · start</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Missing factor</div><div class=\"rc-s\">start · k = target</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">△ABC ∼ △DEF</div><div class=\"rc-s\">A↔D, B↔E, C↔F</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Partners</div><div class=\"rc-s\">AB↔DE, BC↔EF, AC↔DF</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Read k</div><div class=\"rc-s\">target bigger: k more than 1</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts and what they mean · 4 subgoals · 5 execute (5a, 5b) · 6 solve and check. Type fractions like 3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Plan 5a: k from the short sides: 2 · k = 6, so k = ?",
+    "answer": [
+     3,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       1,
+       3
+      ],
+      "msg": "That k is start over target. k = target over start."
+     }
+    ],
+    "nudges": [
+     "k = target over start."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5b: the long side times k: 5 · 3",
+    "answer": 15,
+    "tol": 0,
+    "closeBand": 0,
+    "traps": [],
+    "nudges": [
+     "Multiply the matching starting side by k."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 6: Check",
+    "ask": "Similar or not similar?",
+    "options": [
+     "not similar",
+     "similar"
+    ],
+    "ch": 3686348679,
+    "shuffle": true,
+    "nudges": [
+     "Similar needs the same k for every pair. Does 5 times 3 give 14?"
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
