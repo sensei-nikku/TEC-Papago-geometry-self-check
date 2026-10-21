@@ -44,6 +44,6 @@ w.K.navTo(1); enter(w,'t2',0,'13/20'); A(txt().includes('overlap twice'),'T-2 13
 w.K.navTo(0); enter(w,'t1',0,'23/20'); A(txt().includes('product, not a sum'),'T-1 23/20 -> "and" is a product');
 w.K.navTo(5); enter(w,'a3',0,'2/5'); A(txt().includes('flipped'),'A-3 12/30 -> flipped given');
 w=boot(); w.K.navTo(5); ['3/20','1/4',{c:NOT}].forEach((a,j)=>enter(w,'a3',j,a)); enter(w,'a3',3,'12'); A(txt().includes('what the table shows'),'A-3 count check 12 -> table vs prediction');
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
-A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('checkers/week1-lesson3-rules.html'),'Hub: Week 1 Lesson 3 card live + linked');
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
+A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('../checkers/week1-lesson3-rules.html'),'Hub: Week 1 Lesson 3 card live + linked');
 console.log('WEEK 1 LESSON 3 TEST PASSED');

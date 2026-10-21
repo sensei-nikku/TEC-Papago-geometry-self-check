@@ -33,7 +33,7 @@ Object.keys(LADDER).forEach(pid=>{w=boot(); w.K.navTo(ids.indexOf(pid)); enter(w
   A(w.K._S()[pid].stepIdx>=1||w.K._S()[pid].done,pid+': walking the Plan settles it');});
 const trap=(pid,a,txt)=>{const ww=boot(); ww.K.navTo(ids.indexOf(pid)); enter(ww,pid,0,a); A(ww.document.getElementById('ckRail').textContent.includes(txt),pid+' '+a+' -> "'+txt+'"');};
 trap('t1','11','You added'); trap('t2','13','You added'); trap('t3','13.5','less than 1'); trap('a1','14','You added'); trap('a3','10','took away'); trap('a3','16','start over target');
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
-A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('checkers/'+FILE),'Hub: W3 L2 live + linked');
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
+A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('../checkers/'+FILE),'Hub: W3 L2 live + linked');
 A(![...hub.querySelectorAll('.hub-soon')].some(a=>a.textContent.includes('W3 \u00b7 L2')),'Hub: W3 L2 "soon" card removed');
 console.log('WEEK 3 LESSON 2 TEST PASSED');

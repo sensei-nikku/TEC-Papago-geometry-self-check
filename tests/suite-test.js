@@ -42,9 +42,9 @@ A(/The height above the ground/.test(d.getElementById('ckRail').textContent),'Pr
 })();
 
 // hub, JS OFF (no runScripts) — static cards must link the live checkers
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
 const hrefs=[...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href'));
-A(hrefs.includes('checkers/hudson-project.html'),'Hub: Project card live + linked');
-A(hrefs.includes('checkers/hudson-pretest.html'),'Hub: Pre-Test card live + linked');
-A(hrefs.includes('checkers/unit4-day1-area.html'),'Hub: Area card live + linked');
+A(hrefs.includes('../checkers/hudson-project.html'),'Hub: Project card live + linked');
+A(hrefs.includes('../checkers/hudson-pretest.html'),'Hub: Pre-Test card live + linked');
+A(hrefs.includes('../checkers/unit4-day1-area.html'),'Hub: Area card live + linked');
 console.log('SUITE TEST PASSED');

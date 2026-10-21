@@ -38,6 +38,6 @@ Object.keys(LADDER).forEach(pid=>{w.K.navTo(ids.indexOf(pid)); enter(w,pid,0,'(9
   A(w.K._S()[pid].steps[0].ok===true||w.K._S()[pid].done,pid+': walking the Plan settles it');});
 const trap=(pid,a,txt)=>{const ww=boot(); ww.K.navTo(ids.indexOf(pid)); enter(ww,pid,0,a); A(ww.document.getElementById('ckRail').textContent.includes(txt),pid+' '+a+' -> "'+txt+'"');};
 trap('t1','(-2, -3)','clockwise answer'); trap('a2','(6, 1)','counterclockwise answer'); trap('t3','(-6, 2)','90'); trap('t2','(-1, -4)','does not swap');
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
-A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('checkers/'+FILE),'Hub: W2 L2 live + linked');
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
+A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('../checkers/'+FILE),'Hub: W2 L2 live + linked');
 console.log('WEEK 2 LESSON 2 TEST PASSED');

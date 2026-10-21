@@ -63,6 +63,6 @@ const ra=S().a4.steps[0].subs[0]; w.K.act('a4',1001,'pick',ra.options.indexOf(RU
 w.K.input('a4',1002,'45'); w.K.act('a4',1002,'check'); w.K.input('a4',1003,'90'); w.K.act('a4',1003,'check');
 A(S().a4.steps[0].subIdx===2 && d.getElementById('ckRail').textContent.includes('flipped'),'A-4 bottom 90 -> flipped-given trap, rung not passed');
 
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
-A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('checkers/week1-lesson2-probability.html'),'Hub: Week 1 Lesson 2 card live + linked');
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
+A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('../checkers/week1-lesson2-probability.html'),'Hub: Week 1 Lesson 2 card live + linked');
 console.log('WEEK 1 LESSON 2 TEST PASSED');

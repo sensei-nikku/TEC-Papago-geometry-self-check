@@ -37,7 +37,7 @@ Object.keys(LADDER).forEach(pid=>{w=boot(); w.K.navTo(ids.indexOf(pid)); const f
 const trap=(pid,a,txt)=>{const ww=boot(); ww.K.navTo(ids.indexOf(pid)); enter(ww,pid,0,a); A(ww.document.getElementById('ckRail').textContent.includes(txt),pid+' '+a+' -> "'+txt+'"');};
 trap('t1','(5, -3)','You added k'); trap('a1','(15, 3)','negative times a positive'); trap('t3','1/4','start over target'); trap('a3','5/2','start over target');
 trap('t3','9','You subtracted'); trap('t2','(-8, 16)','multiplied by 2'); trap('a4','(4, 0)','k is 5/2');
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
-A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('checkers/'+FILE),'Hub: W3 L1 live + linked');
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
+A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('../checkers/'+FILE),'Hub: W3 L1 live + linked');
 A(![...hub.querySelectorAll('.hub-soon')].some(a=>a.textContent.includes('W3 \u00b7 L1')),'Hub: W3 L1 "soon" card removed');
 console.log('WEEK 3 LESSON 1 TEST PASSED');

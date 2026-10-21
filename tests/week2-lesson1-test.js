@@ -37,6 +37,6 @@ Object.keys(LADDER).forEach(pid=>{w.K.navTo(ids.indexOf(pid)); enter(w,pid,0,'(9
   A(w.K._S()[pid].steps[0].ok===true||w.K._S()[pid].done,pid+': walking the Plan settles it');});
 const trap=(pid,a,txt)=>{const ww=boot(); ww.K.navTo(ids.indexOf(pid)); enter(ww,pid,0,a); A(ww.document.getElementById('ckRail').textContent.includes(txt),pid+' '+a+' -> "'+txt+'"');};
 trap('t2','(-4, -2)','x-axis rule'); trap('a1','(2, 2)','Left is negative'); trap('a3','(-1, 1)','forward'); trap('t1','(1, 5)','wrong order'); trap('t1','(5, 7)','first coordinate is right');
-const hub=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8')).window.document;
-A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('checkers/'+FILE),'Hub: W2 L1 live + linked');
+const hub=new JSDOM(fs.readFileSync(path.join(root,'terms','sy2627-term2.html'),'utf8')).window.document;
+A([...hub.querySelectorAll('.hub-card:not(.hub-soon)')].map(a=>a.getAttribute('href')).includes('../checkers/'+FILE),'Hub: W2 L1 live + linked');
 console.log('WEEK 2 LESSON 1 TEST PASSED');
