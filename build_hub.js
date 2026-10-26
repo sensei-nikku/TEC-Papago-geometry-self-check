@@ -42,7 +42,7 @@ const TERM2={id:'sy2627-term2',name:'SY2627 Term 2',weeks:[
   ['W3 · L2','Similar Figures','week3-lesson2-similar-figures.html','Match sides, find k from one matched pair, and find the missing side.'],
   ['W3 · L3','Special Right Triangles','week3-lesson3-special-right.html','45-45-90 and 30-60-90 from the short leg, with conduit bends.']]],
  ['Week 4 — Right-Triangle Trigonometry',[
-  ['W4 · L1','Sine, Cosine & Tangent: Missing Sides',null,''],
+  ['W4 · L1','Sine, Cosine & Tangent: Missing Sides','week4-lesson1-trig-sides.html','Name the sides from the marked angle, pick sin, cos, or tan, and find the missing side.'],
   ['W4 · L2','Inverse Functions & Inverse Trig','unit3-day3-inverse.html','Undo a function, then run the three ratios backward: two sides in, the angle out.'],
   ['W4 · L3','Angles of Elevation & Depression',null,'']]],
  ['Week 5 — Midterm: Miracle on the Hudson',[

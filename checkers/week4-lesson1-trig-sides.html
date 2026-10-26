@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 4, Lesson 1 — Trig Ratios: Finding Sides Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Trig Ratios: Finding Sides</h1><div class="sub">Week 4 · Lesson 1 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on the printed sheet and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script>
+/* Week 4 Lesson 1 Learning Lab. Split layout, coarse first. A miss opens the
+   Problem-Solving Plan: name the sides from the marked angle, pick the ratio,
+   substitute, solve, calculator. Answers to the nearest tenth (tol 0.06).
+   Same 7 problems as the printed Learning Lab. Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Find x. Round to the nearest tenth.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 230 161\" style=\"width:100%;height:auto;max-width:345px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is 36 degrees. Labelled sides: 10 and x.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"38.0,123.0 188.0,123.0 188.0,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 177.0 123.0 L 177.0 112.0 L 188.0 112.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"62.0,123.0 62.0,121.9 61.9,120.8 61.8,119.8 61.6,118.7 61.4,117.6 61.1,116.6 60.8,115.6 60.5,114.5 60.1,113.5 59.6,112.6 59.1,111.6 58.6,110.7 58.0,109.8 57.4,108.9\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"79.8\" y=\"114.4\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">36°</text><text x=\"96.8\" y=\"61.7\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">10</text><text x=\"206.8\" y=\"66.7\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">x</text></svg>",
+  "given": [
+   {
+    "v": "36°",
+    "k": "the marked angle"
+   },
+   {
+    "v": "10",
+    "k": "a side"
+   }
+  ],
+  "want": "x, to the nearest tenth",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "x ≈ ? (nearest tenth)",
+    "answer": 5.877852522924732,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 8.090169943749475,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the 36° angle first."
+     },
+     {
+      "near": 7.265425280053607,
+      "tol": 0.06,
+      "msg": "That is what tan gives. Name the sides from the 36° angle first."
+     },
+     {
+      "near": -9.917788534431157,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 5.8,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 36° angle. The side marked 10 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And x is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 1814611347,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "sin 36° = x / 10",
+       "sin 36° = 10 / x",
+       "cos 36° = x / 10"
+      ],
+      "ch": 3515676973,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees x?",
+      "options": [
+       "x = 10 · sin 36°",
+       "x = 10 / sin 36°",
+       "x = sin 36° / 10"
+      ],
+      "ch": 695873717,
+      "shuffle": true,
+      "nudges": [
+       "x is on top, over 10. Multiply both sides by 10."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. x ≈ ? (nearest tenth)",
+      "answer": 5.877852522924732,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 8.090169943749475,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the 36° angle first."
+       },
+       {
+        "near": 7.265425280053607,
+        "tol": 0.06,
+        "msg": "That is what tan gives. Name the sides from the 36° angle first."
+       },
+       {
+        "near": -9.917788534431157,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 5.8,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Find x. Round to the nearest tenth.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 178 207\" style=\"width:100%;height:auto;max-width:267px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is 50 degrees. Labelled sides: 14 and x.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"38.0,164.0 163.9,164.0 163.9,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 152.9 164.0 L 152.9 153.0 L 163.9 153.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"62.0,164.0 62.0,162.5 61.8,161.0 61.6,159.5 61.3,158.1 60.8,156.6 60.3,155.2 59.8,153.9 59.1,152.5 58.3,151.2 57.5,150.0 56.6,148.8 55.6,147.7 54.5,146.6 53.4,145.6\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"77.9\" y=\"150.4\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">50°</text><text x=\"88.1\" y=\"78.7\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">14</text><text x=\"93.2\" y=\"187.4\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">x</text></svg>",
+  "given": [
+   {
+    "v": "50°",
+    "k": "the marked angle"
+   },
+   {
+    "v": "14",
+    "k": "a side"
+   }
+  ],
+  "want": "x, to the nearest tenth",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "x ≈ ? (nearest tenth)",
+    "answer": 8.99902653561155,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 10.724622203665692,
+      "tol": 0.06,
+      "msg": "That is what sin gives. Name the sides from the 50° angle first."
+     },
+     {
+      "near": 16.68455029631894,
+      "tol": 0.06,
+      "msg": "That is what tan gives. Name the sides from the 50° angle first."
+     },
+     {
+      "near": 13.509524398889587,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 8.9,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 50° angle. The side marked 14 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And x is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 2020415598,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "cos 50° = x / 14",
+       "cos 50° = 14 / x",
+       "sin 50° = x / 14"
+      ],
+      "ch": 1273153800,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees x?",
+      "options": [
+       "x = 14 · cos 50°",
+       "x = 14 / cos 50°",
+       "x = cos 50° / 14"
+      ],
+      "ch": 2107813808,
+      "shuffle": true,
+      "nudges": [
+       "x is on top, over 14. Multiply both sides by 14."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. x ≈ ? (nearest tenth)",
+      "answer": 8.99902653561155,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 10.724622203665692,
+        "tol": 0.06,
+        "msg": "That is what sin gives. Name the sides from the 50° angle first."
+       },
+       {
+        "near": 16.68455029631894,
+        "tol": 0.06,
+        "msg": "That is what tan gives. Name the sides from the 50° angle first."
+       },
+       {
+        "near": 13.509524398889587,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 8.9,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Find x. Round to the nearest tenth.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 230 192\" style=\"width:100%;height:auto;max-width:344px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is 42 degrees. Labelled sides: 12 and x.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"38.0,149.1 188.0,149.1 188.0,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 177.0 149.1 L 177.0 138.1 L 188.0 138.1\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"62.0,149.1 62.0,147.8 61.9,146.6 61.7,145.3 61.5,144.1 61.2,142.8 60.8,141.6 60.4,140.5 59.9,139.3 59.4,138.2 58.8,137.1 58.1,136.0 57.4,135.0 56.7,134.0 55.8,133.0\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"79.1\" y=\"138.3\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">42°</text><text x=\"103.3\" y=\"171.5\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">12</text><text x=\"206.2\" y=\"78.3\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">x</text></svg>",
+  "given": [
+   {
+    "v": "42°",
+    "k": "the marked angle"
+   },
+   {
+    "v": "12",
+    "k": "a side"
+   }
+  ],
+  "want": "x, to the nearest tenth",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "x ≈ ? (nearest tenth)",
+    "answer": 10.804848531574079,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 8.029567276306299,
+      "tol": 0.06,
+      "msg": "That is what sin gives. Name the sides from the 42° angle first. 12 is not the hypotenuse."
+     },
+     {
+      "near": 8.917737905728732,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the 42° angle first."
+     },
+     {
+      "near": 13.327350177950315,
+      "tol": 0.06,
+      "msg": "You used 12 / tan 42°. x is on top, so multiply both sides by 12."
+     },
+     {
+      "near": 27.496655909249835,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 42° angle. The side marked 12 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And x is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 2639878154,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "tan 42° = x / 12",
+       "tan 42° = 12 / x",
+       "sin 42° = x / 12"
+      ],
+      "ch": 3741792613,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees x?",
+      "options": [
+       "x = 12 · tan 42°",
+       "x = 12 / tan 42°",
+       "x = tan 42° / 12"
+      ],
+      "ch": 1854183085,
+      "shuffle": true,
+      "nudges": [
+       "x is on top, over 12. Multiply both sides by 12."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. x ≈ ? (nearest tenth)",
+      "answer": 10.804848531574079,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 8.029567276306299,
+        "tol": 0.06,
+        "msg": "That is what sin gives. Name the sides from the 42° angle first. 12 is not the hypotenuse."
+       },
+       {
+        "near": 8.917737905728732,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the 42° angle first."
+       },
+       {
+        "near": 13.327350177950315,
+        "tol": 0.06,
+        "msg": "You used 12 / tan 42°. x is on top, so multiply both sides by 12."
+       },
+       {
+        "near": 27.496655909249835,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Find x. Round to the nearest tenth. The picture is turned around: find the marked angle first.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 247 107\" style=\"width:100%;height:auto;max-width:370px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is 20 degrees. Labelled sides: 25 and x.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"193.0,68.6 43.0,68.6 43.0,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 54.0 68.6 L 54.0 57.6 L 43.0 57.6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"169.0,68.6 169.0,68.0 169.0,67.4 169.0,66.8 169.1,66.2 169.2,65.6 169.2,65.0 169.3,64.4 169.5,63.8 169.6,63.3 169.7,62.7 169.9,62.1 170.0,61.5 170.2,61.0 170.4,60.4\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"204.8\" y=\"75.7\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">20°</text><text x=\"136.8\" y=\"39.5\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">25</text><text x=\"23.3\" y=\"42.7\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">x</text></svg>",
+  "given": [
+   {
+    "v": "20°",
+    "k": "the marked angle"
+   },
+   {
+    "v": "25",
+    "k": "a side"
+   }
+  ],
+  "want": "x, to the nearest tenth",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "x ≈ ? (nearest tenth)",
+    "answer": 8.550503583141717,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 23.49231551964771,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the 20° angle first. The picture is flipped: x is across from 20°."
+     },
+     {
+      "near": 9.09925585665506,
+      "tol": 0.06,
+      "msg": "That is what tan gives. Name the sides from the 20° angle first."
+     },
+     {
+      "near": 22.82363126819069,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 8.5,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 20° angle. The side marked 25 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And x is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 1814611347,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "sin 20° = x / 25",
+       "sin 20° = 25 / x",
+       "cos 20° = x / 25"
+      ],
+      "ch": 2154650732,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees x?",
+      "options": [
+       "x = 25 · sin 20°",
+       "x = 25 / sin 20°",
+       "x = sin 20° / 25"
+      ],
+      "ch": 4114420564,
+      "shuffle": true,
+      "nudges": [
+       "x is on top, over 25. Multiply both sides by 25."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. x ≈ ? (nearest tenth)",
+      "answer": 8.550503583141717,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 23.49231551964771,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the 20° angle first. The picture is flipped: x is across from 20°."
+       },
+       {
+        "near": 9.09925585665506,
+        "tol": 0.06,
+        "msg": "That is what tan gives. Name the sides from the 20° angle first."
+       },
+       {
+        "near": 22.82363126819069,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 8.5,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "A loading ramp is 12 ft long. It makes a 15° angle with the ground. How high is the top of the ramp? Round to the nearest tenth. No picture: sketch the right triangle on your paper first.",
+  "figure": "",
+  "given": [
+   {
+    "v": "12 ft long",
+    "k": "the ramp"
+   },
+   {
+    "v": "15°",
+    "k": "the angle with the ground"
+   }
+  ],
+  "want": "h, the height of the top, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "h ≈ ? (nearest tenth)",
+    "answer": 3.105828541230249,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 11.59110991546882,
+      "tol": 0.06,
+      "msg": "That is the distance along the ground (cos). The height is across from the 15° angle."
+     },
+     {
+      "near": 3.2153903091734723,
+      "tol": 0.06,
+      "msg": "That is what tan gives. Name the sides from the 15° angle first. The ramp itself is the hypotenuse."
+     },
+     {
+      "near": 7.803454081885402,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 15° angle. The ramp (12 ft) is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the height h is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 1814611347,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "sin 15° = h / 12",
+       "sin 15° = 12 / h",
+       "cos 15° = h / 12"
+      ],
+      "ch": 3304521500,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees h?",
+      "options": [
+       "h = 12 · sin 15°",
+       "h = 12 / sin 15°",
+       "h = sin 15° / 12"
+      ],
+      "ch": 1893807236,
+      "shuffle": true,
+      "nudges": [
+       "h is on top, over 12. Multiply both sides by 12."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. h ≈ ? (nearest tenth)",
+      "answer": 3.105828541230249,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 11.59110991546882,
+        "tol": 0.06,
+        "msg": "That is the distance along the ground (cos). The height is across from the 15° angle."
+       },
+       {
+        "near": 3.2153903091734723,
+        "tol": 0.06,
+        "msg": "That is what tan gives. Name the sides from the 15° angle first. The ramp itself is the hypotenuse."
+       },
+       {
+        "near": 7.803454081885402,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "Find x. Round to the nearest tenth. The marked angle is at the top this time.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 206 157\" style=\"width:100%;height:auto;max-width:309px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is 55 degrees. Labelled sides: 9 and x.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"192.2,143.0 42.2,143.0 42.2,38.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 53.2 143.0 L 53.2 132.0 L 42.2 132.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"61.8,51.8 60.8,53.1 59.8,54.3 58.6,55.5 57.4,56.6 56.1,57.6 54.7,58.5 53.3,59.3 51.8,60.0 50.2,60.6 48.7,61.1 47.1,61.5 45.5,61.8 43.8,61.9 42.2,62.0\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"62.5\" y=\"82.0\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">55°</text><text x=\"23.3\" y=\"88.9\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">9</text><text x=\"133.6\" y=\"84.0\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">x</text></svg>",
+  "given": [
+   {
+    "v": "55°",
+    "k": "the marked angle"
+   },
+   {
+    "v": "9",
+    "k": "a side"
+   }
+  ],
+  "want": "x, to the nearest tenth",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "x ≈ ? (nearest tenth)",
+    "answer": 15.691021160589884,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 5.162187927159414,
+      "tol": 0.06,
+      "msg": "x is on the bottom of the fraction, so multiplying doesn't free it. Treat x as the missing factor. Check: a hypotenuse is longer than either leg."
+     },
+     {
+      "near": 10.986971298853105,
+      "tol": 0.06,
+      "msg": "That is what sin gives. Name the sides from the 55° angle first. 9 touches the 55° angle."
+     },
+     {
+      "near": 12.85333206067903,
+      "tol": 0.06,
+      "msg": "That is the other leg, not x. x is across from the square corner."
+     },
+     {
+      "near": 406.7473737881049,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 15.6,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 55° angle. The side marked 9 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And x is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 2020415598,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "cos 55° = 9 / x",
+       "cos 55° = x / 9",
+       "sin 55° = 9 / x"
+      ],
+      "ch": 3947089025,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees x?",
+      "options": [
+       "x = 9 / cos 55°",
+       "x = 9 · cos 55°",
+       "x = cos 55° / 9"
+      ],
+      "ch": 2158507841,
+      "shuffle": true,
+      "nudges": [
+       "x is on the bottom. Multiply both sides by x; then x is the missing factor, like 2 · ☐ = 6."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. x ≈ ? (nearest tenth)",
+      "answer": 15.691021160589884,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 5.162187927159414,
+        "tol": 0.06,
+        "msg": "x is on the bottom of the fraction, so multiplying doesn't free it. Treat x as the missing factor. Check: a hypotenuse is longer than either leg."
+       },
+       {
+        "near": 10.986971298853105,
+        "tol": 0.06,
+        "msg": "That is what sin gives. Name the sides from the 55° angle first. 9 touches the 55° angle."
+       },
+       {
+        "near": 12.85333206067903,
+        "tol": 0.06,
+        "msg": "That is the other leg, not x. x is across from the square corner."
+       },
+       {
+        "near": 406.7473737881049,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 15.6,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "A kite flies 30 ft above the ground. Its string makes a 48° angle with the ground. How long is the string? Treat the string as straight, with your hand at ground level. Round to the nearest tenth. No picture: sketch the right triangle first.",
+  "figure": "",
+  "given": [
+   {
+    "v": "30 ft",
+    "k": "the height of the kite"
+   },
+   {
+    "v": "48°",
+    "k": "the angle with the ground"
+   }
+  ],
+  "want": "L, the length of the string, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from the marked angle</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches the angle, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode. A leg is always shorter than the hypotenuse.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "L ≈ ? (nearest tenth)",
+    "answer": 40.368981888191286,
+    "tol": 0.06,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 22.294344764321828,
+      "tol": 0.06,
+      "msg": "L is on the bottom of the fraction, so multiplying doesn't free it. Treat L as the missing factor. Check: a hypotenuse is longer than either leg."
+     },
+     {
+      "near": 44.83429649593826,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the 48° angle first. The height is across from the 48° angle."
+     },
+     {
+      "near": 27.0121213289352,
+      "tol": 0.06,
+      "msg": "That is the distance along the ground, not the string."
+     },
+     {
+      "near": -39.049551548846324,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 40.3,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the sides from the marked angle, pick the ratio, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at the 48° angle. The height (30 ft) is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the string L is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 1814611347,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "sin 48° = 30 / L",
+       "sin 48° = L / 30",
+       "cos 48° = 30 / L"
+      ],
+      "ch": 1834965446,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees L?",
+      "options": [
+       "L = 30 / sin 48°",
+       "L = 30 · sin 48°",
+       "L = sin 48° / 30"
+      ],
+      "ch": 2418173126,
+      "shuffle": true,
+      "nudges": [
+       "L is on the bottom. Multiply both sides by L; then L is the missing factor, like 2 · ☐ = 6."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. L ≈ ? (nearest tenth)",
+      "answer": 40.368981888191286,
+      "tol": 0.06,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 22.294344764321828,
+        "tol": 0.06,
+        "msg": "L is on the bottom of the fraction, so multiplying doesn't free it. Treat L as the missing factor. Check: a hypotenuse is longer than either leg."
+       },
+       {
+        "near": 44.83429649593826,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the 48° angle first. The height is across from the 48° angle."
+       },
+       {
+        "near": 27.0121213289352,
+        "tol": 0.06,
+        "msg": "That is the distance along the ground, not the string."
+       },
+       {
+        "near": -39.049551548846324,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 40.3,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
