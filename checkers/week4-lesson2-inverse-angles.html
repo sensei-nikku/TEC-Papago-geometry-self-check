@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 4, Lesson 2 — Inverse Trig: Finding Angles Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Inverse Trig: Finding Angles</h1><div class="sub">Week 4 · Lesson 2 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script>
+/* Week 4 Lesson 2 Learning Lab. Split layout, coarse first. A miss opens the
+   Problem-Solving Plan: name both sides from theta, pick the inverse, substitute
+   and undo, calculator. Answers to the nearest tenth of a degree (tol 0.05: the right tenth or
+   the unrounded value passes; a wrongly rounded tenth does not).
+   Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Find θ. Round to the nearest tenth.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 230 148\" style=\"width:100%;height:auto;max-width:346px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is theta, the unknown. Labelled sides: 7 and 13.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"38.0,109.9 188.0,109.9 188.0,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 177.0 109.9 L 177.0 98.9 L 188.0 98.9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"62.0,109.9 62.0,108.9 61.9,107.9 61.8,106.9 61.7,106.0 61.5,105.0 61.3,104.1 61.0,103.1 60.7,102.2 60.4,101.3 60.0,100.4 59.6,99.5 59.2,98.6 58.7,97.8 58.2,96.9\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"72.6\" y=\"104.8\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">θ</text><text x=\"207.1\" y=\"60.8\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">7</text><text x=\"96.1\" y=\"56.2\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">13</text></svg>",
+  "given": [
+   {
+    "v": "7",
+    "k": "a side"
+   },
+   {
+    "v": "13",
+    "k": "a side"
+   }
+  ],
+  "want": "θ, to the nearest tenth of a degree",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 32.57897039280412,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 57.421,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 28.3008,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 61.6992,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.0094,
+      "tol": 0.006,
+      "msg": "You pressed sin, not sin⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 0.5686,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 32.5,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The side marked 7 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The side marked 13 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1350966456,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = sin⁻¹(7 / 13)",
+       "θ = sin⁻¹(13 / 7)",
+       "θ = sin(7 / 13)"
+      ],
+      "ch": 2764122771,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 32.57897039280412,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 57.421,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 28.3008,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 61.6992,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.0094,
+        "tol": 0.006,
+        "msg": "You pressed sin, not sin⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 0.5686,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 32.5,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Find θ. Round to the nearest tenth.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 194 207\" style=\"width:100%;height:auto;max-width:291px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is theta, the unknown. Labelled sides: 11 and 16.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"38.0,164.0 180.0,164.0 180.0,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 169.0 164.0 L 169.0 153.0 L 180.0 153.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"62.0,164.0 62.0,162.6 61.8,161.2 61.6,159.8 61.4,158.5 61.0,157.1 60.6,155.8 60.0,154.5 59.5,153.3 58.8,152.0 58.1,150.8 57.3,149.7 56.4,148.6 55.5,147.6 54.5,146.6\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"71.1\" y=\"154.8\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">θ</text><text x=\"100.4\" y=\"187.1\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">11</text><text x=\"95.3\" y=\"79.5\" text-anchor=\"end\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">16</text></svg>",
+  "given": [
+   {
+    "v": "11",
+    "k": "a side"
+   },
+   {
+    "v": "16",
+    "k": "a side"
+   }
+  ],
+  "want": "θ, to the nearest tenth of a degree",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 46.56746344221023,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 43.4325,
+      "tol": 0.06,
+      "msg": "That is what sin⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 34.5085,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 55.4915,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.9999,
+      "tol": 0.006,
+      "msg": "You pressed cos, not cos⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 0.8128,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 46.5,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The side marked 11 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The side marked 16 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1361918003,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = cos⁻¹(11 / 16)",
+       "θ = cos⁻¹(16 / 11)",
+       "θ = cos(11 / 16)"
+      ],
+      "ch": 3405360988,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 46.56746344221023,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 43.4325,
+        "tol": 0.06,
+        "msg": "That is what sin⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 34.5085,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 55.4915,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.9999,
+        "tol": 0.006,
+        "msg": "You pressed cos, not cos⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 0.8128,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 46.5,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Find θ. Round to the nearest tenth.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 171 208\" style=\"width:100%;height:auto;max-width:256px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is theta, the unknown. Labelled sides: 8 and 5.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"38.0,164.0 131.8,164.0 131.8,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 120.8 164.0 L 120.8 153.0 L 131.8 153.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"62.0,164.0 61.9,162.3 61.7,160.5 61.4,158.8 61.0,157.2 60.4,155.5 59.8,153.9 59.0,152.4 58.1,150.9 57.1,149.5 56.0,148.1 54.8,146.9 53.5,145.7 52.2,144.6 50.7,143.6\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"69.5\" y=\"151.5\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">θ</text><text x=\"147.4\" y=\"81.5\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">8</text><text x=\"78.9\" y=\"188.1\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">5</text></svg>",
+  "given": [
+   {
+    "v": "8",
+    "k": "a side"
+   },
+   {
+    "v": "5",
+    "k": "a side"
+   }
+  ],
+  "want": "θ, to the nearest tenth of a degree",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 57.9946167919165,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 32.0054,
+      "tol": 0.06,
+      "msg": "The sides are in the wrong order, so you got the other acute angle. For tan, opp goes on top."
+     },
+     {
+      "near": 38.6822,
+      "tol": 0.06,
+      "msg": "That is what sin⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 51.3178,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.0279,
+      "tol": 0.006,
+      "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 1.0122,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 57.9,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The side marked 8 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The side marked 5 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1115399119,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = tan⁻¹(8 / 5)",
+       "θ = tan⁻¹(5 / 8)",
+       "θ = tan(8 / 5)"
+      ],
+      "ch": 3608371614,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 57.9946167919165,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 32.0054,
+        "tol": 0.06,
+        "msg": "The sides are in the wrong order, so you got the other acute angle. For tan, opp goes on top."
+       },
+       {
+        "near": 38.6822,
+        "tol": 0.06,
+        "msg": "That is what sin⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 51.3178,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.0279,
+        "tol": 0.006,
+        "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 1.0122,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 57.9,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Find θ. Round to the nearest tenth. The picture is turned around: find θ first.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 180 207\" style=\"width:100%;height:auto;max-width:270px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is theta, the unknown. Labelled sides: 13 and 20.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"142.3,164.0 14.0,164.0 14.0,14.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 25.0 164.0 L 25.0 153.0 L 14.0 153.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"118.3,164.0 118.3,162.5 118.5,161.0 118.7,159.6 119.0,158.1 119.4,156.7 119.9,155.3 120.5,154.0 121.2,152.6 121.9,151.4 122.7,150.1 123.6,148.9 124.6,147.8 125.6,146.8 126.7,145.8\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"109.6\" y=\"153.9\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">θ</text><text x=\"86.0\" y=\"187.4\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">13</text><text x=\"91.2\" y=\"78.8\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">20</text></svg>",
+  "given": [
+   {
+    "v": "13",
+    "k": "a side"
+   },
+   {
+    "v": "20",
+    "k": "a side"
+   }
+  ],
+  "want": "θ, to the nearest tenth of a degree",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 49.45839812649548,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 40.5416,
+      "tol": 0.06,
+      "msg": "That is what sin⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 33.0239,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 56.9761,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.9999,
+      "tol": 0.006,
+      "msg": "You pressed cos, not cos⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 0.8632,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 49.4,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The side marked 13 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The side marked 20 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1361918003,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = cos⁻¹(13 / 20)",
+       "θ = cos⁻¹(20 / 13)",
+       "θ = cos(13 / 20)"
+      ],
+      "ch": 1693330521,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 49.45839812649548,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 40.5416,
+        "tol": 0.06,
+        "msg": "That is what sin⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 33.0239,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 56.9761,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.9999,
+        "tol": 0.006,
+        "msg": "You pressed cos, not cos⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 0.8632,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 49.4,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "A roof rises 7 in for every 12 in across. What angle does the roof make with level? Round to the nearest tenth. No picture: sketch the right triangle on your paper first.",
+  "figure": "",
+  "given": [
+   {
+    "v": "rises 7 in",
+    "k": "up"
+   },
+   {
+    "v": "12 in across",
+    "k": "level"
+   }
+  ],
+  "want": "θ, the roof angle, to the nearest tenth of a degree",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 30.256437163529274,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 59.7436,
+      "tol": 0.06,
+      "msg": "The sides are in the wrong order, so you got the other acute angle. For tan, opp goes on top."
+     },
+     {
+      "near": 35.6853,
+      "tol": 0.06,
+      "msg": "That is what sin⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 54.3147,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.0102,
+      "tol": 0.006,
+      "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 0.5281,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 30.2,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The rise (7 in) is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The run across (12 in) is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1115399119,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = tan⁻¹(7 / 12)",
+       "θ = tan⁻¹(12 / 7)",
+       "θ = tan(7 / 12)"
+      ],
+      "ch": 1820674283,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 30.256437163529274,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 59.7436,
+        "tol": 0.06,
+        "msg": "The sides are in the wrong order, so you got the other acute angle. For tan, opp goes on top."
+       },
+       {
+        "near": 35.6853,
+        "tol": 0.06,
+        "msg": "That is what sin⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 54.3147,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.0102,
+        "tol": 0.006,
+        "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 0.5281,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 30.2,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "Find θ. Round to the nearest tenth. θ is at the top this time.",
+  "figure": "<svg class=\"figtri\" viewBox=\"0 0 146 232\" style=\"width:100%;height:auto;max-width:218px\" role=\"img\" aria-label=\"Right triangle drawn to scale. The marked angle is theta, the unknown. Labelled sides: 9 and 17.\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"131.6,188.0 38.0,188.0 38.0,38.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linejoin=\"round\"/><path d=\"M 49.0 188.0 L 49.0 177.0 L 38.0 177.0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"/><polyline points=\"50.7,58.4 49.9,58.9 49.0,59.3 48.2,59.7 47.3,60.1 46.4,60.5 45.5,60.8 44.6,61.1 43.7,61.3 42.8,61.5 41.8,61.7 40.9,61.8 39.9,61.9 39.0,62.0 38.0,62.0\" fill=\"none\" stroke=\"var(--accent,#1B6B93)\" stroke-width=\"2\"/><text x=\"47.9\" y=\"77.6\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"var(--accent,#1B6B93)\">θ</text><text x=\"90.8\" y=\"212.1\" text-anchor=\"middle\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">9</text><text x=\"95.4\" y=\"101.0\" text-anchor=\"start\" font-size=\"15\" font-family=\"DM Sans, sans-serif\" fill=\"currentColor\" font-style=\"italic\">17</text></svg>",
+  "given": [
+   {
+    "v": "9",
+    "k": "a side"
+   },
+   {
+    "v": "17",
+    "k": "a side"
+   }
+  ],
+  "want": "θ, to the nearest tenth of a degree",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 31.965718750796963,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 58.0343,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 27.8973,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 62.1027,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.0092,
+      "tol": 0.006,
+      "msg": "You pressed sin, not sin⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 0.5579,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 31.9,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The side marked 9 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The side marked 17 is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1350966456,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = sin⁻¹(9 / 17)",
+       "θ = sin⁻¹(17 / 9)",
+       "θ = sin(9 / 17)"
+      ],
+      "ch": 1052091545,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 31.965718750796963,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 58.0343,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 27.8973,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 62.1027,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.0092,
+        "tol": 0.006,
+        "msg": "You pressed sin, not sin⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 0.5579,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 31.9,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "A 16 ft ladder (from its foot to where it rests) reaches 15 ft up a wall. What angle does it make with the ground? Round to the nearest tenth. Then compare it with OSHA’s safe angle, about 75.5°.",
+  "figure": "",
+  "given": [
+   {
+    "v": "16 ft",
+    "k": "the ladder"
+   },
+   {
+    "v": "15 ft",
+    "k": "up the wall"
+   }
+  ],
+  "want": "θ, then how it compares with 75.5°",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">opp and hyp</div><div class=\"rc-s\">θ = sin⁻¹(opp / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj and hyp</div><div class=\"rc-s\">θ = cos⁻¹(adj / hyp)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp and adj</div><div class=\"rc-s\">θ = tan⁻¹(opp / adj)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">hyp</div><div class=\"rc-s\">across from the square corner</div></div><div class=\"ref-cell\"><div class=\"rc-t\">opp</div><div class=\"rc-s\">across from θ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">adj</div><div class=\"rc-s\">touches θ, not the hyp</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math (name both sides) · 4 pick the inverse · 5 substitute and undo · 6 answer and check. Calculator in degree mode; the inverse key is 2nd (or SHIFT), then sin, cos, or tan. The answer is an angle between 0° and 90°.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 69.63586519368219,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 20.3641,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 43.1524,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 46.8476,
+      "tol": 0.06,
+      "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+     },
+     {
+      "near": 0.0164,
+      "tol": 0.006,
+      "msg": "You pressed sin, not sin⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+     },
+     {
+      "near": 1.2154,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     }
+    ],
+    "nudges": [
+     "Name the two sides from θ, pick the inverse, then use the calculator."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "Stand at θ. The height up the wall (15 ft) is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The ladder (16 ft) is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Hypotenuse: across from the square corner. Opposite: across from θ. Adjacent: touches θ and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1350966456,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = sin⁻¹(15 / 16)",
+       "θ = sin⁻¹(16 / 15)",
+       "θ = sin(15 / 16)"
+      ],
+      "ch": 3790286981,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −¹: it undoes the ratio so the angle comes out. ERROR on the calculator means the hypotenuse ended up on top."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 69.63586519368219,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 20.3641,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives: the other acute angle. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 43.1524,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 46.8476,
+        "tol": 0.06,
+        "msg": "That is what tan⁻¹ gives. Name the two sides from θ first, then pick the inverse that uses them."
+       },
+       {
+        "near": 0.0164,
+        "tol": 0.006,
+        "msg": "You pressed sin, not sin⁻¹. The answer is an angle, so undo the ratio: use the 2nd (or SHIFT) key first."
+       },
+       {
+        "near": 1.2154,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Check against OSHA",
+    "ask": "OSHA’s safe angle is about 75.5°. This ladder is…",
+    "options": [
+     "less steep than the safe angle: its base is too far from the wall",
+     "steeper than the safe angle: its base is too close to the wall",
+     "right at the safe angle"
+    ],
+    "ch": 2808476896,
+    "shuffle": true,
+    "nudges": [
+     "Compare your angle with 75.5°. A smaller angle means a flatter ladder."
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>

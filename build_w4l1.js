@@ -57,7 +57,7 @@ function figTri(cfg){
 
 /* ---- step builders (same shapes as Week 3) ---- */
 function ch(label,ask,opts,i,nudge){return {tool:'choice',stack:true,label,ask,options:opts,ch:djb2(opts[i]),shuffle:true,nudges:[nudge]};}
-function num(label,a,traps,nudge){return {tool:'numeric',label,answer:a,tol:0.06,closeBand:0.03,traps:traps||[],nudges:[nudge||'Name the sides from the marked angle, pick the ratio, then solve.']};}
+function num(label,a,traps,nudge){return {tool:'numeric',label,answer:a,tol:0.05,closeBand:0.03,traps:traps||[],nudges:[nudge||'Name the sides from the marked angle, pick the ratio, then solve.']};}
 function coarse(step,ladder){return Object.assign(step,{sub:ladder});}
 const NAMES=['opposite (opp)','adjacent (adj)','hypotenuse (hyp)'], IDX={opp:0,adj:1,hyp:2};
 const NAME_NUDGE='Hypotenuse: across from the square corner. Opposite: across from the marked angle. Adjacent: touches the marked angle and is not the hypotenuse.';
@@ -165,7 +165,8 @@ const page=`<!DOCTYPE html>
 <script>
 /* Week 4 Lesson 1 Learning Lab. Split layout, coarse first. A miss opens the
    Problem-Solving Plan: name the sides from the marked angle, pick the ratio,
-   substitute, solve, calculator. Answers to the nearest tenth (tol 0.06).
+   substitute, solve, calculator. Answers to the nearest tenth (tol 0.05: the right tenth or the unrounded
+   value passes; a wrongly rounded tenth does not).
    Same 7 problems as the printed Learning Lab. Choice answers are djb2 hashes. */
 K.run(${JSON.stringify(P,null,1)}, { layout:'split' });
 </script>

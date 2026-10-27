@@ -50,7 +50,7 @@ trap('t3','8.0','12 is not the hypotenuse'); trap('t3','13.3','multiply both sid
 trap('a1','23.5','flipped'); trap('a2','11.6','distance along the ground'); trap('a2','3.2','what tan gives');
 trap('a3','5.2','missing factor'); trap('a3','12.9','other leg'); trap('a4','22.3','missing factor');
 // a rounding slip is "close", not a wrong-ratio message
-trap('t1','5.8','5 or more rounds up'); trap('a3','15.6','5 or more rounds up'); trap('a4','40.3','5 or more rounds up');
+trap('t1','5.8','5 or more rounds up'); trap('a1','8.5','5 or more rounds up'); trap('a3','15.6','5 or more rounds up'); trap('a4','40.3','5 or more rounds up');
 // on the last rung, a near miss with no named cause gets the engine's "close" nudge
 {const c=boot(); c.K.navTo(0); enter(c,'t1',0,'99'); LADDER.t1.slice(0,5).forEach((a,j)=>enter(c,'t1',1000+j+1,a)); enter(c,'t1',1006,'5.75');
  A(c.document.getElementById('ckRail').textContent.includes('round to one digit'),'t1 last rung, 1st near miss 5.75 -> the step nudge (degree mode, rounding)');
