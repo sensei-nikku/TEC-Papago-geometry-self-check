@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 4, Lesson 3 — Angles of Elevation and Depression Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Angles of Elevation and Depression</h1><div class="sub">Week 4 · Lesson 3 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script>
+/* Week 4 Lesson 3 Learning Lab. Split layout, coarse first, words only (sketch
+   first). A miss opens the Problem-Solving Plan: move an angle of depression to
+   the bottom, name the sides, pick the ratio or inverse, substitute, solve,
+   calculator. Answers to the nearest tenth (tol 0.05). Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "You stand 120 ft from a building. The angle of elevation to the roof is 22°. How tall is the building? Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "120 ft",
+    "k": "along the ground"
+   },
+   {
+    "v": "22°",
+    "k": "angle of elevation"
+   }
+  ],
+  "want": "h, the height, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "h ≈ ? (nearest tenth)",
+    "answer": 48.483147100218815,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "ft",
+    "traps": [
+     {
+      "near": 44.9528,
+      "tol": 0.06,
+      "msg": "That is what sin gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": 111.2621,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": 297.0104,
+      "tol": 0.06,
+      "msg": "h is on top, so multiply both sides by 120."
+     },
+     {
+      "near": 1.0622,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 48.4,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the 22° angle at the bottom, the 120 ft along the ground is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the height h is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 2639878154,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "tan 22° = h / 120",
+       "tan 22° = 120 / h",
+       "sin 22° = h / 120"
+      ],
+      "ch": 1368164131,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees h?",
+      "options": [
+       "h = 120 · tan 22°",
+       "h = 120 / tan 22°",
+       "h = tan 22° / 120"
+      ],
+      "ch": 3532502507,
+      "shuffle": true,
+      "nudges": [
+       "h is on top, over 120. Multiply both sides by 120."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. h ≈ ? (nearest tenth)",
+      "answer": 48.483147100218815,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "ft",
+      "traps": [
+       {
+        "near": 44.9528,
+        "tol": 0.06,
+        "msg": "That is what sin gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": 111.2621,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": 297.0104,
+        "tol": 0.06,
+        "msg": "h is on top, so multiply both sides by 120."
+       },
+       {
+        "near": 1.0622,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 48.4,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "From the top of a 45 ft lighthouse, the angle of depression to a boat is 18°. How far is the boat from the base of the lighthouse? Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "45 ft",
+    "k": "the lighthouse"
+   },
+   {
+    "v": "18°",
+    "k": "angle of depression"
+   }
+  ],
+  "want": "d, the distance along the water, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "d ≈ ? (nearest tenth)",
+    "answer": 138.4957591728864,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "ft",
+    "traps": [
+     {
+      "near": 14.6214,
+      "tol": 0.06,
+      "msg": "You measured the 18° from the lighthouse, not from level. An angle of depression starts at the level line: move it to the bottom, at the boat."
+     },
+     {
+      "near": 145.6231,
+      "tol": 0.06,
+      "msg": "That is what sin gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": 47.3158,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": -39.5669,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 138.4,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The angle of depression is at the top. Where do you work with it?",
+      "options": [
+       "at the bottom, at the boat: it is the same angle (★ SG-5)",
+       "at the top, between the lighthouse and the line of sight",
+       "at the square corner"
+      ],
+      "ch": 2190984299,
+      "shuffle": true,
+      "nudges": [
+       "Angle of depression (from the top) = angle of elevation (from the bottom). Move it to the bottom."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the 18° angle at the bottom, the 45 ft height is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the distance d along the water is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 2639878154,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "tan 18° = 45 / d",
+       "tan 18° = d / 45",
+       "sin 18° = 45 / d"
+      ],
+      "ch": 3475938490,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees d?",
+      "options": [
+       "d = 45 / tan 18°",
+       "d = 45 · tan 18°",
+       "d = tan 18° / 45"
+      ],
+      "ch": 3140600954,
+      "shuffle": true,
+      "nudges": [
+       "d is on the bottom. Multiply both sides by d; then d is the missing factor."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. d ≈ ? (nearest tenth)",
+      "answer": 138.4957591728864,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "ft",
+      "traps": [
+       {
+        "near": 14.6214,
+        "tol": 0.06,
+        "msg": "You measured the 18° from the lighthouse, not from level. An angle of depression starts at the level line: move it to the bottom, at the boat."
+       },
+       {
+        "near": 145.6231,
+        "tol": 0.06,
+        "msg": "That is what sin gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": 47.3158,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": -39.5669,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 138.4,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "A kite string is 90 ft long. The angle of elevation of the string is 35°. Treat your hand as ground level. How high is the kite? Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "90 ft",
+    "k": "the string"
+   },
+   {
+    "v": "35°",
+    "k": "angle of elevation"
+   }
+  ],
+  "want": "h, the height of the kite, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "h ≈ ? (nearest tenth)",
+    "answer": 51.621879271594146,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "ft",
+    "traps": [
+     {
+      "near": 73.7237,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": 63.0187,
+      "tol": 0.06,
+      "msg": "That is what tan gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": 156.9102,
+      "tol": 0.06,
+      "msg": "h is on top, so multiply both sides by 90."
+     },
+     {
+      "near": -38.5364,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the 35° angle at the bottom, the 90 ft string is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the height h is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 1814611347,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "sin 35° = h / 90",
+       "sin 35° = 90 / h",
+       "cos 35° = h / 90"
+      ],
+      "ch": 652065508,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees h?",
+      "options": [
+       "h = 90 · sin 35°",
+       "h = 90 / sin 35°",
+       "h = sin 35° / 90"
+      ],
+      "ch": 3988962700,
+      "shuffle": true,
+      "nudges": [
+       "h is on top, over 90. Multiply both sides by 90."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. h ≈ ? (nearest tenth)",
+      "answer": 51.621879271594146,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "ft",
+      "traps": [
+       {
+        "near": 73.7237,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": 63.0187,
+        "tol": 0.06,
+        "msg": "That is what tan gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": 156.9102,
+        "tol": 0.06,
+        "msg": "h is on top, so multiply both sides by 90."
+       },
+       {
+        "near": -38.5364,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "A lifeguard’s eyes are 20 ft above the water. The angle of depression to a swimmer is 9°. How far out is the swimmer, along the water? Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "20 ft",
+    "k": "eyes above the water"
+   },
+   {
+    "v": "9°",
+    "k": "angle of depression"
+   }
+  ],
+  "want": "d, the distance along the water, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "d ≈ ? (nearest tenth)",
+    "answer": 126.27503029350088,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "ft",
+    "traps": [
+     {
+      "near": 3.1677,
+      "tol": 0.06,
+      "msg": "You measured the 9° from the lifeguard stand, not from level. Move the angle of depression to the bottom, at the swimmer."
+     },
+     {
+      "near": 127.8491,
+      "tol": 0.06,
+      "msg": "That is what sin gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": 20.2493,
+      "tol": 0.06,
+      "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+     },
+     {
+      "near": -44.2169,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 126.2,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The angle of depression is at the top. Where do you work with it?",
+      "options": [
+       "at the bottom, at the swimmer: it is the same angle (★ SG-5)",
+       "at the top, between the lifeguard stand and the line of sight",
+       "at the square corner"
+      ],
+      "ch": 3683508745,
+      "shuffle": true,
+      "nudges": [
+       "Angle of depression (from the top) = angle of elevation (from the bottom). Move it to the bottom."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the 9° angle at the bottom, the 20 ft height is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the distance d along the water is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 2639878154,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "tan 9° = 20 / d",
+       "tan 9° = d / 20",
+       "sin 9° = 20 / d"
+      ],
+      "ch": 2913008035,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees d?",
+      "options": [
+       "d = 20 / tan 9°",
+       "d = 20 · tan 9°",
+       "d = tan 9° / 20"
+      ],
+      "ch": 1138045923,
+      "shuffle": true,
+      "nudges": [
+       "d is on the bottom. Multiply both sides by d; then d is the missing factor."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. d ≈ ? (nearest tenth)",
+      "answer": 126.27503029350088,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "ft",
+      "traps": [
+       {
+        "near": 3.1677,
+        "tol": 0.06,
+        "msg": "You measured the 9° from the lifeguard stand, not from level. Move the angle of depression to the bottom, at the swimmer."
+       },
+       {
+        "near": 127.8491,
+        "tol": 0.06,
+        "msg": "That is what sin gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": 20.2493,
+        "tol": 0.06,
+        "msg": "That is what cos gives. Name the sides from the angle at the bottom first."
+       },
+       {
+        "near": -44.2169,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 126.2,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "A 6 ft person casts a 10 ft shadow. What is the angle of elevation of the sun? It is the angle at the tip of the shadow. Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "6 ft",
+    "k": "the person"
+   },
+   {
+    "v": "10 ft",
+    "k": "the shadow"
+   }
+  ],
+  "want": "θ, the sun’s angle of elevation",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 30.96375653207352,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 59.0362,
+      "tol": 0.06,
+      "msg": "The sides are in the wrong order, so you got the other acute angle. For tan, opp goes on top."
+     },
+     {
+      "near": 36.8699,
+      "tol": 0.06,
+      "msg": "That is what sin⁻¹ gives. Name the two sides from the angle at the bottom first."
+     },
+     {
+      "near": 53.1301,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives. Name the two sides from the angle at the bottom first."
+     },
+     {
+      "near": 0.0105,
+      "tol": 0.006,
+      "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use 2nd (or SHIFT) first."
+     },
+     {
+      "near": 0.5404,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     },
+     {
+      "near": 30.9,
+      "tol": 0.02,
+      "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the angle at the bottom, the 6 ft person is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the 10 ft shadow is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1115399119,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = tan⁻¹(6 / 10)",
+       "θ = tan⁻¹(10 / 6)",
+       "θ = tan(6 / 10)"
+      ],
+      "ch": 529206248,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −1: it undoes the ratio so the angle comes out."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 30.96375653207352,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 59.0362,
+        "tol": 0.06,
+        "msg": "The sides are in the wrong order, so you got the other acute angle. For tan, opp goes on top."
+       },
+       {
+        "near": 36.8699,
+        "tol": 0.06,
+        "msg": "That is what sin⁻¹ gives. Name the two sides from the angle at the bottom first."
+       },
+       {
+        "near": 53.1301,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives. Name the two sides from the angle at the bottom first."
+       },
+       {
+        "near": 0.0105,
+        "tol": 0.006,
+        "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use 2nd (or SHIFT) first."
+       },
+       {
+        "near": 0.5404,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       },
+       {
+        "near": 30.9,
+        "tol": 0.02,
+        "msg": "Close: round to the nearest tenth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "From the top of a 200 ft cliff, you look down at a boat 600 ft from the base of the cliff. What is the angle of depression? Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "200 ft",
+    "k": "the cliff"
+   },
+   {
+    "v": "600 ft",
+    "k": "boat to the base"
+   }
+  ],
+  "want": "θ, the angle of depression",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "θ ≈ ? (nearest tenth of a degree)",
+    "answer": 18.43494882292201,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "°",
+    "traps": [
+     {
+      "near": 71.5651,
+      "tol": 0.06,
+      "msg": "That is the angle between the cliff and the line of sight. An angle of depression is measured from level: it equals the angle at the boat."
+     },
+     {
+      "near": 19.4712,
+      "tol": 0.06,
+      "msg": "That is what sin⁻¹ gives. Name the two sides from the angle at the bottom first."
+     },
+     {
+      "near": 70.5288,
+      "tol": 0.06,
+      "msg": "That is what cos⁻¹ gives. Name the two sides from the angle at the bottom first."
+     },
+     {
+      "near": 0.0058,
+      "tol": 0.006,
+      "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use 2nd (or SHIFT) first."
+     },
+     {
+      "near": 0.3218,
+      "tol": 0.01,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The angle of depression is at the top. Where do you work with it?",
+      "options": [
+       "at the bottom, at the boat: it is the same angle (★ SG-5)",
+       "at the top, between the cliff and the line of sight",
+       "at the square corner"
+      ],
+      "ch": 2190984299,
+      "shuffle": true,
+      "nudges": [
+       "Angle of depression (from the top) = angle of elevation (from the bottom). Move it to the bottom."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the angle at the bottom, the 200 ft cliff is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the 600 ft to the boat is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 2253153151,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which inverse uses those two sides?",
+      "options": [
+       "θ = sin⁻¹(opp / hyp)",
+       "θ = cos⁻¹(adj / hyp)",
+       "θ = tan⁻¹(opp / adj)"
+      ],
+      "ch": 1115399119,
+      "shuffle": true,
+      "nudges": [
+       "Pick the inverse built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute and undo",
+      "ask": "Which equation?",
+      "options": [
+       "θ = tan⁻¹(200 / 600)",
+       "θ = tan⁻¹(600 / 200)",
+       "θ = tan(200 / 600)"
+      ],
+      "ch": 474815865,
+      "shuffle": true,
+      "nudges": [
+       "Keep the sides in the ratio’s order, and keep the −1: it undoes the ratio so the angle comes out."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. θ ≈ ? (nearest tenth of a degree)",
+      "answer": 18.43494882292201,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "°",
+      "traps": [
+       {
+        "near": 71.5651,
+        "tol": 0.06,
+        "msg": "That is the angle between the cliff and the line of sight. An angle of depression is measured from level: it equals the angle at the boat."
+       },
+       {
+        "near": 19.4712,
+        "tol": 0.06,
+        "msg": "That is what sin⁻¹ gives. Name the two sides from the angle at the bottom first."
+       },
+       {
+        "near": 70.5288,
+        "tol": 0.06,
+        "msg": "That is what cos⁻¹ gives. Name the two sides from the angle at the bottom first."
+       },
+       {
+        "near": 0.0058,
+        "tol": 0.006,
+        "msg": "You pressed tan, not tan⁻¹. The answer is an angle, so undo the ratio: use 2nd (or SHIFT) first."
+       },
+       {
+        "near": 0.3218,
+        "tol": 0.01,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "A drone hovers 85 ft above the ground. The angle of depression from the drone to a car is 31°. How far is the drone from the car, measured along the line of sight? Sketch the triangle on your paper first. Round to the nearest tenth.",
+  "figure": "",
+  "given": [
+   {
+    "v": "85 ft",
+    "k": "above the ground"
+   },
+   {
+    "v": "31°",
+    "k": "angle of depression"
+   }
+  ],
+  "want": "L, the line-of-sight distance, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5</div><div class=\"rc-s\">angle of depression (from the top) = angle of elevation (from the bottom)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">SOH</div><div class=\"rc-s\">sin θ = opp / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">CAH</div><div class=\"rc-s\">cos θ = adj / hyp</div></div><div class=\"ref-cell\"><div class=\"rc-t\">TOA</div><div class=\"rc-s\">tan θ = opp / adj</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Angle known</div><div class=\"rc-s\">find a side with sin, cos, or tan</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Two sides known</div><div class=\"rc-s\">find the angle with sin⁻¹, cos⁻¹, or tan⁻¹</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (move an angle of depression to the bottom, then name the sides) · 4 pick the ratio · 5 substitute and solve · 6 answer and check. Calculator in degree mode.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "L ≈ ? (nearest tenth)",
+    "answer": 165.0363422448803,
+    "tol": 0.05,
+    "closeBand": 0.03,
+    "unit": "ft",
+    "traps": [
+     {
+      "near": 141.4638,
+      "tol": 0.06,
+      "msg": "That is the distance along the ground. The question asks along the line of sight: the slanted side."
+     },
+     {
+      "near": 99.1638,
+      "tol": 0.06,
+      "msg": "You measured the 31° from straight down, not from level. Move the angle of depression to the bottom, at the car."
+     },
+     {
+      "near": 43.7782,
+      "tol": 0.06,
+      "msg": "L is on the bottom of the fraction, so multiplying doesn’t free it. Treat L as the missing factor, like 2 · ☐ = 6."
+     },
+     {
+      "near": -210.3764,
+      "tol": 0.1,
+      "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+     }
+    ],
+    "nudges": [
+     "Sketch it, move any angle of depression to the bottom, name the sides, then solve."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "The angle of depression is at the top. Where do you work with it?",
+      "options": [
+       "at the bottom, at the car: it is the same angle (★ SG-5)",
+       "at the top, between the drone’s straight-down line and the line of sight",
+       "at the square corner"
+      ],
+      "ch": 809412603,
+      "shuffle": true,
+      "nudges": [
+       "Angle of depression (from the top) = angle of elevation (from the bottom). Move it to the bottom."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "From the 31° angle at the bottom, the 85 ft height is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 109984600,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts as math",
+      "ask": "And the line of sight L is the…",
+      "options": [
+       "opposite (opp)",
+       "adjacent (adj)",
+       "hypotenuse (hyp)"
+      ],
+      "ch": 3384313467,
+      "shuffle": true,
+      "nudges": [
+       "Work from the angle at the bottom. Hypotenuse: the slanted side, across from the square corner. Opposite: across from the angle. Adjacent: touches the angle and is not the hypotenuse."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 4: Subgoal",
+      "ask": "Which ratio uses those two sides?",
+      "options": [
+       "sin θ = opp / hyp",
+       "cos θ = adj / hyp",
+       "tan θ = opp / adj"
+      ],
+      "ch": 1814611347,
+      "shuffle": true,
+      "nudges": [
+       "SOH CAH TOA: pick the ratio built from the two sides you just named."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute",
+      "ask": "Which equation?",
+      "options": [
+       "sin 31° = 85 / L",
+       "sin 31° = L / 85",
+       "cos 31° = 85 / L"
+      ],
+      "ch": 2733067592,
+      "shuffle": true,
+      "nudges": [
+       "Put each number where its side goes in the ratio."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve",
+      "ask": "Which move frees L?",
+      "options": [
+       "L = 85 / sin 31°",
+       "L = 85 · sin 31°",
+       "L = sin 31° / 85"
+      ],
+      "ch": 531807432,
+      "shuffle": true,
+      "nudges": [
+       "L is on the bottom. Multiply both sides by L; then L is the missing factor."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator, degree mode. L ≈ ? (nearest tenth)",
+      "answer": 165.0363422448803,
+      "tol": 0.05,
+      "closeBand": 0.03,
+      "unit": "ft",
+      "traps": [
+       {
+        "near": 141.4638,
+        "tol": 0.06,
+        "msg": "That is the distance along the ground. The question asks along the line of sight: the slanted side."
+       },
+       {
+        "near": 99.1638,
+        "tol": 0.06,
+        "msg": "You measured the 31° from straight down, not from level. Move the angle of depression to the bottom, at the car."
+       },
+       {
+        "near": 43.7782,
+        "tol": 0.06,
+        "msg": "L is on the bottom of the fraction, so multiplying doesn’t free it. Treat L as the missing factor, like 2 · ☐ = 6."
+       },
+       {
+        "near": -210.3764,
+        "tol": 0.1,
+        "msg": "Your calculator is in radian mode. Switch to degree mode: sin 30 must show 0.5."
+       }
+      ],
+      "nudges": [
+       "Check degree mode, then round to one digit after the point."
+      ]
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>

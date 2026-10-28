@@ -44,7 +44,7 @@ const TERM2={id:'sy2627-term2',name:'SY2627 Term 2',weeks:[
  ['Week 4 — Right-Triangle Trigonometry',[
   ['W4 · L1','Sine, Cosine & Tangent: Missing Sides','week4-lesson1-trig-sides.html','Name the sides from the marked angle, pick sin, cos, or tan, and find the missing side.'],
   ['W4 · L2','Inverse Functions & Inverse Trig','week4-lesson2-inverse-angles.html','Undo the ratio: two sides in, the angle out, with sin⁻¹, cos⁻¹, and tan⁻¹.'],
-  ['W4 · L3','Angles of Elevation & Depression',null,'']]],
+  ['W4 · L3','Angles of Elevation & Depression','week4-lesson3-elevation-depression.html','Sketch it from the words, move an angle of depression to the bottom, then find the side or the angle.']]],
  ['Week 5 — Midterm: Miracle on the Hudson',[
   ['W5 · Pre-Test','Miracle on the Hudson — Pre-Test','hudson-pretest.html','Four-problem readiness check: set up the triangle, pick the ratio, solve.'],
   ['W5 · Project','Miracle on the Hudson — Project','hudson-project.html','Reconstruct the flight path from the NTSB data.']]],

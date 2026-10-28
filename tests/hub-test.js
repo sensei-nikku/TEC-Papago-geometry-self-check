@@ -21,6 +21,6 @@ d.querySelectorAll('.sec-title, .hub-card').forEach(n=>{
   if(n.classList.contains('sec-title')){ sec=(n.textContent.match(/Week (\d+)/)||[])[1]; return; }
   const tag=n.querySelector('.tag').textContent; if(!tag.startsWith('W'+sec)) bad.push(tag+' under Week '+sec); });
 A(bad.length===0,'Term 2: every card sits in its own week'+(bad.length?' -> '+bad.join('; '):''));
-A([...d.querySelectorAll('a.hub-card')].length===12,'Term 2: 12 lessons have checkers');
+A([...d.querySelectorAll('a.hub-card')].length===13,'Term 2: 13 lessons have checkers');
 A([...d.querySelectorAll('div.hub-card.hub-soon')].every(c=>!c.querySelector('a')),'Term 2: lessons without a checker are listed, not linked');
 console.log('HUB TEST PASSED');
