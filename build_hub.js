@@ -49,7 +49,7 @@ const TERM2={id:'sy2627-term2',name:'SY2627 Term 2',weeks:[
   ['W5 · Pre-Test','Miracle on the Hudson — Pre-Test','hudson-pretest.html','Four-problem readiness check: set up the triangle, pick the ratio, solve.'],
   ['W5 · Project','Miracle on the Hudson — Project','hudson-project.html','Reconstruct the flight path from the NTSB data.']]],
  ['Week 6 — Coordinate Geometry',[
-  ['W6 · L1','Slope: Parallel & Perpendicular Lines',null,''],
+  ['W6 · L1','Slope: Parallel & Perpendicular Lines','week6-lesson1-par-perp.html','Parallel, perpendicular, or neither from the slopes; write a perpendicular line through a point.'],
   ['W6 · L2','Distance, Perimeter & Area on a Grid',null,''],
   ['W6 · L3','Equation of a Circle',null,''],
   ['W6 · Review','Area Formulas','unit4-day1-area.html','Area of every shape: pick the formula, solve, check.']]],

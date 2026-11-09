@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 6, Lesson 1 — Parallel and Perpendicular Lines Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Parallel and Perpendicular Lines</h1><div class="sub">Week 6 · Lesson 1 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-fraction.js"></script>
+<script>
+/* Week 6 Lesson 1 Learning Lab. Split layout, coarse first. A miss opens the
+   Problem-Solving Plan: each slope (Δy/Δx, or −A/B from standard form), the
+   parallel test, then the b compare or the product, then the answer; for a new
+   line, m⊥ = −1/m, then point-slope, distribute, change sides, change signs.
+   Exact fractions. Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Are the lines y = 4x − 3 and y = 4x + 7 parallel, perpendicular, neither, or the same line?",
+  "given": [
+   {
+    "v": "y = 4x − 3",
+    "k": "line 1"
+   },
+   {
+    "v": "y = 4x + 7",
+    "k": "line 2"
+   }
+  ],
+  "want": "parallel, perpendicular, neither, or the same line",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your answer",
+    "ask": "Are the lines parallel, perpendicular, neither, or the same line?",
+    "options": [
+     "parallel",
+     "perpendicular",
+     "neither",
+     "the same line"
+    ],
+    "ch": 341173234,
+    "shuffle": true,
+    "nudges": [
+     "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m₁ = ?",
+      "answer": [
+       4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -4,
+         1
+        ],
+        "msg": "Keep the sign that is in front of x."
+       }
+      ],
+      "nudges": [
+       "In y = mx + b, m is the number in front of x. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m₂ = ?",
+      "answer": [
+       4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -4,
+         1
+        ],
+        "msg": "Keep the sign that is in front of x."
+       }
+      ],
+      "nudges": [
+       "In y = mx + b, m is the number in front of x. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Parallel test",
+      "ask": "Are the two slopes equal?",
+      "options": [
+       "yes",
+       "no"
+      ],
+      "ch": 193512214,
+      "shuffle": true,
+      "nudges": [
+       "Compare m₁ and m₂ as numbers, signs included."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Same slope",
+      "ask": "Same slope. Now compare b. Are the y-intercepts the same?",
+      "options": [
+       "no, they are different",
+       "yes, they are the same"
+      ],
+      "ch": 3808118295,
+      "shuffle": true,
+      "nudges": [
+       "b is the number added on the end of y = mx + b."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Answer",
+      "ask": "So the lines are…",
+      "options": [
+       "parallel",
+       "perpendicular",
+       "neither",
+       "the same line"
+      ],
+      "ch": 341173234,
+      "shuffle": true,
+      "nudges": [
+       "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Are the lines y = (1/4)x − 2 and 4x + y = 9 parallel, perpendicular, neither, or the same line?",
+  "given": [
+   {
+    "v": "y = (1/4)x − 2",
+    "k": "line 1"
+   },
+   {
+    "v": "4x + y = 9",
+    "k": "line 2, standard form"
+   }
+  ],
+  "want": "parallel, perpendicular, neither, or the same line",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your answer",
+    "ask": "Are the lines parallel, perpendicular, neither, or the same line?",
+    "options": [
+     "parallel",
+     "perpendicular",
+     "neither",
+     "the same line"
+    ],
+    "ch": 634157139,
+    "shuffle": true,
+    "nudges": [
+     "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m₁ = ?",
+      "answer": [
+       1,
+       4
+      ],
+      "traps": [
+       {
+        "f": [
+         -1,
+         4
+        ],
+        "msg": "Keep the sign that is in front of x."
+       }
+      ],
+      "nudges": [
+       "In y = mx + b, m is the number in front of x. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "4x + y = 9 is in standard form, Ax + By = C. What are A and B?",
+      "options": [
+       "A = 4, B = 1",
+       "A = 4, B = 9",
+       "A = 1, B = 4"
+      ],
+      "ch": 2145025907,
+      "shuffle": true,
+      "nudges": [
+       "A is the number on x and B is the number on y, signs included. C is the number alone on the right."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: m₂ = −A/B = ?",
+      "answer": [
+       -4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "Keep the minus: m = −A/B."
+       },
+       {
+        "f": [
+         -1,
+         4
+        ],
+        "msg": "That is −B/A. The slope is −A over B."
+       },
+       {
+        "f": [
+         -4,
+         9
+        ],
+        "msg": "C only moves the intercept. The slope is −A over B."
+       }
+      ],
+      "nudges": [
+       "m = −A/B. A rides with x, B rides with y. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Parallel test",
+      "ask": "Are the two slopes equal?",
+      "options": [
+       "yes",
+       "no"
+      ],
+      "ch": 5863650,
+      "shuffle": true,
+      "nudges": [
+       "Compare m₁ and m₂ as numbers, signs included."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Perpendicular test. m₁ · m₂ = ?",
+      "answer": [
+       -1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         1
+        ],
+        "msg": "Watch the sign: multiply the signs too."
+       }
+      ],
+      "nudges": [
+       "Multiply tops, multiply bottoms. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Answer",
+      "ask": "So the lines are…",
+      "options": [
+       "parallel",
+       "perpendicular",
+       "neither",
+       "the same line"
+      ],
+      "ch": 634157139,
+      "shuffle": true,
+      "nudges": [
+       "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Write the equation of the line perpendicular to y = 2x + 1 that passes through (4, 3). Give m and b for y = mx + b.",
+  "given": [
+   {
+    "v": "y = 2x + 1",
+    "k": "the given line"
+   },
+   {
+    "v": "(4, 3)",
+    "k": "a point on the new line"
+   }
+  ],
+  "want": "m and b for the new line, y = mx + b",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Your line is y = mx + b. What is m⊥?",
+    "answer": [
+     -1,
+     2
+    ],
+    "traps": [
+     {
+      "f": [
+       -2,
+       1
+      ],
+      "msg": "You changed only the sign. Opposite reciprocal is two moves: flip it too."
+     },
+     {
+      "f": [
+       1,
+       2
+      ],
+      "msg": "You flipped it but kept the sign. Opposite reciprocal is two moves: change the sign too."
+     },
+     {
+      "f": [
+       2,
+       1
+      ],
+      "msg": "That is the slope of the given line. Perpendicular needs the opposite reciprocal."
+     }
+    ],
+    "nudges": [
+     "Perpendicular: m⊥ = −1/m. Get m first. Type fractions like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m, the slope of the given line = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Keep the sign that is in front of x."
+       }
+      ],
+      "nudges": [
+       "In y = mx + b, m is the number in front of x. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: m⊥ = −1/m. m⊥ = ?",
+      "answer": [
+       -1,
+       2
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "You changed only the sign. Opposite reciprocal is two moves: flip it too."
+       },
+       {
+        "f": [
+         1,
+         2
+        ],
+        "msg": "You flipped it but kept the sign. Opposite reciprocal is two moves: change the sign too."
+       },
+       {
+        "f": [
+         2,
+         1
+        ],
+        "msg": "That is the slope of the given line. Perpendicular needs the opposite reciprocal."
+       }
+      ],
+      "nudges": [
+       "Opposite reciprocal: flip m and change its sign. Check: m · m⊥ = −1. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "Now b. What is b?",
+    "answer": [
+     5,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       1,
+       1
+      ],
+      "msg": "Check the point: it goes in as (x − x1), with x1’s sign, before you distribute. Also, distribute −1/2 to both terms in the parentheses, signs included."
+     },
+     {
+      "f": [
+       -1,
+       1
+      ],
+      "msg": "Change sides, change signs: the number next to y crosses with the opposite sign."
+     },
+     {
+      "f": [
+       -5,
+       1
+      ],
+      "msg": "That b comes from the given slope. Use m⊥ in point-slope form."
+     }
+    ],
+    "nudges": [
+     "Put m⊥ and the point into y − y1 = m(x − x1), distribute, then change sides, change signs. Type fractions like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Point-slope form",
+      "ask": "Substitute m⊥ and the point into y − y1 = m(x − x1).",
+      "options": [
+       "y − 3 = −(1/2)(x − 4)",
+       "y − 4 = −(1/2)(x − 3)",
+       "y − 3 = 2(x − 4)"
+      ],
+      "ch": 1758060516,
+      "shuffle": true,
+      "nudges": [
+       "(x1, y1) is the point: x1 goes with x, y1 goes with y. The slope is m⊥."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Distribute",
+      "ask": "Distribute −1/2.",
+      "options": [
+       "y − 3 = −(1/2)x + 2",
+       "y − 3 = −(1/2)x − 2",
+       "y − 3 = −(1/2)x − 4"
+      ],
+      "ch": 3189055722,
+      "shuffle": true,
+      "nudges": [
+       "Multiply −1/2 by each term in the parentheses, signs included."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Change sides, change signs",
+      "ask": "Move the −3 off the y side.",
+      "options": [
+       "y = −(1/2)x + 2 + 3",
+       "y = −(1/2)x + 2 + (−3)"
+      ],
+      "ch": 2319839235,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: the number next to y crosses with the opposite sign."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 6: Add. b = ?",
+      "answer": [
+       5,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         1
+        ],
+        "msg": "Check the point: it goes in as (x − x1), with x1’s sign, before you distribute. Also, distribute −1/2 to both terms in the parentheses, signs included."
+       },
+       {
+        "f": [
+         -1,
+         1
+        ],
+        "msg": "Change sides, change signs: the number next to y crosses with the opposite sign."
+       },
+       {
+        "f": [
+         -5,
+         1
+        ],
+        "msg": "That b comes from the given slope. Use m⊥ in point-slope form."
+       }
+      ],
+      "nudges": [
+       "Add the two numbers on the end. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Are the lines 6x − 3y = 9 and y = −(1/2)x + 4 parallel, perpendicular, neither, or the same line?",
+  "given": [
+   {
+    "v": "6x − 3y = 9",
+    "k": "line 1, standard form"
+   },
+   {
+    "v": "y = −(1/2)x + 4",
+    "k": "line 2"
+   }
+  ],
+  "want": "parallel, perpendicular, neither, or the same line",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your answer",
+    "ask": "Are the lines parallel, perpendicular, neither, or the same line?",
+    "options": [
+     "parallel",
+     "perpendicular",
+     "neither",
+     "the same line"
+    ],
+    "ch": 634157139,
+    "shuffle": true,
+    "nudges": [
+     "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "6x − 3y = 9 is in standard form, Ax + By = C. What are A and B?",
+      "options": [
+       "A = 6, B = −3",
+       "A = 6, B = 3",
+       "A = 6, B = 9"
+      ],
+      "ch": 1680322057,
+      "shuffle": true,
+      "nudges": [
+       "A is the number on x and B is the number on y, signs included. C is the number alone on the right."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: m₁ = −A/B = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Keep the minus: m = −A/B. (B is −3, so a negative over a negative comes out positive.)"
+       },
+       {
+        "f": [
+         1,
+         2
+        ],
+        "msg": "That is −B/A. The slope is −A over B."
+       },
+       {
+        "f": [
+         -2,
+         3
+        ],
+        "msg": "C only moves the intercept. The slope is −A over B."
+       }
+      ],
+      "nudges": [
+       "m = −A/B. A rides with x, B rides with y. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m₂ = ?",
+      "answer": [
+       -1,
+       2
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         2
+        ],
+        "msg": "Keep the sign that is in front of x."
+       }
+      ],
+      "nudges": [
+       "In y = mx + b, m is the number in front of x. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Parallel test",
+      "ask": "Are the two slopes equal?",
+      "options": [
+       "yes",
+       "no"
+      ],
+      "ch": 5863650,
+      "shuffle": true,
+      "nudges": [
+       "Compare m₁ and m₂ as numbers, signs included."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Perpendicular test. m₁ · m₂ = ?",
+      "answer": [
+       -1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         1
+        ],
+        "msg": "Watch the sign: multiply the signs too."
+       }
+      ],
+      "nudges": [
+       "Multiply tops, multiply bottoms. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Answer",
+      "ask": "So the lines are…",
+      "options": [
+       "parallel",
+       "perpendicular",
+       "neither",
+       "the same line"
+      ],
+      "ch": 634157139,
+      "shuffle": true,
+      "nudges": [
+       "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "Line AB goes through A(1, 2) and B(4, 8). Line CD goes through C(0, 5) and D(2, 1). Are the lines parallel, perpendicular, neither, or the same line?",
+  "given": [
+   {
+    "v": "A(1, 2), B(4, 8)",
+    "k": "line AB"
+   },
+   {
+    "v": "C(0, 5), D(2, 1)",
+    "k": "line CD"
+   }
+  ],
+  "want": "parallel, perpendicular, neither, or the same line",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your answer",
+    "ask": "Are the lines parallel, perpendicular, neither, or the same line?",
+    "options": [
+     "parallel",
+     "perpendicular",
+     "neither",
+     "the same line"
+    ],
+    "ch": 176959636,
+    "shuffle": true,
+    "nudges": [
+     "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m(AB) = Δy/Δx = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         2
+        ],
+        "msg": "That is Δx over Δy. Slope is Δy over Δx."
+       },
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Check the signs: Δy := y2 − y1 and Δx := x2 − x1, in the same order."
+       }
+      ],
+      "nudges": [
+       "m = Δy/Δx, with Δx := x2 − x1 and Δy := y2 − y1. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m(CD) = Δy/Δx = ?",
+      "answer": [
+       -2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -1,
+         2
+        ],
+        "msg": "That is Δx over Δy. Slope is Δy over Δx."
+       },
+       {
+        "f": [
+         2,
+         1
+        ],
+        "msg": "Check the signs: Δy := y2 − y1 and Δx := x2 − x1, in the same order."
+       }
+      ],
+      "nudges": [
+       "m = Δy/Δx, with Δx := x2 − x1 and Δy := y2 − y1. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Parallel test",
+      "ask": "Are the two slopes equal?",
+      "options": [
+       "yes",
+       "no"
+      ],
+      "ch": 5863650,
+      "shuffle": true,
+      "nudges": [
+       "Compare m(AB) and m(CD) as numbers, signs included."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Perpendicular test. m(AB) · m(CD) = ?",
+      "answer": [
+       -4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "Watch the sign: multiply the signs too."
+       }
+      ],
+      "nudges": [
+       "Multiply tops, multiply bottoms. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Answer",
+      "ask": "So the lines are…",
+      "options": [
+       "parallel",
+       "perpendicular",
+       "neither",
+       "the same line"
+      ],
+      "ch": 176959636,
+      "shuffle": true,
+      "nudges": [
+       "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "Are the lines 2x + 5y = 10 and 4x + 10y = 30 parallel, perpendicular, neither, or the same line?",
+  "given": [
+   {
+    "v": "2x + 5y = 10",
+    "k": "line 1, standard form"
+   },
+   {
+    "v": "4x + 10y = 30",
+    "k": "line 2, standard form"
+   }
+  ],
+  "want": "parallel, perpendicular, neither, or the same line",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your answer",
+    "ask": "Are the lines parallel, perpendicular, neither, or the same line?",
+    "options": [
+     "parallel",
+     "perpendicular",
+     "neither",
+     "the same line"
+    ],
+    "ch": 341173234,
+    "shuffle": true,
+    "nudges": [
+     "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5: m₁ = −A/B = ?",
+      "answer": [
+       -2,
+       5
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         5
+        ],
+        "msg": "Keep the minus: m = −A/B."
+       },
+       {
+        "f": [
+         -5,
+         2
+        ],
+        "msg": "That is −B/A. The slope is −A over B."
+       },
+       {
+        "f": [
+         -1,
+         5
+        ],
+        "msg": "C only moves the intercept. The slope is −A over B."
+       }
+      ],
+      "nudges": [
+       "m = −A/B. A rides with x, B rides with y. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: m₂ = −A/B = ?",
+      "answer": [
+       -2,
+       5
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         5
+        ],
+        "msg": "Keep the minus: m = −A/B."
+       },
+       {
+        "f": [
+         -5,
+         2
+        ],
+        "msg": "That is −B/A. The slope is −A over B."
+       },
+       {
+        "f": [
+         -2,
+         15
+        ],
+        "msg": "C only moves the intercept. The slope is −A over B."
+       }
+      ],
+      "nudges": [
+       "m = −A/B. A rides with x, B rides with y. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Parallel test",
+      "ask": "Are the two slopes equal?",
+      "options": [
+       "yes",
+       "no"
+      ],
+      "ch": 193512214,
+      "shuffle": true,
+      "nudges": [
+       "Compare m₁ and m₂ as numbers, signs included."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Same slope. Compare b. For line 1, b = C/B = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         5,
+         1
+        ],
+        "msg": "That is B/C. b = C over B."
+       }
+      ],
+      "nudges": [
+       "C only moves the intercept: b = C/B. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: For line 2, b = C/B = ?",
+      "answer": [
+       3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         3
+        ],
+        "msg": "That is B/C. b = C over B."
+       }
+      ],
+      "nudges": [
+       "C only moves the intercept: b = C/B. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Answer",
+      "ask": "So the lines are…",
+      "options": [
+       "parallel",
+       "perpendicular",
+       "neither",
+       "the same line"
+      ],
+      "ch": 341173234,
+      "shuffle": true,
+      "nudges": [
+       "Equal slopes and a different b: parallel. Equal slopes and the same b: the same line. Slopes that multiply to −1: perpendicular. Anything else: neither."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "Write the equation of the line perpendicular to 3x − 2y = 6 that passes through (−3, 5). Give m and b for y = mx + b.",
+  "given": [
+   {
+    "v": "3x − 2y = 6",
+    "k": "the given line, standard form"
+   },
+   {
+    "v": "(−3, 5)",
+    "k": "a point on the new line"
+   }
+  ],
+  "want": "m and b for the new line, y = mx + b",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Slope</div><div class=\"rc-s\">m = Δy / Δx<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Standard form Ax + By = C</div><div class=\"rc-s\">m = −A / B, b = C / B<br>(C only moves the intercept)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-1 Parallel</div><div class=\"rc-s\">m∥ = m (different b)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-2 Perpendicular</div><div class=\"rc-s\">m⊥ = −1 / m (the slopes multiply to −1)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Point-slope</div><div class=\"rc-s\">y − y1 = m(x − x1)</div></div></div><div class=\"ref-note\">Plan: 1 read · 2 goal · 3 facts as math · 4 subgoals (the slope first, then the line) · 5 execute, one move per row · 6 answer and check. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Your line is y = mx + b. What is m⊥?",
+    "answer": [
+     -2,
+     3
+    ],
+    "traps": [
+     {
+      "f": [
+       -3,
+       2
+      ],
+      "msg": "You changed only the sign. Opposite reciprocal is two moves: flip it too."
+     },
+     {
+      "f": [
+       2,
+       3
+      ],
+      "msg": "You flipped it but kept the sign. Opposite reciprocal is two moves: change the sign too. Also, check the sign of m: B is −2, so m = −A/B = 3/2 is positive."
+     },
+     {
+      "f": [
+       3,
+       2
+      ],
+      "msg": "That is the slope of the given line. Perpendicular needs the opposite reciprocal."
+     }
+    ],
+    "nudges": [
+     "Perpendicular: m⊥ = −1/m. Get m first. Type fractions like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "3x − 2y = 6 is in standard form, Ax + By = C. What are A and B?",
+      "options": [
+       "A = 3, B = −2",
+       "A = 3, B = 2",
+       "A = 3, B = 6"
+      ],
+      "ch": 112352005,
+      "shuffle": true,
+      "nudges": [
+       "A is the number on x and B is the number on y, signs included. C is the number alone on the right."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. m = −A/B = ?",
+      "answer": [
+       3,
+       2
+      ],
+      "traps": [
+       {
+        "f": [
+         -3,
+         2
+        ],
+        "msg": "Keep the minus: m = −A/B. (B is −2, so a negative over a negative comes out positive.)"
+       },
+       {
+        "f": [
+         2,
+         3
+        ],
+        "msg": "That is −B/A. The slope is −A over B."
+       },
+       {
+        "f": [
+         -1,
+         2
+        ],
+        "msg": "C only moves the intercept. The slope is −A over B."
+       }
+      ],
+      "nudges": [
+       "m = −A/B. A rides with x, B rides with y. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: m⊥ = −1/m. m⊥ = ?",
+      "answer": [
+       -2,
+       3
+      ],
+      "traps": [
+       {
+        "f": [
+         -3,
+         2
+        ],
+        "msg": "You changed only the sign. Opposite reciprocal is two moves: flip it too."
+       },
+       {
+        "f": [
+         2,
+         3
+        ],
+        "msg": "You flipped it but kept the sign. Opposite reciprocal is two moves: change the sign too. Also, check the sign of m: B is −2, so m = −A/B = 3/2 is positive."
+       },
+       {
+        "f": [
+         3,
+         2
+        ],
+        "msg": "That is the slope of the given line. Perpendicular needs the opposite reciprocal."
+       }
+      ],
+      "nudges": [
+       "Opposite reciprocal: flip m and change its sign. Check: m · m⊥ = −1. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "Now b. What is b?",
+    "answer": [
+     3,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       7,
+       1
+      ],
+      "msg": "Check the point: it goes in as (x − x1), with x1’s sign, before you distribute. Also, distribute −2/3 to both terms in the parentheses, signs included."
+     },
+     {
+      "f": [
+       -7,
+       1
+      ],
+      "msg": "Change sides, change signs: the number next to y crosses with the opposite sign."
+     },
+     {
+      "f": [
+       19,
+       2
+      ],
+      "msg": "That b comes from the given slope. Use m⊥ in point-slope form."
+     }
+    ],
+    "nudges": [
+     "Put m⊥ and the point into y − y1 = m(x − x1), distribute, then change sides, change signs. Type fractions like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Point-slope form",
+      "ask": "Substitute m⊥ and the point into y − y1 = m(x − x1).",
+      "options": [
+       "y − 5 = −(2/3)(x − (−3))",
+       "y − (−3) = −(2/3)(x − 5)",
+       "y − 5 = (3/2)(x − (−3))"
+      ],
+      "ch": 825259722,
+      "shuffle": true,
+      "nudges": [
+       "(x1, y1) is the point: x1 goes with x, y1 goes with y. The slope is m⊥."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Minus a negative",
+      "ask": "Clean up x − (−3).",
+      "options": [
+       "x + 3",
+       "x − 3"
+      ],
+      "ch": 277660667,
+      "shuffle": true,
+      "nudges": [
+       "Minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Distribute",
+      "ask": "Distribute −2/3.",
+      "options": [
+       "y − 5 = −(2/3)x − 2",
+       "y − 5 = −(2/3)x + 2",
+       "y − 5 = −(2/3)x + 3"
+      ],
+      "ch": 3333087701,
+      "shuffle": true,
+      "nudges": [
+       "Multiply −2/3 by each term in the parentheses, signs included."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Change sides, change signs",
+      "ask": "Move the −5 off the y side.",
+      "options": [
+       "y = −(2/3)x − 2 + 5",
+       "y = −(2/3)x − 2 + (−5)"
+      ],
+      "ch": 379806190,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: the number next to y crosses with the opposite sign."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 6: Add. b = ?",
+      "answer": [
+       3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         7,
+         1
+        ],
+        "msg": "Check the point: it goes in as (x − x1), with x1’s sign, before you distribute. Also, distribute −2/3 to both terms in the parentheses, signs included."
+       },
+       {
+        "f": [
+         -7,
+         1
+        ],
+        "msg": "Change sides, change signs: the number next to y crosses with the opposite sign."
+       },
+       {
+        "f": [
+         19,
+         2
+        ],
+        "msg": "That b comes from the given slope. Use m⊥ in point-slope form."
+       }
+      ],
+      "nudges": [
+       "Add the two numbers on the end. Type fractions like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
