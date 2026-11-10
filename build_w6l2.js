@@ -1,6 +1,6 @@
 /* Week 6 Lesson 2 checker (Distance, Partitioning, Perimeter and Area). Follows the
-   handout: SG-4 distance d = √((x2 − x1)² + (y2 − y1)²); SG-5 partition k = a/(a + b),
-   xP = x1 + k(x2 − x1), yP = y1 + k(y2 − y1); midpoint = the average; triangle area ½bh;
+   handout: SG-4 distance d = √(Δx² + Δy²); SG-5 partition k = a/(a + b),
+   xP = x1 + k·Δx, yP = y1 + k·Δy (Δx := x2 − x1, Δy := y2 − y1); midpoint = the average; triangle area ½bh;
    perimeter adds the sides; round once, at the end. Δx := x2 − x1 and Δy := y2 − y1 (Lesson 1).
    Coarse first: each problem asks for the answer straight away. A miss opens the Plan
    one move at a time (Δx, Δy, the number under the root, the square root; k, k·Δx, xP; ...).
@@ -104,14 +104,14 @@ function partition(o){
   putk(kab,'A ratio of '+a+':'+b+' is '+(a+b)+' pieces in all. k = a/(a + b).'); putk(kw,'That is '+S(kw)+': measured from the wrong end. k = a/(a + b).');
   putk(Q(1,a+b),'k = a/(a + b): the first piece is '+a+' of the '+(a+b)+'.');
   const xT=tr(A[0],dx,xP,'x'), yT=tr(A[1],dy,yP,'y');
-  const N='x of P = x1 + k(x2 '+MI+' x1). Find k, then go k of Δx from the first point.';
+  const N='x of P = x1 + k'+DOT+'Δx. Find k, then go k of Δx from the first point.';
   return {id,num:numLbl,prompt,given,want:'the point P, (x, y)',reference:REF,pipeline:[
     coarse(frac('x of P = ?',xP,xT,N),[
       frac('Plan 5a: k = a/(a + b) = ?',k,kTraps,'The ratio '+a+':'+b+' is '+a+' pieces, then '+b+' pieces.'),
       frac('Plan 5b: Δx = x2 '+MI+' x1 = '+sgn(B[0])+' '+MI+' '+P_(A[0])+' = ?',Q(dx),[{f:Q(-dx),msg:'Δx is x2 '+MI+' x1: the second x first.'}].filter(u=>u.f[0]!==dx),'Δx := x2 '+MI+' x1.'),
       frac('Plan 5b: k '+DOT+' Δx = '+S(k)+' '+DOT+' '+P_(dx)+' = ?',mul(k,Q(dx)),[{f:mul(k,Q(-dx)),msg:'Keep the sign of Δx.'}].filter(u=>!eq(u.f,mul(k,Q(dx)))),'Multiply tops, multiply bottoms, then simplify.'),
       frac('Plan 5b: x of P = x1 + k'+DOT+'Δx = '+sgn(A[0])+' + '+PF(mul(k,Q(dx)))+' = ?',xP,xT,'Start at x1 and add the move.')]),
-    coarse(frac('y of P = ?',yP,yT,'y of P = y1 + k(y2 '+MI+' y1). Same k, now with Δy.'),[
+    coarse(frac('y of P = ?',yP,yT,'y of P = y1 + k'+DOT+'Δy. Same k, now with Δy.'),[
       frac('Plan 5c: Δy = y2 '+MI+' y1 = '+sgn(B[1])+' '+MI+' '+P_(A[1])+' = ?',Q(dy),[{f:Q(-dy),msg:'Δy is y2 '+MI+' y1: the second y first.'}].filter(u=>u.f[0]!==dy),'Δy := y2 '+MI+' y1.'),
       frac('Plan 5c: k '+DOT+' Δy = '+S(k)+' '+DOT+' '+P_(dy)+' = ?',mul(k,Q(dy)),[{f:mul(k,Q(-dy)),msg:'Keep the sign of Δy.'}].filter(u=>!eq(u.f,mul(k,Q(dy)))),'Same k as before. Multiply tops, multiply bottoms.'),
       frac('Plan 5c: y of P = y1 + k'+DOT+'Δy = '+sgn(A[1])+' + '+PF(mul(k,Q(dy)))+' = ?',yP,yT,'Start at y1 and add the move.')])],
@@ -119,8 +119,8 @@ function partition(o){
 }
 
 const REF='<div class="surf-label">Formula Box — stays on screen</div>'+
- '<div class="ref-row"><div class="ref-cell"><div class="rc-t">'+STAR+' SG-4 Distance</div><div class="rc-s">d = '+RT+'((x2 '+MI+' x1)'+SQ+' + (y2 '+MI+' y1)'+SQ+')<br>Δx := x2 '+MI+' x1, Δy := y2 '+MI+' y1</div></div>'+
- '<div class="ref-cell"><div class="rc-t">'+STAR+' SG-5 Partition point</div><div class="rc-s">k = a / (a + b)<br>x of P = x1 + k(x2 '+MI+' x1), y of P = y1 + k(y2 '+MI+' y1)</div></div></div>'+
+ '<div class="ref-row"><div class="ref-cell"><div class="rc-t">'+STAR+' SG-4 Distance</div><div class="rc-s">d = '+RT+'(Δx'+SQ+' + Δy'+SQ+')<br>Δx := x2 '+MI+' x1, Δy := y2 '+MI+' y1</div></div>'+
+ '<div class="ref-cell"><div class="rc-t">'+STAR+' SG-5 Partition point</div><div class="rc-s">k = a / (a + b)<br>x of P = x1 + k'+DOT+'Δx, y of P = y1 + k'+DOT+'Δy</div></div></div>'+
  '<div class="ref-row" style="margin-top:8px"><div class="ref-cell"><div class="rc-t">Midpoint (k = 1/2)</div><div class="rc-s">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div>'+
  '<div class="ref-cell"><div class="rc-t">Triangle</div><div class="rc-s">A = (1/2)bh; perimeter: add the sides</div></div></div>'+
  '<div class="ref-note">Plan: 1 read and sketch '+DOT+' 2 goal '+DOT+' 3 facts as math (label x1, y1, x2, y2 first) '+DOT+' 4 subgoals '+DOT+' 5 execute, one move per row '+DOT+' 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>';

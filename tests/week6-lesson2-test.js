@@ -28,8 +28,8 @@ let w=boot();
 A(w.K.layout()==='split','split shell');
 A(w.document.getElementById('hdrDots').textContent==='T-1T-2T-3T-4A-1A-2A-3A-4','8 problems');
 const surf=w.document.getElementById('ckSurf').textContent;
-A(surf.includes('SG-4') && surf.includes('d = √((x2 − x1)² + (y2 − y1)²)') && surf.includes('Δx := x2 − x1, Δy := y2 − y1'),'Formula Box: SG-4 distance with Δx and Δy');
-A(surf.includes('SG-5') && surf.includes('k = a / (a + b)') && surf.includes('x of P = x1 + k(x2 − x1)'),'Formula Box: SG-5 partition');
+A(surf.includes('SG-4') && surf.includes('d = √(Δx² + Δy²)') && surf.includes('Δx := x2 − x1, Δy := y2 − y1'),'Formula Box: SG-4 distance with Δx and Δy');
+A(surf.includes('SG-5') && surf.includes('k = a / (a + b)') && surf.includes('x of P = x1 + k·Δx'),'Formula Box: SG-5 partition');
 A(surf.includes('M = ((x1 + x2) / 2, (y1 + y2) / 2)') && surf.includes('A = (1/2)bh'),'Formula Box: midpoint and triangle area');
 // straight answers: [step 0, step 1?]
 const STRAIGHT={t1:['10'],t2:['4.47',{c:'2√5'}],t3:['1','5'],t4:['1','3'],a1:['1','-1'],a2:['9','14.61'],a3:['50'],a4:['8.94',{c:'4√5'}]};
