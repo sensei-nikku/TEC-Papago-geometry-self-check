@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 6, Lesson 2 — Distance, Partitioning, Perimeter and Area Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Distance, Partitioning, Perimeter and Area</h1><div class="sub">Week 6 · Lesson 2 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-fraction.js"></script>
+<script>
+/* Week 6 Lesson 2 Learning Lab. Split layout, coarse first. A miss opens the
+   Problem-Solving Plan one move at a time: Δx, Δy, the number under the root,
+   the square root; k, k·Δx, x of P; the midpoint average; base, height, ½bh.
+   Decimals to the nearest hundredth (tol 0.005). Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Find the distance between (−2, 1) and (4, 9).",
+  "given": [
+   {
+    "v": "(−2, 1)",
+    "k": "(x1, y1)"
+   },
+   {
+    "v": "(4, 9)",
+    "k": "(x2, y2)"
+   }
+  ],
+  "want": "d, the distance",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "d = ?",
+    "answer": 10,
+    "tol": 0.005,
+    "closeBand": 0.01,
+    "unit": "",
+    "traps": [
+     {
+      "near": 14,
+      "tol": 0.006,
+      "msg": "That is walking along the grid lines: Δx + Δy. The straight-line distance uses the distance formula."
+     },
+     {
+      "near": 100,
+      "tol": 0.006,
+      "msg": "Take the square root: √100."
+     },
+     {
+      "near": 8.2462,
+      "tol": 0.006,
+      "msg": "Check Δx: minus a negative is plus."
+     }
+    ],
+    "nudges": [
+     "Δx := x2 − x1 and Δy := y2 − y1. Square each, add, then take the square root."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δx = x2 − x1 = 4 − (−2) = ?",
+      "answer": [
+       6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         1
+        ],
+        "msg": "Minus a negative is plus: 4 − (−2)."
+       },
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "Δx is x2 − x1: the second x first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δy = y2 − y1 = 9 − 1 = ?",
+      "answer": [
+       8,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -8,
+         1
+        ],
+        "msg": "Δy is y2 − y1: the second y first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Under the root. Δx² + Δy² = 6² + 8² = ?",
+      "answer": [
+       100,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         14,
+         1
+        ],
+        "msg": "Square each one before you add: Δx² + Δy²."
+       },
+       {
+        "f": [
+         28,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. A negative squared is positive. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: d = √100 = ?",
+      "answer": 10,
+      "tol": 0.005,
+      "closeBand": 0.01,
+      "unit": "",
+      "traps": [
+       {
+        "near": 100,
+        "tol": 0.006,
+        "msg": "Take the square root."
+       }
+      ],
+      "nudges": [
+       "What number times itself is 100?"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Find the distance between (−3, 2) and (1, 4). Round to the nearest hundredth. Then give the exact value.",
+  "given": [
+   {
+    "v": "(−3, 2)",
+    "k": "(x1, y1)"
+   },
+   {
+    "v": "(1, 4)",
+    "k": "(x2, y2)"
+   }
+  ],
+  "want": "d, to the nearest hundredth, then exact",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "d ≈ ? (nearest hundredth)",
+    "answer": 4.47213595499958,
+    "tol": 0.005,
+    "closeBand": 0.01,
+    "unit": "",
+    "traps": [
+     {
+      "near": 6,
+      "tol": 0.006,
+      "msg": "That is walking along the grid lines: Δx + Δy. The straight-line distance uses the distance formula."
+     },
+     {
+      "near": 20,
+      "tol": 0.006,
+      "msg": "Take the square root: √20."
+     },
+     {
+      "near": 2.8284,
+      "tol": 0.006,
+      "msg": "Check Δx: minus a negative is plus."
+     },
+     {
+      "near": 4.5,
+      "tol": 0.001,
+      "msg": "Round to the nearest hundredth: two digits after the point."
+     }
+    ],
+    "nudges": [
+     "Δx := x2 − x1 and Δy := y2 − y1. Square each, add, then take the square root."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δx = x2 − x1 = 1 − (−3) = ?",
+      "answer": [
+       4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Minus a negative is plus: 1 − (−3)."
+       },
+       {
+        "f": [
+         -4,
+         1
+        ],
+        "msg": "Δx is x2 − x1: the second x first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δy = y2 − y1 = 4 − 2 = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Δy is y2 − y1: the second y first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Under the root. Δx² + Δy² = 4² + 2² = ?",
+      "answer": [
+       20,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         6,
+         1
+        ],
+        "msg": "Square each one before you add: Δx² + Δy²."
+       },
+       {
+        "f": [
+         12,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. A negative squared is positive. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. d = √20 ≈ ? (nearest hundredth)",
+      "answer": 4.47213595499958,
+      "tol": 0.005,
+      "closeBand": 0.01,
+      "unit": "",
+      "traps": [
+       {
+        "near": 20,
+        "tol": 0.006,
+        "msg": "Take the square root."
+       },
+       {
+        "near": 4.5,
+        "tol": 0.001,
+        "msg": "Round to the nearest hundredth: two digits after the point."
+       }
+      ],
+      "nudges": [
+       "Round once, at the end."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "If you can, simplify",
+    "ask": "Exact value: d = √20 = ?",
+    "options": [
+     "2√5",
+     "4√5",
+     "2√10"
+    ],
+    "ch": 193719590,
+    "shuffle": true,
+    "nudges": [
+     "Find the biggest perfect square that goes into 20 (4, 9, 16, 25, …). Its square root comes out front; the rest stays under the root."
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Find the midpoint of the segment from (−3, 8) to (5, 2).",
+  "given": [
+   {
+    "v": "(−3, 8)",
+    "k": "(x1, y1)"
+   },
+   {
+    "v": "(5, 2)",
+    "k": "(x2, y2)"
+   }
+  ],
+  "want": "M, the midpoint",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "x of the midpoint = ?",
+    "answer": [
+     1,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       4,
+       1
+      ],
+      "msg": "That is half the change: how far to move. The midpoint averages the endpoints: (x1 + x2)/2."
+     },
+     {
+      "f": [
+       2,
+       1
+      ],
+      "msg": "Now multiply by 1/2: the average of two numbers is their sum over 2."
+     }
+    ],
+    "nudges": [
+     "Average the x values: (x1 + x2)/2. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: x1 + x2 = −3 + 5 = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         8,
+         1
+        ],
+        "msg": "Add the two x values; do not take the change."
+       }
+      ],
+      "nudges": [
+       "Add the two x values. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: (x1 + x2)/2 = 2/2 = ?",
+      "answer": [
+       1,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "Multiply by 1/2. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "y of the midpoint = ?",
+    "answer": [
+     5,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       -3,
+       1
+      ],
+      "msg": "That is half the change: how far to move. The midpoint averages the endpoints: (x1 + x2)/2."
+     },
+     {
+      "f": [
+       10,
+       1
+      ],
+      "msg": "Now multiply by 1/2: the average of two numbers is their sum over 2."
+     }
+    ],
+    "nudges": [
+     "Average the y values: (y1 + y2)/2. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: y1 + y2 = 8 + 2 = ?",
+      "answer": [
+       10,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "Add the two y values; do not take the change."
+       }
+      ],
+      "nudges": [
+       "Add the two y values. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: (y1 + y2)/2 = 10/2 = ?",
+      "answer": [
+       5,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "Multiply by 1/2. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t4",
+  "num": "T-4",
+  "prompt": "Find the point P that partitions the directed segment from A(−2, 1) to B(10, 9) in the ratio 1:3.",
+  "given": [
+   {
+    "v": "A(−2, 1)",
+    "k": "the start: (x1, y1)"
+   },
+   {
+    "v": "B(10, 9)",
+    "k": "(x2, y2)"
+   },
+   {
+    "v": "1:3",
+    "k": "the ratio a:b"
+   }
+  ],
+  "want": "the point P, (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "x of P = ?",
+    "answer": [
+     1,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       2,
+       1
+      ],
+      "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+     },
+     {
+      "f": [
+       7,
+       1
+      ],
+      "msg": "That is 3/4 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+     },
+     {
+      "f": [
+       3,
+       1
+      ],
+      "msg": "That is how far to move. Now start from the first point: add x1."
+     },
+     {
+      "f": [
+       -5,
+       1
+      ],
+      "msg": "Check the sign of the change: x2 − x1, the second one first."
+     }
+    ],
+    "nudges": [
+     "x of P = x1 + k(x2 − x1). Find k, then go k of Δx from the first point. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: k = a/(a + b) = ?",
+      "answer": [
+       1,
+       4
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         3
+        ],
+        "msg": "A ratio of 1:3 is 4 pieces in all. k = a/(a + b)."
+       },
+       {
+        "f": [
+         3,
+         4
+        ],
+        "msg": "That is 3/4: measured from the wrong end. k = a/(a + b)."
+       }
+      ],
+      "nudges": [
+       "The ratio 1:3 is 1 pieces, then 3 pieces. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: Δx = x2 − x1 = 10 − (−2) = ?",
+      "answer": [
+       12,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -12,
+         1
+        ],
+        "msg": "Δx is x2 − x1: the second x first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: k · Δx = 1/4 · 12 = ?",
+      "answer": [
+       3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -3,
+         1
+        ],
+        "msg": "Keep the sign of Δx."
+       }
+      ],
+      "nudges": [
+       "Multiply tops, multiply bottoms, then simplify. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: x of P = x1 + k·Δx = −2 + 3 = ?",
+      "answer": [
+       1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         1
+        ],
+        "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+       },
+       {
+        "f": [
+         7,
+         1
+        ],
+        "msg": "That is 3/4 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+       },
+       {
+        "f": [
+         3,
+         1
+        ],
+        "msg": "That is how far to move. Now start from the first point: add x1."
+       },
+       {
+        "f": [
+         -5,
+         1
+        ],
+        "msg": "Check the sign of the change: x2 − x1, the second one first."
+       }
+      ],
+      "nudges": [
+       "Start at x1 and add the move. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "y of P = ?",
+    "answer": [
+     3,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       11,
+       3
+      ],
+      "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+     },
+     {
+      "f": [
+       7,
+       1
+      ],
+      "msg": "That is 3/4 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+     },
+     {
+      "f": [
+       2,
+       1
+      ],
+      "msg": "That is how far to move. Now start from the first point: add y1."
+     },
+     {
+      "f": [
+       -1,
+       1
+      ],
+      "msg": "Check the sign of the change: y2 − y1, the second one first."
+     }
+    ],
+    "nudges": [
+     "y of P = y1 + k(y2 − y1). Same k, now with Δy. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5c: Δy = y2 − y1 = 9 − 1 = ?",
+      "answer": [
+       8,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -8,
+         1
+        ],
+        "msg": "Δy is y2 − y1: the second y first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5c: k · Δy = 1/4 · 8 = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Keep the sign of Δy."
+       }
+      ],
+      "nudges": [
+       "Same k as before. Multiply tops, multiply bottoms. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5c: y of P = y1 + k·Δy = 1 + 2 = ?",
+      "answer": [
+       3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         11,
+         3
+        ],
+        "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+       },
+       {
+        "f": [
+         7,
+         1
+        ],
+        "msg": "That is 3/4 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+       },
+       {
+        "f": [
+         2,
+         1
+        ],
+        "msg": "That is how far to move. Now start from the first point: add y1."
+       },
+       {
+        "f": [
+         -1,
+         1
+        ],
+        "msg": "Check the sign of the change: y2 − y1, the second one first."
+       }
+      ],
+      "nudges": [
+       "Start at y1 and add the move. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Find the point P that partitions the directed segment from A(7, 5) to B(−3, −5) in the ratio 3:2.",
+  "given": [
+   {
+    "v": "A(7, 5)",
+    "k": "the start: (x1, y1)"
+   },
+   {
+    "v": "B(−3, −5)",
+    "k": "(x2, y2)"
+   },
+   {
+    "v": "3:2",
+    "k": "the ratio a:b"
+   }
+  ],
+  "want": "the point P, (x, y)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "x of P = ?",
+    "answer": [
+     1,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       -8,
+       1
+      ],
+      "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+     },
+     {
+      "f": [
+       3,
+       1
+      ],
+      "msg": "That is 2/5 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+     },
+     {
+      "f": [
+       -6,
+       1
+      ],
+      "msg": "That is how far to move. Now start from the first point: add x1."
+     },
+     {
+      "f": [
+       13,
+       1
+      ],
+      "msg": "Check the sign of the change: x2 − x1, the second one first."
+     },
+     {
+      "f": [
+       5,
+       1
+      ],
+      "msg": "k = a/(a + b): 3 pieces of the 5, not 1."
+     }
+    ],
+    "nudges": [
+     "x of P = x1 + k(x2 − x1). Find k, then go k of Δx from the first point. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: k = a/(a + b) = ?",
+      "answer": [
+       3,
+       5
+      ],
+      "traps": [
+       {
+        "f": [
+         3,
+         2
+        ],
+        "msg": "A ratio of 3:2 is 5 pieces in all. k = a/(a + b)."
+       },
+       {
+        "f": [
+         2,
+         5
+        ],
+        "msg": "That is 2/5: measured from the wrong end. k = a/(a + b)."
+       },
+       {
+        "f": [
+         1,
+         5
+        ],
+        "msg": "k = a/(a + b): the first piece is 3 of the 5."
+       }
+      ],
+      "nudges": [
+       "The ratio 3:2 is 3 pieces, then 2 pieces. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: Δx = x2 − x1 = −3 − 7 = ?",
+      "answer": [
+       -10,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         10,
+         1
+        ],
+        "msg": "Δx is x2 − x1: the second x first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: k · Δx = 3/5 · (−10) = ?",
+      "answer": [
+       -6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         6,
+         1
+        ],
+        "msg": "Keep the sign of Δx."
+       }
+      ],
+      "nudges": [
+       "Multiply tops, multiply bottoms, then simplify. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: x of P = x1 + k·Δx = 7 + (−6) = ?",
+      "answer": [
+       1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -8,
+         1
+        ],
+        "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+       },
+       {
+        "f": [
+         3,
+         1
+        ],
+        "msg": "That is 2/5 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+       },
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "That is how far to move. Now start from the first point: add x1."
+       },
+       {
+        "f": [
+         13,
+         1
+        ],
+        "msg": "Check the sign of the change: x2 − x1, the second one first."
+       },
+       {
+        "f": [
+         5,
+         1
+        ],
+        "msg": "k = a/(a + b): 3 pieces of the 5, not 1."
+       }
+      ],
+      "nudges": [
+       "Start at x1 and add the move. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "y of P = ?",
+    "answer": [
+     -1,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       -10,
+       1
+      ],
+      "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+     },
+     {
+      "f": [
+       1,
+       1
+      ],
+      "msg": "That is 2/5 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+     },
+     {
+      "f": [
+       -6,
+       1
+      ],
+      "msg": "That is how far to move. Now start from the first point: add y1."
+     },
+     {
+      "f": [
+       11,
+       1
+      ],
+      "msg": "Check the sign of the change: y2 − y1, the second one first."
+     },
+     {
+      "f": [
+       3,
+       1
+      ],
+      "msg": "k = a/(a + b): 3 pieces of the 5, not 1."
+     }
+    ],
+    "nudges": [
+     "y of P = y1 + k(y2 − y1). Same k, now with Δy. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5c: Δy = y2 − y1 = −5 − 5 = ?",
+      "answer": [
+       -10,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         10,
+         1
+        ],
+        "msg": "Δy is y2 − y1: the second y first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5c: k · Δy = 3/5 · (−10) = ?",
+      "answer": [
+       -6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         6,
+         1
+        ],
+        "msg": "Keep the sign of Δy."
+       }
+      ],
+      "nudges": [
+       "Same k as before. Multiply tops, multiply bottoms. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5c: y of P = y1 + k·Δy = 5 + (−6) = ?",
+      "answer": [
+       -1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -10,
+         1
+        ],
+        "msg": "k compares the first piece with the whole: a/(a + b), not a/b."
+       },
+       {
+        "f": [
+         1,
+         1
+        ],
+        "msg": "That is 2/5 of the way: measured from the wrong end. k = a/(a + b) starts at the first point."
+       },
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "That is how far to move. Now start from the first point: add y1."
+       },
+       {
+        "f": [
+         11,
+         1
+        ],
+        "msg": "Check the sign of the change: y2 − y1, the second one first."
+       },
+       {
+        "f": [
+         3,
+         1
+        ],
+        "msg": "k = a/(a + b): 3 pieces of the 5, not 1."
+       }
+      ],
+      "nudges": [
+       "Start at y1 and add the move. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "Triangle PQR has vertices P(0, 0), Q(6, 0) and R(2, 3). Find its area. Then find its perimeter, to the nearest hundredth.",
+  "given": [
+   {
+    "v": "P(0, 0), Q(6, 0)",
+    "k": "same y: a flat side"
+   },
+   {
+    "v": "R(2, 3)",
+    "k": "the top vertex"
+   }
+  ],
+  "want": "the area, then the perimeter",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "Area = ? (square units)",
+    "answer": [
+     9,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       18,
+       1
+      ],
+      "msg": "A triangle is half of a rectangle: A = (1/2)bh."
+     }
+    ],
+    "nudges": [
+     "A = (1/2)bh. Count the base along the flat side and the height straight up. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: The base PQ has the same y. Count it: b = ?",
+      "answer": [
+       6,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "From x = 0 to x = 6. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: The height, straight up from PQ to R: h = ?",
+      "answer": [
+       3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         2,
+         1
+        ],
+        "msg": "Height goes straight up: count the y of R above the base."
+       }
+      ],
+      "nudges": [
+       "From y = 0 up to the y of R. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: A = (1/2)bh = (1/2)(6)(3) = ?",
+      "answer": [
+       9,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         18,
+         1
+        ],
+        "msg": "Multiply by 1/2 too."
+       }
+      ],
+      "nudges": [
+       "Multiply all three. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Perimeter ≈ ? (nearest hundredth)",
+    "answer": 14.60555127546399,
+    "tol": 0.005,
+    "closeBand": 0.01,
+    "unit": "",
+    "traps": [
+     {
+      "near": 24,
+      "tol": 0.006,
+      "msg": "Take the square root of 13 before you add."
+     },
+     {
+      "near": 14,
+      "tol": 0.006,
+      "msg": "The height is not a side. Use the slanted side PR."
+     },
+     {
+      "near": 8.6056,
+      "tol": 0.006,
+      "msg": "Add all three sides, the base too."
+     },
+     {
+      "near": 14.6,
+      "tol": 0.001,
+      "msg": "Close: round to the nearest hundredth. Look at the next digit; 5 or more rounds up."
+     }
+    ],
+    "nudges": [
+     "Add the three sides. The base is counted; the slanted sides use the distance formula."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: PR first. Δx² + Δy² = 2² + 3² = ?",
+      "answer": [
+       13,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         5,
+         1
+        ],
+        "msg": "Square each one before you add."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: QR. Δx² + Δy² = (−4)² + 3² = ?",
+      "answer": [
+       25,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -7,
+         1
+        ],
+        "msg": "A negative squared is positive."
+       }
+      ],
+      "nudges": [
+       "A negative squared is positive. Square each, then add. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: QR = √25 = ?",
+      "answer": [
+       5,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "What number times itself is 25? Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Perimeter = 6 + √13 + 5 ≈ ? (nearest hundredth)",
+      "answer": 14.60555127546399,
+      "tol": 0.005,
+      "closeBand": 0.01,
+      "unit": "",
+      "traps": [
+       {
+        "near": 24,
+        "tol": 0.006,
+        "msg": "Take the square root of 13 before you add."
+       },
+       {
+        "near": 14.6,
+        "tol": 0.001,
+        "msg": "Close: round to the nearest hundredth. Look at the next digit; 5 or more rounds up."
+       }
+      ],
+      "nudges": [
+       "Round once, at the end."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "On a site plan, each grid unit stands for 5 feet. A fence runs straight from (−1, 2) to (7, 8). How long is the fence, in feet?",
+  "given": [
+   {
+    "v": "(−1, 2) to (7, 8)",
+    "k": "the fence on the plan"
+   },
+   {
+    "v": "1 unit = 5 ft",
+    "k": "the scale"
+   }
+  ],
+  "want": "L, the real length, in feet",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "L = ? (feet)",
+    "answer": 50,
+    "tol": 0.005,
+    "closeBand": 0.01,
+    "unit": "ft",
+    "traps": [
+     {
+      "near": 10,
+      "tol": 0.006,
+      "msg": "That is the length in grid units. Each unit stands for 5 feet."
+     },
+     {
+      "near": 2,
+      "tol": 0.006,
+      "msg": "Each unit is 5 feet: multiply by 5."
+     },
+     {
+      "near": 500,
+      "tol": 0.006,
+      "msg": "Take the square root before you scale."
+     },
+     {
+      "near": 70,
+      "tol": 0.006,
+      "msg": "That is walking along the grid lines: Δx + Δy. The straight-line distance uses the distance formula."
+     },
+     {
+      "near": 42.4264,
+      "tol": 0.006,
+      "msg": "Check Δx: minus a negative is plus."
+     }
+    ],
+    "nudges": [
+     "Find d in grid units with the distance formula, then L = 5 · d."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δx = x2 − x1 = 7 − (−1) = ?",
+      "answer": [
+       8,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         6,
+         1
+        ],
+        "msg": "Minus a negative is plus: 7 − (−1)."
+       },
+       {
+        "f": [
+         -8,
+         1
+        ],
+        "msg": "Δx is x2 − x1: the second x first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δy = y2 − y1 = 8 − 2 = ?",
+      "answer": [
+       6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "Δy is y2 − y1: the second y first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Under the root. Δx² + Δy² = 8² + 6² = ?",
+      "answer": [
+       100,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         14,
+         1
+        ],
+        "msg": "Square each one before you add: Δx² + Δy²."
+       },
+       {
+        "f": [
+         28,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. A negative squared is positive. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: d = √100 = ? (grid units)",
+      "answer": 10,
+      "tol": 0.005,
+      "closeBand": 0.01,
+      "unit": "",
+      "traps": [
+       {
+        "near": 100,
+        "tol": 0.006,
+        "msg": "Take the square root."
+       }
+      ],
+      "nudges": [
+       "What number times itself is 100?"
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: L = 5 · d = ? (feet)",
+      "answer": 50,
+      "tol": 0.005,
+      "closeBand": 0.01,
+      "unit": "ft",
+      "traps": [
+       {
+        "near": 10,
+        "tol": 0.006,
+        "msg": "That is still grid units. Multiply by 5."
+       }
+      ],
+      "nudges": [
+       "Each grid unit stands for 5 feet."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "Find the distance between (−5, −2) and (3, −6). Round to the nearest hundredth. Then give the exact value.",
+  "given": [
+   {
+    "v": "(−5, −2)",
+    "k": "(x1, y1)"
+   },
+   {
+    "v": "(3, −6)",
+    "k": "(x2, y2)"
+   }
+  ],
+  "want": "d, to the nearest hundredth, then exact",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Distance</div><div class=\"rc-s\">d = √((x2 − x1)² + (y2 − y1)²)<br>Δx := x2 − x1, Δy := y2 − y1</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-5 Partition point</div><div class=\"rc-s\">k = a / (a + b)<br>x of P = x1 + k(x2 − x1), y of P = y1 + k(y2 − y1)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Midpoint (k = 1/2)</div><div class=\"rc-s\">M = ((x1 + x2) / 2, (y1 + y2) / 2)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Triangle</div><div class=\"rc-s\">A = (1/2)bh; perimeter: add the sides</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch · 2 goal · 3 facts as math (label x1, y1, x2, y2 first) · 4 subgoals · 5 execute, one move per row · 6 answer and check. Round once, at the end. Type fractions like -3/2.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "d ≈ ? (nearest hundredth)",
+    "answer": 8.94427190999916,
+    "tol": 0.005,
+    "closeBand": 0.01,
+    "unit": "",
+    "traps": [
+     {
+      "near": 12,
+      "tol": 0.006,
+      "msg": "That is walking along the grid lines: Δx + Δy. The straight-line distance uses the distance formula."
+     },
+     {
+      "near": 80,
+      "tol": 0.006,
+      "msg": "Take the square root: √80."
+     },
+     {
+      "near": 4.4721,
+      "tol": 0.006,
+      "msg": "Check Δx: minus a negative is plus."
+     },
+     {
+      "near": 11.3137,
+      "tol": 0.006,
+      "msg": "Check Δy: minus a negative is plus."
+     },
+     {
+      "near": 6.9282,
+      "tol": 0.006,
+      "msg": "A negative squared is positive. Add the squares."
+     },
+     {
+      "near": 8.9,
+      "tol": 0.001,
+      "msg": "Round to the nearest hundredth: two digits after the point."
+     }
+    ],
+    "nudges": [
+     "Δx := x2 − x1 and Δy := y2 − y1. Square each, add, then take the square root."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δx = x2 − x1 = 3 − (−5) = ?",
+      "answer": [
+       8,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Minus a negative is plus: 3 − (−5)."
+       },
+       {
+        "f": [
+         -8,
+         1
+        ],
+        "msg": "Δx is x2 − x1: the second x first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: Facts. Δy = y2 − y1 = −6 − (−2) = ?",
+      "answer": [
+       -4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -8,
+         1
+        ],
+        "msg": "Minus a negative is plus: −6 − (−2)."
+       },
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "Δy is y2 − y1: the second y first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1. Keep the parentheses, then minus a negative is plus. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: Under the root. Δx² + Δy² = 8² + (−4)² = ?",
+      "answer": [
+       80,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         48,
+         1
+        ],
+        "msg": "A negative squared is positive: (−4)² = 16."
+       },
+       {
+        "f": [
+         12,
+         1
+        ],
+        "msg": "Square each one before you add: Δx² + Δy²."
+       },
+       {
+        "f": [
+         24,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. A negative squared is positive. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. d = √80 ≈ ? (nearest hundredth)",
+      "answer": 8.94427190999916,
+      "tol": 0.005,
+      "closeBand": 0.01,
+      "unit": "",
+      "traps": [
+       {
+        "near": 80,
+        "tol": 0.006,
+        "msg": "Take the square root."
+       },
+       {
+        "near": 8.9,
+        "tol": 0.001,
+        "msg": "Round to the nearest hundredth: two digits after the point."
+       }
+      ],
+      "nudges": [
+       "Round once, at the end."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "If you can, simplify",
+    "ask": "Exact value: d = √80 = ?",
+    "options": [
+     "4√5",
+     "16√5",
+     "2√20"
+    ],
+    "ch": 193721768,
+    "shuffle": true,
+    "nudges": [
+     "Find the biggest perfect square that goes into 80 (4, 9, 16, 25, …). Its square root comes out front; the rest stays under the root."
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
