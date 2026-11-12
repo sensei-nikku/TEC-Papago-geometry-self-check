@@ -51,7 +51,7 @@ const TERM2={id:'sy2627-term2',name:'SY2627 Term 2',weeks:[
  ['Week 6 — Coordinate Geometry',[
   ['W6 · L1','Slope: Parallel & Perpendicular Lines','week6-lesson1-par-perp.html','Parallel, perpendicular, or neither from the slopes; write a perpendicular line through a point.'],
   ['W6 · L2','Distance, Partitioning, Perimeter & Area','week6-lesson2-distance-partition.html','Distance (decimal and exact), midpoints, partition points, and perimeter and area on the grid.'],
-  ['W6 · L3','Equation of a Circle',null,''],
+  ['W6 · L3','Equation of a Circle','week6-lesson3-circle.html','Read the center and radius, write the equation from a center and a radius or a point, and test inside or outside.'],
   ['W6 · Review','Area Formulas','unit4-day1-area.html','Area of every shape: pick the formula, solve, check.']]],
  ['Week 7 — 3D Shapes & Modeling',[
   ['W7 · L1','Cross-Sections',null,''],

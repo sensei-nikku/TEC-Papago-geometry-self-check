@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 6, Lesson 3 — The Equation of a Circle Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>The Equation of a Circle</h1><div class="sub">Week 6 · Lesson 3 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script src="../js/tool-fraction.js"></script>
+<script>
+/* Week 6 Lesson 3 Learning Lab. Split layout, coarse first. A miss opens the
+   Problem-Solving Plan one move at a time: match (x − h), (y − k) and r²; for a
+   point on the circle, r² = Δx² + Δy²; inside / on / outside compares with r².
+   Equations are picked from a list. Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "Find the center and the radius of (x − 6)² + (y + 3)² = 64.",
+  "given": [
+   {
+    "v": "(x − 6)² + (y + 3)² = 64",
+    "k": "standard form"
+   }
+  ],
+  "want": "the center (h, k), then the radius r",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "The center’s x: h = ?",
+    "answer": [
+     6,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       -6,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Match (x − h). The number after x, with its sign changed. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Write (x − 6) as x − h. It is…",
+      "options": [
+       "x − 6",
+       "x − (−6)"
+      ],
+      "ch": 287112101,
+      "shuffle": true,
+      "nudges": [
+       "x + a number is x − (a negative number). Minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: h = ?",
+      "answer": [
+       6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "h is the number in x − h. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "The center’s y: k = ?",
+    "answer": [
+     -3,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       3,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Match (y − k). The number after y, with its sign changed. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Write (y + 3) as y − k. It is…",
+      "options": [
+       "y − (−3)",
+       "y − 3"
+      ],
+      "ch": 1113895526,
+      "shuffle": true,
+      "nudges": [
+       "y + a number is y − (a negative number). Minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: k = ?",
+      "answer": [
+       -3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         3,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "k is the number in y − k. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "The radius: r = ?",
+    "answer": [
+     8,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       64,
+       1
+      ],
+      "msg": "That is r², the right side. Take its square root."
+     },
+     {
+      "f": [
+       32,
+       1
+      ],
+      "msg": "Square root, not half: what number times itself is 64?"
+     }
+    ],
+    "nudges": [
+     "The right side is r². Take its square root. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: The right side is r². r² = ?",
+      "answer": [
+       64,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "Read the number on the right side. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: r = √64 = ?",
+      "answer": [
+       8,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         64,
+         1
+        ],
+        "msg": "That is r², the right side. Take its square root."
+       },
+       {
+        "f": [
+         32,
+         1
+        ],
+        "msg": "Square root, not half: what number times itself is 64?"
+       }
+      ],
+      "nudges": [
+       "What number times itself is 64? Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "Find the center and the radius of (x + 7)² + (y − 2)² = 4.",
+  "given": [
+   {
+    "v": "(x + 7)² + (y − 2)² = 4",
+    "k": "standard form"
+   }
+  ],
+  "want": "the center (h, k), then the radius r",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "The center’s x: h = ?",
+    "answer": [
+     -7,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       7,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Match (x − h). The number after x, with its sign changed. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Write (x + 7) as x − h. It is…",
+      "options": [
+       "x − (−7)",
+       "x − 7"
+      ],
+      "ch": 1445125641,
+      "shuffle": true,
+      "nudges": [
+       "x + a number is x − (a negative number). Minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: h = ?",
+      "answer": [
+       -7,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         7,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "h is the number in x − h. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "The center’s y: k = ?",
+    "answer": [
+     2,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       -2,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Match (y − k). The number after y, with its sign changed. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Write (y − 2) as y − k. It is…",
+      "options": [
+       "y − 2",
+       "y − (−2)"
+      ],
+      "ch": 288298018,
+      "shuffle": true,
+      "nudges": [
+       "y + a number is y − (a negative number). Minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: k = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "k is the number in y − k. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "The radius: r = ?",
+    "answer": [
+     2,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       4,
+       1
+      ],
+      "msg": "That is r², the right side. Take its square root."
+     }
+    ],
+    "nudges": [
+     "The right side is r². Take its square root. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: The right side is r². r² = ?",
+      "answer": [
+       4,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "Read the number on the right side. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: r = √4 = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "That is r², the right side. Take its square root."
+       }
+      ],
+      "nudges": [
+       "What number times itself is 4? Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "Write the equation of the circle with center (−3, 5) and radius 4.",
+  "given": [
+   {
+    "v": "(−3, 5)",
+    "k": "the center (h, k)"
+   },
+   {
+    "v": "4",
+    "k": "the radius r"
+   }
+  ],
+  "want": "the equation in standard form",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your equation",
+    "ask": "Which is the equation?",
+    "options": [
+     "(x + 3)² + (y − 5)² = 16",
+     "(x − 3)² + (y + 5)² = 16",
+     "(x + 3)² + (y − 5)² = 4",
+     "(x − 3)² + (y + 5)² = 4"
+    ],
+    "ch": 689265936,
+    "shuffle": true,
+    "nudges": [
+     "Put h and k into (x − h) and (y − k), and square the radius."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute h",
+      "ask": "x − h with h = −3 becomes…",
+      "options": [
+       "(x + 3)",
+       "(x − 3)"
+      ],
+      "ch": 622811724,
+      "shuffle": true,
+      "nudges": [
+       "x − (−3): minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Substitute k",
+      "ask": "y − k with k = 5 becomes…",
+      "options": [
+       "(y − 5)",
+       "(y + 5)"
+      ],
+      "ch": 973844406,
+      "shuffle": true,
+      "nudges": [
+       "y − 5 stays a minus."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5: The right side is r² = 4² = ?",
+      "answer": [
+       16,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         8,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       },
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "The right side is r², not r. Square the radius."
+       }
+      ],
+      "nudges": [
+       "Multiply the radius by itself. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Answer",
+      "ask": "So the equation is…",
+      "options": [
+       "(x + 3)² + (y − 5)² = 16",
+       "(x − 3)² + (y + 5)² = 16",
+       "(x + 3)² + (y − 5)² = 4",
+       "(x − 3)² + (y + 5)² = 4"
+      ],
+      "ch": 689265936,
+      "shuffle": true,
+      "nudges": [
+       "Use the two pieces you just found and r² on the right."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t4",
+  "num": "T-4",
+  "prompt": "Write the equation of the circle with center (−1, 4) that passes through (1, 9).",
+  "given": [
+   {
+    "v": "(−1, 4)",
+    "k": "the center (h, k)"
+   },
+   {
+    "v": "(1, 9)",
+    "k": "a point on the circle"
+   }
+  ],
+  "want": "r², then the equation",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "r² = ?",
+    "answer": [
+     29,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       7,
+       1
+      ],
+      "msg": "Square each one before you add: r² = Δx² + Δy²."
+     }
+    ],
+    "nudges": [
+     "The point is r from the center, so r² = Δx² + Δy² (Lesson 2). Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: Δx = 1 − (−1) = ?",
+      "answer": [
+       2,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         0,
+         1
+        ],
+        "msg": "Minus a negative is plus."
+       },
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Δ is the point minus the center: the second one first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1: the point minus the center. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: Δy = 9 − 4 = ?",
+      "answer": [
+       5,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -5,
+         1
+        ],
+        "msg": "Δy is the point minus the center: the second one first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1: the point minus the center. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: r² = Δx² + Δy² = 2² + 5² = ?",
+      "answer": [
+       29,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         7,
+         1
+        ],
+        "msg": "Square each one before you add."
+       },
+       {
+        "f": [
+         14,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5b: Standard form",
+    "ask": "Which is the equation?",
+    "options": [
+     "(x + 1)² + (y − 4)² = 29",
+     "(x − 1)² + (y + 4)² = 29",
+     "(x + 1)² + (y − 4)² = 7",
+     "(x − 1)² + (y + 4)² = 7"
+    ],
+    "ch": 3676224465,
+    "shuffle": true,
+    "nudges": [
+     "Put h and k into (x − h) and (y − k). The right side is the r² you just found."
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "Find the center and the radius of x² + (y + 4)² = 18.",
+  "given": [
+   {
+    "v": "x² + (y + 4)² = 18",
+    "k": "standard form"
+   }
+  ],
+  "want": "the center (h, k), then the radius r",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "The center’s x: h = ?",
+    "answer": [
+     0,
+     1
+    ],
+    "traps": [],
+    "nudges": [
+     "Match (x − h). The number after x, with its sign changed. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Write x as x − h. It is…",
+      "options": [
+       "x − 0",
+       "there is no h"
+      ],
+      "ch": 287112095,
+      "shuffle": true,
+      "nudges": [
+       "x by itself is x − 0, so h = 0: the center sits on the y-axis."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: h = ?",
+      "answer": [
+       0,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "h is the number in x − h. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "The center’s y: k = ?",
+    "answer": [
+     -4,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       4,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Match (y − k). The number after y, with its sign changed. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 3: Facts",
+      "ask": "Write (y + 4) as y − k. It is…",
+      "options": [
+       "y − (−4)",
+       "y − 4"
+      ],
+      "ch": 1113895559,
+      "shuffle": true,
+      "nudges": [
+       "y + a number is y − (a negative number). Minus a negative is plus."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: k = ?",
+      "answer": [
+       -4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "k is the number in y − k. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "If you can, simplify",
+    "ask": "The radius: r = √18 = ?",
+    "options": [
+     "3√2",
+     "9√2",
+     "2√3"
+    ],
+    "ch": 193720676,
+    "shuffle": true,
+    "nudges": [
+     "Find the biggest perfect square that goes into 18 (4, 9, 16, 25, …). Its square root comes out front; the rest stays under the root."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: The right side is r². r² = ?",
+      "answer": [
+       18,
+       1
+      ],
+      "traps": [],
+      "nudges": [
+       "Read the number on the right side. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: If you can, simplify",
+      "ask": "r = √18 = ?",
+      "options": [
+       "3√2",
+       "9√2",
+       "2√3"
+      ],
+      "ch": 193720676,
+      "shuffle": true,
+      "nudges": [
+       "Find the biggest perfect square that goes into 18. Its square root comes out front."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "Write the equation of the circle with center (−4, −2) that passes through (2, −5).",
+  "given": [
+   {
+    "v": "(−4, −2)",
+    "k": "the center (h, k)"
+   },
+   {
+    "v": "(2, −5)",
+    "k": "a point on the circle"
+   }
+  ],
+  "want": "r², then the equation",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "r² = ?",
+    "answer": [
+     45,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       9,
+       1
+      ],
+      "msg": "Square each one before you add: r² = Δx² + Δy²."
+     },
+     {
+      "f": [
+       27,
+       1
+      ],
+      "msg": "A negative squared is positive. Add the squares."
+     }
+    ],
+    "nudges": [
+     "The point is r from the center, so r² = Δx² + Δy² (Lesson 2). Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: Δx = 2 − (−4) = ?",
+      "answer": [
+       6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -2,
+         1
+        ],
+        "msg": "Minus a negative is plus."
+       },
+       {
+        "f": [
+         -6,
+         1
+        ],
+        "msg": "Δ is the point minus the center: the second one first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1: the point minus the center. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: Δy = −5 − (−2) = ?",
+      "answer": [
+       -3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -7,
+         1
+        ],
+        "msg": "Minus a negative is plus."
+       },
+       {
+        "f": [
+         3,
+         1
+        ],
+        "msg": "Δ is the point minus the center: the second one first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1: the point minus the center. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: r² = Δx² + Δy² = 6² + (−3)² = ?",
+      "answer": [
+       45,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         9,
+         1
+        ],
+        "msg": "Square each one before you add."
+       },
+       {
+        "f": [
+         18,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5b: Standard form",
+    "ask": "Which is the equation?",
+    "options": [
+     "(x + 4)² + (y + 2)² = 45",
+     "(x − 4)² + (y − 2)² = 45",
+     "(x + 4)² + (y + 2)² = 9",
+     "(x − 4)² + (y − 2)² = 9"
+    ],
+    "ch": 317460297,
+    "shuffle": true,
+    "nudges": [
+     "Put h and k into (x − h) and (y − k). The right side is the r² you just found."
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "A cell tower at (−2, 3) on a map measured in miles covers every point within 6 miles. Is a house at (3, 7) inside the range, on its edge, or outside?",
+  "given": [
+   {
+    "v": "(−2, 3)",
+    "k": "the tower: the center"
+   },
+   {
+    "v": "6 miles",
+    "k": "the radius"
+   },
+   {
+    "v": "(3, 7)",
+    "k": "the house"
+   }
+  ],
+  "want": "inside, on the edge, or outside",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Your answer",
+    "ask": "The house is…",
+    "options": [
+     "inside",
+     "on the edge",
+     "outside"
+    ],
+    "ch": 2107604130,
+    "shuffle": true,
+    "nudges": [
+     "Compare the house’s Δx² + Δy² with r²."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: r² = 6² = ?",
+      "answer": [
+       36,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         12,
+         1
+        ],
+        "msg": "Squaring is a number times itself, not times 2."
+       }
+      ],
+      "nudges": [
+       "Multiply the radius by itself. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: Δx = 3 − (−2) = ?",
+      "answer": [
+       5,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         1,
+         1
+        ],
+        "msg": "Minus a negative is plus."
+       },
+       {
+        "f": [
+         -5,
+         1
+        ],
+        "msg": "Δx is the house minus the tower: the second one first."
+       }
+      ],
+      "nudges": [
+       "Δx := x2 − x1: the house minus the tower. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: Δy = 7 − 3 = ?",
+      "answer": [
+       4,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -4,
+         1
+        ],
+        "msg": "Δy is the house minus the tower: the second one first."
+       }
+      ],
+      "nudges": [
+       "Δy := y2 − y1: the house minus the tower. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: Δx² + Δy² = 5² + 4² = ?",
+      "answer": [
+       41,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         9,
+         1
+        ],
+        "msg": "Square each one before you add."
+       }
+      ],
+      "nudges": [
+       "Square each, then add. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Compare",
+      "ask": "Compare 41 with r² = 36. The house is…",
+      "options": [
+       "inside",
+       "on the edge",
+       "outside"
+      ],
+      "ch": 2107604130,
+      "shuffle": true,
+      "nudges": [
+       "Less than r²: inside. Equal: on the edge. More: outside."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "For the circle (x − 1)² + (y + 6)² = 9, find the point on the circle straight above the center.",
+  "given": [
+   {
+    "v": "(x − 1)² + (y + 6)² = 9",
+    "k": "standard form"
+   }
+  ],
+  "want": "the point (x, y) straight above the center",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-6 Circle</div><div class=\"rc-s\">(x − h)² + (y − k)² = r²<br>center (h, k), radius r</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Signs</div><div class=\"rc-s\">(x + 7) is (x − (−7)): h = −7<br>x² alone is (x − 0)²: h = 0</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">From Lesson 2</div><div class=\"rc-s\">d = √(Δx² + Δy²), Δx := x2 − x1, Δy := y2 − y1<br>a point on the circle: r² = Δx² + Δy²</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Inside, on, or outside?</div><div class=\"rc-s\">Δx² + Δy² less than r²: inside<br>equal: on &nbsp; more: outside</div></div></div><div class=\"ref-note\">Plan: 1 read and sketch the center · 2 goal · 3 facts: match (x − h), (y − k), r² · 4 subgoals · 5 execute, one move per row · 6 answer and check: put a point back in. Type negatives like -3.</div>",
+  "pipeline": [
+   {
+    "tool": "fraction",
+    "label": "x of the point = ?",
+    "answer": [
+     1,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       -1,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Straight above the center keeps the center’s x. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: The center’s x: h = ?",
+      "answer": [
+       1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -1,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "Match (x − h). Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5a: Straight up does not change x. x = ?",
+      "answer": [
+       1,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         4,
+         1
+        ],
+        "msg": "Straight up moves y, not x."
+       }
+      ],
+      "nudges": [
+       "Straight up keeps the same x. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "fraction",
+    "label": "y of the point = ?",
+    "answer": [
+     -3,
+     1
+    ],
+    "traps": [
+     {
+      "f": [
+       3,
+       1
+      ],
+      "msg": "Go up r, not r²: take the square root of 9 first."
+     },
+     {
+      "f": [
+       -9,
+       1
+      ],
+      "msg": "That point is straight below the center. Up adds r."
+     },
+     {
+      "f": [
+       9,
+       1
+      ],
+      "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+     }
+    ],
+    "nudges": [
+     "Start at the center’s y and go up r. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+    ],
+    "sub": [
+     {
+      "tool": "fraction",
+      "label": "Plan 3: The center’s y: k = ?",
+      "answer": [
+       -6,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         6,
+         1
+        ],
+        "msg": "Check the sign: a plus in the equation means a negative center number, and a minus means a positive one."
+       }
+      ],
+      "nudges": [
+       "Match (y − k). Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 3: The radius: r = √9 = ?",
+      "answer": [
+       3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         9,
+         1
+        ],
+        "msg": "That is r². Take its square root."
+       }
+      ],
+      "nudges": [
+       "What number times itself is 9? Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     },
+     {
+      "tool": "fraction",
+      "label": "Plan 5b: Up r from the center: y = k + r = −6 + 3 = ?",
+      "answer": [
+       -3,
+       1
+      ],
+      "traps": [
+       {
+        "f": [
+         -9,
+         1
+        ],
+        "msg": "Up adds r."
+       }
+      ],
+      "nudges": [
+       "Add r to the center’s y. Type a whole number or a fraction like -3/2 (a hyphen for the minus)."
+      ]
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
