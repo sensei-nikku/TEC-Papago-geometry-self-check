@@ -1,7 +1,8 @@
 /* Week 7 Lesson 1 Learning Lab: straight answers (the solved formula, then the number) complete
    every problem; a miss on either step opens the Plan ladder and walking it completes the step;
-   named traps fire (4·2 for 4², no × 3, × 1/3 again, r² for r, the width as r, liters, a wrongly
-   answers to the nearest tenth, with 0.1 of wiggle room); the Formula Box shows SG-1 to SG-3; the Term 2 page links this checker.
+   named traps fire (4·2 for 4², no × 3, × 1/3 again, r² for r, the width as r, liters); answers
+   are to the nearest tenth with 0.1 of wiggle room; the Formula Box shows SG-1 to SG-3; the Term 2
+   page links this checker.
    Run: node tests/week7-lesson1-test.js */
 const fs=require('fs'),path=require('path');
 const {JSDOM}=require(path.join(__dirname,'..','node_modules','jsdom'));
