@@ -30,8 +30,17 @@ A(surf.includes('SG-3') && surf.includes('× 1/3: multiply by 3') && surf.includ
 const SOLVED={t1:'h = V / (πr²)',t2:'h = V / B',t3:'h = 3V / (πr²)',t4:'r = √(V / (πh))',a1:'h = 3V / B',a2:'h = 3V / (πr²)',a3:'r = √(V / (πh))',a4:'r = √(3V / (πh))'};
 const NUM={t1:'9.95',t2:'9',t3:'8.49',t4:'4.46',a1:'8',a2:'7.64',a3:'4.61',a4:'1.69'};
 ids.forEach(pid=>{const ww=go(pid); enter(ww,pid,0,{c:SOLVED[pid]}); enter(ww,pid,1,NUM[pid]); A(ww.K._S()[pid].done,pid+': straight answers -> Complete');});
-// unrounded values pass too
-{const ww=go('t1'); enter(ww,'t1',0,{c:SOLVED.t1}); enter(ww,'t1',1,'9.9472'); A(ww.K._S()['t1'].done,'t1: the unrounded value passes');}
+// wiggle room: the unrounded value, and a hundredth one off from rounding a middle step (or from 3.14), pass
+const pass1=(pid,v,why)=>{const ww=go(pid); enter(ww,pid,0,{c:SOLVED[pid]}); enter(ww,pid,1,v); A(ww.K._S()[pid].done,pid+': '+v+' passes ('+why+')');};
+pass1('t1','9.9472','unrounded'); pass1('t1','9.94','500 / 50.3'); pass1('t1','9.96','one hundredth high');
+pass1('t3','8.48','240 / 28.3'); pass1('a3','4.6','sqrt 21.2'); pass1('a4','1.7','sqrt 2.9');
+{const ww=go('t1'); enter(ww,'t1',0,{c:SOLVED.t1}); enter(ww,'t1',1,'9.93'); A(!stepOf(ww,'t1',1).done,'t1: 9.93 is outside the wiggle room');}
+// middle steps: one decimal is enough, and the label says so
+{const ww=go('t1'); enter(ww,'t1',0,{c:SOLVED.t1}); enter(ww,'t1',1,'5'); enter(ww,'t1',2001,{c:'h = 500 / (π · 4²)'}); enter(ww,'t1',2002,'50.3');
+ A(ww.K._S()['t1'].steps[1].subIdx===2,'t1: 16π ≈ 50.3 passes (one decimal)');}
+A(fs.readFileSync(path.join(root,'checkers',FILE),'utf8').includes('16π ≈ ? (one decimal is enough)'),'middle-step labels say one decimal is enough');
+{const ww=go('t4'); enter(ww,'t4',0,{c:SOLVED.t4}); enter(ww,'t4',1,'1'); enter(ww,'t4',2001,{c:'r = √(750 / (π · 12))'}); enter(ww,'t4',2002,'19.9');
+ A(ww.K._S()['t4'].steps[1].subIdx===2,'t4: the inside to one decimal (19.9) passes');}
 // ladders: [step, wrong, rungs]
 const LAD={
  t1:[[0,{c:'h = πr² / V'},[{c:'V = πr²h'},{c:'1/(πr²)'},{c:SOLVED.t1}]],[1,'5',[{c:'h = 500 / (π · 4²)'},'50.27','9.95']]],
@@ -51,9 +60,9 @@ Object.keys(LAD).forEach(pid=>{const ww=go(pid);
 // traps (step 2 after a correct step 1)
 const trap=(pid,val,txt)=>{const ww=go(pid); enter(ww,pid,0,{c:SOLVED[pid]}); enter(ww,pid,1,val);
   const r=ww.document.getElementById('ckRail').textContent; A(!stepOf(ww,pid,1).done && r.includes(txt),pid+' '+val+' -> "'+txt+'"');};
-trap('t1','19.89','not 4 · 2'); trap('t1','9.94','round to the nearest hundredth');
+trap('t1','19.89','not 4 · 2'); trap('t1','9.9','two digits after the point');
 trap('t2','27.69','not 8 + 5'); trap('t2','13.85','not the distance around');
-trap('t3','2.83','skipped the × 3'); trap('t3','0.94','not by 1/3'); trap('t3','8.48','round to the nearest hundredth');
+trap('t3','2.83','skipped the × 3'); trap('t3','0.94','not by 1/3'); trap('a2','7.6','two digits after the point');
 trap('t4','19.89','That is r²'); trap('t4','9.95','not by halving');
 trap('a1','2.67','skipped the × 3'); trap('a1','48','6 · 6, not 6');
 trap('a2','1.91','whole width'); trap('a2','2.55','skipped the × 3');
