@@ -4,16 +4,16 @@
    SG-1 prism V = Bh, cylinder V = πr²h; SG-2 pyramid V = (1/3)Bh, cone V = (1/3)πr²h.
    Two coarse steps per problem:
    1. the solved formula (tap it). A miss opens the Plan: which formula, then each undo move.
-   2. the number (type it, nearest hundredth). A miss opens the Plan: substitute (tap),
+   2. the number (type it, nearest tenth). A miss opens the Plan: substitute (tap),
       the pieces, then the calculator.
    Easy to hard: T-1..T-4 together, A-1..A-4 alone (a pyramid, a width instead of a radius,
    liters, a cone solved for r). Every formula option that is wrong is a named slip; every
    numeric trap is a named slip (no × 3, × 1/3 again, the width as r, no square root, 3.14).
-   Wiggle room (Nov 16, after class feedback): the final answer passes within 0.015 of the exact
-   value, so a hundredth that is one off from rounding a middle step (50.3 for 16π) or from 3.14
-   still passes; an answer given only to the tenth gets "two digits after the point." The middle
-   steps in a ladder (16π ≈ ?, the inside of a root) pass within 0.05, so one decimal is enough,
-   and their labels say so. Whole-number steps stay exact. The build stops if a trap lands on its
+   Rounding (Nov 16, Nick: "we never wanted hundredths"): answers to the nearest tenth, as in
+   Week 4. The answer passes within 0.1 of the exact value, so the right tenth, one tenth off from
+   rounding a middle step or from 3.14, and any hundredth all pass. Middle steps in a ladder
+   (16π ≈ ?, the inside of a root) pass within 0.05 and say "one decimal is enough"; whole-number
+   steps stay exact. The build stops if a trap lands on its
    answer, two traps share a value, options repeat, or a number collides with the handout,
    the recall card, or the final.
    Run: node build_w7l1.js  -> checkers/week7-lesson1-volume.html */
@@ -21,7 +21,8 @@ const fs=require('fs');
 function djb2(s){var v=5381;for(var i=0;i<s.length;i++){v=((v<<5)+v)+s.charCodeAt(i);v=v&v;}return v>>>0;}
 const DOT='·',STAR='★',PI_='π',SQ='²',RT='√',THIRD='(1/3)';
 const PI=Math.PI, r2=x=>Math.round(x*100)/100, f2=x=>r2(x).toFixed(2);
-const TOL=0.015, PIECE_TOL=0.05;
+const TOL=0.1, PIECE_TOL=0.05;
+const f1=x=>(Math.round(x*10)/10).toFixed(1);
 
 function ch(label,ask,opts,i,nudge){
   if(new Set(opts).size!==opts.length) throw new Error(label+': duplicate options '+opts.join(' | '));
@@ -29,13 +30,11 @@ function ch(label,ask,opts,i,nudge){
 function num(label,a,traps,nudge){
   const t=[];
   (traps||[]).forEach(([v,msg])=>{
-    if(f2(v)===f2(a)){ if(msg!==PIKEY) throw new Error(label+': slip '+v+' rounds to the answer '+f2(a)+' ('+msg+')'); return; }   // 3.14 that still rounds right is not a slip
-    if(Math.abs(v-a)<=TOL*2) throw new Error(label+': trap '+v+' sits on the answer '+a+' ('+msg+')');
-    if(t.some(u=>Math.abs(u.near-v)<0.01)) return;              // two slips that land together: keep the first message
-    t.push({near:v,tol:0.006,msg});});
-  const tenth=Math.round(a*10)/10;                                   // answered to the tenth only
-  if(Math.abs(tenth-a)>TOL&&!t.some(u=>Math.abs(u.near-tenth)<0.02)) t.push({near:tenth,tol:0.001,msg:'Close: give two digits after the point (the nearest hundredth).'});
-  return {tool:'numeric',label,answer:a,tol:TOL,closeBand:0.01,traps:t,nudges:[nudge]};}
+    if(Math.abs(v-a)<=TOL){ if(msg!==PIKEY) throw new Error(label+': slip '+v+' passes as the answer '+a+' ('+msg+')'); return; }   // 3.14 that still lands close is not a slip
+    if(Math.abs(v-a)<=TOL+0.06) throw new Error(label+': trap '+v+' sits too close to the answer '+a+' ('+msg+')');
+    if(t.some(u=>Math.abs(u.near-v)<0.12)) return;              // two slips that land together: keep the first message
+    t.push({near:v,tol:0.06,msg});});
+  return {tool:'numeric',label,answer:a,tol:TOL,closeBand:0.03,traps:t,nudges:[nudge]};}
 /* a middle step in a ladder: one decimal is enough; whole numbers stay exact */
 function piece(label,a,nudge){
   const whole=Number.isInteger(a);
@@ -80,11 +79,11 @@ function prob(o){
     .concat([ch('Plan 5: Solved','So '+u+' = …',opts,0,'Put the moves together. '+ONE)]);
   const ladder2=[ch('Plan 6: Substitute','Put the numbers in. Which is it?',subs,0,'Each number goes where its letter is. '+(u==='h'?'V is what it holds.':'h is how tall.'))]
     .concat(pieces.map(([lbl,val,nd])=>piece('Plan 6: '+lbl,val,nd)))
-    .concat([num('Plan 6: Calculator. '+u+' ≈ ? (nearest hundredth)',ans,traps,PIKEY)]);
+    .concat([num('Plan 6: Calculator. '+u+' ≈ ? (nearest tenth)',ans,traps,PIKEY)]);
   return {id,num:numLbl,prompt,given,want,reference:REF,
     pipeline:[coarse(ch('Plan 5: Solve for '+u+' with letters','Before any numbers: '+u+' = …',opts,0,'Start from '+F[k].formula+'. '+ONE),ladder1),
-              coarse(num('Plan 6: Substitute and solve. '+u+' ≈ ? (nearest hundredth'+(unit?', in '+unit:'')+')',ans,traps,'Put the numbers into your solved formula. '+PIKEY),ladder2)],
-    _ans:f2(ans)};
+              coarse(num('Plan 6: Substitute and solve. '+u+' ≈ ? (nearest tenth'+(unit?', in '+unit:'')+')',ans,traps,'Put the numbers into your solved formula. '+PIKEY),ladder2)],
+    _ans:f1(ans)};
 }
 
 const REF='<div class="surf-label">Formula Box — stays on screen</div>'+
@@ -101,7 +100,7 @@ const P=[];
 /* T-1: cylinder, solve for h */
 {const V=500,r=4,a=cylH(V,r);
  P.push(prob({id:'t1',numLbl:'T-1',k:'cyl',u:'h',ans:a,unit:'cm',
-  prompt:'A can holds 500 cm³. Its radius is 4 cm. How tall is it, to the nearest hundredth?',
+  prompt:'A can holds 500 cm³. Its radius is 4 cm. How tall is it, to the nearest tenth?',
   given:[{v:'500 cm³',k:'what it holds: V'},{v:'4 cm',k:'the radius r'}],want:'h, the height',
   subs:['h = 500 / ('+PI_+' '+DOT+' 4'+SQ+')','h = 4 / ('+PI_+' '+DOT+' 500'+SQ+')','h = 500 '+DOT+' '+PI_+' '+DOT+' 4'+SQ],
   pieces:[['The bottom: '+PI_+' '+DOT+' 4'+SQ+' = 16'+PI_+' ≈ ?',16*PI,'Power first: 4'+SQ+' = 16. Then times '+PI_+'.']],
@@ -119,7 +118,7 @@ const P=[];
 /* T-3: cone, solve for h */
 {const V=80,r=3,a=coneH(V,r);
  P.push(prob({id:'t3',numLbl:'T-3',k:'cone',u:'h',ans:a,unit:'cm',
-  prompt:'A cone-shaped cup holds 80 cm³. Its radius is 3 cm. How tall is it, to the nearest hundredth?',
+  prompt:'A cone-shaped cup holds 80 cm³. Its radius is 3 cm. How tall is it, to the nearest tenth?',
   given:[{v:'80 cm³',k:'what it holds: V'},{v:'3 cm',k:'the radius r'}],want:'h, the height',
   subs:['h = 3 '+DOT+' 80 / ('+PI_+' '+DOT+' 3'+SQ+')','h = 80 / (3 '+DOT+' '+PI_+' '+DOT+' 3'+SQ+')','h = 3 '+DOT+' 3'+SQ+' / ('+PI_+' '+DOT+' 80)'],
   pieces:[['The top: 3 '+DOT+' 80 = ?',240,'Undoing the 1/3 put a 3 on V.'],['The bottom: '+PI_+' '+DOT+' 3'+SQ+' = 9'+PI_+' ≈ ?',9*PI,'Power first: 3'+SQ+' = 9.']],
@@ -128,7 +127,7 @@ const P=[];
 /* T-4: cylinder, solve for r */
 {const V=750,h=12,a=cylR(V,h);
  P.push(prob({id:'t4',numLbl:'T-4',k:'cyl',u:'r',ans:a,unit:'cm',
-  prompt:'A can is 12 cm tall and holds 750 cm³. What is its radius, to the nearest hundredth?',
+  prompt:'A can is 12 cm tall and holds 750 cm³. What is its radius, to the nearest tenth?',
   given:[{v:'750 cm³',k:'what it holds: V'},{v:'12 cm',k:'the height h'}],want:'r, the radius',
   subs:['r = '+RT+'(750 / ('+PI_+' '+DOT+' 12))','r = '+RT+'(12 / ('+PI_+' '+DOT+' 750))','r = 750 / ('+PI_+' '+DOT+' 12)'],
   pieces:[['The inside: 750 / (12'+PI_+') ≈ ? (that is r'+SQ+')',V/(PI*h),'Work out the inside of the root first.']],
@@ -146,7 +145,7 @@ const P=[];
 /* A-2: cone given its width, solve for h */
 {const V=200,wid=10,r=wid/2,a=coneH(V,r);
  P.push(prob({id:'a2',numLbl:'A-2',k:'cone',u:'h',ans:a,unit:'cm',
-  prompt:'A cone-shaped funnel is 10 cm across at the top and holds 200 cm³. How deep is it, to the nearest hundredth?',
+  prompt:'A cone-shaped funnel is 10 cm across at the top and holds 200 cm³. How deep is it, to the nearest tenth?',
   given:[{v:'200 cm³',k:'what it holds: V'},{v:'10 cm across',k:'the width of the top'}],want:'h, the depth',
   subs:['h = 3 '+DOT+' 200 / ('+PI_+' '+DOT+' 5'+SQ+')','h = 3 '+DOT+' 200 / ('+PI_+' '+DOT+' 10'+SQ+')','h = 200 / ('+PI_+' '+DOT+' 5'+SQ+')'],
   pieces:[['r = 10 '+DOT+' 1/2 = ?',r,'Across is the whole width. The radius is half of it.'],['The bottom: '+PI_+' '+DOT+' 5'+SQ+' = 25'+PI_+' ≈ ?',25*PI,'Power first: 5'+SQ+' = 25.']],
@@ -155,7 +154,7 @@ const P=[];
 /* A-3: cylinder holding 1 liter, solve for r */
 {const V=1000,h=15,a=cylR(V,h);
  P.push(prob({id:'a3',numLbl:'A-3',k:'cyl',u:'r',ans:a,unit:'cm',
-  prompt:'A bottle shaped like a cylinder is 15 cm tall and holds 1 liter. What is its radius, to the nearest hundredth? (1 L = 1000 cm³)',
+  prompt:'A bottle shaped like a cylinder is 15 cm tall and holds 1 liter. What is its radius, to the nearest tenth? (1 L = 1000 cm³)',
   given:[{v:'1 liter',k:'what it holds'},{v:'15 cm',k:'the height h'}],want:'r, the radius, in cm',
   subs:['r = '+RT+'(1000 / ('+PI_+' '+DOT+' 15))','r = '+RT+'(1 / ('+PI_+' '+DOT+' 15))','r = 1000 / ('+PI_+' '+DOT+' 15)'],
   pieces:[['V in cm³ = ?',V,'1 L = 1000 cm³.'],['The inside: 1000 / (15'+PI_+') ≈ ? (that is r'+SQ+')',V/(PI*h),'Work out the inside of the root first.']],
@@ -164,7 +163,7 @@ const P=[];
 /* A-4: cone-shaped pile, solve for r */
 {const V=6,h=2,a=coneR(V,h);
  P.push(prob({id:'a4',numLbl:'A-4',k:'cone',u:'r',ans:a,unit:'m',
-  prompt:'A cone-shaped pile of gravel is 2 m tall and holds 6 m³. What is the radius of its base, to the nearest hundredth?',
+  prompt:'A cone-shaped pile of gravel is 2 m tall and holds 6 m³. What is the radius of its base, to the nearest tenth?',
   given:[{v:'6 m³',k:'what it holds: V'},{v:'2 m',k:'the height h'}],want:'r, the radius, in m',
   subs:['r = '+RT+'(3 '+DOT+' 6 / ('+PI_+' '+DOT+' 2))','r = '+RT+'(6 / ('+PI_+' '+DOT+' 2))','r = '+RT+'(3 '+DOT+' 2 / ('+PI_+' '+DOT+' 6))'],
   pieces:[['The inside: 3 '+DOT+' 6 / (2'+PI_+') ≈ ? (that is r'+SQ+')',3*V/(PI*h),'Top: 3 '+DOT+' 6 = 18. Bottom: 2'+PI_+'.']],
@@ -172,10 +171,10 @@ const P=[];
 
 /* ---- build-time guards ---- */
 const ANSWERS=P.map(p=>[p.id,p._ans]); P.forEach(p=>delete p._ans);
-const TAKEN=['3.57','8.95','10.61','9.55','5.09','14.32','11.94','11.46','3.99','5.64','4.96','5.96','7.94','4.23'];   // handout, recall card, final, study guide
-ANSWERS.forEach(([id,a])=>{ if(TAKEN.includes(a)) throw new Error(id+': '+a+' is already used in a printed Week 7 item'); });
+const TAKEN=['3.6','9.0','10.6','9.5','5.1','14.3','11.9','11.5','4.0','5.6','6.0','7.9','5.0','4.2'];   // handout, recall card, final, study guide (tenths)
+ANSWERS.forEach(([id,a])=>{ if(!/\.0$/.test(a)&&TAKEN.includes(a)) throw new Error(id+': '+a+' is already used in a printed Week 7 item'); });
 P.forEach(p=>{const walk=s=>{
-  if(s.tool==='numeric'){ if(Math.abs(r2(s.answer)-s.answer)>=0.005) throw new Error(p.id+': rounding edge in '+s.label);
+  if(s.tool==='numeric'){
     s.traps.forEach(t=>{ if(Math.abs(t.near-s.answer)<=s.tol+t.tol) throw new Error(p.id+': trap '+t.near+' overlaps the wiggle room in '+s.label); }); }
   (s.sub||[]).forEach(walk);};p.pipeline.forEach(walk);});
 
@@ -199,8 +198,8 @@ const page=`<!DOCTYPE html>
 <script>
 /* Week 7 Lesson 1 Learning Lab. Split layout, coarse first, letters first:
    step 1 taps the solved formula, step 2 types the number. A miss opens the
-   Problem-Solving Plan one move at a time. Answers to the nearest hundredth
-   (tol 0.015; middle steps 0.05). Choice answers are djb2 hashes. */
+   Problem-Solving Plan one move at a time. Answers to the nearest tenth
+   (tol 0.1; middle steps 0.05). Choice answers are djb2 hashes. */
 K.run(${JSON.stringify(P,null,1)}, { layout:'split' });
 </script>
 </body>
