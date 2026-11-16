@@ -171,7 +171,7 @@ const P=[];
 
 /* ---- build-time guards ---- */
 const ANSWERS=P.map(p=>[p.id,p._ans]); P.forEach(p=>delete p._ans);
-const TAKEN=['3.6','9.0','10.6','9.5','5.1','14.3','11.9','11.5','4.0','5.6','6.0','7.9','5.0','4.2'];   // handout, recall card, final, study guide (tenths)
+const TAKEN=['3.6','9.0','10.6','9.5','5.1','14.3','11.9','11.5','4.0','5.6','13.9','7.9','5.0','4.2'];   // handout, recall card, final, study guide (tenths)
 ANSWERS.forEach(([id,a])=>{ if(!/\.0$/.test(a)&&TAKEN.includes(a)) throw new Error(id+': '+a+' is already used in a printed Week 7 item'); });
 P.forEach(p=>{const walk=s=>{
   if(s.tool==='numeric'){
