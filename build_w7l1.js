@@ -9,8 +9,11 @@
    Easy to hard: T-1..T-4 together, A-1..A-4 alone (a pyramid, a width instead of a radius,
    liters, a cone solved for r). Every formula option that is wrong is a named slip; every
    numeric trap is a named slip (no × 3, × 1/3 again, the width as r, no square root, 3.14).
-   Answers to the nearest hundredth: tol 0.005, so the right hundredth or the unrounded value
-   passes and a wrongly rounded hundredth does not. The build stops if a trap lands on its
+   Wiggle room (Nov 16, after class feedback): the final answer passes within 0.015 of the exact
+   value, so a hundredth that is one off from rounding a middle step (50.3 for 16π) or from 3.14
+   still passes; an answer given only to the tenth gets "two digits after the point." The middle
+   steps in a ladder (16π ≈ ?, the inside of a root) pass within 0.05, so one decimal is enough,
+   and their labels say so. Whole-number steps stay exact. The build stops if a trap lands on its
    answer, two traps share a value, options repeat, or a number collides with the handout,
    the recall card, or the final.
    Run: node build_w7l1.js  -> checkers/week7-lesson1-volume.html */
@@ -18,7 +21,7 @@ const fs=require('fs');
 function djb2(s){var v=5381;for(var i=0;i<s.length;i++){v=((v<<5)+v)+s.charCodeAt(i);v=v&v;}return v>>>0;}
 const DOT='·',STAR='★',PI_='π',SQ='²',RT='√',THIRD='(1/3)';
 const PI=Math.PI, r2=x=>Math.round(x*100)/100, f2=x=>r2(x).toFixed(2);
-const TOL=0.005;
+const TOL=0.015, PIECE_TOL=0.05;
 
 function ch(label,ask,opts,i,nudge){
   if(new Set(opts).size!==opts.length) throw new Error(label+': duplicate options '+opts.join(' | '));
@@ -30,9 +33,13 @@ function num(label,a,traps,nudge){
     if(Math.abs(v-a)<=TOL*2) throw new Error(label+': trap '+v+' sits on the answer '+a+' ('+msg+')');
     if(t.some(u=>Math.abs(u.near-v)<0.01)) return;              // two slips that land together: keep the first message
     t.push({near:v,tol:0.006,msg});});
-  const tr=Math.floor(a*100)/100;                                  // chopped instead of rounded
-  if(f2(a)!==tr.toFixed(2)&&!t.some(u=>Math.abs(u.near-tr)<0.003)) t.push({near:tr,tol:0.001,msg:'Close: round to the nearest hundredth. Look at the third digit after the point; 5 or more rounds up.'});
+  const tenth=Math.round(a*10)/10;                                   // answered to the tenth only
+  if(Math.abs(tenth-a)>TOL&&!t.some(u=>Math.abs(u.near-tenth)<0.02)) t.push({near:tenth,tol:0.001,msg:'Close: give two digits after the point (the nearest hundredth).'});
   return {tool:'numeric',label,answer:a,tol:TOL,closeBand:0.01,traps:t,nudges:[nudge]};}
+/* a middle step in a ladder: one decimal is enough; whole numbers stay exact */
+function piece(label,a,nudge){
+  const whole=Number.isInteger(a);
+  return {tool:'numeric',label:whole?label:label+' (one decimal is enough)',answer:a,tol:whole?0.005:PIECE_TOL,closeBand:0.02,traps:[],nudges:[nudge]};}
 function coarse(step,ladder){return Object.assign(step,{sub:ladder});}
 
 const ONE='One undo move per row. Undo the last thing done to the unknown first.';
@@ -72,7 +79,7 @@ function prob(o){
     .concat(S.moves.map(([ask,mo,nd])=>ch('Plan 5: Solve for '+u+', letters only',ask,mo,0,nd)))
     .concat([ch('Plan 5: Solved','So '+u+' = …',opts,0,'Put the moves together. '+ONE)]);
   const ladder2=[ch('Plan 6: Substitute','Put the numbers in. Which is it?',subs,0,'Each number goes where its letter is. '+(u==='h'?'V is what it holds.':'h is how tall.'))]
-    .concat(pieces.map(([lbl,val,nd])=>num('Plan 6: '+lbl,val,[],nd)))
+    .concat(pieces.map(([lbl,val,nd])=>piece('Plan 6: '+lbl,val,nd)))
     .concat([num('Plan 6: Calculator. '+u+' ≈ ? (nearest hundredth)',ans,traps,PIKEY)]);
   return {id,num:numLbl,prompt,given,want,reference:REF,
     pipeline:[coarse(ch('Plan 5: Solve for '+u+' with letters','Before any numbers: '+u+' = …',opts,0,'Start from '+F[k].formula+'. '+ONE),ladder1),
@@ -169,7 +176,7 @@ const TAKEN=['3.57','8.95','10.61','9.55','5.09','14.32','11.94','11.46','3.99',
 ANSWERS.forEach(([id,a])=>{ if(TAKEN.includes(a)) throw new Error(id+': '+a+' is already used in a printed Week 7 item'); });
 P.forEach(p=>{const walk=s=>{
   if(s.tool==='numeric'){ if(Math.abs(r2(s.answer)-s.answer)>=0.005) throw new Error(p.id+': rounding edge in '+s.label);
-    s.traps.forEach(t=>{ if(Math.abs(t.near-s.answer)<=s.tol) throw new Error(p.id+': trap passes as right in '+s.label); }); }
+    s.traps.forEach(t=>{ if(Math.abs(t.near-s.answer)<=s.tol+t.tol) throw new Error(p.id+': trap '+t.near+' overlaps the wiggle room in '+s.label); }); }
   (s.sub||[]).forEach(walk);};p.pipeline.forEach(walk);});
 
 const page=`<!DOCTYPE html>
@@ -193,7 +200,7 @@ const page=`<!DOCTYPE html>
 /* Week 7 Lesson 1 Learning Lab. Split layout, coarse first, letters first:
    step 1 taps the solved formula, step 2 types the number. A miss opens the
    Problem-Solving Plan one move at a time. Answers to the nearest hundredth
-   (tol 0.005). Choice answers are djb2 hashes. */
+   (tol 0.015; middle steps 0.05). Choice answers are djb2 hashes. */
 K.run(${JSON.stringify(P,null,1)}, { layout:'split' });
 </script>
 </body>
