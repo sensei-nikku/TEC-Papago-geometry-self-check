@@ -18,13 +18,13 @@
 <script>
 /* Week 7 Lesson 1 Learning Lab. Split layout, coarse first, letters first:
    step 1 taps the solved formula, step 2 types the number. A miss opens the
-   Problem-Solving Plan one move at a time. Answers to the nearest hundredth
-   (tol 0.015; middle steps 0.05). Choice answers are djb2 hashes. */
+   Problem-Solving Plan one move at a time. Answers to the nearest tenth
+   (tol 0.1; middle steps 0.05). Choice answers are djb2 hashes. */
 K.run([
  {
   "id": "t1",
   "num": "T-1",
-  "prompt": "A can holds 500 cm³. Its radius is 4 cm. How tall is it, to the nearest hundredth?",
+  "prompt": "A can holds 500 cm³. Its radius is 4 cm. How tall is it, to the nearest tenth?",
   "given": [
    {
     "v": "500 cm³",
@@ -109,25 +109,20 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest tenth, in cm)",
     "answer": 9.94718394324346,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 19.89436788648692,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "4² is 4 · 4 = 16, not 4 · 2."
      },
      {
       "near": 25132.741228718343,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "Undo × πr² by multiplying by 1/(πr²), not by πr²."
-     },
-     {
-      "near": 9.9,
-      "tol": 0.001,
-      "msg": "Close: give two digits after the point (the nearest hundredth)."
      }
     ],
     "nudges": [
@@ -163,25 +158,20 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. h ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. h ≈ ? (nearest tenth)",
       "answer": 9.94718394324346,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 19.89436788648692,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "4² is 4 · 4 = 16, not 4 · 2."
        },
        {
         "near": 25132.741228718343,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "Undo × πr² by multiplying by 1/(πr²), not by πr²."
-       },
-       {
-        "near": 9.9,
-        "tol": 0.001,
-        "msg": "Close: give two digits after the point (the nearest hundredth)."
        }
       ],
       "nudges": [
@@ -280,19 +270,19 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest tenth, in cm)",
     "answer": 9,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 27.692307692307693,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "B is an area: 8 · 5, not 8 + 5."
      },
      {
       "near": 13.846153846153847,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "B is the area of the base, not the distance around it."
      }
     ],
@@ -329,19 +319,19 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. h ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. h ≈ ? (nearest tenth)",
       "answer": 9,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 27.692307692307693,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "B is an area: 8 · 5, not 8 + 5."
        },
        {
         "near": 13.846153846153847,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "B is the area of the base, not the distance around it."
        }
       ],
@@ -356,7 +346,7 @@ K.run([
  {
   "id": "t3",
   "num": "T-3",
-  "prompt": "A cone-shaped cup holds 80 cm³. Its radius is 3 cm. How tall is it, to the nearest hundredth?",
+  "prompt": "A cone-shaped cup holds 80 cm³. Its radius is 3 cm. How tall is it, to the nearest tenth?",
   "given": [
    {
     "v": "80 cm³",
@@ -457,19 +447,19 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest tenth, in cm)",
     "answer": 8.48826363156775,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 2.8294212105225838,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "You skipped the × 3 that undoes the 1/3."
      },
      {
       "near": 0.943140403507528,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "To undo × 1/3, multiply by 3, not by 1/3."
      }
     ],
@@ -517,19 +507,19 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. h ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. h ≈ ? (nearest tenth)",
       "answer": 8.48826363156775,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 2.8294212105225838,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "You skipped the × 3 that undoes the 1/3."
        },
        {
         "near": 0.943140403507528,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "To undo × 1/3, multiply by 3, not by 1/3."
        }
       ],
@@ -544,7 +534,7 @@ K.run([
  {
   "id": "t4",
   "num": "T-4",
-  "prompt": "A can is 12 cm tall and holds 750 cm³. What is its radius, to the nearest hundredth?",
+  "prompt": "A can is 12 cm tall and holds 750 cm³. What is its radius, to the nearest tenth?",
   "given": [
    {
     "v": "750 cm³",
@@ -645,25 +635,20 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. r ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. r ≈ ? (nearest tenth, in cm)",
     "answer": 4.460310290381928,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 19.89436788648692,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "That is r². Take its square root."
      },
      {
       "near": 9.94718394324346,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "A square is undone by a square root, not by halving."
-     },
-     {
-      "near": 4.5,
-      "tol": 0.001,
-      "msg": "Close: give two digits after the point (the nearest hundredth)."
      }
     ],
     "nudges": [
@@ -699,25 +684,20 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. r ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. r ≈ ? (nearest tenth)",
       "answer": 4.460310290381928,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 19.89436788648692,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "That is r². Take its square root."
        },
        {
         "near": 9.94718394324346,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "A square is undone by a square root, not by halving."
-       },
-       {
-        "near": 4.5,
-        "tol": 0.001,
-        "msg": "Close: give two digits after the point (the nearest hundredth)."
        }
       ],
       "nudges": [
@@ -832,24 +812,24 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest tenth, in cm)",
     "answer": 8,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 2.6666666666666665,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "You skipped the × 3 that undoes the 1/3."
      },
      {
       "near": 48,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "B is the area of the base: 6 · 6, not 6."
      },
      {
       "near": 12,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "B is the area of the base, not the distance around it."
      }
     ],
@@ -897,24 +877,24 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. h ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. h ≈ ? (nearest tenth)",
       "answer": 8,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 2.6666666666666665,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "You skipped the × 3 that undoes the 1/3."
        },
        {
         "near": 48,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "B is the area of the base: 6 · 6, not 6."
        },
        {
         "near": 12,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "B is the area of the base, not the distance around it."
        }
       ],
@@ -929,7 +909,7 @@ K.run([
  {
   "id": "a2",
   "num": "A-2",
-  "prompt": "A cone-shaped funnel is 10 cm across at the top and holds 200 cm³. How deep is it, to the nearest hundredth?",
+  "prompt": "A cone-shaped funnel is 10 cm across at the top and holds 200 cm³. How deep is it, to the nearest tenth?",
   "given": [
    {
     "v": "200 cm³",
@@ -1030,25 +1010,20 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. h ≈ ? (nearest tenth, in cm)",
     "answer": 7.639437268410976,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 1.909859317102744,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "10 cm is the whole width. Use r = 10 · 1/2 = 5."
      },
      {
       "near": 2.5464790894703255,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "You skipped the × 3 that undoes the 1/3."
-     },
-     {
-      "near": 7.6,
-      "tol": 0.001,
-      "msg": "Close: give two digits after the point (the nearest hundredth)."
      }
     ],
     "nudges": [
@@ -1095,25 +1070,20 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. h ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. h ≈ ? (nearest tenth)",
       "answer": 7.639437268410976,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 1.909859317102744,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "10 cm is the whole width. Use r = 10 · 1/2 = 5."
        },
        {
         "near": 2.5464790894703255,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "You skipped the × 3 that undoes the 1/3."
-       },
-       {
-        "near": 7.6,
-        "tol": 0.001,
-        "msg": "Close: give two digits after the point (the nearest hundredth)."
        }
       ],
       "nudges": [
@@ -1127,7 +1097,7 @@ K.run([
  {
   "id": "a3",
   "num": "A-3",
-  "prompt": "A bottle shaped like a cylinder is 15 cm tall and holds 1 liter. What is its radius, to the nearest hundredth? (1 L = 1000 cm³)",
+  "prompt": "A bottle shaped like a cylinder is 15 cm tall and holds 1 liter. What is its radius, to the nearest tenth? (1 L = 1000 cm³)",
   "given": [
    {
     "v": "1 liter",
@@ -1228,19 +1198,19 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. r ≈ ? (nearest hundredth, in cm)",
+    "label": "Plan 6: Substitute and solve. r ≈ ? (nearest tenth, in cm)",
     "answer": 4.606588659617806,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 21.22065907891938,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "That is r². Take its square root."
      },
      {
       "near": 0.1456731240789439,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "Change 1 L to 1000 cm³ first."
      }
     ],
@@ -1288,19 +1258,19 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. r ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. r ≈ ? (nearest tenth)",
       "answer": 4.606588659617806,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 21.22065907891938,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "That is r². Take its square root."
        },
        {
         "near": 0.1456731240789439,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "Change 1 L to 1000 cm³ first."
        }
       ],
@@ -1315,7 +1285,7 @@ K.run([
  {
   "id": "a4",
   "num": "A-4",
-  "prompt": "A cone-shaped pile of gravel is 2 m tall and holds 6 m³. What is the radius of its base, to the nearest hundredth?",
+  "prompt": "A cone-shaped pile of gravel is 2 m tall and holds 6 m³. What is the radius of its base, to the nearest tenth?",
   "given": [
    {
     "v": "6 m³",
@@ -1432,19 +1402,19 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and solve. r ≈ ? (nearest hundredth, in m)",
+    "label": "Plan 6: Substitute and solve. r ≈ ? (nearest tenth, in m)",
     "answer": 1.692568750643269,
-    "tol": 0.015,
-    "closeBand": 0.01,
+    "tol": 0.1,
+    "closeBand": 0.03,
     "traps": [
      {
       "near": 0.9772050238058398,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "You skipped the × 3 that undoes the 1/3."
      },
      {
       "near": 2.864788975654116,
-      "tol": 0.006,
+      "tol": 0.06,
       "msg": "That is r². Take its square root."
      }
     ],
@@ -1481,19 +1451,19 @@ K.run([
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. r ≈ ? (nearest hundredth)",
+      "label": "Plan 6: Calculator. r ≈ ? (nearest tenth)",
       "answer": 1.692568750643269,
-      "tol": 0.015,
-      "closeBand": 0.01,
+      "tol": 0.1,
+      "closeBand": 0.03,
       "traps": [
        {
         "near": 0.9772050238058398,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "You skipped the × 3 that undoes the 1/3."
        },
        {
         "near": 2.864788975654116,
-        "tol": 0.006,
+        "tol": 0.06,
         "msg": "That is r². Take its square root."
        }
       ],
