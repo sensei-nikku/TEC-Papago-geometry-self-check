@@ -53,15 +53,13 @@ const TERM2={id:'sy2627-term2',name:'SY2627 Term 2',weeks:[
   ['W6 · L2','Distance, Partitioning, Perimeter & Area','week6-lesson2-distance-partition.html','Distance (decimal and exact), midpoints, partition points, and perimeter and area on the grid.'],
   ['W6 · L3','Equation of a Circle','week6-lesson3-circle.html','Read the center and radius, write the equation from a center and a radius or a point, and test inside or outside.'],
   ['W6 · Review','Area Formulas','unit4-day1-area.html','Area of every shape: pick the formula, solve, check.']]],
- ['Week 7 — 3D Shapes & Modeling',[
-  ['W7 · L1','Cross-Sections',null,''],
-  ['W7 · L2','Volume of Prisms, Cylinders, Pyramids, Cones & Spheres',null,''],
-  ['W7 · L3','Density & Size Limits',null,'']]],
- ['Week 8 — Catch-Up & Retakes',[
-  ['W8','3D Print Bonus: Design to a Volume Limit',null,'']]]
+ ['Week 7 — Volume & Surface Area: Solving Formulas',[
+  ['W7 · L1','Volume: Solving Formulas for a Letter','week7-lesson1-volume.html','Solve the volume formula for h or r with letters first, then substitute: boxes, cans, pyramids, and cones.'],
+  ['W7 · L2','Surface Area: Solving for the Height',null,''],
+  ['W7 · Final','Week 7 Check (Final)',null,'']]]
 ]};
 const TERMS=[
- {href:'terms/sy2627-term2.html',tag:'Current term',name:'SY2627 Term 2',desc:'Probability, transformations, similarity, trig, the Hudson midterm, coordinates, and 3D.'},
+ {href:'terms/sy2627-term2.html',tag:'Current term',name:'SY2627 Term 2',desc:'Probability, transformations, similarity, trig, the Hudson midterm, coordinates, and volume and surface area.'},
  {href:'terms/historical.html',tag:'Archive',name:'Historical',desc:'The older checkers and the hub as it was before SY2627 Term 2.'}];
 
 function card(tag,title,file,desc){
