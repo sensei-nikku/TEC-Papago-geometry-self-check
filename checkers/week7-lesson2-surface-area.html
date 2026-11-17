@@ -1,0 +1,2588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 7, Lesson 2 — Surface Area: Solving for the Height Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Surface Area: Solving for the Height</h1><div class="sub">Week 7 · Lesson 2 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script>
+/* Week 7 Lesson 2 Learning Lab. Work shell: suggested work on the left fills in as each step
+   is checked; the question is on the right; the f button opens the Formula Box. Box: 5a B,
+   5b P, 5c solve with letters, 6 answer. Can: 5 solve with letters, 6 answer. A miss opens
+   the Plan one move at a time. Answers to the nearest tenth (tol 0.1). Choice answers are
+   djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "A closed box has a 6 cm by 4 cm base. Its surface area is 228 cm². How tall is it?",
+  "given": [
+   {
+    "v": "228 cm²",
+    "k": "surface area S"
+   },
+   {
+    "v": "6 cm by 4 cm",
+    "k": "the base"
+   }
+  ],
+  "want": "h, the height, in cm",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5a: Find B, the area of the base. B = ? (in cm²)",
+    "answer": 24,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 20,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: l · w."
+     },
+     {
+      "near": 10,
+      "tol": 0.005,
+      "msg": "B is an area: multiply, l · w."
+     }
+    ],
+    "nudges": [
+     "B is the area of the base: B = lw."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5b: Find P, the distance around the base. P = ? (in cm)",
+    "answer": 20,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 24,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 2l + 2w."
+     },
+     {
+      "near": 10,
+      "tol": 0.005,
+      "msg": "That is halfway around. P = 2l + 2w."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the base: P = 2l + 2w."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5c: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2B) / P",
+     "h = S / P − 2B",
+     "h = (S − B) / P",
+     "h = (S + 2B) / P"
+    ],
+    "ch": 1890603507,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = Ph + 2B. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = Ph + 2B",
+       "S = Ph + B",
+       "V = Bh",
+       "S = 2πrh + 2πr²"
+      ],
+      "ch": 4141017708,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A closed box has two bases, top and bottom: + 2B."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Undo + 2B first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2B = Ph",
+       "S + 2B = Ph",
+       "S = Ph − 2B"
+      ],
+      "ch": 2399194515,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2B on the right becomes − 2B on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Now S − 2B = Ph. Undo × P: multiply both sides by…",
+      "options": [
+       "1/P",
+       "P",
+       "1/2"
+      ],
+      "ch": 193431989,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by P. Its inverse is 1/P."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2B) / P",
+       "h = S / P − 2B",
+       "h = (S − B) / P",
+       "h = (S + 2B) / P"
+      ],
+      "ch": 1890603507,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (in cm)",
+    "answer": 9,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 10.2,
+      "tol": 0.005,
+      "msg": "A closed box has two bases: − 2B, not − B."
+     },
+     {
+      "near": 10.4,
+      "tol": 0.005,
+      "msg": "B is an area: l · w, not l + w."
+     },
+     {
+      "near": 7.833333333333333,
+      "tol": 0.005,
+      "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+     },
+     {
+      "near": 18,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 2l + 2w."
+     },
+     {
+      "near": -36.6,
+      "tol": 0.005,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Type the whole line into the calculator in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (228 − 2(24)) / 20",
+       "h = (228 − 24) / 20",
+       "h = (228 − 2(20)) / 24",
+       "h = 20 / (228 − 2(24))"
+      ],
+      "ch": 2671769987,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (in cm)",
+      "answer": 9,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [
+       {
+        "near": 10.2,
+        "tol": 0.005,
+        "msg": "A closed box has two bases: − 2B, not − B."
+       },
+       {
+        "near": 10.4,
+        "tol": 0.005,
+        "msg": "B is an area: l · w, not l + w."
+       },
+       {
+        "near": 7.833333333333333,
+        "tol": 0.005,
+        "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+       },
+       {
+        "near": 18,
+        "tol": 0.005,
+        "msg": "P goes all the way around: 2l + 2w."
+       },
+       {
+        "near": -36.6,
+        "tol": 0.005,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Type the whole line into the calculator in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 6 cm by 4 cm, height h, surface area 228 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">6 cm</text><text x=\"166\" y=\"113\">4 cm</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 228 cm²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in cm"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 228",
+     "<i>l</i> = 6, &nbsp;<i>w</i> = 4"
+    ]
+   },
+   {
+    "n": "5a",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>B</i> = <i>l</i><i>w</i> = 6 · 4 = 24"
+    ]
+   },
+   {
+    "n": "5b",
+    "at": [
+     1
+    ],
+    "lines": [
+     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(6) + 2(4) = 20"
+    ]
+   },
+   {
+    "n": "5c",
+    "lines": [
+     {
+      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
+      "at": [
+       2,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>228 − 2(24)</span><span>20</span></span>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> = 9 cm",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 20(9) + 2(24) = 228 ✓"
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "A can is made from 400 cm² of metal, top and bottom included. Its radius is 5 cm. How tall is it, to the nearest tenth?",
+  "given": [
+   {
+    "v": "400 cm²",
+    "k": "surface area S"
+   },
+   {
+    "v": "5 cm",
+    "k": "the radius r"
+   }
+  ],
+  "want": "h, the height, in cm",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2πr²) / (2πr)",
+     "h = S / (2πr) − 2πr²",
+     "h = (S − πr²) / (2πr)",
+     "h = (S + 2πr²) / (2πr)"
+    ],
+    "ch": 1631527994,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = 2πrh + 2πr². Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = 2πrh + 2πr²",
+       "S = 2πrh + πr²",
+       "V = πr²h",
+       "S = 2πr²h"
+      ],
+      "ch": 223233442,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A can has a label (2πrh) and two ends (2πr²)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve for h, letters only",
+      "ask": "Undo + 2πr² first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2πr² = 2πrh",
+       "S + 2πr² = 2πrh",
+       "S = 2πrh − 2πr²"
+      ],
+      "ch": 3432985353,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2πr² on the right becomes − 2πr² on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve for h, letters only",
+      "ask": "Now S − 2πr² = 2πrh. Undo × 2πr: multiply both sides by…",
+      "options": [
+       "1/(2πr)",
+       "2πr",
+       "1/(πr)"
+      ],
+      "ch": 809956762,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by 2πr. Its inverse is 1/(2πr)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2πr²) / (2πr)",
+       "h = S / (2πr) − 2πr²",
+       "h = (S − πr²) / (2πr)",
+       "h = (S + 2πr²) / (2πr)"
+      ],
+      "ch": 1631527994,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (nearest tenth, in cm)",
+    "answer": 7.732395447351627,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 12.732395447351628,
+      "tol": 0.06,
+      "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     },
+     {
+      "near": 10.232395447351626,
+      "tol": 0.06,
+      "msg": "A can has two ends: 2πr², not πr²."
+     },
+     {
+      "near": 11.732395447351626,
+      "tol": 0.06,
+      "msg": "Power first: r² is r · r."
+     },
+     {
+      "near": -144.34723723213804,
+      "tol": 0.06,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Use the π key, not 3.14. Type the whole line in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (400 − 2π(5²)) / (2π(5))",
+       "h = (400 − π(5²)) / (2π(5))",
+       "h = 400 / (2π(5))",
+       "h = (400 − 2π(5)) / (2π(5²))"
+      ],
+      "ch": 3971027843,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (nearest tenth, in cm)",
+      "answer": 7.732395447351627,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 12.732395447351628,
+        "tol": 0.06,
+        "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       },
+       {
+        "near": 10.232395447351626,
+        "tol": 0.06,
+        "msg": "A can has two ends: 2πr², not πr²."
+       },
+       {
+        "near": 11.732395447351626,
+        "tol": 0.06,
+        "msg": "Power first: r² is r · r."
+       },
+       {
+        "near": -144.34723723213804,
+        "tol": 0.06,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, radius 5 cm, height h, surface area 400 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M70 40 H118\"/></g><circle cx=\"70\" cy=\"40\" r=\"2.2\" fill=\"currentColor\"/><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"94\" y=\"22\" text-anchor=\"middle\">5 cm</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 400 cm²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in cm"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 400",
+     "<i>r</i> = 5"
+    ]
+   },
+   {
+    "n": "5",
+    "lines": [
+     {
+      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "at": [
+       0,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "at": [
+       0,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
+      "at": [
+       0,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>400 − 2π(5²)</span><span>2π(5)</span></span>",
+      "at": [
+       1,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> ≈ 7.7 cm",
+      "at": [
+       1
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 2π(5)(7.7) + 2π(5²) ≈ 399.0, about 400 ✓"
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "A closed box has a square base, 5 cm on each side. Its surface area is 170 cm². How tall is it?",
+  "given": [
+   {
+    "v": "170 cm²",
+    "k": "surface area S"
+   },
+   {
+    "v": "5 cm",
+    "k": "each side of the square base"
+   }
+  ],
+  "want": "h, the height, in cm",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5a: Find B, the area of the base. B = ? (in cm²)",
+    "answer": 25,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 20,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: l · w."
+     },
+     {
+      "near": 10,
+      "tol": 0.005,
+      "msg": "B is an area: multiply, l · w."
+     }
+    ],
+    "nudges": [
+     "B is the area of the base: B = lw."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5b: Find P, the distance around the base. P = ? (in cm)",
+    "answer": 20,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 25,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 2l + 2w."
+     },
+     {
+      "near": 10,
+      "tol": 0.005,
+      "msg": "That is halfway around. P = 2l + 2w."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the base: P = 2l + 2w."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5c: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2B) / P",
+     "h = S / P − 2B",
+     "h = (S − B) / P",
+     "h = (S + 2B) / P"
+    ],
+    "ch": 1890603507,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = Ph + 2B. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = Ph + 2B",
+       "S = Ph + B",
+       "V = Bh",
+       "S = 2πrh + 2πr²"
+      ],
+      "ch": 4141017708,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A closed box has two bases, top and bottom: + 2B."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Undo + 2B first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2B = Ph",
+       "S + 2B = Ph",
+       "S = Ph − 2B"
+      ],
+      "ch": 2399194515,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2B on the right becomes − 2B on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Now S − 2B = Ph. Undo × P: multiply both sides by…",
+      "options": [
+       "1/P",
+       "P",
+       "1/2"
+      ],
+      "ch": 193431989,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by P. Its inverse is 1/P."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2B) / P",
+       "h = S / P − 2B",
+       "h = (S − B) / P",
+       "h = (S + 2B) / P"
+      ],
+      "ch": 1890603507,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (in cm)",
+    "answer": 6,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 7.25,
+      "tol": 0.005,
+      "msg": "A closed box has two bases: − 2B, not − B."
+     },
+     {
+      "near": 7.5,
+      "tol": 0.005,
+      "msg": "B is an area: l · w, not l + w."
+     },
+     {
+      "near": 5.2,
+      "tol": 0.005,
+      "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+     },
+     {
+      "near": 12,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 2l + 2w."
+     },
+     {
+      "near": -41.5,
+      "tol": 0.005,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Type the whole line into the calculator in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (170 − 2(25)) / 20",
+       "h = (170 − 25) / 20",
+       "h = (170 − 2(20)) / 25",
+       "h = 20 / (170 − 2(25))"
+      ],
+      "ch": 460733376,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (in cm)",
+      "answer": 6,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [
+       {
+        "near": 7.25,
+        "tol": 0.005,
+        "msg": "A closed box has two bases: − 2B, not − B."
+       },
+       {
+        "near": 7.5,
+        "tol": 0.005,
+        "msg": "B is an area: l · w, not l + w."
+       },
+       {
+        "near": 5.2,
+        "tol": 0.005,
+        "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+       },
+       {
+        "near": 12,
+        "tol": 0.005,
+        "msg": "P goes all the way around: 2l + 2w."
+       },
+       {
+        "near": -41.5,
+        "tol": 0.005,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Type the whole line into the calculator in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 5 cm by 5 cm, height h, surface area 170 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">5 cm</text><text x=\"166\" y=\"113\">5 cm</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 170 cm²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in cm"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 170",
+     "<i>l</i> = 5, &nbsp;<i>w</i> = 5"
+    ]
+   },
+   {
+    "n": "5a",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>B</i> = <i>l</i><i>w</i> = 5 · 5 = 25"
+    ]
+   },
+   {
+    "n": "5b",
+    "at": [
+     1
+    ],
+    "lines": [
+     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(5) + 2(5) = 20"
+    ]
+   },
+   {
+    "n": "5c",
+    "lines": [
+     {
+      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
+      "at": [
+       2,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>170 − 2(25)</span><span>20</span></span>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> = 6 cm",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 20(6) + 2(25) = 170 ✓"
+ },
+ {
+  "id": "t4",
+  "num": "T-4",
+  "prompt": "A can is made from 250 cm² of metal, top and bottom included. Its radius is 3 cm. How tall is it, to the nearest tenth?",
+  "given": [
+   {
+    "v": "250 cm²",
+    "k": "surface area S"
+   },
+   {
+    "v": "3 cm",
+    "k": "the radius r"
+   }
+  ],
+  "want": "h, the height, in cm",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2πr²) / (2πr)",
+     "h = S / (2πr) − 2πr²",
+     "h = (S − πr²) / (2πr)",
+     "h = (S + 2πr²) / (2πr)"
+    ],
+    "ch": 1631527994,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = 2πrh + 2πr². Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = 2πrh + 2πr²",
+       "S = 2πrh + πr²",
+       "V = πr²h",
+       "S = 2πr²h"
+      ],
+      "ch": 223233442,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A can has a label (2πrh) and two ends (2πr²)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve for h, letters only",
+      "ask": "Undo + 2πr² first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2πr² = 2πrh",
+       "S + 2πr² = 2πrh",
+       "S = 2πrh − 2πr²"
+      ],
+      "ch": 3432985353,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2πr² on the right becomes − 2πr² on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve for h, letters only",
+      "ask": "Now S − 2πr² = 2πrh. Undo × 2πr: multiply both sides by…",
+      "options": [
+       "1/(2πr)",
+       "2πr",
+       "1/(πr)"
+      ],
+      "ch": 809956762,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by 2πr. Its inverse is 1/(2πr)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2πr²) / (2πr)",
+       "h = S / (2πr) − 2πr²",
+       "h = (S − πr²) / (2πr)",
+       "h = (S + 2πr²) / (2πr)"
+      ],
+      "ch": 1631527994,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (nearest tenth, in cm)",
+    "answer": 10.262911924324612,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 13.262911924324612,
+      "tol": 0.06,
+      "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     },
+     {
+      "near": 11.762911924324612,
+      "tol": 0.06,
+      "msg": "A can has two ends: 2πr², not πr²."
+     },
+     {
+      "near": 12.262911924324612,
+      "tol": 0.06,
+      "msg": "Power first: r² is r · r."
+     },
+     {
+      "near": -43.285755840291664,
+      "tol": 0.06,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Use the π key, not 3.14. Type the whole line in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (250 − 2π(3²)) / (2π(3))",
+       "h = (250 − π(3²)) / (2π(3))",
+       "h = 250 / (2π(3))",
+       "h = (250 − 2π(3)) / (2π(3²))"
+      ],
+      "ch": 589483874,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (nearest tenth, in cm)",
+      "answer": 10.262911924324612,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 13.262911924324612,
+        "tol": 0.06,
+        "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       },
+       {
+        "near": 11.762911924324612,
+        "tol": 0.06,
+        "msg": "A can has two ends: 2πr², not πr²."
+       },
+       {
+        "near": 12.262911924324612,
+        "tol": 0.06,
+        "msg": "Power first: r² is r · r."
+       },
+       {
+        "near": -43.285755840291664,
+        "tol": 0.06,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, radius 3 cm, height h, surface area 250 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M70 40 H118\"/></g><circle cx=\"70\" cy=\"40\" r=\"2.2\" fill=\"currentColor\"/><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"94\" y=\"22\" text-anchor=\"middle\">3 cm</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 250 cm²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in cm"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 250",
+     "<i>r</i> = 3"
+    ]
+   },
+   {
+    "n": "5",
+    "lines": [
+     {
+      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "at": [
+       0,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "at": [
+       0,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
+      "at": [
+       0,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>250 − 2π(3²)</span><span>2π(3)</span></span>",
+      "at": [
+       1,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> ≈ 10.3 cm",
+      "at": [
+       1
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 2π(3)(10.3) + 2π(3²) ≈ 250.7, about 250 ✓"
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "A closed gift box is made from 230 cm² of cardboard. Its base is 8 cm by 3 cm. How tall is it, to the nearest tenth?",
+  "given": [
+   {
+    "v": "230 cm²",
+    "k": "cardboard: S"
+   },
+   {
+    "v": "8 cm by 3 cm",
+    "k": "the base"
+   }
+  ],
+  "want": "h, the height, in cm",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5a: Find B, the area of the base. B = ? (in cm²)",
+    "answer": 24,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 22,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: l · w."
+     },
+     {
+      "near": 11,
+      "tol": 0.005,
+      "msg": "B is an area: multiply, l · w."
+     }
+    ],
+    "nudges": [
+     "B is the area of the base: B = lw."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5b: Find P, the distance around the base. P = ? (in cm)",
+    "answer": 22,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 24,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 2l + 2w."
+     },
+     {
+      "near": 11,
+      "tol": 0.005,
+      "msg": "That is halfway around. P = 2l + 2w."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the base: P = 2l + 2w."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5c: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2B) / P",
+     "h = S / P − 2B",
+     "h = (S − B) / P",
+     "h = (S + 2B) / P"
+    ],
+    "ch": 1890603507,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = Ph + 2B. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = Ph + 2B",
+       "S = Ph + B",
+       "V = Bh",
+       "S = 2πrh + 2πr²"
+      ],
+      "ch": 4141017708,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A closed box has two bases, top and bottom: + 2B."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Undo + 2B first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2B = Ph",
+       "S + 2B = Ph",
+       "S = Ph − 2B"
+      ],
+      "ch": 2399194515,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2B on the right becomes − 2B on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Now S − 2B = Ph. Undo × P: multiply both sides by…",
+      "options": [
+       "1/P",
+       "P",
+       "1/2"
+      ],
+      "ch": 193431989,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by P. Its inverse is 1/P."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2B) / P",
+       "h = S / P − 2B",
+       "h = (S − B) / P",
+       "h = (S + 2B) / P"
+      ],
+      "ch": 1890603507,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (nearest tenth, in cm)",
+    "answer": 8.272727272727273,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 9.363636363636363,
+      "tol": 0.06,
+      "msg": "A closed box has two bases: − 2B, not − B."
+     },
+     {
+      "near": 7.75,
+      "tol": 0.06,
+      "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+     },
+     {
+      "near": 16.545454545454547,
+      "tol": 0.06,
+      "msg": "P goes all the way around: 2l + 2w."
+     },
+     {
+      "near": -37.54545454545455,
+      "tol": 0.06,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Use the π key, not 3.14. Type the whole line in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (230 − 2(24)) / 22",
+       "h = (230 − 24) / 22",
+       "h = (230 − 2(22)) / 24",
+       "h = 22 / (230 − 2(24))"
+      ],
+      "ch": 2436477278,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (nearest tenth, in cm)",
+      "answer": 8.272727272727273,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 9.363636363636363,
+        "tol": 0.06,
+        "msg": "A closed box has two bases: − 2B, not − B."
+       },
+       {
+        "near": 7.75,
+        "tol": 0.06,
+        "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+       },
+       {
+        "near": 16.545454545454547,
+        "tol": 0.06,
+        "msg": "P goes all the way around: 2l + 2w."
+       },
+       {
+        "near": -37.54545454545455,
+        "tol": 0.06,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 8 cm by 3 cm, height h, surface area 230 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">8 cm</text><text x=\"166\" y=\"113\">3 cm</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 230 cm²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in cm"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 230",
+     "<i>l</i> = 8, &nbsp;<i>w</i> = 3"
+    ]
+   },
+   {
+    "n": "5a",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>B</i> = <i>l</i><i>w</i> = 8 · 3 = 24"
+    ]
+   },
+   {
+    "n": "5b",
+    "at": [
+     1
+    ],
+    "lines": [
+     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(8) + 2(3) = 22"
+    ]
+   },
+   {
+    "n": "5c",
+    "lines": [
+     {
+      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
+      "at": [
+       2,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>230 − 2(24)</span><span>22</span></span>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> ≈ 8.3 cm",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 22(8.3) + 2(24) = 230.6, about 230 ✓"
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "A can is 10 cm across and is made from 350 cm² of metal, top and bottom included. How tall is it, to the nearest tenth?",
+  "given": [
+   {
+    "v": "350 cm²",
+    "k": "surface area S"
+   },
+   {
+    "v": "10 cm across",
+    "k": "the width of the can"
+   }
+  ],
+  "want": "h, the height, in cm",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5a: Find r. r = ? (in cm)",
+    "answer": 5,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 10,
+      "tol": 0.005,
+      "msg": "10 cm is all the way across. r = 10 · 1/2."
+     },
+     {
+      "near": 20,
+      "tol": 0.005,
+      "msg": "Across is 2r. Multiply by 1/2 to get r."
+     }
+    ],
+    "nudges": [
+     "Across is 2r. Multiply by 1/2."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5b: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2πr²) / (2πr)",
+     "h = S / (2πr) − 2πr²",
+     "h = (S − πr²) / (2πr)",
+     "h = (S + 2πr²) / (2πr)"
+    ],
+    "ch": 1631527994,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = 2πrh + 2πr². Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = 2πrh + 2πr²",
+       "S = 2πrh + πr²",
+       "V = πr²h",
+       "S = 2πr²h"
+      ],
+      "ch": 223233442,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A can has a label (2πrh) and two ends (2πr²)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Solve for h, letters only",
+      "ask": "Undo + 2πr² first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2πr² = 2πrh",
+       "S + 2πr² = 2πrh",
+       "S = 2πrh − 2πr²"
+      ],
+      "ch": 3432985353,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2πr² on the right becomes − 2πr² on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Solve for h, letters only",
+      "ask": "Now S − 2πr² = 2πrh. Undo × 2πr: multiply both sides by…",
+      "options": [
+       "1/(2πr)",
+       "2πr",
+       "1/(πr)"
+      ],
+      "ch": 809956762,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by 2πr. Its inverse is 1/(2πr)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5b: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2πr²) / (2πr)",
+       "h = S / (2πr) − 2πr²",
+       "h = (S − πr²) / (2πr)",
+       "h = (S + 2πr²) / (2πr)"
+      ],
+      "ch": 1631527994,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (nearest tenth, in cm)",
+    "answer": 6.140846016432674,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": -4.429576991783663,
+      "tol": 0.06,
+      "msg": "10 cm is the whole width. r = 10 · 1/2."
+     },
+     {
+      "near": 11.140846016432674,
+      "tol": 0.06,
+      "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     },
+     {
+      "near": 8.640846016432674,
+      "tol": 0.06,
+      "msg": "A can has two ends: 2πr², not πr²."
+     },
+     {
+      "near": 10.140846016432674,
+      "tol": 0.06,
+      "msg": "Power first: r² is r · r."
+     },
+     {
+      "near": -145.938786663057,
+      "tol": 0.06,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Use the π key, not 3.14. Type the whole line in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (350 − 2π(5²)) / (2π(5))",
+       "h = (350 − π(5²)) / (2π(5))",
+       "h = 350 / (2π(5))",
+       "h = (350 − 2π(5)) / (2π(5²))"
+      ],
+      "ch": 1641605607,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (nearest tenth, in cm)",
+      "answer": 6.140846016432674,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": -4.429576991783663,
+        "tol": 0.06,
+        "msg": "10 cm is the whole width. r = 10 · 1/2."
+       },
+       {
+        "near": 11.140846016432674,
+        "tol": 0.06,
+        "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       },
+       {
+        "near": 8.640846016432674,
+        "tol": 0.06,
+        "msg": "A can has two ends: 2πr², not πr²."
+       },
+       {
+        "near": 10.140846016432674,
+        "tol": 0.06,
+        "msg": "Power first: r² is r · r."
+       },
+       {
+        "near": -145.938786663057,
+        "tol": 0.06,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, 10 cm across, height h, surface area 350 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M22 40 H118\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"70\" y=\"22\" text-anchor=\"middle\">10 cm</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 350 cm²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in cm"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 350",
+     "2<i>r</i> = 10"
+    ]
+   },
+   {
+    "n": "5a",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>r</i> = 10 · <span class=\"fr\"><span>1</span><span>2</span></span> = 5"
+    ]
+   },
+   {
+    "n": "5b",
+    "lines": [
+     {
+      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "at": [
+       1,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "at": [
+       1,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
+      "at": [
+       1,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       1
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>350 − 2π(5²)</span><span>2π(5)</span></span>",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> ≈ 6.1 cm",
+      "at": [
+       2
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 2π(5)(6.1) + 2π(5²) ≈ 348.7, about 350 ✓"
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "A closed box with a square base, 6 in on each side, is wrapped in 336 in² of paper with no overlap. How tall is it?",
+  "given": [
+   {
+    "v": "336 in²",
+    "k": "paper: S"
+   },
+   {
+    "v": "6 in",
+    "k": "each side of the square base"
+   }
+  ],
+  "want": "h, the height, in in",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5a: Find B, the area of the base. B = ? (in in²)",
+    "answer": 36,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 24,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: l · w."
+     },
+     {
+      "near": 12,
+      "tol": 0.005,
+      "msg": "B is an area: multiply, l · w."
+     }
+    ],
+    "nudges": [
+     "B is the area of the base: B = lw."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5b: Find P, the distance around the base. P = ? (in in)",
+    "answer": 24,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 36,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 2l + 2w."
+     },
+     {
+      "near": 12,
+      "tol": 0.005,
+      "msg": "That is halfway around. P = 2l + 2w."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the base: P = 2l + 2w."
+    ]
+   },
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5c: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2B) / P",
+     "h = S / P − 2B",
+     "h = (S − B) / P",
+     "h = (S + 2B) / P"
+    ],
+    "ch": 1890603507,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = Ph + 2B. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = Ph + 2B",
+       "S = Ph + B",
+       "V = Bh",
+       "S = 2πrh + 2πr²"
+      ],
+      "ch": 4141017708,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A closed box has two bases, top and bottom: + 2B."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Undo + 2B first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2B = Ph",
+       "S + 2B = Ph",
+       "S = Ph − 2B"
+      ],
+      "ch": 2399194515,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2B on the right becomes − 2B on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solve for h, letters only",
+      "ask": "Now S − 2B = Ph. Undo × P: multiply both sides by…",
+      "options": [
+       "1/P",
+       "P",
+       "1/2"
+      ],
+      "ch": 193431989,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by P. Its inverse is 1/P."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5c: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2B) / P",
+       "h = S / P − 2B",
+       "h = (S − B) / P",
+       "h = (S + 2B) / P"
+      ],
+      "ch": 1890603507,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (in in)",
+    "answer": 11,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 12.5,
+      "tol": 0.005,
+      "msg": "A closed box has two bases: − 2B, not − B."
+     },
+     {
+      "near": 13,
+      "tol": 0.005,
+      "msg": "B is an area: l · w, not l + w."
+     },
+     {
+      "near": 8,
+      "tol": 0.005,
+      "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+     },
+     {
+      "near": 22,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 2l + 2w."
+     },
+     {
+      "near": -58,
+      "tol": 0.005,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Type the whole line into the calculator in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (336 − 2(36)) / 24",
+       "h = (336 − 36) / 24",
+       "h = (336 − 2(24)) / 36",
+       "h = 24 / (336 − 2(36))"
+      ],
+      "ch": 1153450154,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (in in)",
+      "answer": 11,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [
+       {
+        "near": 12.5,
+        "tol": 0.005,
+        "msg": "A closed box has two bases: − 2B, not − B."
+       },
+       {
+        "near": 13,
+        "tol": 0.005,
+        "msg": "B is an area: l · w, not l + w."
+       },
+       {
+        "near": 8,
+        "tol": 0.005,
+        "msg": "B and P are switched. B is the area (l · w); P goes around (2l + 2w)."
+       },
+       {
+        "near": 22,
+        "tol": 0.005,
+        "msg": "P goes all the way around: 2l + 2w."
+       },
+       {
+        "near": -58,
+        "tol": 0.005,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Type the whole line into the calculator in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 6 in by 6 in, height h, surface area 336 in squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">6 in</text><text x=\"166\" y=\"113\">6 in</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 336 in²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in in"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 336",
+     "<i>l</i> = 6, &nbsp;<i>w</i> = 6"
+    ]
+   },
+   {
+    "n": "5a",
+    "at": [
+     0
+    ],
+    "lines": [
+     "<i>B</i> = <i>l</i><i>w</i> = 6 · 6 = 36"
+    ]
+   },
+   {
+    "n": "5b",
+    "at": [
+     1
+    ],
+    "lines": [
+     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(6) + 2(6) = 24"
+    ]
+   },
+   {
+    "n": "5c",
+    "lines": [
+     {
+      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
+      "at": [
+       2,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>336 − 2(36)</span><span>24</span></span>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> = 11 in",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 24(11) + 2(36) = 336 ✓"
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "A water tank shaped like a cylinder has a radius of 1.5 m. It takes 40 m² of sheet metal, top and bottom included. How tall is it, to the nearest tenth?",
+  "given": [
+   {
+    "v": "40 m²",
+    "k": "sheet metal: S"
+   },
+   {
+    "v": "1.5 m",
+    "k": "the radius r"
+   }
+  ],
+  "want": "h, the height, in m",
+  "pipeline": [
+   {
+    "tool": "choice",
+    "stack": true,
+    "label": "Plan 5: Solve for h with letters",
+    "ask": "Before any numbers: h = …",
+    "options": [
+     "h = (S − 2πr²) / (2πr)",
+     "h = S / (2πr) − 2πr²",
+     "h = (S − πr²) / (2πr)",
+     "h = (S + 2πr²) / (2πr)"
+    ],
+    "ch": 1631527994,
+    "shuffle": true,
+    "nudges": [
+     "Start from S = 2πrh + 2πr². Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which formula covers this solid?",
+      "options": [
+       "S = 2πrh + 2πr²",
+       "S = 2πrh + πr²",
+       "V = πr²h",
+       "S = 2πr²h"
+      ],
+      "ch": 223233442,
+      "shuffle": true,
+      "nudges": [
+       "Covers means surface area. A can has a label (2πrh) and two ends (2πr²)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve for h, letters only",
+      "ask": "Undo + 2πr² first: change sides, change signs. Which line is it?",
+      "options": [
+       "S − 2πr² = 2πrh",
+       "S + 2πr² = 2πrh",
+       "S = 2πrh − 2πr²"
+      ],
+      "ch": 3432985353,
+      "shuffle": true,
+      "nudges": [
+       "Change sides, change signs: + 2πr² on the right becomes − 2πr² on the left."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solve for h, letters only",
+      "ask": "Now S − 2πr² = 2πrh. Undo × 2πr: multiply both sides by…",
+      "options": [
+       "1/(2πr)",
+       "2πr",
+       "1/(πr)"
+      ],
+      "ch": 809956762,
+      "shuffle": true,
+      "nudges": [
+       "h is multiplied by 2πr. Its inverse is 1/(2πr)."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: Solved",
+      "ask": "So h = …",
+      "options": [
+       "h = (S − 2πr²) / (2πr)",
+       "h = S / (2πr) − 2πr²",
+       "h = (S − πr²) / (2πr)",
+       "h = (S + 2πr²) / (2πr)"
+      ],
+      "ch": 1631527994,
+      "shuffle": true,
+      "nudges": [
+       "Put the two moves together: change sides, change signs, then the inverse."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. h = ? (nearest tenth, in m)",
+    "answer": 2.7441318157838754,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 4.244131815783875,
+      "tol": 0.06,
+      "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     },
+     {
+      "near": 3.494131815783876,
+      "tol": 0.06,
+      "msg": "A can has two ends: 2πr², not πr²."
+     },
+     {
+      "near": 3.244131815783876,
+      "tol": 0.06,
+      "msg": "Power first: r² is r · r."
+     },
+     {
+      "near": -9.893035125370194,
+      "tol": 0.06,
+      "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+     }
+    ],
+    "nudges": [
+     "Use the π key, not 3.14. Type the whole line in one go."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into your solved formula. Which is it?",
+      "options": [
+       "h = (40 − 2π(1.5²)) / (2π(1.5))",
+       "h = (40 − π(1.5²)) / (2π(1.5))",
+       "h = 40 / (2π(1.5))",
+       "h = (40 − 2π(1.5)) / (2π(1.5²))"
+      ],
+      "ch": 2233139889,
+      "shuffle": true,
+      "nudges": [
+       "Each number goes where its letter is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. h = ? (nearest tenth, in m)",
+      "answer": 2.7441318157838754,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 4.244131815783875,
+        "tol": 0.06,
+        "msg": "2πr² never moved. Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       },
+       {
+        "near": 3.494131815783876,
+        "tol": 0.06,
+        "msg": "A can has two ends: 2πr², not πr²."
+       },
+       {
+        "near": 3.244131815783876,
+        "tol": 0.06,
+        "msg": "Power first: r² is r · r."
+       },
+       {
+        "near": -9.893035125370194,
+        "tol": 0.06,
+        "msg": "Undo the + first: change sides, change signs. Multiplying first leaves it stuck."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line in one go."
+      ]
+     }
+    ]
+   }
+  ],
+  "work": [
+   {
+    "n": "1",
+    "lines": [
+     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, radius 1.5 m, height h, surface area 40 m squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M70 40 H118\"/></g><circle cx=\"70\" cy=\"40\" r=\"2.2\" fill=\"currentColor\"/><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"94\" y=\"22\" text-anchor=\"middle\">1.5 m</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 40 m²</text></g></svg>"
+    ]
+   },
+   {
+    "n": "2",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    ]
+   },
+   {
+    "n": "3",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>h</i> := the height, in m"
+    ]
+   },
+   {
+    "n": "4",
+    "at": [
+     0,
+     0
+    ],
+    "lines": [
+     "<i>S</i> = 40",
+     "<i>r</i> = 1.5"
+    ]
+   },
+   {
+    "n": "5",
+    "lines": [
+     {
+      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "at": [
+       0,
+       0
+      ]
+     },
+     {
+      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "at": [
+       0,
+       1
+      ]
+     },
+     {
+      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
+      "at": [
+       0,
+       2
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       0
+      ]
+     }
+    ]
+   },
+   {
+    "n": "6",
+    "lines": [
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "at": [
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> = <span class=\"fr\"><span>40 − 2π(1.5²)</span><span>2π(1.5)</span></span>",
+      "at": [
+       1,
+       0
+      ]
+     },
+     {
+      "h": "<i>h</i> ≈ 2.7 m",
+      "at": [
+       1
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": "Check: 2π(1.5)(2.7) + 2π(1.5²) ≈ 39.6, about 40 ✓"
+ }
+], { layout:'work', reference:"<div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Prism</div><div class=\"rc-s\" style=\"font-size:.85rem\">S = Ph + 2B</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Cylinder</div><div class=\"rc-s\" style=\"font-size:.85rem\">S = 2πrh + 2πr²</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Undo moves</div><div class=\"rc-s\" style=\"font-size:.78rem\">+ a: change sides, change signs<br>× a: multiply by 1/a</div></div><div class=\"ref-cell\"><div class=\"rc-t\">A box base</div><div class=\"rc-s\" style=\"font-size:.78rem\">B = lw (area)<br>P = 2l + 2w (around)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Covers or fills?</div><div class=\"rc-s\" style=\"font-size:.78rem\">covers: S, in cm² &nbsp;·&nbsp; fills: V, in cm³</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Across</div><div class=\"rc-s\" style=\"font-size:.78rem\">across = 2r, so r = across · 1/2</div></div></div><div class=\"ref-note\">The Plan: 1 read and sketch · 2 write the formula · 3 name the unknown · 4 facts as math · 5 find in-between numbers first (5a, 5b), then solve for h with letters only · 6 reiterate, substitute, answer: the calculator once, typed just as it looks. Type decimals like 7.7.</div>" });
+</script>
+</body>
+</html>

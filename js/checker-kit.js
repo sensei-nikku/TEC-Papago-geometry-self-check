@@ -21,10 +21,13 @@
 (function (global) {
   'use strict';
 
-  var ENGINE_VERSION = '1.4.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
+  var ENGINE_VERSION = '1.5.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
                                   // 1.3.0 split shell, per-step miss limits, two-level nudges;
-                                  // 1.4.0 coarse-first sub-step ladders (step.sub)
-  var LAYOUT = 'stack';    // 'stack' (one scrolling column) | 'split' (left rail + right surface)
+                                  // 1.4.0 coarse-first sub-step ladders (step.sub);
+                                  // 1.5.0 work shell: suggested work left, question right, f button (opt-in)
+  var LAYOUT = 'stack';    // 'stack' (one column) | 'split' (left rail + right surface) | 'work' (suggested work + question)
+  var GLOBAL_REF = null;   // work shell: the Formula Box when a problem has no reference of its own
+  var refOpen = false, refFor = -1, escWired = false;
   var TOOLS = {};          // tool registry:  name -> tool definition
   var PROBLEMS = [];       // the loaded checker (set by run())
   var S = {};              // run-time state, keyed by problem id
@@ -57,6 +60,12 @@
   // ---- lifecycle ----
   function run(problems, opts){
     LAYOUT = (opts && opts.layout) ? opts.layout : 'stack';
+    GLOBAL_REF = (opts && opts.reference) ? opts.reference : null;
+    refOpen = false; refFor = -1;
+    if(LAYOUT==='work' && !escWired && typeof document!=='undefined'){
+      escWired = true;
+      document.addEventListener('keydown', function(e){ if(e.key==='Escape' && refOpen) closeRef(); });
+    }
     PROBLEMS = problems;
     S = {};
     for (var i=0;i<PROBLEMS.length;i++){
@@ -123,6 +132,7 @@
   function splitNotice(si, step, res){
     var n=step.sub.length, range=(si+1)+'a through '+(si+1)+LETTERS[n-1];
     var diag = (res && res.fb && res.fb.diag) ? res.fb.m+' ' : '';
+    if(LAYOUT==='work') return diag+'Let\u2019s take this one move at a time. Finish these moves and this step is done.';
     return diag+'Let\u2019s take this one move at a time \u2014 steps '+range+'. Finish them and this step is done.';
   }
 
@@ -155,12 +165,14 @@
     var p=pById(pid), s=S[pid];
     s.stepIdx++;
     if(s.stepIdx>=p.pipeline.length){ s.done=true;
-      var i=pIndex(pid); if(i<PROBLEMS.length-1) activeP=i+1;
+      // work shell: stay on the finished problem so the whole suggested work is on screen;
+      // the student moves on with the Next button.
+      var i=pIndex(pid); if(LAYOUT!=='work' && i<PROBLEMS.length-1) activeP=i+1;
     }
     scrollToWork();
   }
   function scrollToWork(){
-    if(LAYOUT==='split'){ return; }        // split: the rail scrolls itself in renderSplit()
+    if(LAYOUT==='split' || LAYOUT==='work'){ return; }   // these shells scroll their own panes
     if(typeof window!=='undefined' && window.scrollTo) window.scrollTo({top:0,behavior:'smooth'});
   }
 
@@ -201,7 +213,7 @@
     var pstep=p.pipeline[si], pst=S[p.id].steps[si];
     var step=pstep.sub[sj], st=pst.subs[sj], t=TOOLS[step.tool];
     var tag='Step '+(si+1)+LETTERS[sj];
-    var lbl=step.label ? (tag+' \u2014 '+step.label) : tag;
+    var lbl=step.label ? (LAYOUT==='work' ? step.label : tag+' \u2014 '+step.label) : tag;
     if(sj < pst.subIdx)
       return '<div class="step sub show"><div class="step-label">'+esc(lbl)+'</div>'+lockedRow(step, st, t)+'</div>';
     if(sj > pst.subIdx) return '';                       // later rungs are not rendered at all
@@ -340,8 +352,130 @@
     }
   }
 
+  // ---- WORK SHELL (v1.5.0) -------------------------------------------
+  // Left  = the suggested work: how the paper should look, filled in one part
+  //         at a time as the student checks each step. Nothing shows ahead of
+  //         the student; parts not reached yet show as blank lines.
+  // Right = the question: prompt, what you know, the live step and its ladder.
+  // An f button on the question's corner opens the Formula Box (references).
+  //
+  // A problem opts in with  work:[block...]  and optional  workCheck:'html'.
+  //   block = { n:'5a', title:'Find B', at:[si] | [si, rung], lines:[ 'html' | {h:'html', at:[...]} ] }
+  //   at:[si]        shows once pipeline step si is settled
+  //   at:[si, rung]  shows once rung `rung` of step si's open ladder is done (or si is settled)
+  //   no `at`        shows from the start
+  // Lines are trusted HTML from the checker's builder (fractions, italics), like p.figure.
+  function revealedAt(s, at){
+    if(!at || s.done) return true;
+    var si=at[0], sj=(at.length>1 ? at[1] : -1);
+    if(s.stepIdx>si) return true;
+    if(s.stepIdx===si && sj>=0){ var st=s.steps[si]; if(st.exp && st.subIdx>sj) return true; }
+    return false;
+  }
+
+  function ensureWorkShell(){
+    var m=document.getElementById('main'); if(!m) return false;
+    if(!document.getElementById('ckWork')){
+      m.innerHTML='<div class="wk">'+
+        '<section class="pane wk-work" id="ckWork" aria-label="Suggested work"></section>'+
+        '<div class="wk-qwrap">'+
+          '<section class="pane wk-q" id="ckQ" aria-label="Question"></section>'+
+          '<button type="button" class="ref-fab" id="ckRefBtn" aria-expanded="false" aria-controls="ckRef" '+
+            'aria-label="Formula Box" title="Formula Box" onclick="K.toggleRef()">f</button>'+
+          '<div class="ref-pop" id="ckRef" role="dialog" aria-label="Formula Box" hidden></div>'+
+        '</div></div>';
+    }
+    return true;
+  }
+
+  function workHtml(p, s){
+    var h='<div class="wk-head"><span class="wk-title">Suggested work</span><span class="wk-for">'+esc(p.num)+'</span></div>'+
+          '<p class="wk-note">Write each part on your paper. Each part shows up here after you check it.</p>';
+    var blocks=p.work||[], marked=false;
+    for(var i=0;i<blocks.length;i++){
+      var b=blocks[i], ls=b.lines||[], shown='', blanks='', nShown=0;
+      for(var j=0;j<ls.length;j++){
+        var L=(typeof ls[j]==='string') ? {h:ls[j], at:b.at} : {h:ls[j].h, at:(ls[j].at||b.at)};
+        if(revealedAt(s, L.at)){ shown+='<div class="wk-line">'+L.h+'</div>'; nShown++; }
+        else blanks+='<div class="wk-blank" aria-hidden="true"></div>';
+      }
+      var state = nShown===ls.length ? 'done' : (nShown ? 'part' : 'pending');
+      var next = (!s.done && !marked && state!=='done'); if(next) marked=true;
+      // laid out like the student's paper: the step number in the margin, the math beside it
+      h+='<div class="wk-block '+state+(next?' next':'')+'">'+
+         '<div class="wk-n">'+esc(b.n||'')+'</div><div class="wk-body">'+
+         (b.title?'<div class="wk-label">'+esc(b.title)+'</div>':'')+shown+blanks+
+         (state==='pending'?'<span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">step '+esc(b.n||'')+', not yet</span>':'')+
+         '</div></div>';
+    }
+    if(s.done && p.workCheck) h+='<div class="wk-check">'+p.workCheck+'</div>';
+    return h;
+  }
+
+  function questionHtml(p, s){
+    var i=pIndex(p.id);
+    var h='<div class="qn">'+esc(p.num)+(s.done?'<span class="done-check">✓ Complete</span>':'')+'</div>'+
+          '<div class="qp">'+esc(p.prompt)+'</div>';
+    if(p.given && p.given.length){
+      h+='<div class="surf-block"><div class="surf-label">What you know</div><div class="given-list">';
+      for(var g=0;g<p.given.length;g++)
+        h+='<div class="g-chip"><span class="g-val">'+esc(p.given[g].v)+'</span><span class="g-k">'+esc(p.given[g].k)+'</span></div>';
+      h+='</div>';
+      if(p.want) h+='<div class="g-want">Looking for: <strong>'+esc(p.want)+'</strong></div>';
+      h+='</div>';
+    }
+    if(p.figure) h+='<div class="q-figure">'+p.figure+'</div>';
+    for(var j=0;j<p.pipeline.length;j++) h+=renderStep(p, j);
+    if(s.done){
+      var left=0; for(var k=0;k<PROBLEMS.length;k++) if(!S[PROBLEMS[k].id].done) left++;
+      h+='<div class="wk-done">';
+      if(i<PROBLEMS.length-1) h+='<button class="btn btn-go" onclick="K.navTo('+(i+1)+')">Next problem →</button>';
+      h+='<p class="wk-note">'+(left ? 'Check your paper against the suggested work before you move on.'
+                                    : 'That is every problem. Check your paper against the suggested work.')+'</p></div>';
+    }
+    return h;
+  }
+
+  function refHtml(){
+    var p=PROBLEMS[activeP], ref=(p && p.reference) || GLOBAL_REF;
+    return '<div class="ref-pop-head"><span class="surf-label" style="margin:0">Formula Box</span>'+
+           '<button type="button" class="ref-close" onclick="K.closeRef()" aria-label="Close the Formula Box">✕</button></div>'+
+           (ref||'');
+  }
+  function syncRef(){
+    var btn=document.getElementById('ckRefBtn'), pop=document.getElementById('ckRef'); if(!btn||!pop) return;
+    var p=PROBLEMS[activeP], has=!!((p && p.reference) || GLOBAL_REF);
+    btn.hidden=!has;
+    if(refFor!==activeP){ pop.innerHTML=refHtml(); refFor=activeP; }
+    pop.hidden=!(refOpen && has);
+    btn.setAttribute('aria-expanded', (refOpen && has) ? 'true' : 'false');
+  }
+  function toggleRef(){ refOpen ? closeRef() : openRef(); }
+  function openRef(){
+    refOpen=true; syncRef();
+    var c=document.querySelector('#ckRef .ref-close'); if(c && c.focus) c.focus();
+  }
+  function closeRef(){
+    refOpen=false; syncRef();
+    var b=document.getElementById('ckRefBtn'); if(b && b.focus) b.focus();
+  }
+
+  function renderWork(){
+    if(!ensureWorkShell()) return;
+    var p=PROBLEMS[activeP], s=S[p.id];
+    var q=document.getElementById('ckQ');
+    document.getElementById('ckWork').innerHTML=workHtml(p, s);
+    q.innerHTML=questionHtml(p, s);
+    syncRef();
+    renderDots();
+    var liveEl=q.querySelector('.step.live');
+    if(liveEl && liveEl.scrollIntoView) liveEl.scrollIntoView({block:'nearest'});
+    mountLive();
+  }
+
   function render(){
     if(LAYOUT==='split') return renderSplit();
+    if(LAYOUT==='work') return renderWork();
     var m=document.getElementById('main'); if(!m) return; m.innerHTML='';
     for(var i=0;i<PROBLEMS.length;i++){
       var p=PROBLEMS[i], s=S[p.id], card=document.createElement('div');
@@ -402,6 +536,7 @@
   global.K = { run:run, tool:tool, act:act, input:input, set:set, navTo:navTo,
                VERSION:ENGINE_VERSION, layout:function(){return LAYOUT;},
                showWork:showWork, closeWork:closeWork,
+               toggleRef:toggleRef, openRef:openRef, closeRef:closeRef, _refOpen:function(){return refOpen;},
                _esc:esc, _djb2:djb2, _live:liveCode, _sub:subCode, _S:function(){return S;} };
 
 })(window);
