@@ -49,7 +49,7 @@ console.log('\nengine v1.4.0 — split shell');
   const rail = () => doc.getElementById('ckRail').innerHTML;
   const surf = () => doc.getElementById('ckSurf').innerHTML;
   ok('no load error', !err(), err() && (err().detail || err()));
-  ok('version is 1.4.0', w.K.VERSION === '1.4.0', w.K.VERSION);
+  ok('version is 1.5.0 (1.5.0 adds the opt-in work shell; split is unchanged)', w.K.VERSION === '1.5.0', w.K.VERSION);
   ok('layout reported as split', w.K.layout() === 'split');
   ok('both panes rendered', !!doc.getElementById('ckRail') && !!doc.getElementById('ckSurf'));
   ok('prompt in the rail only', /A prompt\./.test(rail()) && !/A prompt\./.test(surf()));

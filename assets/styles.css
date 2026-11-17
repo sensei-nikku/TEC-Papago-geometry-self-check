@@ -292,3 +292,64 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 .step.sub .step-label{color:var(--accent)}
 .pane.rail .step.sub.live{border-left:2px solid var(--accent)}
 .ladder-done{opacity:.85}
+
+/* ══════════════════════════════════════════════════════════════════
+   WORK SHELL  (engine v1.5.0, opt-in: K.run(P,{layout:'work'}))
+   Left  = suggested work: how the paper should look, filled in as each
+           step is checked, never ahead of the student.
+   Right = the question. The f button on its corner opens the Formula Box.
+   ══════════════════════════════════════════════════════════════════ */
+.wk{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+.pane.wk-work{max-height:calc(100vh - 130px);overflow-y:auto}
+.wk-qwrap{position:sticky;top:88px}
+.pane.wk-q{max-height:calc(100vh - 130px);overflow-y:auto;padding-bottom:44px}
+.pane.wk-q .step.live{border-left:3px solid var(--accent);padding-left:12px;margin-left:-2px}
+.pane.wk-q .step.sub.live{border-left:2px solid var(--accent)}
+
+.wk-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.wk-title{font-size:.66rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.wk-for{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:600}
+.wk-note{font-size:.8rem;color:var(--muted);margin:0 0 12px}
+.wk-block{display:grid;grid-template-columns:2.7em minmax(0,1fr);align-items:start;padding:8px 0 10px 10px;
+  border-left:3px solid transparent;border-bottom:1px dashed var(--border)}
+.wk-block:last-of-type{border-bottom:0}
+.wk-block.next{border-left-color:var(--accent);background:var(--accent-lt);border-radius:0 8px 8px 0}
+.wk-label{font-size:.84rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.wk-n{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.95rem;line-height:2.2}
+.wk-block.pending .wk-n{color:var(--muted)}
+.wk-line{font-size:1.05rem;line-height:2.2;font-family:Georgia,'Times New Roman',serif}
+.wk-line i{font-style:italic}
+.wk-blank{height:1.6em;margin-top:4px;width:min(70%,260px);border-bottom:2px dotted var(--border)}
+.wk-sketch{display:block;max-width:100%;height:auto;color:var(--text);margin:2px 0 4px}
+.wk-check{margin-top:12px;font-size:.88rem;color:var(--ok);background:var(--ok-lt);border-left:3px solid var(--ok);
+  border-radius:6px;padding:8px 12px;font-family:Georgia,'Times New Roman',serif}
+.wk-done{margin-top:16px}
+.wk-done .wk-note{margin-top:8px}
+
+/* stacked fraction for suggested-work lines:  <span class="fr"><span>top</span><span>bottom</span></span> */
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .18em;line-height:1.3}
+.fr>span:first-child{border-bottom:1.5px solid currentColor;padding:0 .25em}
+.fr>span:last-child{padding:0 .25em}
+
+/* the f button: on the question's bottom-right corner; opens the Formula Box */
+.ref-fab{position:absolute;right:-14px;bottom:-14px;width:54px;height:54px;border-radius:50%;
+  border:2px solid var(--accent);background:var(--surface);color:var(--accent);cursor:pointer;z-index:5;
+  font:italic 700 1.7rem/1 Georgia,'Times New Roman',serif;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+.ref-fab:hover,.ref-fab[aria-expanded="true"]{background:var(--accent);color:#fff}
+.ref-fab:focus-visible,.ref-close:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+/* wide screens: opens beside the question, over the suggested work, so the question stays readable */
+.ref-pop{position:absolute;right:calc(100% + 14px);bottom:0;width:min(470px,92vw);max-height:calc(100vh - 140px);overflow-y:auto;z-index:6;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;
+  box-shadow:0 10px 28px rgba(0,0,0,.32)}
+.ref-pop[hidden]{display:none}
+.ref-pop-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ref-close{min-width:44px;min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--raised);
+  color:var(--text);font-size:1rem;cursor:pointer}
+
+@media (max-width:900px){
+  .wk{grid-template-columns:1fr}
+  .wk-qwrap{position:static;order:-1}
+  .pane.wk-work,.pane.wk-q{max-height:none;overflow:visible}
+  .ref-fab{position:fixed;right:16px;bottom:16px}
+  .ref-pop{position:fixed;right:12px;bottom:82px;max-height:66vh}
+}
