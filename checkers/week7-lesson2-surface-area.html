@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Week 7, Lesson 2 — Surface Area: Solving for the Height Checker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>
@@ -263,107 +263,70 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 6 cm by 4 cm, height h, surface area 228 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">6 cm</text><text x=\"166\" y=\"113\">4 cm</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 228 cm²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in cm"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 228",
-     "<i>l</i> = 6, &nbsp;<i>w</i> = 4"
-    ]
-   },
-   {
-    "n": "5a",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>B</i> = <i>l</i><i>w</i> = 6 · 4 = 24"
-    ]
-   },
-   {
-    "n": "5b",
-    "at": [
-     1
-    ],
-    "lines": [
-     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(6) + 2(4) = 20"
-    ]
-   },
-   {
-    "n": "5c",
     "lines": [
      {
-      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 6 cm, w = 4 cm, h unknown, S = 228 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 6 cm</text><text x=\"206\" y=\"116\">w = 4 cm</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 228 cm²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
       "at": [
-       2,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "tag": "5a",
+      "l": "<i>B</i>",
+      "r": "= <i>l</i><i>w</i> = 6 · 4 = 24",
+      "at": [
+       0
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i>P</i>",
+      "r": "= 2<i>l</i> + 2<i>w</i> = 2(6) + 2(4) = 20",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5c",
+      "l": "<i>S</i> − 2<i>B</i>",
+      "r": "= <i>P</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        2,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
-      "at": [
-       2,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "at": [
-       2
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "note": "× 1/P",
       "at": [
        2
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>228 − 2(24)</span><span>20</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>228 − 2(24)</span><span>20</span></span>",
       "at": [
        3,
        0
       ]
      },
      {
-      "h": "<i>h</i> = 9 cm",
+      "l": "",
+      "r": "= <span class=\"wk-box\">9 cm</span>",
       "at": [
        3
       ]
@@ -371,7 +334,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 20(9) + 2(24) = 228 ✓"
+  "workCheck": "<b>Check:</b> 20(9) + 2(24) = 228 ✓"
  },
  {
   "id": "t2",
@@ -560,92 +523,55 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, radius 5 cm, height h, surface area 400 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M70 40 H118\"/></g><circle cx=\"70\" cy=\"40\" r=\"2.2\" fill=\"currentColor\"/><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"94\" y=\"22\" text-anchor=\"middle\">5 cm</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 400 cm²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in cm"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 400",
-     "<i>r</i> = 5"
-    ]
-   },
-   {
-    "n": "5",
     "lines": [
      {
-      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 5 cm, h unknown, S = 400 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"124\" y=\"24\" text-anchor=\"middle\">r = 5 cm</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 400 cm²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
       "at": [
        0,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "tag": "5",
+      "l": "<i>S</i> − 2π<i>r</i>²",
+      "r": "= 2π<i>r</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        0,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
-      "at": [
-       0,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "at": [
-       0
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "note": "× 1/(2πr)",
       "at": [
        0
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>400 − 2π(5²)</span><span>2π(5)</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>400 − 2π(5²)</span><span>2π(5)</span></span>",
       "at": [
        1,
        0
       ]
      },
      {
-      "h": "<i>h</i> ≈ 7.7 cm",
+      "l": "",
+      "r": "≈ <span class=\"wk-box\">7.7 cm</span>",
       "at": [
        1
       ]
@@ -653,7 +579,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 2π(5)(7.7) + 2π(5²) ≈ 399.0, about 400 ✓"
+  "workCheck": "<b>Check:</b> 2π(5)(7.7) + 2π(5²) ≈ 399.0, about 400 ✓"
  },
  {
   "id": "t3",
@@ -896,107 +822,70 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 5 cm by 5 cm, height h, surface area 170 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">5 cm</text><text x=\"166\" y=\"113\">5 cm</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 170 cm²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in cm"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 170",
-     "<i>l</i> = 5, &nbsp;<i>w</i> = 5"
-    ]
-   },
-   {
-    "n": "5a",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>B</i> = <i>l</i><i>w</i> = 5 · 5 = 25"
-    ]
-   },
-   {
-    "n": "5b",
-    "at": [
-     1
-    ],
-    "lines": [
-     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(5) + 2(5) = 20"
-    ]
-   },
-   {
-    "n": "5c",
     "lines": [
      {
-      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 5 cm, w = 5 cm, h unknown, S = 170 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 5 cm</text><text x=\"206\" y=\"116\">w = 5 cm</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 170 cm²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
       "at": [
-       2,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "tag": "5a",
+      "l": "<i>B</i>",
+      "r": "= <i>l</i><i>w</i> = 5 · 5 = 25",
+      "at": [
+       0
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i>P</i>",
+      "r": "= 2<i>l</i> + 2<i>w</i> = 2(5) + 2(5) = 20",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5c",
+      "l": "<i>S</i> − 2<i>B</i>",
+      "r": "= <i>P</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        2,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
-      "at": [
-       2,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "at": [
-       2
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "note": "× 1/P",
       "at": [
        2
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>170 − 2(25)</span><span>20</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>170 − 2(25)</span><span>20</span></span>",
       "at": [
        3,
        0
       ]
      },
      {
-      "h": "<i>h</i> = 6 cm",
+      "l": "",
+      "r": "= <span class=\"wk-box\">6 cm</span>",
       "at": [
        3
       ]
@@ -1004,7 +893,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 20(6) + 2(25) = 170 ✓"
+  "workCheck": "<b>Check:</b> 20(6) + 2(25) = 170 ✓"
  },
  {
   "id": "t4",
@@ -1193,92 +1082,55 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, radius 3 cm, height h, surface area 250 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M70 40 H118\"/></g><circle cx=\"70\" cy=\"40\" r=\"2.2\" fill=\"currentColor\"/><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"94\" y=\"22\" text-anchor=\"middle\">3 cm</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 250 cm²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in cm"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 250",
-     "<i>r</i> = 3"
-    ]
-   },
-   {
-    "n": "5",
     "lines": [
      {
-      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 3 cm, h unknown, S = 250 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"124\" y=\"24\" text-anchor=\"middle\">r = 3 cm</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 250 cm²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
       "at": [
        0,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "tag": "5",
+      "l": "<i>S</i> − 2π<i>r</i>²",
+      "r": "= 2π<i>r</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        0,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
-      "at": [
-       0,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "at": [
-       0
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "note": "× 1/(2πr)",
       "at": [
        0
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>250 − 2π(3²)</span><span>2π(3)</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>250 − 2π(3²)</span><span>2π(3)</span></span>",
       "at": [
        1,
        0
       ]
      },
      {
-      "h": "<i>h</i> ≈ 10.3 cm",
+      "l": "",
+      "r": "≈ <span class=\"wk-box\">10.3 cm</span>",
       "at": [
        1
       ]
@@ -1286,7 +1138,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 2π(3)(10.3) + 2π(3²) ≈ 250.7, about 250 ✓"
+  "workCheck": "<b>Check:</b> 2π(3)(10.3) + 2π(3²) ≈ 250.7, about 250 ✓"
  },
  {
   "id": "a1",
@@ -1519,107 +1371,70 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 8 cm by 3 cm, height h, surface area 230 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">8 cm</text><text x=\"166\" y=\"113\">3 cm</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 230 cm²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in cm"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 230",
-     "<i>l</i> = 8, &nbsp;<i>w</i> = 3"
-    ]
-   },
-   {
-    "n": "5a",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>B</i> = <i>l</i><i>w</i> = 8 · 3 = 24"
-    ]
-   },
-   {
-    "n": "5b",
-    "at": [
-     1
-    ],
-    "lines": [
-     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(8) + 2(3) = 22"
-    ]
-   },
-   {
-    "n": "5c",
     "lines": [
      {
-      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 8 cm, w = 3 cm, h unknown, S = 230 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 8 cm</text><text x=\"206\" y=\"116\">w = 3 cm</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 230 cm²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
       "at": [
-       2,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "tag": "5a",
+      "l": "<i>B</i>",
+      "r": "= <i>l</i><i>w</i> = 8 · 3 = 24",
+      "at": [
+       0
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i>P</i>",
+      "r": "= 2<i>l</i> + 2<i>w</i> = 2(8) + 2(3) = 22",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5c",
+      "l": "<i>S</i> − 2<i>B</i>",
+      "r": "= <i>P</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        2,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
-      "at": [
-       2,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "at": [
-       2
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "note": "× 1/P",
       "at": [
        2
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>230 − 2(24)</span><span>22</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>230 − 2(24)</span><span>22</span></span>",
       "at": [
        3,
        0
       ]
      },
      {
-      "h": "<i>h</i> ≈ 8.3 cm",
+      "l": "",
+      "r": "≈ <span class=\"wk-box\">8.3 cm</span>",
       "at": [
        3
       ]
@@ -1627,7 +1442,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 22(8.3) + 2(24) = 230.6, about 230 ✓"
+  "workCheck": "<b>Check:</b> 22(8.3) + 2(24) = 230.6, about 230 ✓"
  },
  {
   "id": "a2",
@@ -1848,98 +1663,62 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, 10 cm across, height h, surface area 350 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M22 40 H118\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"70\" y=\"22\" text-anchor=\"middle\">10 cm</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 350 cm²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in cm"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 350",
-     "2<i>r</i> = 10"
-    ]
-   },
-   {
-    "n": "5a",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>r</i> = 10 · <span class=\"fr\"><span>1</span><span>2</span></span> = 5"
-    ]
-   },
-   {
-    "n": "5b",
     "lines": [
      {
-      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
-      "at": [
-       1,
-       0
-      ]
-     },
-     {
-      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
-      "at": [
-       1,
-       1
-      ]
-     },
-     {
-      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
-      "at": [
-       1,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "at": [
-       1
-      ]
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, 10 cm across, h unknown, S = 350 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M52 40 H148\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"100\" y=\"24\" text-anchor=\"middle\">10 cm</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 350 cm²</text></g></svg>",
+      "fig": true
      }
     ]
    },
    {
-    "n": "6",
     "lines": [
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "at": [
+       0
+      ]
+     },
+     {
+      "tag": "5a",
+      "l": "<i>r</i>",
+      "r": "= 10 · <span class=\"fr\"><span>1</span><span>2</span></span> = 5",
+      "at": [
+       0
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i>S</i> − 2π<i>r</i>²",
+      "r": "= 2π<i>r</i><i>h</i>",
+      "note": "change sides, change signs",
+      "at": [
+       1,
+       1
+      ]
+     },
+     {
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "note": "× 1/(2πr)",
       "at": [
        1
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>350 − 2π(5²)</span><span>2π(5)</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>350 − 2π(5²)</span><span>2π(5)</span></span>",
       "at": [
        2,
        0
       ]
      },
      {
-      "h": "<i>h</i> ≈ 6.1 cm",
+      "l": "",
+      "r": "≈ <span class=\"wk-box\">6.1 cm</span>",
       "at": [
        2
       ]
@@ -1947,7 +1726,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 2π(5)(6.1) + 2π(5²) ≈ 348.7, about 350 ✓"
+  "workCheck": "<b>Check:</b> 2π(5)(6.1) + 2π(5²) ≈ 348.7, about 350 ✓"
  },
  {
   "id": "a3",
@@ -2190,107 +1969,70 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 140\" width=\"300\" height=\"140\" role=\"img\" aria-label=\"Sketch: a closed box, base 6 in by 6 in, height h, surface area 336 in squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linejoin=\"round\"><path d=\"M20 45 H140 V115 H20 Z\"/><path d=\"M20 45 L60 18 H180 L140 45\"/><path d=\"M140 115 L180 88 V18\"/><path d=\"M20 115 L60 88 H180 M60 88 V18\" stroke-dasharray=\"4 4\" opacity=\".5\"/></g><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"80\" y=\"134\" text-anchor=\"middle\">6 in</text><text x=\"166\" y=\"113\">6 in</text><text x=\"6\" y=\"85\" font-style=\"italic\">h</text><text x=\"200\" y=\"62\"><tspan font-style=\"italic\">S</tspan> = 336 in²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in in"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 336",
-     "<i>l</i> = 6, &nbsp;<i>w</i> = 6"
-    ]
-   },
-   {
-    "n": "5a",
-    "at": [
-     0
-    ],
-    "lines": [
-     "<i>B</i> = <i>l</i><i>w</i> = 6 · 6 = 36"
-    ]
-   },
-   {
-    "n": "5b",
-    "at": [
-     1
-    ],
-    "lines": [
-     "<i>P</i> = 2<i>l</i> + 2<i>w</i> = 2(6) + 2(6) = 24"
-    ]
-   },
-   {
-    "n": "5c",
     "lines": [
      {
-      "h": "<i>S</i> = <i>P</i><i>h</i> + 2<i>B</i>",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 6 in, w = 6 in, h unknown, S = 336 in squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 6 in</text><text x=\"206\" y=\"116\">w = 6 in</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 336 in²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
       "at": [
-       2,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2<i>B</i> = <i>P</i><i>h</i>",
+      "tag": "5a",
+      "l": "<i>B</i>",
+      "r": "= <i>l</i><i>w</i> = 6 · 6 = 36",
+      "at": [
+       0
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i>P</i>",
+      "r": "= 2<i>l</i> + 2<i>w</i> = 2(6) + 2(6) = 24",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5c",
+      "l": "<i>S</i> − 2<i>B</i>",
+      "r": "= <i>P</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        2,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span><i>P</i></span></span> · (<i>S</i> − 2<i>B</i>) = <i>h</i>",
-      "at": [
-       2,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "at": [
-       2
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
+      "note": "× 1/P",
       "at": [
        2
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>336 − 2(36)</span><span>24</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>336 − 2(36)</span><span>24</span></span>",
       "at": [
        3,
        0
       ]
      },
      {
-      "h": "<i>h</i> = 11 in",
+      "l": "",
+      "r": "= <span class=\"wk-box\">11 in</span>",
       "at": [
        3
       ]
@@ -2298,7 +2040,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 24(11) + 2(36) = 336 ✓"
+  "workCheck": "<b>Check:</b> 24(11) + 2(36) = 336 ✓"
  },
  {
   "id": "a4",
@@ -2487,92 +2229,55 @@ K.run([
   ],
   "work": [
    {
-    "n": "1",
-    "lines": [
-     "<svg class=\"wk-sketch\" viewBox=\"0 0 300 136\" width=\"300\" height=\"136\" role=\"img\" aria-label=\"Sketch: a cylinder, radius 1.5 m, height h, surface area 40 m squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><ellipse cx=\"70\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M22 40 V118 M118 40 V118\"/><path d=\"M22 118 A48 11 0 0 0 118 118\"/><path d=\"M22 118 A48 11 0 0 1 118 118\" stroke-dasharray=\"4 4\" opacity=\".5\"/><path d=\"M70 40 H118\"/></g><circle cx=\"70\" cy=\"40\" r=\"2.2\" fill=\"currentColor\"/><g fill=\"currentColor\" font-family=\"Georgia,serif\" font-size=\"14\"><text x=\"94\" y=\"22\" text-anchor=\"middle\">1.5 m</text><text x=\"128\" y=\"84\" font-style=\"italic\">h</text><text x=\"160\" y=\"84\"><tspan font-style=\"italic\">S</tspan> = 40 m²</text></g></svg>"
-    ]
-   },
-   {
-    "n": "2",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
-    ]
-   },
-   {
-    "n": "3",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>h</i> := the height, in m"
-    ]
-   },
-   {
-    "n": "4",
-    "at": [
-     0,
-     0
-    ],
-    "lines": [
-     "<i>S</i> = 40",
-     "<i>r</i> = 1.5"
-    ]
-   },
-   {
-    "n": "5",
     "lines": [
      {
-      "h": "<i>S</i> = 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "tag": "1, 3, 4",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 1.5 m, h unknown, S = 40 m squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"124\" y=\"24\" text-anchor=\"middle\">r = 1.5 m</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 40 m²</text></g></svg>",
+      "fig": true
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "l": "<i>S</i>",
+      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
       "at": [
        0,
        0
       ]
      },
      {
-      "h": "<i>S</i> − 2π<i>r</i>² = 2π<i>r</i><i>h</i>",
+      "tag": "5",
+      "l": "<i>S</i> − 2π<i>r</i>²",
+      "r": "= 2π<i>r</i><i>h</i>",
+      "note": "change sides, change signs",
       "at": [
        0,
        1
       ]
      },
      {
-      "h": "<span class=\"fr\"><span>1</span><span>2π<i>r</i></span></span> · (<i>S</i> − 2π<i>r</i>²) = <i>h</i>",
-      "at": [
-       0,
-       2
-      ]
-     },
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "at": [
-       0
-      ]
-     }
-    ]
-   },
-   {
-    "n": "6",
-    "lines": [
-     {
-      "h": "<i>h</i> = <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "l": "<i>h</i>",
+      "r": "= <span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
+      "note": "× 1/(2πr)",
       "at": [
        0
       ]
      },
      {
-      "h": "<i>h</i> = <span class=\"fr\"><span>40 − 2π(1.5²)</span><span>2π(1.5)</span></span>",
+      "tag": "6",
+      "l": "",
+      "r": "= <span class=\"fr\"><span>40 − 2π(1.5²)</span><span>2π(1.5)</span></span>",
       "at": [
        1,
        0
       ]
      },
      {
-      "h": "<i>h</i> ≈ 2.7 m",
+      "l": "",
+      "r": "≈ <span class=\"wk-box\">2.7 m</span>",
       "at": [
        1
       ]
@@ -2580,7 +2285,7 @@ K.run([
     ]
    }
   ],
-  "workCheck": "Check: 2π(1.5)(2.7) + 2π(1.5²) ≈ 39.6, about 40 ✓"
+  "workCheck": "<b>Check:</b> 2π(1.5)(2.7) + 2π(1.5²) ≈ 39.6, about 40 ✓"
  }
 ], { layout:'work', reference:"<div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Prism</div><div class=\"rc-s\" style=\"font-size:.85rem\">S = Ph + 2B</div></div><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-4 Cylinder</div><div class=\"rc-s\" style=\"font-size:.85rem\">S = 2πrh + 2πr²</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">★ SG-3 Undo moves</div><div class=\"rc-s\" style=\"font-size:.78rem\">+ a: change sides, change signs<br>× a: multiply by 1/a</div></div><div class=\"ref-cell\"><div class=\"rc-t\">A box base</div><div class=\"rc-s\" style=\"font-size:.78rem\">B = lw (area)<br>P = 2l + 2w (around)</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Covers or fills?</div><div class=\"rc-s\" style=\"font-size:.78rem\">covers: S, in cm² &nbsp;·&nbsp; fills: V, in cm³</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Across</div><div class=\"rc-s\" style=\"font-size:.78rem\">across = 2r, so r = across · 1/2</div></div></div><div class=\"ref-note\">The Plan: 1 read and sketch · 2 write the formula · 3 name the unknown · 4 facts as math · 5 find in-between numbers first (5a, 5b), then solve for h with letters only · 6 reiterate, substitute, answer: the calculator once, typed just as it looks. Type decimals like 7.7.</div>" });
 </script>

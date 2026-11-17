@@ -359,12 +359,19 @@
   // Right = the question: prompt, what you know, the live step and its ladder.
   // An f button on the question's corner opens the Formula Box (references).
   //
-  // A problem opts in with  work:[block...]  and optional  workCheck:'html'.
-  //   block = { n:'5a', title:'Find B', at:[si] | [si, rung], lines:[ 'html' | {h:'html', at:[...]} ] }
+  // A problem opts in with  work:[group...]  and optional  workCheck:'html'.
+  // The work is what a person writes on paper, not the scaffolding: a labelled sketch,
+  // side calculations beside it, then one column of algebra with the = signs lined up.
+  //   group = { lines:[line...] }  or  { cols:[ [line...], [line...] ] }   (side by side)
+  //   line  = { h:'html' }                         a free line (a sketch, a side calculation)
+  //         | { l:'html', r:'html' }               an equation: left side | = right side, aligned
+  //           + tag:'5c'      the step number, in the margin
+  //           + note:'text'   the move, written beside the line (change sides, change signs)
+  //           + at:[si] | [si, rung]   when it shows (see below); no `at` = from the start
+  //           + fig:true      a sketch: its step number sits at the top, not on the last baseline
   //   at:[si]        shows once pipeline step si is settled
   //   at:[si, rung]  shows once rung `rung` of step si's open ladder is done (or si is settled)
-  //   no `at`        shows from the start
-  // Lines are trusted HTML from the checker's builder (fractions, italics), like p.figure.
+  // Lines are trusted HTML from the checker's builder (fractions, sketches), like p.figure.
   function revealedAt(s, at){
     if(!at || s.done) return true;
     var si=at[0], sj=(at.length>1 ? at[1] : -1);
@@ -388,25 +395,40 @@
     return true;
   }
 
+  function workLine(L, s, mark){
+    if(typeof L==='string') L={h:L};
+    var eq=(L.l!=null || L.r!=null);
+    var tag='<span class="wk-tag'+(L.fig?' top':'')+'">'+esc(L.tag||'')+'</span>';   // fig: a sketch, number at its top
+    if(!revealedAt(s, L.at)){
+      var next=(!s.done && !mark.done); if(next) mark.done=true;
+      return '<div class="wk-ln pending'+(next?' next':'')+'">'+tag+
+             // the left side is laid out but invisible, so the = signs never move as lines appear
+             ' <span class="wk-l" style="visibility:hidden">'+(L.l||'')+'</span><span class="wk-guide" aria-hidden="true"></span><span class="wk-move"></span></div>';
+    }
+    // spaces between the parts read right aloud and in textContent; a grid ignores them
+    var body = eq ? '<span class="wk-l">'+(L.l||'')+'</span> <span class="wk-r">'+(L.r||'')+'</span>'
+                  : '<span class="wk-h">'+L.h+'</span>';
+    return '<div class="wk-ln'+(eq?' eq':'')+'">'+tag+' '+body+' <span class="wk-move">'+esc(L.note||'')+'</span></div>';
+  }
   function workHtml(p, s){
     var h='<div class="wk-head"><span class="wk-title">Suggested work</span><span class="wk-for">'+esc(p.num)+'</span></div>'+
-          '<p class="wk-note">Write each part on your paper. Each part shows up here after you check it.</p>';
-    var blocks=p.work||[], marked=false;
-    for(var i=0;i<blocks.length;i++){
-      var b=blocks[i], ls=b.lines||[], shown='', blanks='', nShown=0;
-      for(var j=0;j<ls.length;j++){
-        var L=(typeof ls[j]==='string') ? {h:ls[j], at:b.at} : {h:ls[j].h, at:(ls[j].at||b.at)};
-        if(revealedAt(s, L.at)){ shown+='<div class="wk-line">'+L.h+'</div>'; nShown++; }
-        else blanks+='<div class="wk-blank" aria-hidden="true"></div>';
+          '<p class="wk-intro">How your paper could look. A line shows up after you check that step.</p>';
+    var groups=p.work||[], mark={done:false};
+    for(var i=0;i<groups.length;i++){
+      var g=groups[i];
+      if(g.cols){
+        h+='<div class="wk-group wk-cols">';
+        for(var c=0;c<g.cols.length;c++){
+          h+='<div class="wk-sheet">';
+          for(var k=0;k<g.cols[c].length;k++) h+=workLine(g.cols[c][k], s, mark);
+          h+='</div>';
+        }
+        h+='</div>';
+      } else {
+        h+='<div class="wk-group"><div class="wk-sheet">';
+        for(var j=0;j<(g.lines||[]).length;j++) h+=workLine(g.lines[j], s, mark);
+        h+='</div></div>';
       }
-      var state = nShown===ls.length ? 'done' : (nShown ? 'part' : 'pending');
-      var next = (!s.done && !marked && state!=='done'); if(next) marked=true;
-      // laid out like the student's paper: the step number in the margin, the math beside it
-      h+='<div class="wk-block '+state+(next?' next':'')+'">'+
-         '<div class="wk-n">'+esc(b.n||'')+'</div><div class="wk-body">'+
-         (b.title?'<div class="wk-label">'+esc(b.title)+'</div>':'')+shown+blanks+
-         (state==='pending'?'<span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">step '+esc(b.n||'')+', not yet</span>':'')+
-         '</div></div>';
     }
     if(s.done && p.workCheck) h+='<div class="wk-check">'+p.workCheck+'</div>';
     return h;

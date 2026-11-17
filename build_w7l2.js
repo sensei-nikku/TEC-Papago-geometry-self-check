@@ -59,8 +59,7 @@ const BOX={
   formulas:['S = Ph + 2B','S = Ph + B','V = Bh','S = 2'+PI_+'rh + 2'+PI_+'r'+SQ],
   pickNudge:'Covers means surface area. A closed box has two bases, top and bottom: + 2B.',
   moves:[['Undo + 2B first: change sides, change signs. Which line is it?',['S '+MI+' 2B = Ph','S + 2B = Ph','S = Ph '+MI+' 2B'],'Change sides, change signs: + 2B on the right becomes '+MI+' 2B on the left.'],
-         ['Now S '+MI+' 2B = Ph. Undo × P: multiply both sides by…',['1/P','P','1/2'],'h is multiplied by P. Its inverse is 1/P.']],
-  lines:[S_+' = '+P_+h_+' + 2'+B_, S_+' '+MI+' 2'+B_+' = '+P_+h_, FR('1',P_)+' '+DOT+' ('+S_+' '+MI+' 2'+B_+') = '+h_, h_+' = '+FR(S_+' '+MI+' 2'+B_,P_)]};
+         ['Now S '+MI+' 2B = Ph. Undo × P: multiply both sides by…',['1/P','P','1/2'],'h is multiplied by P. Its inverse is 1/P.']]};
 
 /* ---- can: S = 2πrh + 2πr² ---- */
 const CAN={
@@ -70,8 +69,7 @@ const CAN={
   formulas:['S = 2'+PI_+'rh + 2'+PI_+'r'+SQ,'S = 2'+PI_+'rh + '+PI_+'r'+SQ,'V = '+PI_+'r'+SQ+'h','S = 2'+PI_+'r'+SQ+'h'],
   pickNudge:'Covers means surface area. A can has a label (2'+PI_+'rh) and two ends (2'+PI_+'r'+SQ+').',
   moves:[['Undo + 2'+PI_+'r'+SQ+' first: change sides, change signs. Which line is it?',['S '+MI+' 2'+PI_+'r'+SQ+' = 2'+PI_+'rh','S + 2'+PI_+'r'+SQ+' = 2'+PI_+'rh','S = 2'+PI_+'rh '+MI+' 2'+PI_+'r'+SQ],'Change sides, change signs: + 2'+PI_+'r'+SQ+' on the right becomes '+MI+' 2'+PI_+'r'+SQ+' on the left.'],
-         ['Now S '+MI+' 2'+PI_+'r'+SQ+' = 2'+PI_+'rh. Undo × 2'+PI_+'r: multiply both sides by…',['1/(2'+PI_+'r)','2'+PI_+'r','1/('+PI_+'r)'],'h is multiplied by 2'+PI_+'r. Its inverse is 1/(2'+PI_+'r).']],
-  lines:[S_+' = 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ, S_+' '+MI+' 2'+PI_+r_+SQ+' = 2'+PI_+r_+h_, FR('1','2'+PI_+r_)+' '+DOT+' ('+S_+' '+MI+' 2'+PI_+r_+SQ+') = '+h_, h_+' = '+FR(S_+' '+MI+' 2'+PI_+r_+SQ,'2'+PI_+r_)]};
+         ['Now S '+MI+' 2'+PI_+'r'+SQ+' = 2'+PI_+'rh. Undo × 2'+PI_+'r: multiply both sides by…',['1/(2'+PI_+'r)','2'+PI_+'r','1/('+PI_+'r)'],'h is multiplied by 2'+PI_+'r. Its inverse is 1/(2'+PI_+'r).']]};
 
 /* the "solve with letters" step (coarse tap) and its ladder: formula, each undo move, solved */
 function solveStep(K,lbl){
@@ -90,30 +88,31 @@ function answerStep(subs,ans,traps,unit,tenth){
      mk('Plan 6: Answer. Simplify with the calculator, one go. h = ?'+ask)]);
 }
 
-/* step 1 on paper is a sketch with the givens on it */
+/* steps 1, 3, 4 on paper: a sketch with the facts and the unknown written on it */
 function boxSketch(l,w,S,u){
-  return '<svg class="wk-sketch" viewBox="0 0 300 140" width="300" height="140" role="img" aria-label="Sketch: a closed box, base '+l+' '+u+' by '+w+' '+u+', height h, surface area '+S+' '+u+' squared">'+
-    '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">'+
-    '<path d="M20 45 H140 V115 H20 Z"/><path d="M20 45 L60 18 H180 L140 45"/><path d="M140 115 L180 88 V18"/>'+
-    '<path d="M20 115 L60 88 H180 M60 88 V18" stroke-dasharray="4 4" opacity=".5"/></g>'+
-    '<g fill="currentColor" font-family="Georgia,serif" font-size="14">'+
-    '<text x="80" y="134" text-anchor="middle">'+l+' '+u+'</text><text x="166" y="113">'+w+' '+u+'</text>'+
-    '<text x="6" y="85" font-style="italic">h</text>'+
-    '<text x="200" y="62"><tspan font-style="italic">S</tspan> = '+S+' '+u+'²</text></g></svg>';
+  return '<svg class="wk-sketch" viewBox="0 0 330 150" width="330" height="150" role="img" aria-label="Sketch: a closed box, l = '+l+' '+u+', w = '+w+' '+u+', h unknown, S = '+S+' '+u+' squared">'+
+    '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">'+
+    '<path d="M60 45 H180 V115 H60 Z"/><path d="M60 45 L100 18 H220 L180 45"/><path d="M180 115 L220 88 V18"/>'+
+    '<path d="M60 115 L100 88 H220 M100 88 V18" stroke-dasharray="4 5" opacity=".45"/></g>'+
+    '<g fill="currentColor" style="font-family:inherit" font-size="15">'+
+    '<text x="120" y="137" text-anchor="middle">l = '+l+' '+u+'</text><text x="206" y="116">w = '+w+' '+u+'</text>'+
+    '<text x="52" y="85" text-anchor="end">h = ?</text>'+
+    '<text x="236" y="60">S = '+S+' '+u+'²</text></g></svg>';
 }
 function canSketch(r,S,u,width){
-  const across=width?'<path d="M22 40 H118"/>':'<path d="M70 40 H118"/>';
-  const lab=width?'<text x="70" y="22" text-anchor="middle">'+width+' '+u+'</text>':'<text x="94" y="22" text-anchor="middle">'+r+' '+u+'</text>';
-  return '<svg class="wk-sketch" viewBox="0 0 300 136" width="300" height="136" role="img" aria-label="Sketch: a cylinder, '+(width?width+' '+u+' across':'radius '+r+' '+u)+', height h, surface area '+S+' '+u+' squared">'+
-    '<g fill="none" stroke="currentColor" stroke-width="1.6">'+
-    '<ellipse cx="70" cy="40" rx="48" ry="11"/><path d="M22 40 V118 M118 40 V118"/><path d="M22 118 A48 11 0 0 0 118 118"/>'+
-    '<path d="M22 118 A48 11 0 0 1 118 118" stroke-dasharray="4 4" opacity=".5"/>'+across+'</g>'+
-    (width?'':'<circle cx="70" cy="40" r="2.2" fill="currentColor"/>')+
-    '<g fill="currentColor" font-family="Georgia,serif" font-size="14">'+lab+
-    '<text x="128" y="84" font-style="italic">h</text>'+
-    '<text x="160" y="84"><tspan font-style="italic">S</tspan> = '+S+' '+u+'²</text></g></svg>';
+  const across=width?'<path d="M52 40 H148"/>':'<path d="M100 40 H148"/>';
+  const lab=width?'<text x="100" y="24" text-anchor="middle">'+width+' '+u+'</text>':'<text x="124" y="24" text-anchor="middle">r = '+r+' '+u+'</text>';
+  return '<svg class="wk-sketch" viewBox="0 0 330 140" width="330" height="140" role="img" aria-label="Sketch: a cylinder, '+(width?width+' '+u+' across':'r = '+r+' '+u)+', h unknown, S = '+S+' '+u+' squared">'+
+    '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">'+
+    '<ellipse cx="100" cy="40" rx="48" ry="11"/><path d="M52 40 V118 M148 40 V118"/><path d="M52 118 A48 11 0 0 0 148 118"/>'+
+    '<path d="M52 118 A48 11 0 0 1 148 118" stroke-dasharray="4 5" opacity=".45"/>'+across+'</g>'+
+    (width?'':'<circle cx="100" cy="40" r="2.3" fill="currentColor"/>')+
+    '<g fill="currentColor" style="font-family:inherit" font-size="15">'+lab+
+    '<text x="158" y="86">h = ?</text>'+
+    '<text x="220" y="86">S = '+S+' '+u+'²</text></g></svg>';
 }
-const work=(sketch,blocks,check)=>({work:[{n:'1',lines:[sketch]}].concat(blocks),workCheck:check});
+const BOXED=v=>'<span class="wk-box">'+v+'</span>';
+
 
 /* ---- one box problem ---- */
 function boxProb(o){
@@ -124,22 +123,24 @@ function boxProb(o){
   const sub=(a,b,c)=>'h = ('+a+' '+MI+' 2('+b+')) / '+c;
   const subs=[sub(S,B,P),'h = ('+S+' '+MI+' '+B+') / '+P,sub(S,P,B),'h = '+P+' / ('+S+' '+MI+' 2('+B+'))'];
   const back=P*Number(aStr)+2*B;
-  const check='Check: '+P+'('+aStr+') + 2('+B+') = '+(Number.isInteger(back)?back:back.toFixed(1))+(back===S?' ✓':', about '+S+' ✓');
+  const check='<b>Check:</b> '+P+'('+aStr+') + 2('+B+') = '+(Number.isInteger(back)?back:back.toFixed(1))+(back===S?' ✓':', about '+S+' ✓');
   return Object.assign({id,num:numLbl,prompt,given,want:'h, the height, in '+u,
     pipeline:[
       exact('Plan 5a: Find B, the area of the base. B = ? (in '+u+SQ+')',B,[[P,'That is P, the distance around. B is the area: l '+DOT+' w.'],[l+w,'B is an area: multiply, l '+DOT+' w.']],'B is the area of the base: B = lw.'),
       exact('Plan 5b: Find P, the distance around the base. P = ? (in '+u+')',P,[[B,'That is B, the area. P goes around: 2l + 2w.'],[l+w,'That is halfway around. P = 2l + 2w.']],'P is the distance around the base: P = 2l + 2w.'),
       solveStep(BOX,'5c'),
       answerStep(subs,ans,traps,u,tenth)]},
-   work(boxSketch(l,w,S,u),[
-     {n:'2',at:[0],lines:[S_+' = '+P_+h_+' + 2'+B_]},
-     {n:'3',at:[0],lines:[h_+' := the height, in '+u]},
-     {n:'4',at:[0],lines:[S_+' = '+S, l_+' = '+l+', &nbsp;'+w_+' = '+w]},
-     {n:'5a',at:[0],lines:[B_+' = '+l_+w_+' = '+l+' '+DOT+' '+w+' = '+B]},
-     {n:'5b',at:[1],lines:[P_+' = 2'+l_+' + 2'+w_+' = 2('+l+') + 2('+w+') = '+P]},
-     {n:'5c',lines:[{h:BOX.lines[0],at:[2,0]},{h:BOX.lines[1],at:[2,1]},{h:BOX.lines[2],at:[2,2]},{h:BOX.lines[3],at:[2]}]},
-     {n:'6',lines:[{h:BOX.lines[3],at:[2]},{h:h_+' = '+FR(S+' '+MI+' 2('+B+')',String(P)),at:[3,0]},{h:h_+' '+(tenth?'≈':'=')+' '+aStr+' '+u,at:[3]}]}],
-     check),
+   {work:[
+     {lines:[{tag:'1, 3, 4',h:boxSketch(l,w,S,u),fig:true}]},
+     {lines:[
+       {tag:'2',l:S_,r:'= '+P_+h_+' + 2'+B_,at:[0]},
+       {tag:'5a',l:B_,r:'= '+l_+w_+' = '+l+' '+DOT+' '+w+' = '+B,at:[0]},
+       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_+' = 2('+l+') + 2('+w+') = '+P,at:[1]},
+       {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[2,1]},
+       {l:h_,r:'= '+FR(S_+' '+MI+' 2'+B_,P_),note:'× 1/P',at:[2]},
+       {tag:'6',l:'',r:'= '+FR(S+' '+MI+' 2('+B+')',String(P)),at:[3,0]},
+       {l:'',r:(tenth?'≈ ':'= ')+BOXED(aStr+' '+u),at:[3]}]}],
+    workCheck:check},
    {_ans:aStr});
 }
 
@@ -153,20 +154,19 @@ function canProb(o){
   const subs=['h = ('+S+' '+MI+' 2'+PI_+'('+rs+SQ+')) / (2'+PI_+'('+rs+'))','h = ('+S+' '+MI+' '+PI_+'('+rs+SQ+')) / (2'+PI_+'('+rs+'))',
     'h = '+S+' / (2'+PI_+'('+rs+'))','h = ('+S+' '+MI+' 2'+PI_+'('+rs+')) / (2'+PI_+'('+rs+SQ+'))'];
   const back=2*PI*r*Number(aStr)+2*PI*r*r;
-  const check='Check: 2'+PI_+'('+rs+')('+aStr+') + 2'+PI_+'('+rs+SQ+') ≈ '+back.toFixed(1)+', about '+S+' ✓';
+  const check='<b>Check:</b> 2'+PI_+'('+rs+')('+aStr+') + 2'+PI_+'('+rs+SQ+') ≈ '+back.toFixed(1)+', about '+S+' ✓';
   const k=width?1:0;                                          // pipeline index of the letters step
   const pipeline=(width?[exact('Plan 5a: Find r. r = ? (in '+u+')',r,[[width,width+' '+u+' is all the way across. r = '+width+' '+DOT+' 1/2.'],[2*width,'Across is 2r. Multiply by 1/2 to get r.']],'Across is 2r. Multiply by 1/2.')]:[])
     .concat([solveStep(CAN,width?'5b':'5'),answerStep(subs,ans,traps,u,true)]);
-  const facts=[S_+' = '+S, width?'2'+r_+' = '+width:r_+' = '+rs];
-  const g0=width?[0]:[0,0];
-  const blocks=[
-     {n:'2',at:g0,lines:[S_+' = 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ]},
-     {n:'3',at:g0,lines:[h_+' := the height, in '+u]},
-     {n:'4',at:g0,lines:facts}];
-  if(width) blocks.push({n:'5a',at:[0],lines:[r_+' = '+width+' '+DOT+' '+FR('1','2')+' = '+rs]});
-  blocks.push({n:width?'5b':'5',lines:[{h:CAN.lines[0],at:[k,0]},{h:CAN.lines[1],at:[k,1]},{h:CAN.lines[2],at:[k,2]},{h:CAN.lines[3],at:[k]}]});
-  blocks.push({n:'6',lines:[{h:CAN.lines[3],at:[k]},{h:h_+' = '+FR(S+' '+MI+' 2'+PI_+'('+rs+SQ+')','2'+PI_+'('+rs+')'),at:[k+1,0]},{h:h_+' ≈ '+aStr+' '+u,at:[k+1]}]});
-  return Object.assign({id,num:numLbl,prompt,given,want:'h, the height, in '+u,pipeline},work(canSketch(rs,S,u,width),blocks,check),{_ans:aStr});
+  const g0=width?[0]:[0,0], n5=width?'5b':'5';
+  const workCan=[{lines:[{tag:'1, 3, 4',h:canSketch(rs,S,u,width),fig:true}]},{lines:[
+    {tag:'2',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ,at:g0}].concat(
+    width?[{tag:'5a',l:r_,r:'= '+width+' '+DOT+' '+FR('1','2')+' = '+rs,at:[0]}]:[],[
+    {tag:n5,l:S_+' '+MI+' 2'+PI_+r_+SQ,r:'= 2'+PI_+r_+h_,note:'change sides, change signs',at:[k,1]},
+    {l:h_,r:'= '+FR(S_+' '+MI+' 2'+PI_+r_+SQ,'2'+PI_+r_),note:'× 1/(2'+PI_+'r)',at:[k]},
+    {tag:'6',l:'',r:'= '+FR(S+' '+MI+' 2'+PI_+'('+rs+SQ+')','2'+PI_+'('+rs+')'),at:[k+1,0]},
+    {l:'',r:'≈ '+BOXED(aStr+' '+u),at:[k+1]}])}];
+  return {id,num:numLbl,prompt,given,want:'h, the height, in '+u,pipeline,work:workCan,workCheck:check,_ans:aStr};
 }
 
 const P=[
@@ -206,7 +206,7 @@ P.forEach(p=>{
     (s.sub||[]).forEach(walk);};
   p.pipeline.forEach(walk);
   // every work gate points at a real step or rung
-  p.work.forEach(b=>[b.at].concat((b.lines||[]).map(L=>typeof L==='string'?null:L.at)).forEach(at=>{ if(!at) return;
+  p.work.forEach(g=>(g.cols?[].concat(...g.cols):g.lines).map(L=>L.at).forEach(at=>{ if(!at) return;
     const st=p.pipeline[at[0]]; if(!st) throw new Error(p.id+': work gate '+at+' has no step');
     if(at.length>1 && !(st.sub && st.sub[at[1]])) throw new Error(p.id+': work gate '+at+' has no rung'); }));
 });
@@ -228,7 +228,7 @@ const page=`<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Week 7, Lesson 2 — Surface Area: Solving for the Height Checker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>

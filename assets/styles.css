@@ -306,25 +306,43 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 .pane.wk-q .step.live{border-left:3px solid var(--accent);padding-left:12px;margin-left:-2px}
 .pane.wk-q .step.sub.live{border-left:2px solid var(--accent)}
 
-.wk-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.wk-title{font-size:.66rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.wk-for{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:600}
-.wk-note{font-size:.8rem;color:var(--muted);margin:0 0 12px}
-.wk-block{display:grid;grid-template-columns:2.7em minmax(0,1fr);align-items:start;padding:8px 0 10px 10px;
-  border-left:3px solid transparent;border-bottom:1px dashed var(--border)}
-.wk-block:last-of-type{border-bottom:0}
-.wk-block.next{border-left-color:var(--accent);background:var(--accent-lt);border-radius:0 8px 8px 0}
-.wk-label{font-size:.84rem;font-weight:700;color:var(--text);margin-bottom:4px}
-.wk-n{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.95rem;line-height:2.2}
-.wk-block.pending .wk-n{color:var(--muted)}
-.wk-line{font-size:1.05rem;line-height:2.2;font-family:Georgia,'Times New Roman',serif}
-.wk-line i{font-style:italic}
-.wk-blank{height:1.6em;margin-top:4px;width:min(70%,260px);border-bottom:2px dotted var(--border)}
-.wk-sketch{display:block;max-width:100%;height:auto;color:var(--text);margin:2px 0 4px}
-.wk-check{margin-top:12px;font-size:.88rem;color:var(--ok);background:var(--ok-lt);border-left:3px solid var(--ok);
-  border-radius:6px;padding:8px 12px;font-family:Georgia,'Times New Roman',serif}
+/* the work pane is a sheet of parchment, written in ink */
+.pane.wk-work{--ink:#3a2412;--ink-red:#8f2c1c;--ink-faint:rgba(96,64,30,.30);
+  color:var(--ink);border:1px solid #b99561;
+  background-color:#f1dfb9;
+  background-image:radial-gradient(ellipse at 18% 8%,rgba(255,250,232,.65),transparent 55%),
+    radial-gradient(ellipse at 85% 95%,rgba(150,105,45,.22),transparent 60%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .29 0 0 0 0 .12 0 0 0 .10 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  box-shadow:inset 0 0 46px rgba(120,78,28,.38),0 3px 14px rgba(0,0,0,.45);
+  font-family:'Kalam','Segoe Print','Bradley Hand','Comic Sans MS',cursive}
+.wk-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px;
+  border-bottom:1px solid var(--ink-faint);padding-bottom:4px}
+.wk-title{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-red);font-family:Georgia,serif}
+.wk-for{font-size:.9rem;color:var(--ink-red);font-weight:700}
+.wk-intro{font-size:.82rem;color:var(--ink);opacity:.75;margin:4px 0 10px;font-style:italic;font-family:Georgia,serif}
+.wk-group{margin:4px 0 12px}
+.wk-cols{display:flex;flex-wrap:wrap;align-items:flex-start;gap:4px 18px}
+.wk-cols>.wk-sheet{flex:1 1 220px}
+/* one grid per sheet, so the = signs of every equation in it line up */
+.wk-sheet{display:grid;grid-template-columns:2.9em max-content minmax(0,max-content) minmax(0,1fr);align-items:baseline;column-gap:6px}
+.wk-ln{display:contents}
+.wk-tag{grid-column:1;color:var(--ink-red);font-weight:700;font-size:.92rem;line-height:2.3;white-space:nowrap}
+.wk-l{grid-column:2;text-align:right;font-size:1.12rem;line-height:2.3;white-space:nowrap}
+.wk-r{grid-column:3;font-size:1.12rem;line-height:2.3;white-space:nowrap}
+.wk-h{grid-column:2 / 4;font-size:1.08rem;line-height:2.1}
+.wk-move{grid-column:4;font-size:.84rem;color:var(--ink-red);font-style:italic;padding-left:8px;line-height:1.3;align-self:center}
+.wk-tag.top{align-self:start}
+.wk-ln.pending .wk-tag{opacity:.35}
+/* a guide line sits in the right-hand column only, so lines still to come never shift the = signs */
+.wk-guide{grid-column:3;align-self:end;height:1.9em;width:10em;border-bottom:1.5px dotted var(--ink-faint)}
+.wk-ln.next .wk-tag{opacity:1}
+.wk-ln.next .wk-guide{border-bottom:2px dotted var(--ink-red)}
+.wk-box{border:1.8px solid var(--ink);border-radius:3px 6px 4px 7px;padding:0 .35em;margin-left:.15em}
+.wk-sketch{display:block;max-width:100%;height:auto;color:var(--ink);margin:2px 0}
+.wk-check{margin-top:6px;padding-top:8px;border-top:1px solid var(--ink-faint);font-size:1rem;color:var(--ink)}
+.wk-check b{color:var(--ink-red)}
 .wk-done{margin-top:16px}
 .wk-done .wk-note{margin-top:8px}
+.wk-note{font-size:.8rem;color:var(--muted);margin:0 0 12px}
 
 /* stacked fraction for suggested-work lines:  <span class="fr"><span>top</span><span>bottom</span></span> */
 .fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 .18em;line-height:1.3}
