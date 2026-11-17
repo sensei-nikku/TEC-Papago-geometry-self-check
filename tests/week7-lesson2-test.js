@@ -75,8 +75,8 @@ A(d.getElementById('ckRef').hidden,'the close button closes it');
 w=go('t1');
 A(w.document.querySelector('#ckWork svg.wk-sketch') && ['l = 6 cm','w = 4 cm','h = ?','S = 228 cm²'].every(x=>workText(w).includes(x)),'t1: steps 1, 3, 4 are one labelled sketch (facts and the unknown on the picture), shown from the start');
 A(!/Write the formula|Name the unknown|Find B|Facts as math|Read it/.test(workText(w)),'t1: no plan instructions on the paper side');
-A(pending(w)===11 && !workText(w).includes('= 24') && !workText(w).includes('9 cm'),'t1: the 11 written lines are blank before any check');
-A(w.document.querySelector('#ckWork .wk-ln.next .wk-tag').textContent==='2','t1: the next line to write is marked');
+A(workText(w).includes('S = Ph + 2B') && pending(w)===10 && !workText(w).includes('= 24') && !workText(w).includes('9 cm'),'t1: the formula is free from the start (it is in the Formula Box); the other 10 lines are blank');
+A(w.document.querySelector('#ckWork .wk-ln.next .wk-tag').textContent==='5a','t1: the next line to write (5a) is marked');
 enter(w,'t1',0,'24');
 A(flat(w).includes('B = lw = 6 · 4 = 24') && workText(w).includes('S = Ph + 2B'),'t1: after B: the formula and 5a show');
 A(hanging(w) && w.document.querySelectorAll('#ckWork .wk-ln.eq').length===4,'t1: 5a hangs: B = lw, then = 6 · 4, then = 24, one = per line');
@@ -104,12 +104,12 @@ A(w.document.getElementById('ckQ').textContent.includes('400 cm²') && workText(
 w=go('t2');
 enter(w,'t2',0,{c:'h = (S + 2πr²) / (2πr)'});
 A(w.K._S().t2.steps[0].exp===true && fb(w).includes('one move at a time') && !/Step 1a|steps 1a/.test(w.document.getElementById('ckQ').textContent),'t2: a miss opens the Plan, without Step 1a tags that clash with the paper numbers');
-A(!workText(w).includes('S = 2πrh + 2πr²'),'t2: nothing shows for a miss');
-enter(w,'t2',1001,{c:'S = 2πrh + 2πr²'});
-A(workText(w).includes('S = 2πrh + 2πr²') && !workText(w).includes('S − 2πr² = 2πrh'),'t2: rung a shows the formula');
-enter(w,'t2',1002,{c:'S − 2πr² = 2πrh'});
-A(workText(w).includes('S − 2πr² = 2πrh') && !workText(w).includes('· (S − 2πr²) = h'),'t2: rung b shows its line only');
-enter(w,'t2',1003,{c:'1/(2πr)'}); enter(w,'t2',1004,{c:CANS});
+A(!workText(w).includes('S − 2πr² = 2πrh'),'t2: nothing new shows for a miss');
+A(workText(w).includes('S = 2πrh + 2πr²') && !workText(w).includes('S − 2πr² = 2πrh'),'t2: the formula is already there; the solving lines are not');
+A(!/Which formula/.test(w.document.getElementById('ckQ').textContent),'t2: no formula pick: the formula is free');
+enter(w,'t2',1001,{c:'S − 2πr² = 2πrh'});
+A(workText(w).includes('S − 2πr² = 2πrh') && w.document.querySelectorAll('#ckWork .wk-group .wk-ln.eq:not(.pending)').length===2,'t2: the change-sides rung shows its line only');
+enter(w,'t2',1002,{c:'1/(2πr)'}); enter(w,'t2',1003,{c:CANS});
 A(w.K._S().t2.stepIdx===1,'t2: walking the ladder settles step 5');
 enter(w,'t2',1,'3'); enter(w,'t2',2001,{c:'h = (400 − 2π(5²)) / (2π(5))'});
 A(workText(w).includes('400 − 2π(5²)') && !w.document.querySelector('#ckWork .wk-box'),'t2: substitute shows, the answer waits');
@@ -148,14 +148,14 @@ trap('a1',3,'9.36','two bases',box('a1'));
 
 /* ---- every ladder walks to the end ---- */
 const LAD={
- t1:[[2,{c:'h = (S − B) / P'},[{c:'S = Ph + 2B'},{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (228 − 2(24)) / 20'},'9']]],
- t2:[[0,{c:'h = S / (2πr) − 2πr²'},[{c:'S = 2πrh + 2πr²'},{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[1,'1',[{c:'h = (400 − 2π(5²)) / (2π(5))'},'7.7']]],
- t3:[[2,{c:'h = (S + 2B) / P'},[{c:'S = Ph + 2B'},{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (170 − 2(25)) / 20'},'6']]],
- t4:[[0,{c:'h = (S − πr²) / (2πr)'},[{c:'S = 2πrh + 2πr²'},{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[1,'1',[{c:'h = (250 − 2π(3²)) / (2π(3))'},'10.3']]],
- a1:[[2,{c:'h = S / P − 2B'},[{c:'S = Ph + 2B'},{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (230 − 2(24)) / 22'},'8.3']]],
- a2:[[1,{c:'h = (S + 2πr²) / (2πr)'},[{c:'S = 2πrh + 2πr²'},{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[2,'1',[{c:'h = (350 − 2π(5²)) / (2π(5))'},'6.1']]],
- a3:[[2,{c:'h = (S − B) / P'},[{c:'S = Ph + 2B'},{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (336 − 2(36)) / 24'},'11']]],
- a4:[[0,{c:'h = (S + 2πr²) / (2πr)'},[{c:'S = 2πrh + 2πr²'},{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[1,'1',[{c:'h = (40 − 2π(1.5²)) / (2π(1.5))'},'2.7']]]};
+ t1:[[2,{c:'h = (S − B) / P'},[{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (228 − 2(24)) / 20'},'9']]],
+ t2:[[0,{c:'h = S / (2πr) − 2πr²'},[{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[1,'1',[{c:'h = (400 − 2π(5²)) / (2π(5))'},'7.7']]],
+ t3:[[2,{c:'h = (S + 2B) / P'},[{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (170 − 2(25)) / 20'},'6']]],
+ t4:[[0,{c:'h = (S − πr²) / (2πr)'},[{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[1,'1',[{c:'h = (250 − 2π(3²)) / (2π(3))'},'10.3']]],
+ a1:[[2,{c:'h = S / P − 2B'},[{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (230 − 2(24)) / 22'},'8.3']]],
+ a2:[[1,{c:'h = (S + 2πr²) / (2πr)'},[{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[2,'1',[{c:'h = (350 − 2π(5²)) / (2π(5))'},'6.1']]],
+ a3:[[2,{c:'h = (S − B) / P'},[{c:'S − 2B = Ph'},{c:'1/P'},{c:BOXS}]],[3,'1',[{c:'h = (336 − 2(36)) / 24'},'11']]],
+ a4:[[0,{c:'h = (S + 2πr²) / (2πr)'},[{c:'S − 2πr² = 2πrh'},{c:'1/(2πr)'},{c:CANS}]],[1,'1',[{c:'h = (40 − 2π(1.5²)) / (2π(1.5))'},'2.7']]]};
 Object.keys(LAD).forEach(pid=>{const ww=go(pid);
   if(BP[pid]){ enter(ww,pid,0,String(BP[pid][0])); enter(ww,pid,1,String(BP[pid][1])); }
   if(pid==='a2') enter(ww,pid,0,'5');

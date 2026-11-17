@@ -59,8 +59,6 @@ const BOX={
   formula:'S = Ph + 2B',
   solved:'h = (S '+MI+' 2B) / P',
   slips:['h = S / P '+MI+' 2B','h = (S '+MI+' B) / P','h = (S + 2B) / P'],
-  formulas:['S = Ph + 2B','S = Ph + B','V = Bh','S = 2'+PI_+'rh + 2'+PI_+'r'+SQ],
-  pickNudge:'Covers means surface area. A closed box has two bases, top and bottom: + 2B.',
   moves:[['Undo + 2B first: change sides, change signs. Which line is it?',['S '+MI+' 2B = Ph','S + 2B = Ph','S = Ph '+MI+' 2B'],'Change sides, change signs: + 2B on the right becomes '+MI+' 2B on the left.'],
          ['Now S '+MI+' 2B = Ph. Undo × P: multiply both sides by…',['1/P','P','1/2'],'h is multiplied by P. Its inverse is 1/P.']]};
 
@@ -69,16 +67,13 @@ const CAN={
   formula:'S = 2'+PI_+'rh + 2'+PI_+'r'+SQ,
   solved:'h = (S '+MI+' 2'+PI_+'r'+SQ+') / (2'+PI_+'r)',
   slips:['h = S / (2'+PI_+'r) '+MI+' 2'+PI_+'r'+SQ,'h = (S '+MI+' '+PI_+'r'+SQ+') / (2'+PI_+'r)','h = (S + 2'+PI_+'r'+SQ+') / (2'+PI_+'r)'],
-  formulas:['S = 2'+PI_+'rh + 2'+PI_+'r'+SQ,'S = 2'+PI_+'rh + '+PI_+'r'+SQ,'V = '+PI_+'r'+SQ+'h','S = 2'+PI_+'r'+SQ+'h'],
-  pickNudge:'Covers means surface area. A can has a label (2'+PI_+'rh) and two ends (2'+PI_+'r'+SQ+').',
   moves:[['Undo + 2'+PI_+'r'+SQ+' first: change sides, change signs. Which line is it?',['S '+MI+' 2'+PI_+'r'+SQ+' = 2'+PI_+'rh','S + 2'+PI_+'r'+SQ+' = 2'+PI_+'rh','S = 2'+PI_+'rh '+MI+' 2'+PI_+'r'+SQ],'Change sides, change signs: + 2'+PI_+'r'+SQ+' on the right becomes '+MI+' 2'+PI_+'r'+SQ+' on the left.'],
          ['Now S '+MI+' 2'+PI_+'r'+SQ+' = 2'+PI_+'rh. Undo × 2'+PI_+'r: multiply both sides by…',['1/(2'+PI_+'r)','2'+PI_+'r','1/('+PI_+'r)'],'h is multiplied by 2'+PI_+'r. Its inverse is 1/(2'+PI_+'r).']]};
 
 /* the "solve with letters" step (coarse tap) and its ladder: formula, each undo move, solved */
 function solveStep(K,lbl){
   const opts=[K.solved].concat(K.slips);
-  const ladder=[ch('Plan 2: Write the formula','Which formula covers this solid?',K.formulas,0,K.pickNudge)]
-    .concat(K.moves.map(([ask,mo,nd])=>ch('Plan '+lbl+': Solve for h, letters only',ask,mo,0,nd)))
+  const ladder=K.moves.map(([ask,mo,nd])=>ch('Plan '+lbl+': Solve for h, letters only',ask,mo,0,nd))
     .concat([ch('Plan '+lbl+': Solved','So h = …',opts,0,'Put the two moves together: change sides, change signs, then the inverse.')]);
   return coarse(ch('Plan '+lbl+': Solve for h with letters','Before any numbers: h = …',opts,0,'Start from '+K.formula+'. '+UNDO_PLUS),ladder);
 }
@@ -137,10 +132,10 @@ function boxProb(o){
    {work:[
      {lines:[{tag:'1, 3, 4',h:boxSketch(l,w,S,u),fig:true}]},
      {lines:[
-       {tag:'2',l:S_,r:'= '+P_+h_+' + 2'+B_,at:[0]},
+       {tag:'2',l:S_,r:'= '+P_+h_+' + 2'+B_},                    // free: it is in the Formula Box
        {tag:'5a',l:B_,r:'= '+l_+w_,at:[0]},{l:'',r:'= '+N('l',l)+' '+DOT+' '+N('w',w),at:[0]},{l:'',r:'= '+N('B',B),at:[0]},
        {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_,at:[1]},{l:'',r:'= 2('+N('l',l)+') + 2('+N('w',w)+')',at:[1]},{l:'',r:'= '+N('P',P),at:[1]},
-       {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[2,1]},
+       {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[2,0]},
        {l:FR(S_+' '+MI+' 2'+B_,P_),r:'= '+h_,note:'× 1/P',at:[2]},
        {tag:'6',l:h_,r:'= '+FR(N('S',S)+' '+MI+' 2('+N('B',B)+')',N('P',P)),at:[3,0]},
        {l:'',r:(tenth?'≈ ':'= ')+BOXED(N('h',aStr+' '+u)),at:[3]}]}],
@@ -163,12 +158,12 @@ function canProb(o){
   const k=width?1:0;                                          // pipeline index of the letters step
   const pipeline=(width?[exact('Plan 5a: Find r. r = ? (in '+u+')',r,[[width,width+' '+u+' is d, all the way across. d = 2r, so r = d/2.'],[2*width,'d = 2r: undo × 2 with × 1/2, not × 2.']],'Write d = 2r, then solve it for r.')]:[])
     .concat([solveStep(CAN,width?'5b':'5'),answerStep(subs,ans,traps,u,true)]);
-  const g0=width?[0]:[0,0], n5=width?'5b':'5';
+  const n5=width?'5b':'5';
   const workCan=[{lines:[{tag:'1, 3, 4',h:canSketch(rs,S,u,width),fig:true}]},{lines:[
-    {tag:'2',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ,at:g0}].concat(
+    {tag:'2',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ}].concat(          // free: it is in the Formula Box
     width?[{tag:'5a',l:d_,r:'= 2'+r_,at:[0]},{l:FR(d_,'2'),r:'= '+r_,note:'× 1/2',at:[0]},
            {l:r_,r:'= '+FR(N('d',width),'2'),at:[0]},{l:'',r:'= '+N('r',rs),at:[0]}]:[],[
-    {tag:n5,l:S_+' '+MI+' 2'+PI_+r_+SQ,r:'= 2'+PI_+r_+h_,note:'change sides, change signs',at:[k,1]},
+    {tag:n5,l:S_+' '+MI+' 2'+PI_+r_+SQ,r:'= 2'+PI_+r_+h_,note:'change sides, change signs',at:[k,0]},
     {l:FR(S_+' '+MI+' 2'+PI_+r_+SQ,'2'+PI_+r_),r:'= '+h_,note:'× 1/(2'+PI_+'r)',at:[k]},
     {tag:'6',l:h_,r:'= '+FR(N('S',S)+' '+MI+' 2'+PI_+'('+N('r',rs)+SQ+')','2'+PI_+'('+N('r',rs)+')'),at:[k+1,0]},
     {l:'',r:'≈ '+BOXED(N('h',aStr+' '+u)),at:[k+1]}])}];
