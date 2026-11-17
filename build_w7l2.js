@@ -134,8 +134,8 @@ function boxProb(o){
      {lines:[{tag:'1, 3, 4',h:boxSketch(l,w,S,u),fig:true}]},
      {lines:[
        {tag:'2',l:S_,r:'= '+P_+h_+' + 2'+B_,at:[0]},
-       {tag:'5a',l:B_,r:'= '+l_+w_+' = '+l+' '+DOT+' '+w+' = '+B,at:[0]},
-       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_+' = 2('+l+') + 2('+w+') = '+P,at:[1]},
+       {tag:'5a',l:B_,r:'= '+l_+w_,at:[0]},{l:'',r:'= '+l+' '+DOT+' '+w,at:[0]},{l:'',r:'= '+B,at:[0]},
+       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_,at:[1]},{l:'',r:'= 2('+l+') + 2('+w+')',at:[1]},{l:'',r:'= '+P,at:[1]},
        {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[2,1]},
        {l:h_,r:'= '+FR(S_+' '+MI+' 2'+B_,P_),note:'× 1/P',at:[2]},
        {tag:'6',l:'',r:'= '+FR(S+' '+MI+' 2('+B+')',String(P)),at:[3,0]},
@@ -161,7 +161,7 @@ function canProb(o){
   const g0=width?[0]:[0,0], n5=width?'5b':'5';
   const workCan=[{lines:[{tag:'1, 3, 4',h:canSketch(rs,S,u,width),fig:true}]},{lines:[
     {tag:'2',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ,at:g0}].concat(
-    width?[{tag:'5a',l:r_,r:'= '+width+' '+DOT+' '+FR('1','2')+' = '+rs,at:[0]}]:[],[
+    width?[{tag:'5a',l:r_,r:'= '+width+' '+DOT+' '+FR('1','2'),at:[0]},{l:'',r:'= '+rs,at:[0]}]:[],[
     {tag:n5,l:S_+' '+MI+' 2'+PI_+r_+SQ,r:'= 2'+PI_+r_+h_,note:'change sides, change signs',at:[k,1]},
     {l:h_,r:'= '+FR(S_+' '+MI+' 2'+PI_+r_+SQ,'2'+PI_+r_),note:'× 1/(2'+PI_+'r)',at:[k]},
     {tag:'6',l:'',r:'= '+FR(S+' '+MI+' 2'+PI_+'('+rs+SQ+')','2'+PI_+'('+rs+')'),at:[k+1,0]},
@@ -210,6 +210,9 @@ P.forEach(p=>{
     const st=p.pipeline[at[0]]; if(!st) throw new Error(p.id+': work gate '+at+' has no step');
     if(at.length>1 && !(st.sub && st.sub[at[1]])) throw new Error(p.id+': work gate '+at+' has no rung'); }));
 });
+P.forEach(p=>p.work.forEach(g=>(g.cols?[].concat(...g.cols):g.lines).forEach(L=>{
+  if(L.r==null) return; const rel=(L.r.replace(/<[^>]*>/g,'').match(/[=≈]/g)||[]).length;
+  if(rel!==1) throw new Error(p.id+': a work line chains '+rel+' relations (hang them, one per line): '+L.r); })));
 const txt=JSON.stringify(P);
 ['subtract','divide'].forEach(wd=>{ if(new RegExp('\\b'+wd,'i').test(txt)) throw new Error('uses "'+wd+'"'); });
 

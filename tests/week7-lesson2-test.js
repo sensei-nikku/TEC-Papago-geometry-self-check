@@ -29,6 +29,8 @@ const ids=['t1','t2','t3','t4','a1','a2','a3','a4'];
 const go=pid=>{const w=boot(); w.K.navTo(ids.indexOf(pid)); return w;};
 const workText=w=>w.document.getElementById('ckWork').textContent;
 const pending=w=>w.document.querySelectorAll('#ckWork .wk-ln.pending').length;
+const flat=w=>workText(w).replace(/\s+/g,' ');
+const hanging=w=>[...w.document.querySelectorAll('#ckWork .wk-ln.eq .wk-r')].every(e=>(e.textContent.match(/[=≈]/g)||[]).length===1);
 const fb=w=>{const f=w.document.querySelectorAll('#ckQ .fb'); return f.length?f[f.length-1].textContent:'';};
 
 const BOXS='h = (S − 2B) / P', CANS='h = (S − 2πr²) / (2πr)';
@@ -73,13 +75,14 @@ A(d.getElementById('ckRef').hidden,'the close button closes it');
 w=go('t1');
 A(w.document.querySelector('#ckWork svg.wk-sketch') && ['l = 6 cm','w = 4 cm','h = ?','S = 228 cm²'].every(x=>workText(w).includes(x)),'t1: steps 1, 3, 4 are one labelled sketch (facts and the unknown on the picture), shown from the start');
 A(!/Write the formula|Name the unknown|Find B|Facts as math|Read it/.test(workText(w)),'t1: no plan instructions on the paper side');
-A(pending(w)===7 && !workText(w).includes('= 24') && !workText(w).includes('9 cm'),'t1: the 7 written lines are blank before any check');
+A(pending(w)===11 && !workText(w).includes('= 24') && !workText(w).includes('9 cm'),'t1: the 11 written lines are blank before any check');
 A(w.document.querySelector('#ckWork .wk-ln.next .wk-tag').textContent==='2','t1: the next line to write is marked');
 enter(w,'t1',0,'24');
-A(workText(w).includes('B = lw = 6 · 4 = 24') && workText(w).includes('S = Ph + 2B'),'t1: after B: the formula and 5a show');
+A(flat(w).includes('B = lw = 6 · 4 = 24') && workText(w).includes('S = Ph + 2B'),'t1: after B: the formula and 5a show');
+A(hanging(w) && w.document.querySelectorAll('#ckWork .wk-ln.eq').length===4,'t1: 5a hangs: B = lw, then = 6 · 4, then = 24, one = per line');
 A(!workText(w).includes('= 20'),'t1: P not yet');
 enter(w,'t1',1,'20');
-A(workText(w).includes('P = 2l + 2w = 2(6) + 2(4) = 20'),'t1: after P: 5b shows');
+A(flat(w).includes('P = 2l + 2w = 2(6) + 2(4) = 20') && hanging(w),'t1: after P: 5b shows, hanging');
 A(!workText(w).includes('S − 2B = Ph'),'t1: 5c still blank');
 enter(w,'t1',2,{c:BOXS});
 A(workText(w).includes('S − 2B = Ph') && workText(w).includes('change sides, change signs') && workText(w).includes('× 1/P'),'t1: after 5c: the letters lines show, each move written beside its line');
@@ -87,7 +90,7 @@ A(!workText(w).includes('228 − 2(24)'),'t1: the substitution waits for step 6'
 enter(w,'t1',3,'9');
 A(w.K._S().t1.done && workText(w).includes('228 − 2(24)') && w.document.querySelector('#ckWork .wk-box').textContent==='9 cm','t1: after the answer: substitute and the boxed answer show');
 {const t=workText(w); A(t.split('Ph + 2B').length===2 && t.split('228 − 2(24)').length===2,'t1: nothing is written twice (the formula once, the substitution once)');}
-A(pending(w)===0 && workText(w).includes('Check: 20(9) + 2(24) = 228 ✓'),'t1: finished: every line and the check');
+A(pending(w)===0 && workText(w).includes('Check: 20(9) + 2(24) = 228 ✓') && hanging(w),'t1: finished: every line hangs, and the check');
 A(w.document.getElementById('ckQ').textContent.includes('Complete') && w.document.querySelector('#ckQ .wk-done .btn-go'),'t1: stays on screen with a Next button');
 w.document.querySelector('#ckQ .wk-done .btn-go').click();
 A(w.document.getElementById('ckQ').textContent.includes('400 cm²') && workText(w).includes('T-2'),'Next opens T-2');
@@ -109,7 +112,7 @@ enter(w,'t2',2002,'7.7');
 A(w.K._S().t2.done && w.document.querySelector('#ckWork .wk-box').textContent==='7.7 cm' && workText(w).includes('about 400 ✓'),'t2: answer and check show');
 
 /* ---- straight answers ---- */
-ids.forEach(pid=>{const ww=go(pid); straight(ww,pid); A(ww.K._S()[pid].done,pid+': straight answers -> Complete'); A(pending(ww)===0,pid+': every line of the work shows');});
+ids.forEach(pid=>{const ww=go(pid); straight(ww,pid); A(ww.K._S()[pid].done,pid+': straight answers -> Complete'); A(pending(ww)===0 && hanging(ww),pid+': every line of the work shows, one = per line');});
 
 /* ---- rounding ---- */
 const tryAns=(pid,v)=>{const ww=go(pid); let k=0;
