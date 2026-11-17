@@ -93,6 +93,9 @@ A(w.K._S().t1.done && workText(w).includes('228 − 2(24)') && w.document.queryS
 {const rows=[...w.document.querySelectorAll('#ckWork .wk-group .wk-ln.eq')].map(e=>[e.querySelector('.wk-l').textContent.trim(),e.querySelector('.wk-r').textContent.trim()]);
  A(rows.some(([l,r])=>l==='S − 2BP' && r==='= h') && rows.some(([l,r])=>l==='h' && r==='= 228 − 2(24)20'),'t1: like d = 2r: the inverse leaves h on the right, step 6 substitutes with h on the left');}
 A(pending(w)===0 && flat(w).includes('Check S = Ph + 2B = 20(9) + 2(24) = 228 ✓') && hanging(w),'t1: finished: every line hangs; the check restates S = Ph + 2B, then substitutes');
+{const allowed={1:['S','228','S = 228 cm²'],2:['l','6','l = 6 cm'],3:['w','4','w = 4 cm'],4:['B','24'],5:['P','20'],6:['h','9','9 cm','h = ?']};
+ const bad=[]; Object.keys(allowed).forEach(k=>w.document.querySelectorAll('#ckWork .ink-'+k).forEach(e=>{if(!allowed[k].includes(e.textContent.trim())) bad.push(k+':'+e.textContent);}));
+ A(!bad.length && w.document.querySelectorAll('#ckWork .ink-4').length>=4,'t1: colour code: each letter and its values share one ink, nothing else is inked '+bad.join(' '));}
 A(w.document.getElementById('ckQ').textContent.includes('Complete') && w.document.querySelector('#ckQ .wk-done .btn-go'),'t1: stays on screen with a Next button');
 w.document.querySelector('#ckQ .wk-done .btn-go').click();
 A(w.document.getElementById('ckQ').textContent.includes('400 cm²') && workText(w).includes('T-2'),'Next opens T-2');

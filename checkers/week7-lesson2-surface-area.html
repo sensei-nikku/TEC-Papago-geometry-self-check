@@ -266,7 +266,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 6 cm, w = 4 cm, h unknown, S = 228 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 6 cm</text><text x=\"206\" y=\"116\">w = 4 cm</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 228 cm²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 6 cm, w = 4 cm, h unknown, S = 228 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"120\" y=\"137\" text-anchor=\"middle\">l = 6 cm</text><text class=\"ink-3\" fill=\"currentColor\" x=\"206\" y=\"116\">w = 4 cm</text><text class=\"ink-6\" fill=\"currentColor\" x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"236\" y=\"60\">S = 228 cm²</text></g></svg>",
       "fig": true
      }
     ]
@@ -275,60 +275,60 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>",
       "at": [
        0
       ]
      },
      {
       "tag": "5a",
-      "l": "<i>B</i>",
-      "r": "= <i>l</i><i>w</i>",
+      "l": "<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-2\">l</i><i class=\"ink-3\">w</i>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 6 · 4",
+      "r": "= <span class=\"ink-2\">6</span> · <span class=\"ink-3\">4</span>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 24",
+      "r": "= <span class=\"ink-4\">24</span>",
       "at": [
        0
       ]
      },
      {
       "tag": "5b",
-      "l": "<i>P</i>",
-      "r": "= 2<i>l</i> + 2<i>w</i>",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 2<i class=\"ink-2\">l</i> + 2<i class=\"ink-3\">w</i>",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 2(6) + 2(4)",
+      "r": "= 2(<span class=\"ink-2\">6</span>) + 2(<span class=\"ink-3\">4</span>)",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 20",
+      "r": "= <span class=\"ink-5\">20</span>",
       "at": [
        1
       ]
      },
      {
       "tag": "5c",
-      "l": "<i>S</i> − 2<i>B</i>",
-      "r": "= <i>P</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        2,
@@ -336,8 +336,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i></span><span><i class=\"ink-5\">P</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/P",
       "at": [
        2
@@ -345,8 +345,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>228 − 2(24)</span><span>20</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">228</span> − 2(<span class=\"ink-4\">24</span>)</span><span><span class=\"ink-5\">20</span></span></span>",
       "at": [
        3,
        0
@@ -354,7 +354,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "= <span class=\"wk-box\">9 cm</span>",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-6\">9 cm</span></span>",
       "at": [
        3
       ]
@@ -365,16 +365,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= <i>P</i><i>h</i> + 2<i>B</i>"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>"
    },
    {
     "l": "",
-    "r": "= 20(9) + 2(24)"
+    "r": "= <span class=\"ink-5\">20</span>(<span class=\"ink-6\">9</span>) + 2(<span class=\"ink-4\">24</span>)"
    },
    {
     "l": "",
-    "r": "= 228 ✓"
+    "r": "= <span class=\"ink-1\">228</span> ✓"
    }
   ]
  },
@@ -568,7 +568,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 5 cm, h unknown, S = 400 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"124\" y=\"24\" text-anchor=\"middle\">r = 5 cm</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 400 cm²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 5 cm, h unknown, S = 400 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"124\" y=\"24\" text-anchor=\"middle\">r = 5 cm</text><text class=\"ink-6\" fill=\"currentColor\" x=\"158\" y=\"86\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"220\" y=\"86\">S = 400 cm²</text></g></svg>",
       "fig": true
      }
     ]
@@ -577,8 +577,8 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²",
       "at": [
        0,
        0
@@ -586,8 +586,8 @@ K.run([
      },
      {
       "tag": "5",
-      "l": "<i>S</i> − 2π<i>r</i>²",
-      "r": "= 2π<i>r</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        0,
@@ -595,8 +595,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²</span><span>2π<i class=\"ink-2\">r</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/(2πr)",
       "at": [
        0
@@ -604,8 +604,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>400 − 2π(5²)</span><span>2π(5)</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">400</span> − 2π(<span class=\"ink-2\">5</span>²)</span><span>2π(<span class=\"ink-2\">5</span>)</span></span>",
       "at": [
        1,
        0
@@ -613,7 +613,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "≈ <span class=\"wk-box\">7.7 cm</span>",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-6\">7.7 cm</span></span>",
       "at": [
        1
       ]
@@ -624,16 +624,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²"
    },
    {
     "l": "",
-    "r": "= 2π(5)(7.7) + 2π(5²)"
+    "r": "= 2π(<span class=\"ink-2\">5</span>)(<span class=\"ink-6\">7.7</span>) + 2π(<span class=\"ink-2\">5</span>²)"
    },
    {
     "l": "",
-    "r": "≈ 399.0, about 400 ✓"
+    "r": "≈ <span class=\"ink-1\">399.0</span>, about <span class=\"ink-1\">400</span> ✓"
    }
   ]
  },
@@ -881,7 +881,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 5 cm, w = 5 cm, h unknown, S = 170 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 5 cm</text><text x=\"206\" y=\"116\">w = 5 cm</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 170 cm²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 5 cm, w = 5 cm, h unknown, S = 170 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"120\" y=\"137\" text-anchor=\"middle\">l = 5 cm</text><text class=\"ink-3\" fill=\"currentColor\" x=\"206\" y=\"116\">w = 5 cm</text><text class=\"ink-6\" fill=\"currentColor\" x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"236\" y=\"60\">S = 170 cm²</text></g></svg>",
       "fig": true
      }
     ]
@@ -890,60 +890,60 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>",
       "at": [
        0
       ]
      },
      {
       "tag": "5a",
-      "l": "<i>B</i>",
-      "r": "= <i>l</i><i>w</i>",
+      "l": "<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-2\">l</i><i class=\"ink-3\">w</i>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 5 · 5",
+      "r": "= <span class=\"ink-2\">5</span> · <span class=\"ink-3\">5</span>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 25",
+      "r": "= <span class=\"ink-4\">25</span>",
       "at": [
        0
       ]
      },
      {
       "tag": "5b",
-      "l": "<i>P</i>",
-      "r": "= 2<i>l</i> + 2<i>w</i>",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 2<i class=\"ink-2\">l</i> + 2<i class=\"ink-3\">w</i>",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 2(5) + 2(5)",
+      "r": "= 2(<span class=\"ink-2\">5</span>) + 2(<span class=\"ink-3\">5</span>)",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 20",
+      "r": "= <span class=\"ink-5\">20</span>",
       "at": [
        1
       ]
      },
      {
       "tag": "5c",
-      "l": "<i>S</i> − 2<i>B</i>",
-      "r": "= <i>P</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        2,
@@ -951,8 +951,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i></span><span><i class=\"ink-5\">P</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/P",
       "at": [
        2
@@ -960,8 +960,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>170 − 2(25)</span><span>20</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">170</span> − 2(<span class=\"ink-4\">25</span>)</span><span><span class=\"ink-5\">20</span></span></span>",
       "at": [
        3,
        0
@@ -969,7 +969,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "= <span class=\"wk-box\">6 cm</span>",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-6\">6 cm</span></span>",
       "at": [
        3
       ]
@@ -980,16 +980,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= <i>P</i><i>h</i> + 2<i>B</i>"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>"
    },
    {
     "l": "",
-    "r": "= 20(6) + 2(25)"
+    "r": "= <span class=\"ink-5\">20</span>(<span class=\"ink-6\">6</span>) + 2(<span class=\"ink-4\">25</span>)"
    },
    {
     "l": "",
-    "r": "= 170 ✓"
+    "r": "= <span class=\"ink-1\">170</span> ✓"
    }
   ]
  },
@@ -1183,7 +1183,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 3 cm, h unknown, S = 250 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"124\" y=\"24\" text-anchor=\"middle\">r = 3 cm</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 250 cm²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 3 cm, h unknown, S = 250 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"124\" y=\"24\" text-anchor=\"middle\">r = 3 cm</text><text class=\"ink-6\" fill=\"currentColor\" x=\"158\" y=\"86\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"220\" y=\"86\">S = 250 cm²</text></g></svg>",
       "fig": true
      }
     ]
@@ -1192,8 +1192,8 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²",
       "at": [
        0,
        0
@@ -1201,8 +1201,8 @@ K.run([
      },
      {
       "tag": "5",
-      "l": "<i>S</i> − 2π<i>r</i>²",
-      "r": "= 2π<i>r</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        0,
@@ -1210,8 +1210,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²</span><span>2π<i class=\"ink-2\">r</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/(2πr)",
       "at": [
        0
@@ -1219,8 +1219,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>250 − 2π(3²)</span><span>2π(3)</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">250</span> − 2π(<span class=\"ink-2\">3</span>²)</span><span>2π(<span class=\"ink-2\">3</span>)</span></span>",
       "at": [
        1,
        0
@@ -1228,7 +1228,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "≈ <span class=\"wk-box\">10.3 cm</span>",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-6\">10.3 cm</span></span>",
       "at": [
        1
       ]
@@ -1239,16 +1239,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²"
    },
    {
     "l": "",
-    "r": "= 2π(3)(10.3) + 2π(3²)"
+    "r": "= 2π(<span class=\"ink-2\">3</span>)(<span class=\"ink-6\">10.3</span>) + 2π(<span class=\"ink-2\">3</span>²)"
    },
    {
     "l": "",
-    "r": "≈ 250.7, about 250 ✓"
+    "r": "≈ <span class=\"ink-1\">250.7</span>, about <span class=\"ink-1\">250</span> ✓"
    }
   ]
  },
@@ -1486,7 +1486,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 8 cm, w = 3 cm, h unknown, S = 230 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 8 cm</text><text x=\"206\" y=\"116\">w = 3 cm</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 230 cm²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 8 cm, w = 3 cm, h unknown, S = 230 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"120\" y=\"137\" text-anchor=\"middle\">l = 8 cm</text><text class=\"ink-3\" fill=\"currentColor\" x=\"206\" y=\"116\">w = 3 cm</text><text class=\"ink-6\" fill=\"currentColor\" x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"236\" y=\"60\">S = 230 cm²</text></g></svg>",
       "fig": true
      }
     ]
@@ -1495,60 +1495,60 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>",
       "at": [
        0
       ]
      },
      {
       "tag": "5a",
-      "l": "<i>B</i>",
-      "r": "= <i>l</i><i>w</i>",
+      "l": "<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-2\">l</i><i class=\"ink-3\">w</i>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 8 · 3",
+      "r": "= <span class=\"ink-2\">8</span> · <span class=\"ink-3\">3</span>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 24",
+      "r": "= <span class=\"ink-4\">24</span>",
       "at": [
        0
       ]
      },
      {
       "tag": "5b",
-      "l": "<i>P</i>",
-      "r": "= 2<i>l</i> + 2<i>w</i>",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 2<i class=\"ink-2\">l</i> + 2<i class=\"ink-3\">w</i>",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 2(8) + 2(3)",
+      "r": "= 2(<span class=\"ink-2\">8</span>) + 2(<span class=\"ink-3\">3</span>)",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 22",
+      "r": "= <span class=\"ink-5\">22</span>",
       "at": [
        1
       ]
      },
      {
       "tag": "5c",
-      "l": "<i>S</i> − 2<i>B</i>",
-      "r": "= <i>P</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        2,
@@ -1556,8 +1556,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i></span><span><i class=\"ink-5\">P</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/P",
       "at": [
        2
@@ -1565,8 +1565,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>230 − 2(24)</span><span>22</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">230</span> − 2(<span class=\"ink-4\">24</span>)</span><span><span class=\"ink-5\">22</span></span></span>",
       "at": [
        3,
        0
@@ -1574,7 +1574,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "≈ <span class=\"wk-box\">8.3 cm</span>",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-6\">8.3 cm</span></span>",
       "at": [
        3
       ]
@@ -1585,16 +1585,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= <i>P</i><i>h</i> + 2<i>B</i>"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>"
    },
    {
     "l": "",
-    "r": "= 22(8.3) + 2(24)"
+    "r": "= <span class=\"ink-5\">22</span>(<span class=\"ink-6\">8.3</span>) + 2(<span class=\"ink-4\">24</span>)"
    },
    {
     "l": "",
-    "r": "= 230.6, about 230 ✓"
+    "r": "= <span class=\"ink-1\">230.6</span>, about <span class=\"ink-1\">230</span> ✓"
    }
   ]
  },
@@ -1820,7 +1820,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, d = 10 cm across, h unknown, S = 350 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M52 40 H148\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"100\" y=\"24\" text-anchor=\"middle\">d = 10 cm</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 350 cm²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, d = 10 cm across, h unknown, S = 350 cm squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M52 40 H148\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-3\" fill=\"currentColor\" x=\"100\" y=\"24\" text-anchor=\"middle\">d = 10 cm</text><text class=\"ink-6\" fill=\"currentColor\" x=\"158\" y=\"86\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"220\" y=\"86\">S = 350 cm²</text></g></svg>",
       "fig": true
      }
     ]
@@ -1829,46 +1829,46 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²",
       "at": [
        0
       ]
      },
      {
       "tag": "5a",
-      "l": "<i>d</i>",
-      "r": "= 2<i>r</i>",
+      "l": "<i class=\"ink-3\">d</i>",
+      "r": "= 2<i class=\"ink-2\">r</i>",
       "at": [
        0
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>d</i></span><span>2</span></span>",
-      "r": "= <i>r</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-3\">d</i></span><span>2</span></span>",
+      "r": "= <i class=\"ink-2\">r</i>",
       "note": "× 1/2",
       "at": [
        0
       ]
      },
      {
-      "l": "<i>r</i>",
-      "r": "= <span class=\"fr\"><span>10</span><span>2</span></span>",
+      "l": "<i class=\"ink-2\">r</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-3\">10</span></span><span>2</span></span>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 5",
+      "r": "= <span class=\"ink-2\">5</span>",
       "at": [
        0
       ]
      },
      {
       "tag": "5b",
-      "l": "<i>S</i> − 2π<i>r</i>²",
-      "r": "= 2π<i>r</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        1,
@@ -1876,8 +1876,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²</span><span>2π<i class=\"ink-2\">r</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/(2πr)",
       "at": [
        1
@@ -1885,8 +1885,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>350 − 2π(5²)</span><span>2π(5)</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">350</span> − 2π(<span class=\"ink-2\">5</span>²)</span><span>2π(<span class=\"ink-2\">5</span>)</span></span>",
       "at": [
        2,
        0
@@ -1894,7 +1894,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "≈ <span class=\"wk-box\">6.1 cm</span>",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-6\">6.1 cm</span></span>",
       "at": [
        2
       ]
@@ -1905,16 +1905,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²"
    },
    {
     "l": "",
-    "r": "= 2π(5)(6.1) + 2π(5²)"
+    "r": "= 2π(<span class=\"ink-2\">5</span>)(<span class=\"ink-6\">6.1</span>) + 2π(<span class=\"ink-2\">5</span>²)"
    },
    {
     "l": "",
-    "r": "≈ 348.7, about 350 ✓"
+    "r": "≈ <span class=\"ink-1\">348.7</span>, about <span class=\"ink-1\">350</span> ✓"
    }
   ]
  },
@@ -2162,7 +2162,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 6 in, w = 6 in, h unknown, S = 336 in squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"120\" y=\"137\" text-anchor=\"middle\">l = 6 in</text><text x=\"206\" y=\"116\">w = 6 in</text><text x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text x=\"236\" y=\"60\">S = 336 in²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 150\" width=\"330\" height=\"150\" role=\"img\" aria-label=\"Sketch: a closed box, l = 6 in, w = 6 in, h unknown, S = 336 in squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linejoin=\"round\" stroke-linecap=\"round\"><path d=\"M60 45 H180 V115 H60 Z\"/><path d=\"M60 45 L100 18 H220 L180 45\"/><path d=\"M180 115 L220 88 V18\"/><path d=\"M60 115 L100 88 H220 M100 88 V18\" stroke-dasharray=\"4 5\" opacity=\".45\"/></g><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"120\" y=\"137\" text-anchor=\"middle\">l = 6 in</text><text class=\"ink-3\" fill=\"currentColor\" x=\"206\" y=\"116\">w = 6 in</text><text class=\"ink-6\" fill=\"currentColor\" x=\"52\" y=\"85\" text-anchor=\"end\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"236\" y=\"60\">S = 336 in²</text></g></svg>",
       "fig": true
      }
     ]
@@ -2171,60 +2171,60 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= <i>P</i><i>h</i> + 2<i>B</i>",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>",
       "at": [
        0
       ]
      },
      {
       "tag": "5a",
-      "l": "<i>B</i>",
-      "r": "= <i>l</i><i>w</i>",
+      "l": "<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-2\">l</i><i class=\"ink-3\">w</i>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 6 · 6",
+      "r": "= <span class=\"ink-2\">6</span> · <span class=\"ink-3\">6</span>",
       "at": [
        0
       ]
      },
      {
       "l": "",
-      "r": "= 36",
+      "r": "= <span class=\"ink-4\">36</span>",
       "at": [
        0
       ]
      },
      {
       "tag": "5b",
-      "l": "<i>P</i>",
-      "r": "= 2<i>l</i> + 2<i>w</i>",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 2<i class=\"ink-2\">l</i> + 2<i class=\"ink-3\">w</i>",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 2(6) + 2(6)",
+      "r": "= 2(<span class=\"ink-2\">6</span>) + 2(<span class=\"ink-3\">6</span>)",
       "at": [
        1
       ]
      },
      {
       "l": "",
-      "r": "= 24",
+      "r": "= <span class=\"ink-5\">24</span>",
       "at": [
        1
       ]
      },
      {
       "tag": "5c",
-      "l": "<i>S</i> − 2<i>B</i>",
-      "r": "= <i>P</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i>",
+      "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        2,
@@ -2232,8 +2232,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2<i>B</i></span><span><i>P</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2<i class=\"ink-4\">B</i></span><span><i class=\"ink-5\">P</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/P",
       "at": [
        2
@@ -2241,8 +2241,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>336 − 2(36)</span><span>24</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">336</span> − 2(<span class=\"ink-4\">36</span>)</span><span><span class=\"ink-5\">24</span></span></span>",
       "at": [
        3,
        0
@@ -2250,7 +2250,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "= <span class=\"wk-box\">11 in</span>",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-6\">11 in</span></span>",
       "at": [
        3
       ]
@@ -2261,16 +2261,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= <i>P</i><i>h</i> + 2<i>B</i>"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= <i class=\"ink-5\">P</i><i class=\"ink-6\">h</i> + 2<i class=\"ink-4\">B</i>"
    },
    {
     "l": "",
-    "r": "= 24(11) + 2(36)"
+    "r": "= <span class=\"ink-5\">24</span>(<span class=\"ink-6\">11</span>) + 2(<span class=\"ink-4\">36</span>)"
    },
    {
     "l": "",
-    "r": "= 336 ✓"
+    "r": "= <span class=\"ink-1\">336</span> ✓"
    }
   ]
  },
@@ -2464,7 +2464,7 @@ K.run([
     "lines": [
      {
       "tag": "1, 3, 4",
-      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 1.5 m, h unknown, S = 40 m squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text x=\"124\" y=\"24\" text-anchor=\"middle\">r = 1.5 m</text><text x=\"158\" y=\"86\">h = ?</text><text x=\"220\" y=\"86\">S = 40 m²</text></g></svg>",
+      "h": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 140\" width=\"330\" height=\"140\" role=\"img\" aria-label=\"Sketch: a cylinder, r = 1.5 m, h unknown, S = 40 m squared\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\"><ellipse cx=\"100\" cy=\"40\" rx=\"48\" ry=\"11\"/><path d=\"M52 40 V118 M148 40 V118\"/><path d=\"M52 118 A48 11 0 0 0 148 118\"/><path d=\"M52 118 A48 11 0 0 1 148 118\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 40 H148\"/></g><circle cx=\"100\" cy=\"40\" r=\"2.3\" fill=\"currentColor\"/><g fill=\"currentColor\" style=\"font-family:inherit\" font-size=\"15\"><text class=\"ink-2\" fill=\"currentColor\" x=\"124\" y=\"24\" text-anchor=\"middle\">r = 1.5 m</text><text class=\"ink-6\" fill=\"currentColor\" x=\"158\" y=\"86\">h = ?</text><text class=\"ink-1\" fill=\"currentColor\" x=\"220\" y=\"86\">S = 40 m²</text></g></svg>",
       "fig": true
      }
     ]
@@ -2473,8 +2473,8 @@ K.run([
     "lines": [
      {
       "tag": "2",
-      "l": "<i>S</i>",
-      "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²",
       "at": [
        0,
        0
@@ -2482,8 +2482,8 @@ K.run([
      },
      {
       "tag": "5",
-      "l": "<i>S</i> − 2π<i>r</i>²",
-      "r": "= 2π<i>r</i><i>h</i>",
+      "l": "<i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²",
+      "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i>",
       "note": "change sides, change signs",
       "at": [
        0,
@@ -2491,8 +2491,8 @@ K.run([
       ]
      },
      {
-      "l": "<span class=\"fr\"><span><i>S</i> − 2π<i>r</i>²</span><span>2π<i>r</i></span></span>",
-      "r": "= <i>h</i>",
+      "l": "<span class=\"fr\"><span><i class=\"ink-1\">S</i> − 2π<i class=\"ink-2\">r</i>²</span><span>2π<i class=\"ink-2\">r</i></span></span>",
+      "r": "= <i class=\"ink-6\">h</i>",
       "note": "× 1/(2πr)",
       "at": [
        0
@@ -2500,8 +2500,8 @@ K.run([
      },
      {
       "tag": "6",
-      "l": "<i>h</i>",
-      "r": "= <span class=\"fr\"><span>40 − 2π(1.5²)</span><span>2π(1.5)</span></span>",
+      "l": "<i class=\"ink-6\">h</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-1\">40</span> − 2π(<span class=\"ink-2\">1.5</span>²)</span><span>2π(<span class=\"ink-2\">1.5</span>)</span></span>",
       "at": [
        1,
        0
@@ -2509,7 +2509,7 @@ K.run([
      },
      {
       "l": "",
-      "r": "≈ <span class=\"wk-box\">2.7 m</span>",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-6\">2.7 m</span></span>",
       "at": [
        1
       ]
@@ -2520,16 +2520,16 @@ K.run([
   "workCheck": [
    {
     "tag": "Check",
-    "l": "<i>S</i>",
-    "r": "= 2π<i>r</i><i>h</i> + 2π<i>r</i>²"
+    "l": "<i class=\"ink-1\">S</i>",
+    "r": "= 2π<i class=\"ink-2\">r</i><i class=\"ink-6\">h</i> + 2π<i class=\"ink-2\">r</i>²"
    },
    {
     "l": "",
-    "r": "= 2π(1.5)(2.7) + 2π(1.5²)"
+    "r": "= 2π(<span class=\"ink-2\">1.5</span>)(<span class=\"ink-6\">2.7</span>) + 2π(<span class=\"ink-2\">1.5</span>²)"
    },
    {
     "l": "",
-    "r": "≈ 39.6, about 40 ✓"
+    "r": "≈ <span class=\"ink-1\">39.6</span>, about <span class=\"ink-1\">40</span> ✓"
    }
   ]
  }

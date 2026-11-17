@@ -336,6 +336,14 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 .wk-guide{grid-column:3;align-self:end;height:1.9em;width:10em;border-bottom:1.5px dotted var(--ink-faint)}
 .wk-ln.next .wk-tag{opacity:1}
 .wk-ln.next .wk-guide{border-bottom:2px dotted var(--ink-red)}
+/* colour code: a letter and every number standing for it share one ink (all >= 4.7:1 on the parchment) */
+.pane.wk-work .ink-1{color:#1d4f91}  /* S  blue    */
+.pane.wk-work .ink-2{color:#2f6b2a}  /* l, r green */
+.pane.wk-work .ink-3{color:#6a2f8f}  /* w, d purple */
+.pane.wk-work .ink-4{color:#9a4b00}  /* B  amber   */
+.pane.wk-work .ink-5{color:#0b6a6a}  /* P  teal    */
+.pane.wk-work .ink-6{color:#a0185a}  /* h  magenta */
+.pane.wk-work [class^="ink-"]{font-weight:700}
 .wk-box{border:1.8px solid var(--ink);border-radius:3px 6px 4px 7px;padding:0 .35em;margin-left:.15em}
 .wk-sketch{display:block;max-width:100%;height:auto;color:var(--ink);margin:2px 0}
 .wk-check{margin-top:6px;padding-top:8px;border-top:1px solid var(--ink-faint);font-size:1rem;color:var(--ink)}
