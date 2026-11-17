@@ -39,10 +39,10 @@ const fb=w=>{const f=w.document.querySelectorAll('#ckQ .fb'); return f.length?f[
 const sketchLabels=w=>[...w.document.querySelectorAll('#ckWork .wk-fig .wk-lbl')].map(e=>e.textContent);
 
 const BOXS='h = (S − 2B) / P', CANS='h = (S − 2πr²) / (2πr)', BOXM='S = Ph + 2B', CANM='S = 2πrh + 2πr²';
-const LABELS={t1:{l:'l = 6 cm',w:'w = 4 cm',h:'h = ?',S:'S = 228 cm²'}, t2:{r:'r = 5 cm',h:'h = ?',S:'S = 400 cm²'},
-  t3:{l:'l = 5 cm',w:'w = 5 cm',h:'h = ?',S:'S = 170 cm²'}, t4:{r:'r = 3 cm',h:'h = ?',S:'S = 250 cm²'},
-  a1:{l:'l = 8 cm',w:'w = 3 cm',h:'h = ?',S:'S = 230 cm²'}, a2:{d:'d = 10 cm',h:'h = ?',S:'S = 350 cm²'},
-  a3:{l:'l = 6 in',w:'w = 6 in',h:'h = ?',S:'S = 336 in²'}, a4:{r:'r = 1.5 m',h:'h = ?',S:'S = 40 m²'}};
+const LABELS={t1:{front:'l = 6 cm',back:'w = 4 cm',h:'h = ?',S:'S = 228 cm²'}, t2:{r:'r = 5 cm',h:'h = ?',S:'S = 400 cm²'},
+  t3:{front:'l = 5 cm',back:'w = 5 cm',h:'h = ?',S:'S = 170 cm²'}, t4:{r:'r = 3 cm',h:'h = ?',S:'S = 250 cm²'},
+  a1:{front:'l = 8 cm',back:'w = 3 cm',h:'h = ?',S:'S = 230 cm²'}, a2:{d:'d = 10 cm',h:'h = ?',S:'S = 350 cm²'},
+  a3:{front:'l = 6 in',back:'w = 6 in',h:'h = ?',S:'S = 336 in²'}, a4:{r:'r = 1.5 m',h:'h = ?',S:'S = 40 m²'}};
 const BOX={t1:1,t3:1,a1:1,a3:1};
 const SOLVED={t1:BOXS,t2:CANS,t3:BOXS,t4:CANS,a1:BOXS,a2:CANS,a3:BOXS,a4:CANS};
 const BP={t1:[24,20],t3:[25,20],a1:[24,22],a3:[36,24]};
@@ -78,28 +78,40 @@ A(d.getElementById('ckRef').hidden && d.activeElement===d.getElementById('ckRefB
 w=go('t1');
 A(w.document.querySelector('#ckWork svg.wk-sketch') && sketchLabels(w).length===0,'t1: the sketch starts with no labels');
 A(w.document.querySelectorAll('#ckWork .wk-zone[data-drop]').length===4,'t1: four drop spots on the sketch');
-A(w.document.querySelectorAll('#ckQ .dd-card').length===6 && w.document.getElementById('ckQ').textContent.includes('Not every label belongs'),'t1: six label cards on the right, two do not belong');
+{const t=[...w.document.querySelectorAll('#ckQ .dd-card')].map(e=>e.textContent);
+ A(t.length===7 && ['l = 6 cm','w = 6 cm','l = 4 cm','w = 4 cm'].every(x=>t.includes(x)) && w.document.getElementById('ckQ').textContent.includes('Not every label belongs'),'t1: seven cards: l and w doubled up with both numbers (l = 6, w = 6, l = 4, w = 4), plus h, S, V');}
 A(w.document.querySelector('#ckQ .dd-card.ink-card.ink-2') && w.document.querySelector('#ckQ .dd-card.ink-card.ink-1'),'t1: label cards wear their letter\'s ink');
 drop(w,'t1',0,'l = 6 cm','h');
-A(fb(w).includes('l is the length') && sketchLabels(w).length===0,'t1: l on the height edge: says why (l runs along the front) and does not stick');
+A(fb(w).includes('6 cm is the long side of the base') && sketchLabels(w).length===0,'t1: l = 6 on the height edge: says 6 cm is the long side of the base, and does not stick');
+drop(w,'t1',0,'l = 4 cm','front');
+A(fb(w).includes('4 cm is the short side') && sketchLabels(w).length===0,'t1: orientation matters: 4 cm on the front edge is turned down (the short side goes back)');
 drop(w,'t1',0,'V = 228 cm³','S');
 A(fb(w).includes('V is what a box holds'),'t1: V does not belong: says what V is');
-drop(w,'t1',0,'h = 6 cm','h');
-A(fb(w).includes('runs along the base'),'t1: h = 6 cm: says 6 cm is l, h is the unknown');
-drop(w,'t1',0,'l = 6 cm','l');
-A(sketchLabels(w).includes('l = 6 cm') && fb(w).includes('l is the length') && w.K._S().t1.steps[0].misses===0,'t1: l on the front edge sticks, says why, and clears the misses');
+drop(w,'t1',0,'l = 6 cm','front');
+A(sketchLabels(w).includes('l = 6 cm') && fb(w).includes('long side of the base') && w.K._S().t1.steps[0].misses===0,'t1: l = 6 on the front edge sticks, says why, and clears the misses');
+drop(w,'t1',0,'l = 4 cm','back');
+A(fb(w).includes('l is already on the other side') && !sketchLabels(w).includes('l = 4 cm'),'t1: not repeating: l = 4 on the back after l = 6 on the front is turned down');
 A(w.document.querySelector('#ckWork .wk-fig .wk-lbl.ink-2').textContent==='l = 6 cm','t1: a placed label is in its ink');
 A(![...w.document.querySelectorAll('#ckQ .dd-card')].some(e=>e.textContent==='l = 6 cm') && w.document.getElementById('ckQ').textContent.includes('1 of 4 labels'),'t1: a placed card leaves the tray; 1 of 4');
 /* tap a card, then tap the spot */
 [...w.document.querySelectorAll('#ckQ .dd-card')].find(e=>e.textContent==='w = 4 cm').click();
 A(w.document.querySelector('#ckQ .dd-card.sel') && w.document.querySelector('#ckWork .wk-zone.armed'),'t1: tapping a card picks it and arms the spots');
-w.document.querySelector('#ckWork .wk-zone[data-drop="w"]').click();
+w.document.querySelector('#ckWork .wk-zone[data-drop="back"]').click();
 A(sketchLabels(w).includes('w = 4 cm'),'t1: tapping the spot places the picked card');
 w.document.querySelector('#ckWork .wk-zone[data-drop="h"]').click();
 A(fb(w).includes('Pick a card on the right first'),'t1: tapping a spot with no card picked says what to do');
 drop(w,'t1',0,'h = ?','h'); drop(w,'t1',0,'S = 228 cm²','S');
 A(w.K._S().t1.stepIdx===1 && ['l = 6 cm','w = 4 cm','h = ?','S = 228 cm²'].every(x=>sketchLabels(w).includes(x)),'t1: four labels placed: the step is done and the sketch keeps them');
 A(w.document.querySelectorAll('#ckWork .wk-zone').length===0,'t1: no drop spots once the sketch is labelled');
+/* the letters do not matter, only the side: w = 6 on the front and l = 4 on the back is right too, and the work follows */
+{const ww=go('t1'); drop(ww,'t1',0,'w = 6 cm','front'); drop(ww,'t1',0,'w = 4 cm','back');
+ A(fb(ww).includes('w is already on the other side'),'t1 (swapped): w twice is turned down');
+ drop(ww,'t1',0,'l = 4 cm','back'); drop(ww,'t1',0,'h = ?','h'); drop(ww,'t1',0,'S = 228 cm²','S');
+ A(ww.K._S().t1.stepIdx===1 && sketchLabels(ww).includes('w = 6 cm') && sketchLabels(ww).includes('l = 4 cm'),'t1 (swapped): w = 6 front, l = 4 back is accepted');
+ drop(ww,'t1',1,'S = Ph + 2B','model'); enter(ww,'t1',2,'24'); enter(ww,'t1',3,'20');
+ const fw=flat(ww); A(fw.includes('B = lw = 4 · 6 = 24') && fw.includes('P = 2l + 2w = 2(4) + 2(6) = 20'),'t1 (swapped): the work uses their letters: B = lw = 4 · 6, P = 2(4) + 2(6)');
+ A([...ww.document.querySelectorAll('#ckWork .wk-group .ink-2')].some(e=>e.textContent==='4') && [...ww.document.querySelectorAll('#ckWork .wk-group .ink-3')].some(e=>e.textContent==='6'),'t1 (swapped): 4 is in l\'s ink, 6 in w\'s ink, as on their sketch');
+ enter(ww,'t1',4,{c:BOXS}); enter(ww,'t1',5,'9'); A(ww.K._S().t1.done,'t1 (swapped): finishes the same');}
 
 /* ---- step 2: drag the model ---- */
 A(w.document.querySelector('#ckWork .wk-drop[data-drop="model"]') && w.document.querySelector('#ckWork .wk-ln.drop .wk-tag').textContent==='2','t1: step 2 on the paper is a drop box');

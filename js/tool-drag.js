@@ -18,9 +18,13 @@
             zones:[ {id:'l', accept: djb2('l = 6 cm')}, … ] }
    The work's sketch line carries the zone positions:
             { fig:{svg, vb:[w,h], zones:[{id, x, y, anchor, name}]}, slot:'sketch' }
-   A card is right in the zone whose `accept` is its hash. A card no zone
-   takes is a distractor: its why says what it is. Done when every zone
-   holds its card. Answers are hashes; no plain mapping in the page.
+   A card is right in a zone whose `accept` is its hash (or one of a list
+   of hashes: when the letter does not matter, only where it goes). A card
+   no zone takes is a distractor: its why says what it is. Done when every
+   zone holds a card. Answers are hashes; no plain mapping in the page.
+   NOT REPEATING: unique:[['front','back']] with cards keyed k:'l' / k:'w'
+   means those zones must hold different letters (l = 6 and w = 4, or
+   w = 6 and l = 4, never l and l). uniqueWhy says so; {k} is the letter.
    =================================================================== */
 (function () {
   'use strict';
@@ -91,7 +95,14 @@
       if(!d) return {fb:{t:'err', m:'Drag a label onto the sketch first.'}, tier:'soft'};
       var c=step.cards[d.card], zone=null;
       for(var j=0;j<step.zones.length;j++) if(step.zones[j].id===d.zone) zone=step.zones[j];
-      if(zone && ctx.djb2(c.t)===zone.accept){
+      var takes = zone && [].concat(zone.accept).indexOf(ctx.djb2(c.t))>=0;
+      if(takes && c.k && step.unique){                    // a letter already used on a paired side
+        for(var g=0;g<step.unique.length;g++){ var grp=step.unique[g]; if(grp.indexOf(zone.id)<0) continue;
+          for(var q=0;q<grp.length;q++){ var other=st.placed[grp[q]];
+            if(grp[q]!==zone.id && other!=null && step.cards[other].k===c.k)
+              return {fb:{t:'err', m:(step.uniqueWhy||'{k} is already used. Each letter names one side.').replace(/\{k\}/g, c.k), diag:true}}; } }
+      }
+      if(takes){
         st.placed[zone.id]=d.card;
         var all=true; for(var k=0;k<step.zones.length;k++) if(st.placed[step.zones[k].id]==null) all=false;
         if(all) return {pass:true};

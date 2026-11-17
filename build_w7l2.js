@@ -94,7 +94,7 @@ function boxFig(l,w,S,u){
       '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">'+
       '<path d="M60 45 H180 V115 H60 Z"/><path d="M60 45 L100 18 H220 L180 45"/><path d="M180 115 L220 88 V18"/>'+
       '<path d="M60 115 L100 88 H220 M100 88 V18" stroke-dasharray="4 5" opacity=".45"/></g></svg>',
-    zones:[{id:'l',x:120,y:133,anchor:'middle',name:'the front edge of the base'},{id:'w',x:204,y:112,anchor:'start',name:'the edge going back'},
+    zones:[{id:'front',x:120,y:133,anchor:'middle',name:'the front edge of the base'},{id:'back',x:204,y:112,anchor:'start',name:'the edge going back'},
            {id:'h',x:54,y:80,anchor:'end',name:'the edge going up'},{id:'S',x:236,y:55,anchor:'start',name:'beside the box'}]};
 }
 function canFig(r,S,u,width){
@@ -108,12 +108,14 @@ function canFig(r,S,u,width){
            {id:'h',x:158,y:81,anchor:'start',name:'the side going up'},{id:'S',x:222,y:81,anchor:'start',name:'beside the can'}]};
 }
 /* label cards: the right ones say why they go where they go; the extras say what they are */
-function labelStep(cards){
-  const zones=cards.filter(c=>c.z).map(c=>({id:c.z,accept:djb2(c.t)}));
+function labelStep(cards,extra){
+  // c.z: the zone a card goes in (or a list, when either letter fits); the first card listed for a zone is its default
+  const zs={}; cards.forEach(c=>[].concat(c.z||[]).forEach(z=>{(zs[z]=zs[z]||[]).push(djb2(c.t));}));
+  const zones=Object.keys(zs).map(id=>({id,accept:zs[id].length===1?zs[id][0]:zs[id]}));
   if(new Set(cards.map(c=>c.t)).size!==cards.length) throw new Error('duplicate label cards');
-  return {tool:'labels',slot:'sketch',shuffle:true,label:'Plan 1, 3, 4: Label your sketch',
+  return Object.assign({tool:'labels',slot:'sketch',shuffle:true,label:'Plan 1, 3, 4: Label your sketch',
     ask:'Put each label where it belongs on the sketch. Not every label belongs.',
-    cards:cards.map(c=>{const o={t:c.t,why:c.why}; if(c.ink) o.ink=c.ink; return o;}),zones};
+    cards:cards.map(c=>{const o={t:c.t,why:c.why}; if(c.ink) o.ink=c.ink; if(c.k) o.k=c.k; return o;}),zones},extra||{});
 }
 function modelStep(cards){
   if(new Set(cards.map(c=>c.t)).size!==cards.length) throw new Error('duplicate model cards');
@@ -142,31 +144,39 @@ function boxProb(o){
   const back=P*Number(aStr)+2*B;
   const check=[{tag:'Check',l:S_,r:'= '+P_+h_+' + 2'+B_},{l:'',r:'= '+N('P',P)+'('+N('h',aStr)+') + 2('+N('B',B)+')'},
                {l:'',r:(back===S?'= '+N('S',back)+' ✓':'= '+N('S',back.toFixed(1))+', about '+N('S',S)+' ✓')}];
-  const labels=labelStep([
-    {t:'l = '+l+' '+u,ink:INK.l,z:'l',why:'l is the length of the base: '+l+' '+u+' along the front.'},
-    {t:'w = '+w+' '+u,ink:INK.w,z:'w',why:'w is the width of the base: '+w+' '+u+' going back.'},
+  const sq=(l===w), long=sq?'a side of the square base. Both sides of the base are '+l+' '+u+'.':'the long side of the base: the front edge.';
+  const sides=sq?[
+    {t:'l = '+l+' '+u,ink:INK.l,k:'l',z:['front','back'],why:l+' '+u+' is '+long},
+    {t:'w = '+w+' '+u,ink:INK.w,k:'w',z:['front','back'],why:w+' '+u+' is '+long},
+    {t:'h = '+l+' '+u,ink:INK.h,why:l+' '+u+' runs along the base. The height is what you are looking for: h = ?.'}]:[
+    {t:'l = '+l+' '+u,ink:INK.l,k:'l',z:'front',why:l+' '+u+' is '+long},
+    {t:'w = '+l+' '+u,ink:INK.w,k:'w',z:'front',why:l+' '+u+' is '+long},
+    {t:'w = '+w+' '+u,ink:INK.w,k:'w',z:'back',why:w+' '+u+' is the short side of the base: the edge going back.'},
+    {t:'l = '+w+' '+u,ink:INK.l,k:'l',z:'back',why:w+' '+u+' is the short side of the base: the edge going back.'}];
+  const labels=labelStep(sides.concat([
     {t:'h = ?',ink:INK.h,z:'h',why:'h is what you are looking for: mark the edge that goes up with h = ?.'},
     {t:'S = '+S+' '+u+SQ,ink:INK.S,z:'S',why:'S covers the whole box, so it goes beside the box, not on one edge. Square units mean it covers.'},
-    {t:'V = '+S+' '+u+'³',why:'V is what a box holds, in cubic units. This box is covered with '+S+' '+u+SQ+': that is S.'},
-    {t:'h = '+l+' '+u,ink:INK.h,why:l+' '+u+' runs along the base: that is l. The height is what you are looking for: h = ?.'}]);
+    {t:'V = '+S+' '+u+'³',why:'V is what a box holds, in cubic units. This box is covered with '+S+' '+u+SQ+': that is S.'}]),
+    {unique:[['front','back']],uniqueWhy:'{k} is already on the other side of the base. Each letter names one side: use the other letter here.'});
   return Object.assign({id,num:numLbl,prompt,given,want:'h, the height, in '+u,
     pipeline:[labels, modelStep(BOX_MODELS),
       exact('Plan 5a: Find B, the area of the base. B = ? (in '+u+SQ+')',B,[[P,'That is P, the distance around. B is the area: l '+DOT+' w.'],[l+w,'B is an area: multiply, l '+DOT+' w.']],'B is the area of the base: B = lw.'),
       exact('Plan 5b: Find P, the distance around the base. P = ? (in '+u+')',P,[[B,'That is B, the area. P goes around: 2l + 2w.'],[l+w,'That is halfway around. P = 2l + 2w.']],'P is the distance around the base: P = 2l + 2w.'),
       solveStep(BOX,'5c'),
       answerStep(subs,ans,traps,u,tenth)]},
-   {work:[
+   {work:boxWork(l,w), workVariants:sq?undefined:{swap:boxWork(w,l)}, variantBy:sq?undefined:{step:0,zone:'front',key:{w:'swap'}},
+    workCheck:check},
+   {_ans:aStr});
+  function boxWork(lv,wv){ return [
      {lines:[{tag:'1, 3, 4',fig:boxFig(l,w,S,u),slot:'sketch'}]},
      {lines:[
        {tag:'2',slot:'model',l:S_,r:'= '+P_+h_+' + 2'+B_,at:[1]},
-       {tag:'5a',l:B_,r:'= '+l_+w_,at:[2]},{l:'',r:'= '+N('l',l)+' '+DOT+' '+N('w',w),at:[2]},{l:'',r:'= '+N('B',B),at:[2]},
-       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_,at:[3]},{l:'',r:'= 2('+N('l',l)+') + 2('+N('w',w)+')',at:[3]},{l:'',r:'= '+N('P',P),at:[3]},
+       {tag:'5a',l:B_,r:'= '+l_+w_,at:[2]},{l:'',r:'= '+N('l',lv)+' '+DOT+' '+N('w',wv),at:[2]},{l:'',r:'= '+N('B',B),at:[2]},
+       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_,at:[3]},{l:'',r:'= 2('+N('l',lv)+') + 2('+N('w',wv)+')',at:[3]},{l:'',r:'= '+N('P',P),at:[3]},
        {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[4,0]},
        {l:FR(S_+' '+MI+' 2'+B_,P_),r:'= '+h_,note:'× 1/P',at:[4]},
        {tag:'6',l:h_,r:'= '+FR(N('S',S)+' '+MI+' 2('+N('B',B)+')',N('P',P)),at:[5,0]},
-       {l:'',r:(tenth?'≈ ':'= ')+BOXED(N('h',aStr+' '+u)),at:[5]}]}],
-    workCheck:check},
-   {_ans:aStr});
+       {l:'',r:(tenth?'≈ ':'= ')+BOXED(N('h',aStr+' '+u)),at:[5]}]}]; }
 }
 
 /* ---- one can problem (width: given the distance across instead of r) ---- */
@@ -248,7 +258,7 @@ P.forEach(p=>{
     const st=p.pipeline[at[0]]; if(!st) throw new Error(p.id+': work gate '+at+' has no step');
     if(at.length>1 && !(st.sub && st.sub[at[1]])) throw new Error(p.id+': work gate '+at+' has no rung'); }));
 });
-P.forEach(p=>p.work.concat([{lines:p.workCheck}]).forEach(g=>(g.cols?[].concat(...g.cols):g.lines).forEach(L=>{
+P.forEach(p=>p.work.concat(...Object.values(p.workVariants||{}),[{lines:p.workCheck}]).forEach(g=>(g.cols?[].concat(...g.cols):g.lines).forEach(L=>{
   if(L.r==null) return; const rel=(L.r.replace(/<[^>]*>/g,'').match(/[=≈]/g)||[]).length;
   if(rel!==1) throw new Error(p.id+': a work line chains '+rel+' relations (hang them, one per line): '+L.r); })));
 const txt=JSON.stringify(P);

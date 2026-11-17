@@ -416,10 +416,18 @@
     var st=s.steps[si]; if(st.redirect) return null;
     return {si:si, step:p.pipeline[si], st:st};
   }
-  function cardFor(step, zid){                        // the card a zone takes, found by its hash
+  // the card a zone takes, found by its hash. A zone may take any of several cards; the first one
+  // not already on the sketch (and not repeating a letter already there) is the default.
+  function cardFor(step, zid, usedIdx, usedKey){
     var acc=null; (step.zones||[]).forEach(function(z){ if(z.id===zid) acc=z.accept; });
     if(acc==null) return null;
-    for(var i=0;i<(step.cards||[]).length;i++) if(djb2(step.cards[i].t)===acc) return i;
+    var list=[].concat(acc);
+    for(var a=0;a<list.length;a++)
+      for(var i=0;i<(step.cards||[]).length;i++){
+        var c=step.cards[i];
+        if(djb2(c.t)!==list[a] || usedIdx[i] || (c.k && usedKey[c.k])) continue;
+        return i;
+      }
     return null;
   }
   var ANCHOR={start:'translate(0,-50%)', middle:'translate(-50%,-50%)', end:'translate(-100%,-50%)'};
@@ -428,9 +436,17 @@
     var step=si>=0 ? p.pipeline[si] : null, st=si>=0 ? s.steps[si] : null;
     var settled = si<0 || s.done || s.stepIdx>si;
     var h='<div class="wk-fig" style="max-width:'+F.vb[0]+'px">'+F.svg;
+    // what each zone shows: the student's card, or (once the step is settled, e.g. a teacher-helped
+    // skip) the right card, never repeating a card or a letter already on the sketch
+    var show={}, usedIdx={}, usedKey={};
+    (F.zones||[]).forEach(function(z){ var ci=(st && st.placed) ? st.placed[z.id] : null;
+      if(ci!=null){ show[z.id]=ci; usedIdx[ci]=1; if(step.cards[ci].k) usedKey[step.cards[ci].k]=1; } });
+    if(settled && step) (F.zones||[]).forEach(function(z){ if(show[z.id]!=null) return;
+      var ci=cardFor(step, z.id, usedIdx, usedKey);
+      if(ci!=null){ show[z.id]=ci; usedIdx[ci]=1; if(step.cards[ci].k) usedKey[step.cards[ci].k]=1; } });
     (F.zones||[]).forEach(function(z){
       var pos='left:'+(100*z.x/F.vb[0]).toFixed(2)+'%;top:'+(100*z.y/F.vb[1]).toFixed(2)+'%;transform:'+(ANCHOR[z.anchor||'middle']);
-      var ci = (st && st.placed && st.placed[z.id]!=null) ? st.placed[z.id] : (settled && step ? cardFor(step, z.id) : null);
+      var ci = show[z.id]!=null ? show[z.id] : null;
       if(ci!=null){ var c=step.cards[ci];
         h+='<span class="wk-lbl'+(c.ink?' ink-'+c.ink:'')+'" style="'+pos+'">'+esc(c.t)+'</span>'; }
       else if(!step && z.text) h+='<span class="wk-lbl'+(z.ink?' ink-'+z.ink:'')+'" style="'+pos+'">'+z.text+'</span>';
@@ -462,10 +478,19 @@
                   : '<span class="wk-h">'+L.h+'</span>';
     return '<div class="wk-ln'+(eq?' eq':'')+'">'+tag+' '+body+' <span class="wk-move">'+esc(L.note||'')+'</span></div>';
   }
+  // p.workVariants = { name: [group...] } and p.variantBy = { step:si, zone:'id', key:{ k:'name' } }:
+  // when the card placed in that zone has key k, the work is variant `name` (same lines, the
+  // student's letters). Anything else uses p.work.
+  function workFor(p, s){
+    var v=p.variantBy; if(!v || !p.workVariants) return p.work||[];
+    var st=s.steps[v.step], step=p.pipeline[v.step], ci=st && st.placed ? st.placed[v.zone] : null;
+    if(ci==null) return p.work||[];
+    var name=v.key[step.cards[ci].k]; return (name && p.workVariants[name]) || p.work || [];
+  }
   function workHtml(p, s){
     var h='<div class="wk-head"><span class="wk-title">Suggested work</span><span class="wk-for">'+esc(p.num)+'</span></div>'+
           '<p class="wk-intro">How your paper could look. A line shows up after you check that step.</p>';
-    var groups=p.work||[], mark={done:false};
+    var groups=workFor(p, s), mark={done:false};
     for(var i=0;i<groups.length;i++){
       var g=groups[i];
       if(g.cols){
