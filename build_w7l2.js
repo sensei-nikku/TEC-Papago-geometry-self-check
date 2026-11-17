@@ -17,7 +17,7 @@
    Run: node build_w7l2.js  -> checkers/week7-lesson2-surface-area.html */
 const fs=require('fs');
 function djb2(s){var v=5381;for(var i=0;i<s.length;i++){v=((v<<5)+v)+s.charCodeAt(i);v=v&v;}return v>>>0;}
-const DOT='·',PI_='π',SQ='²',MI='−';
+const DOT='·',PI_='π',SQ='²',MI='−',THIRD='(1/3)';
 const PI=Math.PI, TOL=0.1;
 const f1=x=>(Math.floor(x*10+0.5)/10).toFixed(1);
 const show=x=>String(x);                                           // 1.5 stays 1.5
@@ -86,29 +86,48 @@ function answerStep(subs,ans,traps,unit,tenth){
      mk('Plan 6: Answer. Simplify with the calculator, one go. h = ?'+ask)]);
 }
 
-/* steps 1, 3, 4 on paper: a sketch with the facts and the unknown written on it */
-function boxSketch(l,w,S,u){
-  return '<svg class="wk-sketch" viewBox="0 0 330 150" width="330" height="150" role="img" aria-label="Sketch: a closed box, l = '+l+' '+u+', w = '+w+' '+u+', h unknown, S = '+S+' '+u+' squared">'+
-    '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">'+
-    '<path d="M60 45 H180 V115 H60 Z"/><path d="M60 45 L100 18 H220 L180 45"/><path d="M180 115 L220 88 V18"/>'+
-    '<path d="M60 115 L100 88 H220 M100 88 V18" stroke-dasharray="4 5" opacity=".45"/></g>'+
-    '<g fill="currentColor" style="font-family:inherit" font-size="15">'+
-    '<text class="ink-2" fill="currentColor" x="120" y="137" text-anchor="middle">l = '+l+' '+u+'</text><text class="ink-3" fill="currentColor" x="206" y="116">w = '+w+' '+u+'</text>'+
-    '<text class="ink-6" fill="currentColor" x="52" y="85" text-anchor="end">h = ?</text>'+
-    '<text class="ink-1" fill="currentColor" x="236" y="60">S = '+S+' '+u+'²</text></g></svg>';
+/* steps 1, 3, 4 on paper: a sketch the student labels by dragging. The drawing has no
+   labels; each zone is a spot (viewBox units) where one label belongs. */
+function boxFig(l,w,S,u){
+  return {vb:[330,150],
+    svg:'<svg class="wk-sketch" viewBox="0 0 330 150" width="330" height="150" role="img" aria-label="Sketch: a closed box">'+
+      '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round">'+
+      '<path d="M60 45 H180 V115 H60 Z"/><path d="M60 45 L100 18 H220 L180 45"/><path d="M180 115 L220 88 V18"/>'+
+      '<path d="M60 115 L100 88 H220 M100 88 V18" stroke-dasharray="4 5" opacity=".45"/></g></svg>',
+    zones:[{id:'l',x:120,y:133,anchor:'middle',name:'the front edge of the base'},{id:'w',x:204,y:112,anchor:'start',name:'the edge going back'},
+           {id:'h',x:54,y:80,anchor:'end',name:'the edge going up'},{id:'S',x:236,y:55,anchor:'start',name:'beside the box'}]};
 }
-function canSketch(r,S,u,width){
-  const across=width?'<path d="M52 40 H148"/>':'<path d="M100 40 H148"/>';
-  const lab=width?'<text class="ink-3" fill="currentColor" x="100" y="24" text-anchor="middle">d = '+width+' '+u+'</text>':'<text class="ink-2" fill="currentColor" x="124" y="24" text-anchor="middle">r = '+r+' '+u+'</text>';
-  return '<svg class="wk-sketch" viewBox="0 0 330 140" width="330" height="140" role="img" aria-label="Sketch: a cylinder, '+(width?'d = '+width+' '+u+' across':'r = '+r+' '+u)+', h unknown, S = '+S+' '+u+' squared">'+
-    '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">'+
-    '<ellipse cx="100" cy="40" rx="48" ry="11"/><path d="M52 40 V118 M148 40 V118"/><path d="M52 118 A48 11 0 0 0 148 118"/>'+
-    '<path d="M52 118 A48 11 0 0 1 148 118" stroke-dasharray="4 5" opacity=".45"/>'+across+'</g>'+
-    (width?'':'<circle cx="100" cy="40" r="2.3" fill="currentColor"/>')+
-    '<g fill="currentColor" style="font-family:inherit" font-size="15">'+lab+
-    '<text class="ink-6" fill="currentColor" x="158" y="86">h = ?</text>'+
-    '<text class="ink-1" fill="currentColor" x="220" y="86">S = '+S+' '+u+'²</text></g></svg>';
+function canFig(r,S,u,width){
+  return {vb:[330,140],
+    svg:'<svg class="wk-sketch" viewBox="0 0 330 140" width="330" height="140" role="img" aria-label="Sketch: a cylinder">'+
+      '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">'+
+      '<ellipse cx="100" cy="40" rx="48" ry="11"/><path d="M52 40 V118 M148 40 V118"/><path d="M52 118 A48 11 0 0 0 148 118"/>'+
+      '<path d="M52 118 A48 11 0 0 1 148 118" stroke-dasharray="4 5" opacity=".45"/>'+(width?'<path d="M52 40 H148"/>':'<path d="M100 40 H148"/>')+'</g>'+
+      (width?'':'<circle cx="100" cy="40" r="2.3" fill="currentColor"/>')+'</svg>',
+    zones:[width?{id:'d',x:100,y:19,anchor:'middle',name:'across the top'}:{id:'r',x:124,y:19,anchor:'middle',name:'the radius'},
+           {id:'h',x:158,y:81,anchor:'start',name:'the side going up'},{id:'S',x:222,y:81,anchor:'start',name:'beside the can'}]};
 }
+/* label cards: the right ones say why they go where they go; the extras say what they are */
+function labelStep(cards){
+  const zones=cards.filter(c=>c.z).map(c=>({id:c.z,accept:djb2(c.t)}));
+  if(new Set(cards.map(c=>c.t)).size!==cards.length) throw new Error('duplicate label cards');
+  return {tool:'labels',slot:'sketch',shuffle:true,label:'Plan 1, 3, 4: Label your sketch',
+    ask:'Put each label where it belongs on the sketch. Not every label belongs.',
+    cards:cards.map(c=>{const o={t:c.t,why:c.why}; if(c.ink) o.ink=c.ink; return o;}),zones};
+}
+function modelStep(cards){
+  if(new Set(cards.map(c=>c.t)).size!==cards.length) throw new Error('duplicate model cards');
+  return {tool:'model',slot:'model',shuffle:true,label:'Plan 2: The model',ask:'Which model covers this solid?',dropText:'Drag the model here',
+    cards:cards.map(c=>({t:c.t,why:c.why})),ch:djb2(cards[0].t)};
+}
+const BOX_MODELS=[{t:'S = Ph + 2B',why:'A closed box: the strip around the sides (Ph) plus the top and the bottom (2B).'},
+  {t:'S = Ph + B',why:'One base only: that covers a box with no lid. This box is closed, top and bottom.'},
+  {t:'V = Bh',why:'V fills the box, in cubic units. This problem covers it, in square units: S.'},
+  {t:'S = 2'+PI_+'rh + 2'+PI_+'r'+SQ,why:'That covers a can. A box has no '+PI_+' and no r.'}];
+const CAN_MODELS=[{t:'S = 2'+PI_+'rh + 2'+PI_+'r'+SQ,why:'A can: the label all the way around (2'+PI_+'rh) plus the top and the bottom (2'+PI_+'r'+SQ+').'},
+  {t:'S = 2'+PI_+'rh + '+PI_+'r'+SQ,why:'One end only: that covers a cup. This can has a top and a bottom.'},
+  {t:'V = '+PI_+'r'+SQ+'h',why:'V fills the can, in cubic units. This problem covers it, in square units: S.'},
+  {t:'V = '+THIRD+PI_+'r'+SQ+'h',why:'That fills a cone. This is a can, and it is covered, not filled.'}];
 const BOXED=v=>'<span class="wk-box">'+v+'</span>';
 
 
@@ -123,22 +142,29 @@ function boxProb(o){
   const back=P*Number(aStr)+2*B;
   const check=[{tag:'Check',l:S_,r:'= '+P_+h_+' + 2'+B_},{l:'',r:'= '+N('P',P)+'('+N('h',aStr)+') + 2('+N('B',B)+')'},
                {l:'',r:(back===S?'= '+N('S',back)+' ✓':'= '+N('S',back.toFixed(1))+', about '+N('S',S)+' ✓')}];
+  const labels=labelStep([
+    {t:'l = '+l+' '+u,ink:INK.l,z:'l',why:'l is the length of the base: '+l+' '+u+' along the front.'},
+    {t:'w = '+w+' '+u,ink:INK.w,z:'w',why:'w is the width of the base: '+w+' '+u+' going back.'},
+    {t:'h = ?',ink:INK.h,z:'h',why:'h is what you are looking for: mark the edge that goes up with h = ?.'},
+    {t:'S = '+S+' '+u+SQ,ink:INK.S,z:'S',why:'S covers the whole box, so it goes beside the box, not on one edge. Square units mean it covers.'},
+    {t:'V = '+S+' '+u+'³',why:'V is what a box holds, in cubic units. This box is covered with '+S+' '+u+SQ+': that is S.'},
+    {t:'h = '+l+' '+u,ink:INK.h,why:l+' '+u+' runs along the base: that is l. The height is what you are looking for: h = ?.'}]);
   return Object.assign({id,num:numLbl,prompt,given,want:'h, the height, in '+u,
-    pipeline:[
+    pipeline:[labels, modelStep(BOX_MODELS),
       exact('Plan 5a: Find B, the area of the base. B = ? (in '+u+SQ+')',B,[[P,'That is P, the distance around. B is the area: l '+DOT+' w.'],[l+w,'B is an area: multiply, l '+DOT+' w.']],'B is the area of the base: B = lw.'),
       exact('Plan 5b: Find P, the distance around the base. P = ? (in '+u+')',P,[[B,'That is B, the area. P goes around: 2l + 2w.'],[l+w,'That is halfway around. P = 2l + 2w.']],'P is the distance around the base: P = 2l + 2w.'),
       solveStep(BOX,'5c'),
       answerStep(subs,ans,traps,u,tenth)]},
    {work:[
-     {lines:[{tag:'1, 3, 4',h:boxSketch(l,w,S,u),fig:true}]},
+     {lines:[{tag:'1, 3, 4',fig:boxFig(l,w,S,u),slot:'sketch'}]},
      {lines:[
-       {tag:'2',l:S_,r:'= '+P_+h_+' + 2'+B_},                    // free: it is in the Formula Box
-       {tag:'5a',l:B_,r:'= '+l_+w_,at:[0]},{l:'',r:'= '+N('l',l)+' '+DOT+' '+N('w',w),at:[0]},{l:'',r:'= '+N('B',B),at:[0]},
-       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_,at:[1]},{l:'',r:'= 2('+N('l',l)+') + 2('+N('w',w)+')',at:[1]},{l:'',r:'= '+N('P',P),at:[1]},
-       {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[2,0]},
-       {l:FR(S_+' '+MI+' 2'+B_,P_),r:'= '+h_,note:'× 1/P',at:[2]},
-       {tag:'6',l:h_,r:'= '+FR(N('S',S)+' '+MI+' 2('+N('B',B)+')',N('P',P)),at:[3,0]},
-       {l:'',r:(tenth?'≈ ':'= ')+BOXED(N('h',aStr+' '+u)),at:[3]}]}],
+       {tag:'2',slot:'model',l:S_,r:'= '+P_+h_+' + 2'+B_,at:[1]},
+       {tag:'5a',l:B_,r:'= '+l_+w_,at:[2]},{l:'',r:'= '+N('l',l)+' '+DOT+' '+N('w',w),at:[2]},{l:'',r:'= '+N('B',B),at:[2]},
+       {tag:'5b',l:P_,r:'= 2'+l_+' + 2'+w_,at:[3]},{l:'',r:'= 2('+N('l',l)+') + 2('+N('w',w)+')',at:[3]},{l:'',r:'= '+N('P',P),at:[3]},
+       {tag:'5c',l:S_+' '+MI+' 2'+B_,r:'= '+P_+h_,note:'change sides, change signs',at:[4,0]},
+       {l:FR(S_+' '+MI+' 2'+B_,P_),r:'= '+h_,note:'× 1/P',at:[4]},
+       {tag:'6',l:h_,r:'= '+FR(N('S',S)+' '+MI+' 2('+N('B',B)+')',N('P',P)),at:[5,0]},
+       {l:'',r:(tenth?'≈ ':'= ')+BOXED(N('h',aStr+' '+u)),at:[5]}]}],
     workCheck:check},
    {_ans:aStr});
 }
@@ -155,14 +181,25 @@ function canProb(o){
   const back=2*PI*r*Number(aStr)+2*PI*r*r;
   const check=[{tag:'Check',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ},{l:'',r:'= 2'+PI_+'('+N('r',rs)+')('+N('h',aStr)+') + 2'+PI_+'('+N('r',rs)+SQ+')'},
                {l:'',r:'≈ '+N('S',back.toFixed(1))+', about '+N('S',S)+' ✓'}];
-  const k=width?1:0;                                          // pipeline index of the letters step
-  const pipeline=(width?[exact('Plan 5a: Find r. r = ? (in '+u+')',r,[[width,width+' '+u+' is d, all the way across. d = 2r, so r = d/2.'],[2*width,'d = 2r: undo × 2 with × 1/2, not × 2.']],'Write d = 2r, then solve it for r.')]:[])
-    .concat([solveStep(CAN,width?'5b':'5'),answerStep(subs,ans,traps,u,true)]);
+  const lab=width?[
+    {t:'d = '+width+' '+u,ink:INK.d,z:'d',why:'d is all the way across the top: '+width+' '+u+'.'},
+    {t:'r = '+width+' '+u,ink:INK.r,why:width+' '+u+' goes all the way across: that is d. r is half of it.'}]:[
+    {t:'r = '+rs+' '+u,ink:INK.r,z:'r',why:'r is the radius: from the center to the edge, '+rs+' '+u+'.'},
+    {t:'d = '+rs+' '+u,ink:INK.d,why:rs+' '+u+' is the radius, center to edge. d goes all the way across: d = 2r.'}];
+  const labels=labelStep([lab[0],
+    {t:'h = ?',ink:INK.h,z:'h',why:'h is what you are looking for: mark the side that goes up with h = ?.'},
+    {t:'S = '+S+' '+u+SQ,ink:INK.S,z:'S',why:'S covers the whole can, so it goes beside the can. Square units mean it covers.'},
+    lab[1],
+    {t:'V = '+S+' '+u+'³',why:'V is what the can holds, in cubic units. The can is made from '+S+' '+u+SQ+' of metal: that is S.'}]);
+  const o0=2, k=o0+(width?1:0);                               // pipeline index of the letters step
+  const pipeline=[labels, modelStep(CAN_MODELS)].concat(
+    width?[exact('Plan 5a: Find r. r = ? (in '+u+')',r,[[width,width+' '+u+' is d, all the way across. d = 2r, so r = d/2.'],[2*width,'d = 2r: undo × 2 with × 1/2, not × 2.']],'Write d = 2r, then solve it for r.')]:[],
+    [solveStep(CAN,width?'5b':'5'),answerStep(subs,ans,traps,u,true)]);
   const n5=width?'5b':'5';
-  const workCan=[{lines:[{tag:'1, 3, 4',h:canSketch(rs,S,u,width),fig:true}]},{lines:[
-    {tag:'2',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ}].concat(          // free: it is in the Formula Box
-    width?[{tag:'5a',l:d_,r:'= 2'+r_,at:[0]},{l:FR(d_,'2'),r:'= '+r_,note:'× 1/2',at:[0]},
-           {l:r_,r:'= '+FR(N('d',width),'2'),at:[0]},{l:'',r:'= '+N('r',rs),at:[0]}]:[],[
+  const workCan=[{lines:[{tag:'1, 3, 4',fig:canFig(rs,S,u,width),slot:'sketch'}]},{lines:[
+    {tag:'2',slot:'model',l:S_,r:'= 2'+PI_+r_+h_+' + 2'+PI_+r_+SQ,at:[1]}].concat(
+    width?[{tag:'5a',l:d_,r:'= 2'+r_,at:[o0]},{l:FR(d_,'2'),r:'= '+r_,note:'× 1/2',at:[o0]},
+           {l:r_,r:'= '+FR(N('d',width),'2'),at:[o0]},{l:'',r:'= '+N('r',rs),at:[o0]}]:[],[
     {tag:n5,l:S_+' '+MI+' 2'+PI_+r_+SQ,r:'= 2'+PI_+r_+h_,note:'change sides, change signs',at:[k,0]},
     {l:FR(S_+' '+MI+' 2'+PI_+r_+SQ,'2'+PI_+r_),r:'= '+h_,note:'× 1/(2'+PI_+'r)',at:[k]},
     {tag:'6',l:h_,r:'= '+FR(N('S',S)+' '+MI+' 2'+PI_+'('+N('r',rs)+SQ+')','2'+PI_+'('+N('r',rs)+')'),at:[k+1,0]},
@@ -243,6 +280,7 @@ const page=`<!DOCTYPE html>
 <main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the Learning Lab on paper and check with your teacher.</p></noscript></main>
 
 <script src="../js/checker-kit.js"></script>
+<script src="../js/tool-drag.js"></script>
 <script>
 /* Week 7 Lesson 2 Learning Lab. Work shell: suggested work on the left fills in as each step
    is checked; the question is on the right; the f button opens the Formula Box. Box: 5a B,
