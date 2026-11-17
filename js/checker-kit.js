@@ -359,7 +359,7 @@
   // Right = the question: prompt, what you know, the live step and its ladder.
   // An f button on the question's corner opens the Formula Box (references).
   //
-  // A problem opts in with  work:[group...]  and optional  workCheck:'html'.
+  // A problem opts in with  work:[group...]  and optional  workCheck: 'html' or [line...] (shown when done).
   // The work is what a person writes on paper, not the scaffolding: a labelled sketch,
   // side calculations beside it, then one column of algebra with the = signs lined up.
   //   group = { lines:[line...] }  or  { cols:[ [line...], [line...] ] }   (side by side)
@@ -430,7 +430,12 @@
         h+='</div></div>';
       }
     }
-    if(s.done && p.workCheck) h+='<div class="wk-check">'+p.workCheck+'</div>';
+    if(s.done && p.workCheck){
+      if(typeof p.workCheck==='string') h+='<div class="wk-check">'+p.workCheck+'</div>';
+      else { h+='<div class="wk-check"><div class="wk-sheet">';
+             for(var c=0;c<p.workCheck.length;c++) h+=workLine(p.workCheck[c], s, mark);
+             h+='</div></div>'; }
+    }
     return h;
   }
 

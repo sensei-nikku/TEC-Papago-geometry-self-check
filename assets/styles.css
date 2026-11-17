@@ -339,6 +339,7 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
 .wk-box{border:1.8px solid var(--ink);border-radius:3px 6px 4px 7px;padding:0 .35em;margin-left:.15em}
 .wk-sketch{display:block;max-width:100%;height:auto;color:var(--ink);margin:2px 0}
 .wk-check{margin-top:6px;padding-top:8px;border-top:1px solid var(--ink-faint);font-size:1rem;color:var(--ink)}
+.wk-check .wk-sheet{grid-template-columns:3.6em max-content minmax(0,max-content) minmax(0,1fr)}
 .wk-check b{color:var(--ink-red)}
 .wk-done{margin-top:16px}
 .wk-done .wk-note{margin-top:8px}

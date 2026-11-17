@@ -61,7 +61,7 @@ A(pop.hidden && btn.getAttribute('aria-expanded')==='false','Formula Box starts 
 btn.click();
 A(!pop.hidden && btn.getAttribute('aria-expanded')==='true','f opens the Formula Box');
 A(pop.textContent.includes('SG-4') && pop.textContent.includes('S = Ph + 2B') && pop.textContent.includes('S = 2πrh + 2πr²'),'Formula Box: SG-4 prism and cylinder');
-A(pop.textContent.includes('change sides, change signs') && pop.textContent.includes('P = 2l + 2w') && pop.textContent.includes('across = 2r'),'Formula Box: undo moves, B and P, across');
+A(pop.textContent.includes('change sides, change signs') && pop.textContent.includes('P = 2l + 2w') && pop.textContent.includes('d = 2r'),'Formula Box: undo moves, B and P, across');
 A(d.activeElement===pop.querySelector('.ref-close'),'focus moves to the close button');
 enter(w,'t1',0,'24');
 A(!d.getElementById('ckRef').hidden,'the Formula Box stays open while the student works');
@@ -89,8 +89,10 @@ A(workText(w).includes('S − 2B = Ph') && workText(w).includes('change sides, c
 A(!workText(w).includes('228 − 2(24)'),'t1: the substitution waits for step 6');
 enter(w,'t1',3,'9');
 A(w.K._S().t1.done && workText(w).includes('228 − 2(24)') && w.document.querySelector('#ckWork .wk-box').textContent==='9 cm','t1: after the answer: substitute and the boxed answer show');
-{const t=workText(w); A(t.split('Ph + 2B').length===2 && t.split('228 − 2(24)').length===2,'t1: nothing is written twice (the formula once, the substitution once)');}
-A(pending(w)===0 && workText(w).includes('Check: 20(9) + 2(24) = 228 ✓') && hanging(w),'t1: finished: every line hangs, and the check');
+{const t=[...w.document.querySelectorAll('#ckWork .wk-group')].map(e=>e.textContent).join(' '); A(t.split('Ph + 2B').length===2 && t.split('228 − 2(24)').length===2 && t.split('S − 2B').length===3,'t1: the work writes each line once: the formula once, the solved form once, the substitution once');}
+{const rows=[...w.document.querySelectorAll('#ckWork .wk-group .wk-ln.eq')].map(e=>[e.querySelector('.wk-l').textContent.trim(),e.querySelector('.wk-r').textContent.trim()]);
+ A(rows.some(([l,r])=>l==='S − 2BP' && r==='= h') && rows.some(([l,r])=>l==='h' && r==='= 228 − 2(24)20'),'t1: like d = 2r: the inverse leaves h on the right, step 6 substitutes with h on the left');}
+A(pending(w)===0 && flat(w).includes('Check S = Ph + 2B = 20(9) + 2(24) = 228 ✓') && hanging(w),'t1: finished: every line hangs; the check restates S = Ph + 2B, then substitutes');
 A(w.document.getElementById('ckQ').textContent.includes('Complete') && w.document.querySelector('#ckQ .wk-done .btn-go'),'t1: stays on screen with a Next button');
 w.document.querySelector('#ckQ .wk-done .btn-go').click();
 A(w.document.getElementById('ckQ').textContent.includes('400 cm²') && workText(w).includes('T-2'),'Next opens T-2');
@@ -109,7 +111,7 @@ A(w.K._S().t2.stepIdx===1,'t2: walking the ladder settles step 5');
 enter(w,'t2',1,'3'); enter(w,'t2',2001,{c:'h = (400 − 2π(5²)) / (2π(5))'});
 A(workText(w).includes('400 − 2π(5²)') && !w.document.querySelector('#ckWork .wk-box'),'t2: substitute shows, the answer waits');
 enter(w,'t2',2002,'7.7');
-A(w.K._S().t2.done && w.document.querySelector('#ckWork .wk-box').textContent==='7.7 cm' && workText(w).includes('about 400 ✓'),'t2: answer and check show');
+A(w.K._S().t2.done && w.document.querySelector('#ckWork .wk-box').textContent==='7.7 cm' && flat(w).includes('Check S = 2πrh + 2πr² = 2π(5)(7.7) + 2π(5²) ≈ 399.0, about 400 ✓'),'t2: answer and check show; the check restates the formula');
 
 /* ---- straight answers ---- */
 ids.forEach(pid=>{const ww=go(pid); straight(ww,pid); A(ww.K._S()[pid].done,pid+': straight answers -> Complete'); A(pending(ww)===0 && hanging(ww),pid+': every line of the work shows, one = per line');});
@@ -134,7 +136,11 @@ trap('t1',3,'10.2','two bases',box('t1')); trap('t1',3,'10.4','l · w, not l + w
 trap('t1',3,'7.83','switched',box('t1')); trap('t1',3,'18','all the way around',box('t1'));
 trap('t2',1,'12.73','never moved',[[0,{c:CANS}]]); trap('t4',1,'11.76','two ends',[[0,{c:CANS}]]);
 trap('t4',1,'12.26','Power first',[[0,{c:CANS}]]);
-trap('a2',0,'10','all the way across'); trap('a2',2,'-4.43','whole width',[[0,'5'],[1,{c:CANS}]]);
+trap('a2',0,'10','all the way across');
+{const ww=go('a2'); enter(ww,'a2',0,'5');
+ const rows=[...ww.document.querySelectorAll('#ckWork .wk-group .wk-ln.eq')].map(e=>[e.querySelector('.wk-l').textContent.trim(),e.querySelector('.wk-r').textContent.trim(),e.querySelector('.wk-move').textContent.trim()]);
+ const has=(l,r,n)=>rows.some(x=>x[0]===l&&x[1]===r&&(n===undefined||x[2]===n));
+ A(flat(ww).includes('d = 10 cm') && has('d','= 2r') && has('d2','= r','× 1/2') && has('r','= 102') && has('','= 5') && hanging(ww),'a2: 5a writes d = 2r, solves it (d/2 = r), then substitutes d: r = 10/2 = 5');} trap('a2',2,'-4.43','is d, all the way across',[[0,'5'],[1,{c:CANS}]]);
 trap('a1',3,'9.36','two bases',box('a1'));
 
 /* ---- every ladder walks to the end ---- */
