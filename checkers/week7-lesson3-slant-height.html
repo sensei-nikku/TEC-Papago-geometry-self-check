@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 7, Lesson 3 — Surface Area: Pyramids and Cones Checker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Surface Area: Pyramids and Cones</h1><div class="sub">Week 7 · Lesson 3 — Learning Lab</div></div>
+  <div class="hdr-dots" id="hdrDots"></div>
+</header>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the packet on paper and check with the key on page 4.</p></noscript></main>
+
+<script src="../js/checker-kit.js"></script>
+<script>
+/* Week 7 Lesson 3 Learning Lab (sub day). Split layout, coarse first: find the slant
+   height when h is given, then the surface area. A miss opens the plan one move at a time.
+   Nearest tenth (tol 0.1). Choice answers are djb2 hashes. */
+K.run([
+ {
+  "id": "t1",
+  "num": "T-1",
+  "prompt": "A cone has a radius of 4 in and a slant height of 10 in. Find its surface area, to the nearest tenth.",
+  "given": [
+   {
+    "v": "4 in",
+    "k": "the radius r"
+   },
+   {
+    "v": "10 in",
+    "k": "the slant height ℓ"
+   }
+  ],
+  "want": "SA, the surface area",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA ≈ ? (nearest tenth, in in²)",
+    "answer": 175.92918860102841,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 125.66370614359172,
+      "tol": 0.06,
+      "msg": "That is only the side. Add the base circle: πr²."
+     },
+     {
+      "near": 552.9203070318035,
+      "tol": 0.06,
+      "msg": "The side is πrℓ, not πr²ℓ."
+     }
+    ],
+    "nudges": [
+     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 2885075722,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers in. Which is it?",
+      "options": [
+       "SA = π · 4² + π · 4 · 10",
+       "SA = π · 4 · 10",
+       "SA = π · 10² + π · 4 · 10"
+      ],
+      "ch": 3393429505,
+      "shuffle": true,
+      "nudges": [
+       "r goes where r is, ℓ where ℓ is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA ≈ ? (nearest tenth)",
+      "answer": 175.92918860102841,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 125.66370614359172,
+        "tol": 0.06,
+        "msg": "That is only the side. Add the base circle: πr²."
+       },
+       {
+        "near": 552.9203070318035,
+        "tol": 0.06,
+        "msg": "The side is πrℓ, not πr²ℓ."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t2",
+  "num": "T-2",
+  "prompt": "A square pyramid has a base 8 cm on each side. Its slant height is 6 cm. Find its surface area.",
+  "given": [
+   {
+    "v": "8 cm",
+    "k": "each side s"
+   },
+   {
+    "v": "6 cm",
+    "k": "the slant height ℓ"
+   }
+  ],
+  "want": "SA, the surface area",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA = ? (in cm²)",
+    "answer": 160,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 256,
+      "tol": 0.06,
+      "msg": "You left out the 1/2."
+     },
+     {
+      "near": 96,
+      "tol": 0.06,
+      "msg": "That is only the sides. Add the base B."
+     },
+     {
+      "near": 128,
+      "tol": 0.06,
+      "msg": "B is the area of the base, s², not 4s."
+     }
+    ],
+    "nudges": [
+     "Find B and P first, then substitute."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 292636809,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5a: B = s² = ?",
+      "answer": 64,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "B is the area of the square base: s · s."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: P = 4s = ?",
+      "answer": 32,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "P is the distance around the base: 4 sides."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA = ? ",
+      "answer": 160,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 256,
+        "tol": 0.06,
+        "msg": "You left out the 1/2."
+       },
+       {
+        "near": 96,
+        "tol": 0.06,
+        "msg": "That is only the sides. Add the base B."
+       },
+       {
+        "near": 128,
+        "tol": 0.06,
+        "msg": "B is the area of the base, s², not 4s."
+       }
+      ],
+      "nudges": [
+       "Reiterate the rule, substitute, then the calculator."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t3",
+  "num": "T-3",
+  "prompt": "A cone has a radius of 9 m and a height of 12 m. Find its surface area, to the nearest tenth.",
+  "given": [
+   {
+    "v": "9 m",
+    "k": "the radius r"
+   },
+   {
+    "v": "12 m",
+    "k": "the height h"
+   }
+  ],
+  "want": "SA, the surface area",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "answer": 15,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 21,
+      "tol": 0.06,
+      "msg": "ℓ is not h + r. Square, add, then take the square root."
+     },
+     {
+      "near": 7.937253933193772,
+      "tol": 0.06,
+      "msg": "Add the squares; ℓ is the longest side."
+     }
+    ],
+    "nudges": [
+     "h, r and ℓ make a right triangle. ℓ is the longest side."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: The slant height rule",
+      "ask": "Which rule finds ℓ?",
+      "options": [
+       "ℓ = √(h² + r²)",
+       "ℓ = h + r",
+       "ℓ = √(h² − r²)",
+       "ℓ = h"
+      ],
+      "ch": 3445052713,
+      "shuffle": true,
+      "nudges": [
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Under the root: 12² + 9² = ?",
+      "answer": 225,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "Power first: 12² = 144 and 9² = 81. Then add."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Take the square root. ℓ = ?",
+      "answer": 15,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 225,
+        "tol": 0.06,
+        "msg": "That is ℓ². Take its square root."
+       }
+      ],
+      "nudges": [
+       "A square is undone by a square root."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA ≈ ? (nearest tenth, in m²)",
+    "answer": 678.5840131753953,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 593.7610115284708,
+      "tol": 0.06,
+      "msg": "You used h. Surface area uses ℓ."
+     },
+     {
+      "near": 424.11500823462205,
+      "tol": 0.06,
+      "msg": "That is only the side. Add the base circle."
+     },
+     {
+      "near": 678.24,
+      "tol": 0.06,
+      "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+     }
+    ],
+    "nudges": [
+     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 2885075722,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers in. Which is it?",
+      "options": [
+       "SA = π · 9² + π · 9 · 15",
+       "SA = π · 9 · 15",
+       "SA = π · 15² + π · 9 · 15"
+      ],
+      "ch": 106074096,
+      "shuffle": true,
+      "nudges": [
+       "r goes where r is, ℓ where ℓ is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA ≈ ? (nearest tenth)",
+      "answer": 678.5840131753953,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 593.7610115284708,
+        "tol": 0.06,
+        "msg": "You used h. Surface area uses ℓ."
+       },
+       {
+        "near": 424.11500823462205,
+        "tol": 0.06,
+        "msg": "That is only the side. Add the base circle."
+       },
+       {
+        "near": 678.24,
+        "tol": 0.06,
+        "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "t4",
+  "num": "T-4",
+  "prompt": "A square pyramid has a base 12 ft on each side. Its height is 8 ft. Find its surface area.",
+  "given": [
+   {
+    "v": "12 ft",
+    "k": "each side s"
+   },
+   {
+    "v": "8 ft",
+    "k": "the height h"
+   }
+  ],
+  "want": "SA, the surface area",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "answer": 10,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 14.422205101855956,
+      "tol": 0.06,
+      "msg": "Use half the side: s/2 = 6, not 12."
+     },
+     {
+      "near": 14,
+      "tol": 0.06,
+      "msg": "ℓ is not h + s/2. Square, add, then take the square root."
+     }
+    ],
+    "nudges": [
+     "h, half the side and ℓ make a right triangle. ℓ is the longest side."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: The slant height rule",
+      "ask": "Which rule finds ℓ?",
+      "options": [
+       "ℓ = √(h² + (s/2)²)",
+       "ℓ = √(h² + s²)",
+       "ℓ = h + s/2",
+       "ℓ = h"
+      ],
+      "ch": 3541956028,
+      "shuffle": true,
+      "nudges": [
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Under the root: 8² + 6² = ?",
+      "answer": 100,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "Power first: 8² = 64 and 6² = 36. Then add."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Take the square root. ℓ = ?",
+      "answer": 10,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 100,
+        "tol": 0.06,
+        "msg": "That is ℓ². Take its square root."
+       }
+      ],
+      "nudges": [
+       "A square is undone by a square root."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA = ? (in ft²)",
+    "answer": 384,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 336,
+      "tol": 0.06,
+      "msg": "You used h. Surface area uses ℓ."
+     },
+     {
+      "near": 240,
+      "tol": 0.06,
+      "msg": "That is only the sides. Add the base B."
+     },
+     {
+      "near": 624,
+      "tol": 0.06,
+      "msg": "You left out the 1/2."
+     }
+    ],
+    "nudges": [
+     "Find B and P first, then substitute."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 292636809,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5a: B = s² = ?",
+      "answer": 144,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "B is the area of the square base: s · s."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: P = 4s = ?",
+      "answer": 48,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "P is the distance around the base: 4 sides."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA = ? ",
+      "answer": 384,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 336,
+        "tol": 0.06,
+        "msg": "You used h. Surface area uses ℓ."
+       },
+       {
+        "near": 240,
+        "tol": 0.06,
+        "msg": "That is only the sides. Add the base B."
+       },
+       {
+        "near": 624,
+        "tol": 0.06,
+        "msg": "You left out the 1/2."
+       }
+      ],
+      "nudges": [
+       "Reiterate the rule, substitute, then the calculator."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a1",
+  "num": "A-1",
+  "prompt": "A cone is 12 in across the bottom. Its slant height is 14 in. Find its surface area, to the nearest tenth.",
+  "given": [
+   {
+    "v": "12 in across",
+    "k": "the diameter"
+   },
+   {
+    "v": "14 in",
+    "k": "the slant height ℓ"
+   }
+  ],
+  "want": "SA, the surface area",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA ≈ ? (nearest tenth, in in²)",
+    "answer": 376.9911184307752,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 980.1769079200155,
+      "tol": 0.06,
+      "msg": "12 in across is the diameter. r = 12 · 1/2 = 6."
+     },
+     {
+      "near": 263.89378290154264,
+      "tol": 0.06,
+      "msg": "That is only the side. Add the base circle."
+     },
+     {
+      "near": 376.8,
+      "tol": 0.06,
+      "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+     }
+    ],
+    "nudges": [
+     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 2885075722,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 4: r = 12 · 1/2 = ?",
+      "answer": 6,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "Across is the whole width. The radius is half of it."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers in. Which is it?",
+      "options": [
+       "SA = π · 6² + π · 6 · 14",
+       "SA = π · 6 · 14",
+       "SA = π · 14² + π · 6 · 14"
+      ],
+      "ch": 360500425,
+      "shuffle": true,
+      "nudges": [
+       "r goes where r is, ℓ where ℓ is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA ≈ ? (nearest tenth)",
+      "answer": 376.9911184307752,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 980.1769079200155,
+        "tol": 0.06,
+        "msg": "12 in across is the diameter. r = 12 · 1/2 = 6."
+       },
+       {
+        "near": 263.89378290154264,
+        "tol": 0.06,
+        "msg": "That is only the side. Add the base circle."
+       },
+       {
+        "near": 376.8,
+        "tol": 0.06,
+        "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a2",
+  "num": "A-2",
+  "prompt": "A square pyramid has a base 14 m on each side. Its height is 24 m. Find its surface area.",
+  "given": [
+   {
+    "v": "14 m",
+    "k": "each side s"
+   },
+   {
+    "v": "24 m",
+    "k": "the height h"
+   }
+  ],
+  "want": "SA, the surface area",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "answer": 25,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 27.784887978899608,
+      "tol": 0.06,
+      "msg": "Use half the side: s/2 = 7, not 14."
+     },
+     {
+      "near": 31,
+      "tol": 0.06,
+      "msg": "ℓ is not h + s/2."
+     }
+    ],
+    "nudges": [
+     "h, half the side and ℓ make a right triangle. ℓ is the longest side."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: The slant height rule",
+      "ask": "Which rule finds ℓ?",
+      "options": [
+       "ℓ = √(h² + (s/2)²)",
+       "ℓ = √(h² + s²)",
+       "ℓ = h + s/2",
+       "ℓ = h"
+      ],
+      "ch": 3541956028,
+      "shuffle": true,
+      "nudges": [
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Under the root: 24² + 7² = ?",
+      "answer": 625,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "Power first: 24² = 576 and 7² = 49. Then add."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Take the square root. ℓ = ?",
+      "answer": 25,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 625,
+        "tol": 0.06,
+        "msg": "That is ℓ². Take its square root."
+       }
+      ],
+      "nudges": [
+       "A square is undone by a square root."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA = ? (in m²)",
+    "answer": 896,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 868,
+      "tol": 0.06,
+      "msg": "You used h. Surface area uses ℓ."
+     },
+     {
+      "near": 700,
+      "tol": 0.06,
+      "msg": "That is only the sides. Add the base B."
+     },
+     {
+      "near": 1596,
+      "tol": 0.06,
+      "msg": "You left out the 1/2."
+     }
+    ],
+    "nudges": [
+     "Find B and P first, then substitute."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 292636809,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5a: B = s² = ?",
+      "answer": 196,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "B is the area of the square base: s · s."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: P = 4s = ?",
+      "answer": 56,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "P is the distance around the base: 4 sides."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA = ? ",
+      "answer": 896,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 868,
+        "tol": 0.06,
+        "msg": "You used h. Surface area uses ℓ."
+       },
+       {
+        "near": 700,
+        "tol": 0.06,
+        "msg": "That is only the sides. Add the base B."
+       },
+       {
+        "near": 1596,
+        "tol": 0.06,
+        "msg": "You left out the 1/2."
+       }
+      ],
+      "nudges": [
+       "Reiterate the rule, substitute, then the calculator."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a3",
+  "num": "A-3",
+  "prompt": "A paper cup is a cone with no top. Its radius is 3 cm and its height is 4 cm. How much paper does it take, to the nearest tenth?",
+  "given": [
+   {
+    "v": "3 cm",
+    "k": "the radius r"
+   },
+   {
+    "v": "4 cm",
+    "k": "the height h"
+   },
+   {
+    "v": "no top",
+    "k": "no circle"
+   }
+  ],
+  "want": "SA, the paper (the side only)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "answer": 5,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 7,
+      "tol": 0.06,
+      "msg": "ℓ is not h + r."
+     },
+     {
+      "near": 2.6457513110645907,
+      "tol": 0.06,
+      "msg": "Add the squares; ℓ is the longest side."
+     }
+    ],
+    "nudges": [
+     "h, r and ℓ make a right triangle. ℓ is the longest side."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: The slant height rule",
+      "ask": "Which rule finds ℓ?",
+      "options": [
+       "ℓ = √(h² + r²)",
+       "ℓ = h + r",
+       "ℓ = √(h² − r²)",
+       "ℓ = h"
+      ],
+      "ch": 3445052713,
+      "shuffle": true,
+      "nudges": [
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Under the root: 4² + 3² = ?",
+      "answer": 25,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "Power first: 4² = 16 and 3² = 9. Then add."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Take the square root. ℓ = ?",
+      "answer": 5,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 25,
+        "tol": 0.06,
+        "msg": "That is ℓ². Take its square root."
+       }
+      ],
+      "nudges": [
+       "A square is undone by a square root."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA ≈ ? (nearest tenth, in cm²)",
+    "answer": 47.12388980384689,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 75.39822368615503,
+      "tol": 0.06,
+      "msg": "The cup has no top. Leave out the circle: SA = πrℓ."
+     },
+     {
+      "near": 37.69911184307752,
+      "tol": 0.06,
+      "msg": "You used h. Surface area uses ℓ."
+     }
+    ],
+    "nudges": [
+     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 4020983419,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers in. Which is it?",
+      "options": [
+       "SA = π · 3 · 5",
+       "SA = π · 3² + π · 3 · 5",
+       "SA = π · 5 · 5"
+      ],
+      "ch": 2152165900,
+      "shuffle": true,
+      "nudges": [
+       "r goes where r is, ℓ where ℓ is."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA ≈ ? (nearest tenth)",
+      "answer": 47.12388980384689,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 75.39822368615503,
+        "tol": 0.06,
+        "msg": "The cup has no top. Leave out the circle: SA = πrℓ."
+       },
+       {
+        "near": 37.69911184307752,
+        "tol": 0.06,
+        "msg": "You used h. Surface area uses ℓ."
+       }
+      ],
+      "nudges": [
+       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "a4",
+  "num": "A-4",
+  "prompt": "A tent is a square pyramid with no floor. Its base is 6 ft on each side and it is 4 ft tall. How much fabric does it take?",
+  "given": [
+   {
+    "v": "6 ft",
+    "k": "each side s"
+   },
+   {
+    "v": "4 ft",
+    "k": "the height h"
+   },
+   {
+    "v": "no floor",
+    "k": "no base"
+   }
+  ],
+  "want": "SA, the fabric (the sides only)",
+  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">SA = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">SA = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "pipeline": [
+   {
+    "tool": "numeric",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "answer": 5,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 7.211102550927978,
+      "tol": 0.06,
+      "msg": "Use half the side: s/2 = 3, not 6."
+     },
+     {
+      "near": 7,
+      "tol": 0.06,
+      "msg": "ℓ is not h + s/2."
+     }
+    ],
+    "nudges": [
+     "h, half the side and ℓ make a right triangle. ℓ is the longest side."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 5: The slant height rule",
+      "ask": "Which rule finds ℓ?",
+      "options": [
+       "ℓ = √(h² + (s/2)²)",
+       "ℓ = √(h² + s²)",
+       "ℓ = h + s/2",
+       "ℓ = h"
+      ],
+      "ch": 3541956028,
+      "shuffle": true,
+      "nudges": [
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Under the root: 4² + 3² = ?",
+      "answer": 25,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "Power first: 4² = 16 and 3² = 9. Then add."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5: Take the square root. ℓ = ?",
+      "answer": 5,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 25,
+        "tol": 0.06,
+        "msg": "That is ℓ². Take its square root."
+       }
+      ],
+      "nudges": [
+       "A square is undone by a square root."
+      ]
+     }
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. SA = ? (in ft²)",
+    "answer": 60,
+    "tol": 0.1,
+    "closeBand": 0.03,
+    "traps": [
+     {
+      "near": 96,
+      "tol": 0.06,
+      "msg": "The tent has no floor. Leave out B: SA = (1/2)Pℓ."
+     },
+     {
+      "near": 48,
+      "tol": 0.06,
+      "msg": "You used h. Surface area uses ℓ."
+     },
+     {
+      "near": 120,
+      "tol": 0.06,
+      "msg": "You left out the 1/2."
+     }
+    ],
+    "nudges": [
+     "Find B and P first, then substitute."
+    ],
+    "sub": [
+     {
+      "tool": "choice",
+      "stack": true,
+      "label": "Plan 2: Write the formula",
+      "ask": "Which rule fits?",
+      "options": [
+       "SA = πr² + πrℓ",
+       "SA = πrℓ",
+       "SA = πr² + πrh",
+       "SA = B + (1/2)Pℓ",
+       "SA = (1/2)Pℓ",
+       "SA = B + (1/2)Ph"
+      ],
+      "ch": 1545389916,
+      "shuffle": true,
+      "nudges": [
+       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 5b: P = 4s = ?",
+      "answer": 24,
+      "tol": 0.005,
+      "closeBand": 0.02,
+      "traps": [],
+      "nudges": [
+       "P is the distance around the base: 4 sides."
+      ]
+     },
+     {
+      "tool": "numeric",
+      "label": "Plan 6: Calculator. SA = ? ",
+      "answer": 60,
+      "tol": 0.1,
+      "closeBand": 0.03,
+      "traps": [
+       {
+        "near": 96,
+        "tol": 0.06,
+        "msg": "The tent has no floor. Leave out B: SA = (1/2)Pℓ."
+       },
+       {
+        "near": 48,
+        "tol": 0.06,
+        "msg": "You used h. Surface area uses ℓ."
+       },
+       {
+        "near": 120,
+        "tol": 0.06,
+        "msg": "You left out the 1/2."
+       }
+      ],
+      "nudges": [
+       "Reiterate the rule, substitute, then the calculator."
+      ]
+     }
+    ]
+   }
+  ]
+ }
+], { layout:'split' });
+</script>
+</body>
+</html>
