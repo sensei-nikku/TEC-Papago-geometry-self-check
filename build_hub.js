@@ -56,7 +56,7 @@ const TERM2={id:'sy2627-term2',name:'SY2627 Term 2',weeks:[
  ['Week 7 — Volume & Surface Area: Solving Formulas',[
   ['W7 · L1','Volume: Solving Formulas for a Letter','week7-lesson1-volume.html','Solve the volume formula for h or r with letters first, then substitute: boxes, cans, pyramids, and cones.'],
   ['W7 · L2','Surface Area: Solving for the Height','week7-lesson2-surface-area.html','Label the sketch and drag in the model that fits, then solve the surface area formula for h with letters first: boxes (find B and P first) and cans. The suggested work fills in as you check each step.'],
-  ['W7 · L3','Surface Area: Pyramids and Cones','week7-lesson3-slant-height.html','Find the slant height from the height (a right triangle), then the surface area of cones and square pyramids. Some have no bottom.'],
+  ['W7 · L3','Surface Area: Pyramids and Cones','week7-lesson3-slant-height.html','Label the sketch and drag in the model, then find the slant height from the height (a right triangle) and the surface area of cones and square pyramids. Some have no bottom. The suggested work fills in as you check each step.'],
   ['W7 · Final','Week 7 Check (Final)',null,'']]]
 ]};
 const TERMS=[
