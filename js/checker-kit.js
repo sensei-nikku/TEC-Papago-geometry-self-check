@@ -21,10 +21,11 @@
 (function (global) {
   'use strict';
 
-  var ENGINE_VERSION = '1.5.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
+  var ENGINE_VERSION = '1.6.0';   // 1.1.0 locked-in rows (tool.entry); 1.2.0 choice stack layout;
                                   // 1.3.0 split shell, per-step miss limits, two-level nudges;
                                   // 1.4.0 coarse-first sub-step ladders (step.sub);
-                                  // 1.5.0 work shell: suggested work left, question right, f button (opt-in)
+                                  // 1.5.0 work shell: suggested work left, question right, f button (opt-in);
+                                  // 1.6.0 work shell drop slots: drag a card from the question onto the paper
   var LAYOUT = 'stack';    // 'stack' (one column) | 'split' (left rail + right surface) | 'work' (suggested work + question)
   var GLOBAL_REF = null;   // work shell: the Formula Box when a problem has no reference of its own
   var refOpen = false, refFor = -1, escWired = false;
@@ -126,7 +127,11 @@
       else st.fb = nudgeFor(step, st, res);
       render(); return;
     }
-    if(t.act){ t.act(step, st, action, payload, {render:render, djb2:djb2}); render(); }   // tool-specific actions
+    if(t.act){                                                                          // tool-specific actions
+      var ar=t.act(step, st, action, payload, {render:render, djb2:djb2});
+      if(ar && ar.check) return act(pid, code, 'check');                                 // e.g. a drop is an answer
+      render();
+    }
   }
 
   function splitNotice(si, step, res){
@@ -395,10 +400,73 @@
     return true;
   }
 
-  function workLine(L, s, mark){
+  // ---- DROP SLOTS (v1.6.0) ----
+  // A pipeline step with  slot:'name'  is answered by dragging a card from the
+  // question pane onto the paper. The work names where:
+  //   a line   { slot:'model', tag, l, r, at:[si] }   while step si is live it is a drop box;
+  //                                                   once si is settled it is the written line
+  //   a sketch { fig:{ svg, vb:[w,h], zones:[{id, x, y, anchor, name}] }, slot:'sketch' }
+  //            each zone is a spot on the sketch (viewBox units); while the step is live the
+  //            empty zones are drop boxes, and every label placed there stays in its ink
+  // The tool (tool-drag.js) owns the cards and decides right or wrong; the shell only
+  // draws the targets and hands a drop back as  act(pid, code, 'drop', {card, zone}).
+  function slotStep(p, name){ for(var i=0;i<p.pipeline.length;i++) if(p.pipeline[i].slot===name) return i; return -1; }
+  function slotLive(p, s, name){
+    var si=slotStep(p, name); if(si<0 || s.done || s.stepIdx!==si) return null;
+    var st=s.steps[si]; if(st.redirect) return null;
+    return {si:si, step:p.pipeline[si], st:st};
+  }
+  // the card a zone takes, found by its hash. A zone may take any of several cards; the first one
+  // not already on the sketch (and not repeating a letter already there) is the default.
+  function cardFor(step, zid, usedIdx, usedKey){
+    var acc=null; (step.zones||[]).forEach(function(z){ if(z.id===zid) acc=z.accept; });
+    if(acc==null) return null;
+    var list=[].concat(acc);
+    for(var a=0;a<list.length;a++)
+      for(var i=0;i<(step.cards||[]).length;i++){
+        var c=step.cards[i];
+        if(djb2(c.t)!==list[a] || usedIdx[i] || (c.k && usedKey[c.k])) continue;
+        return i;
+      }
+    return null;
+  }
+  var ANCHOR={start:'translate(0,-50%)', middle:'translate(-50%,-50%)', end:'translate(-100%,-50%)'};
+  function figHtml(L, p, s){
+    var F=L.fig, si=L.slot ? slotStep(p, L.slot) : -1, lv=L.slot ? slotLive(p, s, L.slot) : null;
+    var step=si>=0 ? p.pipeline[si] : null, st=si>=0 ? s.steps[si] : null;
+    var settled = si<0 || s.done || s.stepIdx>si;
+    var h='<div class="wk-fig" style="max-width:'+F.vb[0]+'px">'+F.svg;
+    // what each zone shows: the student's card, or (once the step is settled, e.g. a teacher-helped
+    // skip) the right card, never repeating a card or a letter already on the sketch
+    var show={}, usedIdx={}, usedKey={};
+    (F.zones||[]).forEach(function(z){ var ci=(st && st.placed) ? st.placed[z.id] : null;
+      if(ci!=null){ show[z.id]=ci; usedIdx[ci]=1; if(step.cards[ci].k) usedKey[step.cards[ci].k]=1; } });
+    if(settled && step) (F.zones||[]).forEach(function(z){ if(show[z.id]!=null) return;
+      var ci=cardFor(step, z.id, usedIdx, usedKey);
+      if(ci!=null){ show[z.id]=ci; usedIdx[ci]=1; if(step.cards[ci].k) usedKey[step.cards[ci].k]=1; } });
+    (F.zones||[]).forEach(function(z){
+      var pos='left:'+(100*z.x/F.vb[0]).toFixed(2)+'%;top:'+(100*z.y/F.vb[1]).toFixed(2)+'%;transform:'+(ANCHOR[z.anchor||'middle']);
+      var ci = show[z.id]!=null ? show[z.id] : null;
+      if(ci!=null){ var c=step.cards[ci];
+        h+='<span class="wk-lbl'+(c.ink?' ink-'+c.ink:'')+'" style="'+pos+'">'+esc(c.t)+'</span>'; }
+      else if(!step && z.text) h+='<span class="wk-lbl'+(z.ink?' ink-'+z.ink:'')+'" style="'+pos+'">'+z.text+'</span>';
+      else if(lv) h+='<button type="button" class="wk-zone'+(lv.st.sel!=null?' armed':'')+'" data-drop="'+esc(z.id)+'" style="'+pos+'" '+
+                    'onclick="K.dropAt(\''+esc(z.id)+'\')" aria-label="Put a label here'+(z.name?': '+esc(z.name):'')+'">?</button>';
+    });
+    return h+'</div>';
+  }
+  function workLine(L, s, mark, p){
     if(typeof L==='string') L={h:L};
     var eq=(L.l!=null || L.r!=null);
     var tag='<span class="wk-tag'+(L.fig?' top':'')+'">'+esc(L.tag||'')+'</span>';   // fig: a sketch, number at its top
+    // a sketch spans to the flexible last column, so it can shrink on a phone instead of widening the = column
+    if(L.fig && L.fig.svg) return '<div class="wk-ln">'+tag+' <span class="wk-h wk-figcell">'+figHtml(L, p, s)+'</span></div>';
+    var lv = L.slot ? slotLive(p, s, L.slot) : null;
+    if(lv && !revealedAt(s, L.at)){
+      mark.done=true;
+      return '<div class="wk-ln drop">'+tag+' <span class="wk-dropcell"><button type="button" class="wk-drop'+(lv.st.sel!=null?' armed':'')+
+             '" data-drop="'+esc(L.slot)+'" onclick="K.dropAt(\''+esc(L.slot)+'\')">'+esc(lv.step.dropText||'Drag it here')+'</button></span><span class="wk-move"></span></div>';
+    }
     if(!revealedAt(s, L.at)){
       var next=(!s.done && !mark.done); if(next) mark.done=true;
       return '<div class="wk-ln pending'+(next?' next':'')+'">'+tag+
@@ -410,30 +478,39 @@
                   : '<span class="wk-h">'+L.h+'</span>';
     return '<div class="wk-ln'+(eq?' eq':'')+'">'+tag+' '+body+' <span class="wk-move">'+esc(L.note||'')+'</span></div>';
   }
+  // p.workVariants = { name: [group...] } and p.variantBy = { step:si, zone:'id', key:{ k:'name' } }:
+  // when the card placed in that zone has key k, the work is variant `name` (same lines, the
+  // student's letters). Anything else uses p.work.
+  function workFor(p, s){
+    var v=p.variantBy; if(!v || !p.workVariants) return p.work||[];
+    var st=s.steps[v.step], step=p.pipeline[v.step], ci=st && st.placed ? st.placed[v.zone] : null;
+    if(ci==null) return p.work||[];
+    var name=v.key[step.cards[ci].k]; return (name && p.workVariants[name]) || p.work || [];
+  }
   function workHtml(p, s){
     var h='<div class="wk-head"><span class="wk-title">Suggested work</span><span class="wk-for">'+esc(p.num)+'</span></div>'+
           '<p class="wk-intro">How your paper could look. A line shows up after you check that step.</p>';
-    var groups=p.work||[], mark={done:false};
+    var groups=workFor(p, s), mark={done:false};
     for(var i=0;i<groups.length;i++){
       var g=groups[i];
       if(g.cols){
         h+='<div class="wk-group wk-cols">';
         for(var c=0;c<g.cols.length;c++){
           h+='<div class="wk-sheet">';
-          for(var k=0;k<g.cols[c].length;k++) h+=workLine(g.cols[c][k], s, mark);
+          for(var k=0;k<g.cols[c].length;k++) h+=workLine(g.cols[c][k], s, mark, p);
           h+='</div>';
         }
         h+='</div>';
       } else {
         h+='<div class="wk-group"><div class="wk-sheet">';
-        for(var j=0;j<(g.lines||[]).length;j++) h+=workLine(g.lines[j], s, mark);
+        for(var j=0;j<(g.lines||[]).length;j++) h+=workLine(g.lines[j], s, mark, p);
         h+='</div></div>';
       }
     }
     if(s.done && p.workCheck){
       if(typeof p.workCheck==='string') h+='<div class="wk-check">'+p.workCheck+'</div>';
       else { h+='<div class="wk-check"><div class="wk-sheet">';
-             for(var c=0;c<p.workCheck.length;c++) h+=workLine(p.workCheck[c], s, mark);
+             for(var c=0;c<p.workCheck.length;c++) h+=workLine(p.workCheck[c], s, mark, p);
              h+='</div></div>'; }
     }
     return h;
@@ -487,8 +564,66 @@
     var b=document.getElementById('ckRefBtn'); if(b && b.focus) b.focus();
   }
 
+  // a tap on a drop box uses the card picked on the right (tap a card, then tap the spot)
+  var lastDrop=0;
+  function dropAt(zone){
+    if(Date.now()-lastDrop<350) return;              // the click that trails a finished drag
+    var p=PROBLEMS[activeP], code=liveCode(p.id); if(code<0) return;
+    var r=resolve(p.id, code);
+    if(r.st.sel==null){ r.st.fb={t:'warn', m:'Pick a card on the right first, then tap here. Or drag the card here.'}; render(); return; }
+    act(p.id, code, 'drop', {card:r.st.sel, zone:zone});
+  }
+  function dropCard(card, zone){
+    var p=PROBLEMS[activeP], code=liveCode(p.id); if(code<0) return;
+    lastDrop=Date.now();
+    act(p.id, code, 'drop', {card:card, zone:zone});
+  }
+  // Drag a .dd-card (data-card) anywhere; let go over a [data-drop] box. Hit-testing by
+  // bounding boxes, as in the proven label tool. Pointer events cover mouse, pen and touch.
+  var dragWired=false;
+  function wireDrag(){
+    if(dragWired || typeof document==='undefined') return; dragWired=true;
+    var d=null;
+    function hit(x, y){
+      var zs=document.querySelectorAll('[data-drop]');
+      for(var i=0;i<zs.length;i++){ var b=zs[i].getBoundingClientRect();
+        if(b.width && x>=b.left && x<=b.right && y>=b.top && y<=b.bottom) return zs[i]; }
+      return null;
+    }
+    document.addEventListener('pointerdown', function(e){
+      var c=e.target && e.target.closest ? e.target.closest('.dd-card') : null;
+      if(!c || c.disabled) return;
+      d={card:+c.getAttribute('data-card'), el:c, x:e.clientX, y:e.clientY, ghost:null, over:null};
+    });
+    document.addEventListener('pointermove', function(e){
+      if(!d) return;
+      if(!d.ghost){
+        if(Math.abs(e.clientX-d.x)+Math.abs(e.clientY-d.y)<6) return;     // a tap, not a drag (yet)
+        d.ghost=d.el.cloneNode(true); d.ghost.className='dd-card dd-ghost'; d.ghost.removeAttribute('onclick');
+        document.body.appendChild(d.ghost); document.body.classList.add('dd-on');
+      }
+      d.ghost.style.left=e.clientX+'px'; d.ghost.style.top=e.clientY+'px';
+      var z=hit(e.clientX, e.clientY);
+      if(d.over && d.over!==z) d.over.classList.remove('dd-over');
+      if(z) z.classList.add('dd-over'); d.over=z;
+      if(e.cancelable) e.preventDefault();
+    });
+    function finish(e, cancel){
+      if(!d) return; var g=d; d=null; document.body.classList.remove('dd-on');
+      if(!g.ghost) return;                                                 // a tap: the card's own click selects it
+      if(g.ghost.parentNode) g.ghost.parentNode.removeChild(g.ghost);
+      if(g.over) g.over.classList.remove('dd-over');
+      lastDrop=Date.now();
+      var t = cancel ? null : (hit(e.clientX, e.clientY) || g.over);         // where it was let go
+      if(t) dropCard(g.card, t.getAttribute('data-drop'));
+    }
+    document.addEventListener('pointerup', function(e){ finish(e, false); });
+    document.addEventListener('pointercancel', function(e){ finish(e, true); });
+  }
+
   function renderWork(){
     if(!ensureWorkShell()) return;
+    wireDrag();
     var p=PROBLEMS[activeP], s=S[p.id];
     var q=document.getElementById('ckQ');
     document.getElementById('ckWork').innerHTML=workHtml(p, s);
@@ -564,6 +699,7 @@
                VERSION:ENGINE_VERSION, layout:function(){return LAYOUT;},
                showWork:showWork, closeWork:closeWork,
                toggleRef:toggleRef, openRef:openRef, closeRef:closeRef, _refOpen:function(){return refOpen;},
+               dropAt:dropAt, dropCard:dropCard,
                _esc:esc, _djb2:djb2, _live:liveCode, _sub:subCode, _S:function(){return S;} };
 
 })(window);

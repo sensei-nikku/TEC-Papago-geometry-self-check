@@ -380,3 +380,39 @@ select.s-err{border-color:var(--err);background:var(--err-lt)}
   .ref-fab{position:fixed;right:16px;bottom:16px}
   .ref-pop{position:fixed;right:12px;bottom:82px;max-height:66vh}
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   DRAG TO THE PAPER  (engine v1.6.0, js/tool-drag.js)
+   Cards in the question pane; drop boxes on the parchment.
+   ══════════════════════════════════════════════════════════════════ */
+.dd-how{font-size:.8rem;color:var(--muted);margin:2px 0 10px}
+.dd-tray{display:flex;flex-wrap:wrap;gap:8px}
+.dd-card{min-height:44px;padding:8px 14px;border:2px solid var(--border);border-radius:10px;background:var(--surface);
+  color:var(--text);font:600 1rem/1.3 'DM Sans',sans-serif;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.dd-card:hover{border-color:var(--accent)}
+.dd-card.sel{border-color:var(--accent);background:var(--accent-lt);box-shadow:0 0 0 2px var(--accent) inset}
+.dd-card:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.dd-count{font-size:.78rem;color:var(--muted);margin-top:8px}
+/* label cards wear their letter's ink (lighter, for the dark pane) */
+.dd-card.ink-card.ink-1{color:#8ab4f8}.dd-card.ink-card.ink-2{color:#8fd18a}.dd-card.ink-card.ink-3{color:#c9a2ec}
+.dd-card.ink-card.ink-4{color:#f0b45a}.dd-card.ink-card.ink-5{color:#6fd0cf}.dd-card.ink-card.ink-6{color:#f28bb8}
+.dd-ghost{position:fixed;z-index:60;pointer-events:none;transform:translate(-50%,-50%) rotate(-2deg);opacity:.92;
+  box-shadow:0 8px 20px rgba(0,0,0,.45);cursor:grabbing}
+body.dd-on,body.dd-on *{cursor:grabbing !important}
+
+/* targets on the parchment */
+.wk-figcell{grid-column:2 / 5;min-width:0}
+.wk-fig{position:relative;width:100%}
+.wk-fig .wk-sketch{width:100%}
+.wk-lbl{position:absolute;white-space:nowrap;font-size:15px;font-weight:700;line-height:1.1;pointer-events:none}
+.wk-zone{position:absolute;min-width:54px;min-height:30px;padding:2px 8px;border:2px dashed var(--ink-red);border-radius:8px;
+  background:rgba(255,250,232,.75);color:var(--ink-red);font:700 15px/1 'Kalam',cursive;cursor:pointer}
+.wk-ln.drop .wk-tag{opacity:1}
+/* spans the margin-note column (1fr), so a wide drop box never widens the = column */
+.wk-dropcell{grid-column:2 / 5;justify-self:start}
+.wk-drop{min-height:44px;min-width:230px;padding:6px 14px;border:2px dashed var(--ink-red);border-radius:10px;
+  background:rgba(255,250,232,.6);color:var(--ink-red);font:700 1rem/1.2 'Kalam',cursive;cursor:pointer;margin:4px 0}
+.wk-zone.armed,.wk-drop.armed{background:rgba(255,236,190,.9);animation:ddPulse 1.2s ease-in-out infinite}
+.wk-zone.dd-over,.wk-drop.dd-over{background:#ffe7b3;border-style:solid;transform-origin:center}
+@keyframes ddPulse{0%,100%{box-shadow:0 0 0 0 rgba(143,44,28,.35)}50%{box-shadow:0 0 0 5px rgba(143,44,28,0)}}
+@media (prefers-reduced-motion:reduce){.wk-zone.armed,.wk-drop.armed{animation:none}}
