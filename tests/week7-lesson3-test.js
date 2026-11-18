@@ -24,8 +24,8 @@ let w=boot();
 A(w.K.layout()==='split','split shell');
 A(w.document.getElementById('hdrDots').textContent==='T-1T-2T-3T-4A-1A-2A-3A-4','8 problems');
 const surf=w.document.getElementById('ckSurf').textContent;
-A(surf.includes('SA = πr² + πrℓ') && surf.includes('ℓ = √(h² + r²)'),'Formula Box: cone');
-A(surf.includes('SA = B + (1/2)Pℓ') && surf.includes('ℓ = √(h² + (s/2)²)') && surf.includes('P = 4s'),'Formula Box: square pyramid');
+A(surf.includes('S = πr² + πrℓ') && surf.includes('ℓ = √(h² + r²)'),'Formula Box: cone');
+A(surf.includes('S = B + (1/2)Pℓ') && surf.includes('ℓ = √(h² + (s/2)²)') && surf.includes('P = 4s'),'Formula Box: square pyramid');
 const STR={t1:['175.9'],t2:['160'],t3:['15','678.6'],t4:['10','384'],a1:['377'],a2:['25','896'],a3:['5','47.1'],a4:['5','60']};
 ids.forEach(pid=>{const ww=go(pid); STR[pid].forEach((v,i)=>enter(ww,pid,i,v)); A(ww.K._S()[pid].done,pid+': straight answers -> Complete');});
 // traps
@@ -35,14 +35,14 @@ TRAP.forEach(([pid,si,v,msg])=>{const ww=go(pid); for(let i=0;i<si;i++) enter(ww
   const txt=ww.document.getElementById('main').textContent; A(!stepOf(ww,pid,si).done && txt.includes(msg),pid+': '+v+' -> "'+msg+'"');});
 // ladders: walk every rung of every step after a miss
 const LAD={
- t1:[[0,'1',[{c:'SA = πr² + πrℓ'},{c:'SA = π · 4² + π · 4 · 10'},'175.9']]],
- t2:[[0,'1',[{c:'SA = B + (1/2)Pℓ'},'64','32','160']]],
- t3:[[0,'1',[{c:'ℓ = √(h² + r²)'},'225','15']],[1,'1',[{c:'SA = πr² + πrℓ'},{c:'SA = π · 9² + π · 9 · 15'},'678.6']]],
- t4:[[0,'1',[{c:'ℓ = √(h² + (s/2)²)'},'100','10']],[1,'1',[{c:'SA = B + (1/2)Pℓ'},'144','48','384']]],
- a1:[[0,'1',[{c:'SA = πr² + πrℓ'},'6',{c:'SA = π · 6² + π · 6 · 14'},'377']]],
- a2:[[0,'1',[{c:'ℓ = √(h² + (s/2)²)'},'625','25']],[1,'1',[{c:'SA = B + (1/2)Pℓ'},'196','56','896']]],
- a3:[[0,'1',[{c:'ℓ = √(h² + r²)'},'25','5']],[1,'1',[{c:'SA = πrℓ'},{c:'SA = π · 3 · 5'},'47.1']]],
- a4:[[0,'1',[{c:'ℓ = √(h² + (s/2)²)'},'25','5']],[1,'1',[{c:'SA = (1/2)Pℓ'},'24','60']]]};
+ t1:[[0,'1',[{c:'S = πr² + πrℓ'},{c:'S = π · 4² + π · 4 · 10'},'175.9']]],
+ t2:[[0,'1',[{c:'S = B + (1/2)Pℓ'},'64','32','160']]],
+ t3:[[0,'1',[{c:'ℓ = √(h² + r²)'},'225','15']],[1,'1',[{c:'S = πr² + πrℓ'},{c:'S = π · 9² + π · 9 · 15'},'678.6']]],
+ t4:[[0,'1',[{c:'ℓ = √(h² + (s/2)²)'},'100','10']],[1,'1',[{c:'S = B + (1/2)Pℓ'},'144','48','384']]],
+ a1:[[0,'1',[{c:'S = πr² + πrℓ'},'6',{c:'S = π · 6² + π · 6 · 14'},'377']]],
+ a2:[[0,'1',[{c:'ℓ = √(h² + (s/2)²)'},'625','25']],[1,'1',[{c:'S = B + (1/2)Pℓ'},'196','56','896']]],
+ a3:[[0,'1',[{c:'ℓ = √(h² + r²)'},'25','5']],[1,'1',[{c:'S = πrℓ'},{c:'S = π · 3 · 5'},'47.1']]],
+ a4:[[0,'1',[{c:'ℓ = √(h² + (s/2)²)'},'25','5']],[1,'1',[{c:'S = (1/2)Pℓ'},'24','60']]]};
 Object.keys(LAD).forEach(pid=>{const ww=go(pid);
   LAD[pid].forEach(([si,wrong,rungs])=>{
     enter(ww,pid,si,wrong); A(ww.K._S()[pid].steps[si].exp===true,pid+' step '+(si+1)+': miss opens the ladder');
