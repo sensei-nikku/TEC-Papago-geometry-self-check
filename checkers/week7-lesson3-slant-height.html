@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Week 7, Lesson 3 — Surface Area: Pyramids and Cones Checker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>
@@ -12,13 +12,15 @@
   <div class="hdr-left"><a class="hdr-back" href="../index.html">&larr; All Checkers</a><h1>Surface Area: Pyramids and Cones</h1><div class="sub">Week 7 · Lesson 3 — Learning Lab</div></div>
   <div class="hdr-dots" id="hdrDots"></div>
 </header>
-<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the packet on paper and check with the key on page 4.</p></noscript></main>
+<main class="main wide" id="main"><noscript><p>This checker needs JavaScript. Work the packet on paper and check with the key on page 8.</p></noscript></main>
 
 <script src="../js/checker-kit.js"></script>
+<script src="../js/tool-drag.js"></script>
 <script>
-/* Week 7 Lesson 3 Learning Lab (sub day). Split layout, coarse first: find the slant
-   height when h is given, then the surface area. A miss opens the plan one move at a time.
-   Nearest tenth (tol 0.1). Choice answers are djb2 hashes. */
+/* Week 7 Lesson 3 Learning Lab (sub day). Work shell: suggested work on parchment on the left
+   fills in as each step is checked; the question is on the right; the f button opens the Formula
+   Box. Label the sketch, drag in the model, find l (and r, B, P), then substitute and answer.
+   A miss opens the plan one move at a time. Nearest tenth (tol 0.1). Choice answers are djb2 hashes. */
 K.run([
  {
   "id": "t1",
@@ -34,12 +36,86 @@ K.run([
     "k": "the slant height ℓ"
    }
   ],
-  "want": "S, the surface area",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the surface area, in in²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "r = 4 in",
+      "why": "r is the radius: from the center of the base to its edge.",
+      "ink": 2
+     },
+     {
+      "t": "d = 4 in",
+      "why": "4 in is the radius, center to edge. d goes all the way across.",
+      "ink": 3
+     },
+     {
+      "t": "ℓ = 10 in",
+      "why": "The slant height runs down the outside, along the side.",
+      "ink": 4
+     },
+     {
+      "t": "h = 10 in",
+      "why": "10 in is the slant height: it runs down the outside. h would go straight up inside.",
+      "ink": 6
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole cone, so it goes beside it, not on one line.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "r",
+      "accept": 3774252703
+     },
+     {
+      "id": "l",
+      "accept": 3489386989
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = πr² + πrℓ",
+      "why": "A cone with its bottom: the base circle (πr²) plus the side (πrℓ)."
+     },
+     {
+      "t": "S = πrℓ",
+      "why": "The side only covers a cone with no bottom. This cone has its base circle too."
+     },
+     {
+      "t": "S = πr² + πrh",
+      "why": "The side unrolls to πrℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)πr²h",
+      "why": "V fills the cone, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1801984585
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S ≈ ? (nearest tenth, in in²)",
+    "label": "Plan 6: Substitute and answer. S = ? (nearest tenth, in in²)",
     "answer": 175.92918860102841,
     "tol": 0.1,
     "closeBand": 0.03,
@@ -56,47 +132,28 @@ K.run([
      }
     ],
     "nudges": [
-     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+     "Use the π key, not 3.14. Type the whole line in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
-      "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
-      ],
-      "ch": 1801984585,
-      "shuffle": true,
-      "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
-      ]
-     },
-     {
-      "tool": "choice",
-      "stack": true,
       "label": "Plan 6: Substitute",
-      "ask": "Put the numbers in. Which is it?",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = π · 4² + π · 4 · 10",
-       "S = π · 4 · 10",
-       "S = π · 10² + π · 4 · 10"
+       "S = π(4²) + π(4)(10)",
+       "S = π(10²) + π(10)(4)",
+       "S = π(4)(10)"
       ],
-      "ch": 2656981504,
+      "ch": 3322808814,
       "shuffle": true,
       "nudges": [
-       "r goes where r is, ℓ where ℓ is."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. S ≈ ? (nearest tenth)",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (nearest tenth, in in²)",
       "answer": 175.92918860102841,
       "tol": 0.1,
       "closeBand": 0.03,
@@ -113,10 +170,94 @@ K.run([
        }
       ],
       "nudges": [
-       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+       "Use the π key, not 3.14. Type the whole line in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        310,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 310 165\" width=\"310\" height=\"165\" role=\"img\" aria-label=\"Sketch: a cone\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M100 16 L44 124 M100 16 L156 124\"/><path d=\"M44 124 A56 13 0 0 0 156 124\"/><path d=\"M44 124 A56 13 0 0 1 156 124\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 124 H156\" stroke-dasharray=\"5 4\"/></g><circle cx=\"100\" cy=\"124\" r=\"2.3\" fill=\"currentColor\"/></svg>",
+       "zones": [
+        {
+         "id": "r",
+         "x": 128,
+         "y": 154,
+         "anchor": "middle",
+         "name": "the radius"
+        },
+        {
+         "id": "l",
+         "x": 136,
+         "y": 62,
+         "anchor": "start",
+         "name": "down the side"
+        },
+        {
+         "id": "S",
+         "x": 212,
+         "y": 100,
+         "anchor": "start",
+         "name": "beside the cone"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i>² + π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i>² + π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= π(<span class=\"ink-2\">4</span>²) + π(<span class=\"ink-2\">4</span>)(<span class=\"ink-4\">10</span>)",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-1\">175.9 in²</span></span>",
+      "at": [
+       2
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">10</span>: longer than <i class=\"ink-2\">r</i> ✓"
    }
   ]
  },
@@ -134,105 +275,326 @@ K.run([
     "k": "the slant height ℓ"
    }
   ],
-  "want": "S, the surface area",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the surface area, in cm²",
   "pipeline": [
+   {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "s = 8 cm",
+      "why": "s is a side of the square base: the front edge.",
+      "ink": 2
+     },
+     {
+      "t": "s = 4 cm",
+      "why": "The side is 8 cm. Half of it, 4, is only for finding ℓ.",
+      "ink": 2
+     },
+     {
+      "t": "ℓ = 6 cm",
+      "why": "The slant height runs down the middle of a face.",
+      "ink": 4
+     },
+     {
+      "t": "h = 6 cm",
+      "why": "6 cm is the slant height, down the face. h would go straight up inside.",
+      "ink": 6
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole pyramid, so it goes beside it, not on one edge.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "s",
+      "accept": 3443166269
+     },
+     {
+      "id": "l",
+      "accept": 2969215003
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = B + (1/2)Pℓ",
+      "why": "A square pyramid: the base (B) plus the 4 triangle faces ((1/2)Pℓ)."
+     },
+     {
+      "t": "S = (1/2)Pℓ",
+      "why": "The faces only cover a pyramid with no floor. This one has its base too."
+     },
+     {
+      "t": "S = B + (1/2)Ph",
+      "why": "Each triangle face is (1/2) · s · ℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)Bh",
+      "why": "V fills the pyramid, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1922395016
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5a: Find B, the area of the base. B = ? (in cm²)",
+    "answer": 64,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 32,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: s²."
+     },
+     {
+      "near": 16,
+      "tol": 0.005,
+      "msg": "s² is s · s, not 2s."
+     }
+    ],
+    "nudges": [
+     "B is the area of the square base: B = s²."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5b: Find P, the distance around the base. P = ? (in cm)",
+    "answer": 32,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 64,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 4s."
+     },
+     {
+      "near": 16,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 4 sides, 4s."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the square: P = 4s."
+    ]
+   },
    {
     "tool": "numeric",
     "label": "Plan 6: Substitute and answer. S = ? (in cm²)",
     "answer": 160,
-    "tol": 0.1,
-    "closeBand": 0.03,
+    "tol": 0.005,
+    "closeBand": 0.02,
     "traps": [
      {
+      "near": 96,
+      "tol": 0.005,
+      "msg": "That is only the faces. Add the base B."
+     },
+     {
       "near": 256,
-      "tol": 0.06,
+      "tol": 0.005,
       "msg": "You left out the 1/2."
      },
      {
-      "near": 96,
-      "tol": 0.06,
-      "msg": "That is only the sides. Add the base B."
-     },
-     {
       "near": 128,
-      "tol": 0.06,
+      "tol": 0.005,
       "msg": "B is the area of the base, s², not 4s."
      }
     ],
     "nudges": [
-     "Find B and P first, then substitute."
+     "Type the whole line into the calculator in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
+       "S = 64 + (1/2)(32)(6)",
+       "S = 32 + (1/2)(64)(6)",
+       "S = 64 + (1/2)(32)(8)"
       ],
-      "ch": 1922395016,
+      "ch": 3539986442,
       "shuffle": true,
       "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 5a: B = s² = ?",
-      "answer": 64,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "B is the area of the square base: s · s."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 5b: P = 4s = ?",
-      "answer": 32,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "P is the distance around the base: 4 sides."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 6: Calculator. S = ? ",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (in cm²)",
       "answer": 160,
-      "tol": 0.1,
-      "closeBand": 0.03,
+      "tol": 0.005,
+      "closeBand": 0.02,
       "traps": [
        {
+        "near": 96,
+        "tol": 0.005,
+        "msg": "That is only the faces. Add the base B."
+       },
+       {
         "near": 256,
-        "tol": 0.06,
+        "tol": 0.005,
         "msg": "You left out the 1/2."
        },
        {
-        "near": 96,
-        "tol": 0.06,
-        "msg": "That is only the sides. Add the base B."
-       },
-       {
         "near": 128,
-        "tol": 0.06,
+        "tol": 0.005,
         "msg": "B is the area of the base, s², not 4s."
        }
       ],
       "nudges": [
-       "Reiterate the rule, substitute, then the calculator."
+       "Type the whole line into the calculator in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        330,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 165\" width=\"330\" height=\"165\" role=\"img\" aria-label=\"Sketch: a square pyramid\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M50 132 H180 L222 100\"/><path d=\"M140 16 L50 132 M140 16 L180 132 M140 16 L222 100\"/><path d=\"M222 100 H92 L50 132 M140 16 L92 100\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M140 16 L115 132\"/></g></svg>",
+       "zones": [
+        {
+         "id": "s",
+         "x": 82,
+         "y": 152,
+         "anchor": "middle",
+         "name": "the front edge of the base"
+        },
+        {
+         "id": "l",
+         "x": 118,
+         "y": 66,
+         "anchor": "end",
+         "name": "down the middle of the front face"
+        },
+        {
+         "id": "S",
+         "x": 240,
+         "y": 70,
+         "anchor": "start",
+         "name": "beside the pyramid"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-3\">B</i> + (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5a",
+      "l": "<i class=\"ink-3\">B</i>",
+      "r": "= <i class=\"ink-2\">s</i>²",
+      "at": [
+       2
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-2\">8</span>²",
+      "at": [
+       2
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-3\">64</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 4<i class=\"ink-2\">s</i>",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= 4(<span class=\"ink-2\">8</span>)",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-5\">32</span>",
+      "at": [
+       3
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-3\">B</i> + (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       4,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-3\">64</span> + (1/2)(<span class=\"ink-5\">32</span>)(<span class=\"ink-4\">6</span>)",
+      "at": [
+       4,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-1\">160 cm²</span></span>",
+      "at": [
+       4
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">6</span>: longer than half of <i class=\"ink-2\">s</i> ✓"
    }
   ]
  },
@@ -250,12 +612,95 @@ K.run([
     "k": "the height h"
    }
   ],
-  "want": "S, the surface area",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the surface area, in m²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "r = 9 m",
+      "why": "r is the radius: from the center of the base to its edge.",
+      "ink": 2
+     },
+     {
+      "t": "d = 9 m",
+      "why": "9 m is the radius, center to edge. d goes all the way across.",
+      "ink": 3
+     },
+     {
+      "t": "h = 12 m",
+      "why": "h goes straight up the middle, inside the cone.",
+      "ink": 6
+     },
+     {
+      "t": "ℓ = ?",
+      "why": "ℓ runs down the outside, along the side. You find it in step 5.",
+      "ink": 4
+     },
+     {
+      "t": "ℓ = 12 m",
+      "why": "12 m goes straight up inside: that is h. ℓ runs down the outside.",
+      "ink": 4
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole cone, so it goes beside it, not on one line.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "r",
+      "accept": 2587236698
+     },
+     {
+      "id": "h",
+      "accept": 2791494618
+     },
+     {
+      "id": "l",
+      "accept": 1586628276
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = πr² + πrℓ",
+      "why": "A cone with its bottom: the base circle (πr²) plus the side (πrℓ)."
+     },
+     {
+      "t": "S = πrℓ",
+      "why": "The side only covers a cone with no bottom. This cone has its base circle too."
+     },
+     {
+      "t": "S = πr² + πrh",
+      "why": "The side unrolls to πrℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)πr²h",
+      "why": "V fills the cone, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1801984585
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ? (in m)",
     "answer": 15,
     "tol": 0.1,
     "closeBand": 0.03,
@@ -268,7 +713,12 @@ K.run([
      {
       "near": 7.937253933193772,
       "tol": 0.06,
-      "msg": "Add the squares; ℓ is the longest side."
+      "msg": "Add the squares. ℓ is the longest side."
+     },
+     {
+      "near": 225,
+      "tol": 0.06,
+      "msg": "That is ℓ². Take its square root."
      }
     ],
     "nudges": [
@@ -289,7 +739,7 @@ K.run([
       "ch": 3445052713,
       "shuffle": true,
       "nudges": [
-       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Undo the square with a square root."
       ]
      },
      {
@@ -298,7 +748,13 @@ K.run([
       "answer": 225,
       "tol": 0.005,
       "closeBand": 0.02,
-      "traps": [],
+      "traps": [
+       {
+        "near": 162,
+        "tol": 0.005,
+        "msg": "Power first: 9² is 9 · 9."
+       }
+      ],
       "nudges": [
        "Power first: 12² = 144 and 9² = 81. Then add."
       ]
@@ -324,94 +780,209 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S ≈ ? (nearest tenth, in m²)",
+    "label": "Plan 6: Substitute and answer. S = ? (nearest tenth, in m²)",
     "answer": 678.5840131753953,
     "tol": 0.1,
     "closeBand": 0.03,
     "traps": [
      {
-      "near": 593.7610115284708,
-      "tol": 0.06,
-      "msg": "You used h. Surface area uses ℓ."
-     },
-     {
       "near": 424.11500823462205,
       "tol": 0.06,
-      "msg": "That is only the side. Add the base circle."
+      "msg": "That is only the side. Add the base circle: πr²."
      },
      {
       "near": 678.24,
       "tol": 0.06,
-      "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+      "msg": "Use the π key, not 3.14. Type the whole line in one go."
+     },
+     {
+      "near": 4071.5040790523717,
+      "tol": 0.06,
+      "msg": "The side is πrℓ, not πr²ℓ."
+     },
+     {
+      "near": 593.7610115284708,
+      "tol": 0.06,
+      "msg": "You used h. Surface area uses the slant height ℓ."
      }
     ],
     "nudges": [
-     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+     "Use the π key, not 3.14. Type the whole line in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
-      "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
-      ],
-      "ch": 1801984585,
-      "shuffle": true,
-      "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
-      ]
-     },
-     {
-      "tool": "choice",
-      "stack": true,
       "label": "Plan 6: Substitute",
-      "ask": "Put the numbers in. Which is it?",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = π · 9² + π · 9 · 15",
-       "S = π · 9 · 15",
-       "S = π · 15² + π · 9 · 15"
+       "S = π(9²) + π(9)(15)",
+       "S = π(15²) + π(15)(9)",
+       "S = π(9²) + π(9)(12)"
       ],
-      "ch": 3664593391,
+      "ch": 4193842653,
       "shuffle": true,
       "nudges": [
-       "r goes where r is, ℓ where ℓ is."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. S ≈ ? (nearest tenth)",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (nearest tenth, in m²)",
       "answer": 678.5840131753953,
       "tol": 0.1,
       "closeBand": 0.03,
       "traps": [
        {
-        "near": 593.7610115284708,
-        "tol": 0.06,
-        "msg": "You used h. Surface area uses ℓ."
-       },
-       {
         "near": 424.11500823462205,
         "tol": 0.06,
-        "msg": "That is only the side. Add the base circle."
+        "msg": "That is only the side. Add the base circle: πr²."
        },
        {
         "near": 678.24,
         "tol": 0.06,
-        "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+        "msg": "Use the π key, not 3.14. Type the whole line in one go."
+       },
+       {
+        "near": 4071.5040790523717,
+        "tol": 0.06,
+        "msg": "The side is πrℓ, not πr²ℓ."
+       },
+       {
+        "near": 593.7610115284708,
+        "tol": 0.06,
+        "msg": "You used h. Surface area uses the slant height ℓ."
        }
       ],
       "nudges": [
-       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+       "Use the π key, not 3.14. Type the whole line in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        310,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 310 165\" width=\"310\" height=\"165\" role=\"img\" aria-label=\"Sketch: a cone\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M100 16 L44 124 M100 16 L156 124\"/><path d=\"M44 124 A56 13 0 0 0 156 124\"/><path d=\"M44 124 A56 13 0 0 1 156 124\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 124 H156\" stroke-dasharray=\"5 4\"/><path d=\"M100 16 V124\" stroke-dasharray=\"5 4\"/><path d=\"M100 115 H109 V124\" stroke-width=\"1.2\"/></g><circle cx=\"100\" cy=\"124\" r=\"2.3\" fill=\"currentColor\"/></svg>",
+       "zones": [
+        {
+         "id": "r",
+         "x": 128,
+         "y": 154,
+         "anchor": "middle",
+         "name": "the radius"
+        },
+        {
+         "id": "h",
+         "x": 94,
+         "y": 78,
+         "anchor": "end",
+         "name": "straight up the middle"
+        },
+        {
+         "id": "l",
+         "x": 136,
+         "y": 62,
+         "anchor": "start",
+         "name": "down the side"
+        },
+        {
+         "id": "S",
+         "x": 212,
+         "y": 100,
+         "anchor": "start",
+         "name": "beside the cone"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i>² + π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5",
+      "l": "<i class=\"ink-4\">ℓ</i>²",
+      "r": "= <i class=\"ink-6\">h</i>² + <i class=\"ink-2\">r</i>²",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "<i class=\"ink-4\">ℓ</i>",
+      "r": "= √(<i class=\"ink-6\">h</i>² + <i class=\"ink-2\">r</i>²)",
+      "note": "square root",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= √(<span class=\"ink-6\">12</span>² + <span class=\"ink-2\">9</span>²)",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-4\">15</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i>² + π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= π(<span class=\"ink-2\">9</span>²) + π(<span class=\"ink-2\">9</span>)(<span class=\"ink-4\">15</span>)",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-1\">678.6 m²</span></span>",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">15</span>: longer than <i class=\"ink-6\">h</i> and <i class=\"ink-2\">r</i> ✓"
    }
   ]
  },
@@ -429,25 +1000,113 @@ K.run([
     "k": "the height h"
    }
   ],
-  "want": "S, the surface area",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the surface area, in ft²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "s = 12 ft",
+      "why": "s is a side of the square base: the front edge.",
+      "ink": 2
+     },
+     {
+      "t": "s = 6 ft",
+      "why": "The side is 12 ft. Half of it, 6, is only for finding ℓ.",
+      "ink": 2
+     },
+     {
+      "t": "h = 8 ft",
+      "why": "h goes straight up the middle, inside the pyramid.",
+      "ink": 6
+     },
+     {
+      "t": "ℓ = ?",
+      "why": "ℓ runs down the middle of a face. You find it in step 5.",
+      "ink": 4
+     },
+     {
+      "t": "ℓ = 8 ft",
+      "why": "8 ft goes straight up inside: that is h. ℓ runs down the face.",
+      "ink": 4
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole pyramid, so it goes beside it, not on one edge.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "s",
+      "accept": 1947609522
+     },
+     {
+      "id": "h",
+      "accept": 2791728892
+     },
+     {
+      "id": "l",
+      "accept": 1586628276
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = B + (1/2)Pℓ",
+      "why": "A square pyramid: the base (B) plus the 4 triangle faces ((1/2)Pℓ)."
+     },
+     {
+      "t": "S = (1/2)Pℓ",
+      "why": "The faces only cover a pyramid with no floor. This one has its base too."
+     },
+     {
+      "t": "S = B + (1/2)Ph",
+      "why": "Each triangle face is (1/2) · s · ℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)Bh",
+      "why": "V fills the pyramid, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1922395016
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ? (in ft)",
     "answer": 10,
     "tol": 0.1,
     "closeBand": 0.03,
     "traps": [
      {
-      "near": 14.422205101855956,
+      "near": 14,
+      "tol": 0.06,
+      "msg": "ℓ is not h + half the side. Square, add, then take the square root."
+     },
+     {
+      "near": 14.422205101855958,
       "tol": 0.06,
       "msg": "Use half the side: s/2 = 6, not 12."
      },
      {
-      "near": 14,
+      "near": 100,
       "tol": 0.06,
-      "msg": "ℓ is not h + s/2. Square, add, then take the square root."
+      "msg": "That is ℓ². Take its square root."
      }
     ],
     "nudges": [
@@ -468,7 +1127,7 @@ K.run([
       "ch": 3541956028,
       "shuffle": true,
       "nudges": [
-       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Undo the square with a square root."
       ]
      },
      {
@@ -477,7 +1136,13 @@ K.run([
       "answer": 100,
       "tol": 0.005,
       "closeBand": 0.02,
-      "traps": [],
+      "traps": [
+       {
+        "near": 76,
+        "tol": 0.005,
+        "msg": "Power first: 6² is 6 · 6."
+       }
+      ],
       "nudges": [
        "Power first: 8² = 64 and 6² = 36. Then add."
       ]
@@ -503,100 +1168,297 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S = ? (in ft²)",
-    "answer": 384,
-    "tol": 0.1,
-    "closeBand": 0.03,
+    "label": "Plan 5b: Find B, the area of the base. B = ? (in ft²)",
+    "answer": 144,
+    "tol": 0.005,
+    "closeBand": 0.02,
     "traps": [
      {
-      "near": 336,
-      "tol": 0.06,
-      "msg": "You used h. Surface area uses ℓ."
+      "near": 48,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: s²."
      },
      {
-      "near": 240,
-      "tol": 0.06,
-      "msg": "That is only the sides. Add the base B."
-     },
-     {
-      "near": 624,
-      "tol": 0.06,
-      "msg": "You left out the 1/2."
+      "near": 24,
+      "tol": 0.005,
+      "msg": "s² is s · s, not 2s."
      }
     ],
     "nudges": [
-     "Find B and P first, then substitute."
+     "B is the area of the square base: B = s²."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5c: Find P, the distance around the base. P = ? (in ft)",
+    "answer": 48,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 144,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 4s."
+     },
+     {
+      "near": 24,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 4 sides, 4s."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the square: P = 4s."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. S = ? (in ft²)",
+    "answer": 384,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 240,
+      "tol": 0.005,
+      "msg": "That is only the faces. Add the base B."
+     },
+     {
+      "near": 624,
+      "tol": 0.005,
+      "msg": "You left out the 1/2."
+     },
+     {
+      "near": 288,
+      "tol": 0.005,
+      "msg": "B is the area of the base, s², not 4s."
+     },
+     {
+      "near": 336,
+      "tol": 0.005,
+      "msg": "You used h. Surface area uses the slant height ℓ."
+     }
+    ],
+    "nudges": [
+     "Type the whole line into the calculator in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
+       "S = 144 + (1/2)(48)(10)",
+       "S = 48 + (1/2)(144)(10)",
+       "S = 144 + (1/2)(48)(8)"
       ],
-      "ch": 1922395016,
+      "ch": 1906318955,
       "shuffle": true,
       "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 5a: B = s² = ?",
-      "answer": 144,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "B is the area of the square base: s · s."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 5b: P = 4s = ?",
-      "answer": 48,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "P is the distance around the base: 4 sides."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 6: Calculator. S = ? ",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (in ft²)",
       "answer": 384,
-      "tol": 0.1,
-      "closeBand": 0.03,
+      "tol": 0.005,
+      "closeBand": 0.02,
       "traps": [
        {
-        "near": 336,
-        "tol": 0.06,
-        "msg": "You used h. Surface area uses ℓ."
-       },
-       {
         "near": 240,
-        "tol": 0.06,
-        "msg": "That is only the sides. Add the base B."
+        "tol": 0.005,
+        "msg": "That is only the faces. Add the base B."
        },
        {
         "near": 624,
-        "tol": 0.06,
+        "tol": 0.005,
         "msg": "You left out the 1/2."
+       },
+       {
+        "near": 288,
+        "tol": 0.005,
+        "msg": "B is the area of the base, s², not 4s."
+       },
+       {
+        "near": 336,
+        "tol": 0.005,
+        "msg": "You used h. Surface area uses the slant height ℓ."
        }
       ],
       "nudges": [
-       "Reiterate the rule, substitute, then the calculator."
+       "Type the whole line into the calculator in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        330,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 165\" width=\"330\" height=\"165\" role=\"img\" aria-label=\"Sketch: a square pyramid\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M50 132 H180 L222 100\"/><path d=\"M140 16 L50 132 M140 16 L180 132 M140 16 L222 100\"/><path d=\"M222 100 H92 L50 132 M140 16 L92 100\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M140 16 L115 132\"/><path d=\"M140 16 V116 L115 132\" stroke-dasharray=\"5 4\"/></g></svg>",
+       "zones": [
+        {
+         "id": "s",
+         "x": 82,
+         "y": 152,
+         "anchor": "middle",
+         "name": "the front edge of the base"
+        },
+        {
+         "id": "h",
+         "x": 147,
+         "y": 72,
+         "anchor": "start",
+         "name": "straight up the middle"
+        },
+        {
+         "id": "l",
+         "x": 118,
+         "y": 66,
+         "anchor": "end",
+         "name": "down the middle of the front face"
+        },
+        {
+         "id": "S",
+         "x": 240,
+         "y": 70,
+         "anchor": "start",
+         "name": "beside the pyramid"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-3\">B</i> + (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5a",
+      "l": "<i class=\"ink-4\">ℓ</i>²",
+      "r": "= <i class=\"ink-6\">h</i>² + (<span class=\"fr\"><span><i class=\"ink-2\">s</i></span><span>2</span></span>)²",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "<i class=\"ink-4\">ℓ</i>",
+      "r": "= √(<i class=\"ink-6\">h</i>² + (<span class=\"fr\"><span><i class=\"ink-2\">s</i></span><span>2</span></span>)²)",
+      "note": "square root",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= √(<span class=\"ink-6\">8</span>² + (<span class=\"fr\"><span><span class=\"ink-2\">12</span></span><span>2</span></span>)²)",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-4\">10</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i class=\"ink-3\">B</i>",
+      "r": "= <i class=\"ink-2\">s</i>²",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-2\">12</span>²",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-3\">144</span>",
+      "at": [
+       3
+      ]
+     },
+     {
+      "tag": "5c",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 4<i class=\"ink-2\">s</i>",
+      "at": [
+       4
+      ]
+     },
+     {
+      "l": "",
+      "r": "= 4(<span class=\"ink-2\">12</span>)",
+      "at": [
+       4
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-5\">48</span>",
+      "at": [
+       4
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-3\">B</i> + (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       5,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-3\">144</span> + (1/2)(<span class=\"ink-5\">48</span>)(<span class=\"ink-4\">10</span>)",
+      "at": [
+       5,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-1\">384 ft²</span></span>",
+      "at": [
+       5
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">10</span>: longer than <i class=\"ink-6\">h</i> and half of <i class=\"ink-2\">s</i> ✓"
    }
   ]
  },
@@ -607,117 +1469,307 @@ K.run([
   "given": [
    {
     "v": "12 in across",
-    "k": "the diameter"
+    "k": "all the way across the bottom"
    },
    {
     "v": "14 in",
     "k": "the slant height ℓ"
    }
   ],
-  "want": "S, the surface area",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the surface area, in in²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "d = 12 in",
+      "why": "12 in goes all the way across the bottom: that is d.",
+      "ink": 3
+     },
+     {
+      "t": "r = 12 in",
+      "why": "12 in goes all the way across: that is d. r is half of it.",
+      "ink": 2
+     },
+     {
+      "t": "ℓ = 14 in",
+      "why": "The slant height runs down the outside, along the side.",
+      "ink": 4
+     },
+     {
+      "t": "h = 14 in",
+      "why": "14 in is the slant height: it runs down the outside. h would go straight up inside.",
+      "ink": 6
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole cone, so it goes beside it, not on one line.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "d",
+      "accept": 2697693952
+     },
+     {
+      "id": "l",
+      "accept": 3489530737
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = πr² + πrℓ",
+      "why": "A cone with its bottom: the base circle (πr²) plus the side (πrℓ)."
+     },
+     {
+      "t": "S = πrℓ",
+      "why": "The side only covers a cone with no bottom. This cone has its base circle too."
+     },
+     {
+      "t": "S = πr² + πrh",
+      "why": "The side unrolls to πrℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)πr²h",
+      "why": "V fills the cone, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1801984585
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S ≈ ? (nearest tenth, in in²)",
+    "label": "Plan 5a: Find r. r = ? (in in)",
+    "answer": 6,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 12,
+      "tol": 0.005,
+      "msg": "12 in is d, all the way across. d = 2r, so r = d/2."
+     },
+     {
+      "near": 24,
+      "tol": 0.005,
+      "msg": "d = 2r: undo × 2 with × 1/2, not × 2."
+     }
+    ],
+    "nudges": [
+     "Write d = 2r, then solve it for r."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. S = ? (nearest tenth, in in²)",
     "answer": 376.9911184307752,
     "tol": 0.1,
     "closeBand": 0.03,
     "traps": [
      {
-      "near": 980.1769079200155,
-      "tol": 0.06,
-      "msg": "12 in across is the diameter. r = 12 · 1/2 = 6."
-     },
-     {
       "near": 263.89378290154264,
       "tol": 0.06,
-      "msg": "That is only the side. Add the base circle."
+      "msg": "That is only the side. Add the base circle: πr²."
      },
      {
       "near": 376.8,
       "tol": 0.06,
-      "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+      "msg": "Use the π key, not 3.14. Type the whole line in one go."
+     },
+     {
+      "near": 1696.4600329384884,
+      "tol": 0.06,
+      "msg": "The side is πrℓ, not πr²ℓ."
+     },
+     {
+      "near": 980.1769079200155,
+      "tol": 0.06,
+      "msg": "12 in is d, all the way across. r = d/2."
      }
     ],
     "nudges": [
-     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+     "Use the π key, not 3.14. Type the whole line in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
-      "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
-      ],
-      "ch": 1801984585,
-      "shuffle": true,
-      "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 4: r = 12 · 1/2 = ?",
-      "answer": 6,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "Across is the whole width. The radius is half of it."
-      ]
-     },
-     {
-      "tool": "choice",
-      "stack": true,
       "label": "Plan 6: Substitute",
-      "ask": "Put the numbers in. Which is it?",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = π · 6² + π · 6 · 14",
-       "S = π · 6 · 14",
-       "S = π · 14² + π · 6 · 14"
+       "S = π(6²) + π(6)(14)",
+       "S = π(14²) + π(14)(6)",
+       "S = π(6)(14)"
       ],
-      "ch": 3919019720,
+      "ch": 1094242038,
       "shuffle": true,
       "nudges": [
-       "r goes where r is, ℓ where ℓ is."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. S ≈ ? (nearest tenth)",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (nearest tenth, in in²)",
       "answer": 376.9911184307752,
       "tol": 0.1,
       "closeBand": 0.03,
       "traps": [
        {
-        "near": 980.1769079200155,
-        "tol": 0.06,
-        "msg": "12 in across is the diameter. r = 12 · 1/2 = 6."
-       },
-       {
         "near": 263.89378290154264,
         "tol": 0.06,
-        "msg": "That is only the side. Add the base circle."
+        "msg": "That is only the side. Add the base circle: πr²."
        },
        {
         "near": 376.8,
         "tol": 0.06,
-        "msg": "Use the π key, not 3.14. Type the whole line into the calculator at once."
+        "msg": "Use the π key, not 3.14. Type the whole line in one go."
+       },
+       {
+        "near": 1696.4600329384884,
+        "tol": 0.06,
+        "msg": "The side is πrℓ, not πr²ℓ."
+       },
+       {
+        "near": 980.1769079200155,
+        "tol": 0.06,
+        "msg": "12 in is d, all the way across. r = d/2."
        }
       ],
       "nudges": [
-       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+       "Use the π key, not 3.14. Type the whole line in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        310,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 310 165\" width=\"310\" height=\"165\" role=\"img\" aria-label=\"Sketch: a cone\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M100 16 L44 124 M100 16 L156 124\"/><path d=\"M44 124 A56 13 0 0 0 156 124\"/><path d=\"M44 124 A56 13 0 0 1 156 124\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M44 124 H156\" stroke-dasharray=\"5 4\"/></g><circle cx=\"100\" cy=\"124\" r=\"2.3\" fill=\"currentColor\"/></svg>",
+       "zones": [
+        {
+         "id": "d",
+         "x": 100,
+         "y": 154,
+         "anchor": "middle",
+         "name": "across the bottom"
+        },
+        {
+         "id": "l",
+         "x": 136,
+         "y": 62,
+         "anchor": "start",
+         "name": "down the side"
+        },
+        {
+         "id": "S",
+         "x": 212,
+         "y": 100,
+         "anchor": "start",
+         "name": "beside the cone"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i>² + π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5a",
+      "l": "<i class=\"ink-3\">d</i>",
+      "r": "= 2<i class=\"ink-2\">r</i>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "l": "<span class=\"fr\"><span><i class=\"ink-3\">d</i></span><span>2</span></span>",
+      "r": "= <i class=\"ink-2\">r</i>",
+      "note": "× 1/2",
+      "at": [
+       2
+      ]
+     },
+     {
+      "l": "<i class=\"ink-2\">r</i>",
+      "r": "= <span class=\"fr\"><span><span class=\"ink-3\">12</span></span><span>2</span></span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-2\">6</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i>² + π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= π(<span class=\"ink-2\">6</span>²) + π(<span class=\"ink-2\">6</span>)(<span class=\"ink-4\">14</span>)",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-1\">377.0 in²</span></span>",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">14</span>: longer than <i class=\"ink-2\">r</i> ✓"
    }
   ]
  },
@@ -735,25 +1787,113 @@ K.run([
     "k": "the height h"
    }
   ],
-  "want": "S, the surface area",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the surface area, in m²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "s = 14 m",
+      "why": "s is a side of the square base: the front edge.",
+      "ink": 2
+     },
+     {
+      "t": "s = 7 m",
+      "why": "The side is 14 m. Half of it, 7, is only for finding ℓ.",
+      "ink": 2
+     },
+     {
+      "t": "h = 24 m",
+      "why": "h goes straight up the middle, inside the pyramid.",
+      "ink": 6
+     },
+     {
+      "t": "ℓ = ?",
+      "why": "ℓ runs down the middle of a face. You find it in step 5.",
+      "ink": 4
+     },
+     {
+      "t": "ℓ = 24 m",
+      "why": "24 m goes straight up inside: that is h. ℓ runs down the face.",
+      "ink": 4
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole pyramid, so it goes beside it, not on one edge.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "s",
+      "accept": 3442934279
+     },
+     {
+      "id": "h",
+      "accept": 2791532733
+     },
+     {
+      "id": "l",
+      "accept": 1586628276
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = B + (1/2)Pℓ",
+      "why": "A square pyramid: the base (B) plus the 4 triangle faces ((1/2)Pℓ)."
+     },
+     {
+      "t": "S = (1/2)Pℓ",
+      "why": "The faces only cover a pyramid with no floor. This one has its base too."
+     },
+     {
+      "t": "S = B + (1/2)Ph",
+      "why": "Each triangle face is (1/2) · s · ℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)Bh",
+      "why": "V fills the pyramid, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1922395016
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ? (in m)",
     "answer": 25,
     "tol": 0.1,
     "closeBand": 0.03,
     "traps": [
      {
-      "near": 27.784887978899608,
+      "near": 31,
+      "tol": 0.06,
+      "msg": "ℓ is not h + half the side. Square, add, then take the square root."
+     },
+     {
+      "near": 27.78488797889961,
       "tol": 0.06,
       "msg": "Use half the side: s/2 = 7, not 14."
      },
      {
-      "near": 31,
+      "near": 625,
       "tol": 0.06,
-      "msg": "ℓ is not h + s/2."
+      "msg": "That is ℓ². Take its square root."
      }
     ],
     "nudges": [
@@ -774,7 +1914,7 @@ K.run([
       "ch": 3541956028,
       "shuffle": true,
       "nudges": [
-       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Undo the square with a square root."
       ]
      },
      {
@@ -783,7 +1923,13 @@ K.run([
       "answer": 625,
       "tol": 0.005,
       "closeBand": 0.02,
-      "traps": [],
+      "traps": [
+       {
+        "near": 590,
+        "tol": 0.005,
+        "msg": "Power first: 7² is 7 · 7."
+       }
+      ],
       "nudges": [
        "Power first: 24² = 576 and 7² = 49. Then add."
       ]
@@ -809,100 +1955,297 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S = ? (in m²)",
-    "answer": 896,
-    "tol": 0.1,
-    "closeBand": 0.03,
+    "label": "Plan 5b: Find B, the area of the base. B = ? (in m²)",
+    "answer": 196,
+    "tol": 0.005,
+    "closeBand": 0.02,
     "traps": [
      {
-      "near": 868,
-      "tol": 0.06,
-      "msg": "You used h. Surface area uses ℓ."
+      "near": 56,
+      "tol": 0.005,
+      "msg": "That is P, the distance around. B is the area: s²."
      },
      {
-      "near": 700,
-      "tol": 0.06,
-      "msg": "That is only the sides. Add the base B."
-     },
-     {
-      "near": 1596,
-      "tol": 0.06,
-      "msg": "You left out the 1/2."
+      "near": 28,
+      "tol": 0.005,
+      "msg": "s² is s · s, not 2s."
      }
     ],
     "nudges": [
-     "Find B and P first, then substitute."
+     "B is the area of the square base: B = s²."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 5c: Find P, the distance around the base. P = ? (in m)",
+    "answer": 56,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 196,
+      "tol": 0.005,
+      "msg": "That is B, the area. P goes around: 4s."
+     },
+     {
+      "near": 28,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 4 sides, 4s."
+     }
+    ],
+    "nudges": [
+     "P is the distance around the square: P = 4s."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. S = ? (in m²)",
+    "answer": 896,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 700,
+      "tol": 0.005,
+      "msg": "That is only the faces. Add the base B."
+     },
+     {
+      "near": 1596,
+      "tol": 0.005,
+      "msg": "You left out the 1/2."
+     },
+     {
+      "near": 756,
+      "tol": 0.005,
+      "msg": "B is the area of the base, s², not 4s."
+     },
+     {
+      "near": 868,
+      "tol": 0.005,
+      "msg": "You used h. Surface area uses the slant height ℓ."
+     }
+    ],
+    "nudges": [
+     "Type the whole line into the calculator in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
+       "S = 196 + (1/2)(56)(25)",
+       "S = 56 + (1/2)(196)(25)",
+       "S = 196 + (1/2)(56)(24)"
       ],
-      "ch": 1922395016,
+      "ch": 2249358711,
       "shuffle": true,
       "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 5a: B = s² = ?",
-      "answer": 196,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "B is the area of the square base: s · s."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 5b: P = 4s = ?",
-      "answer": 56,
-      "tol": 0.005,
-      "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "P is the distance around the base: 4 sides."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 6: Calculator. S = ? ",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (in m²)",
       "answer": 896,
-      "tol": 0.1,
-      "closeBand": 0.03,
+      "tol": 0.005,
+      "closeBand": 0.02,
       "traps": [
        {
-        "near": 868,
-        "tol": 0.06,
-        "msg": "You used h. Surface area uses ℓ."
-       },
-       {
         "near": 700,
-        "tol": 0.06,
-        "msg": "That is only the sides. Add the base B."
+        "tol": 0.005,
+        "msg": "That is only the faces. Add the base B."
        },
        {
         "near": 1596,
-        "tol": 0.06,
+        "tol": 0.005,
         "msg": "You left out the 1/2."
+       },
+       {
+        "near": 756,
+        "tol": 0.005,
+        "msg": "B is the area of the base, s², not 4s."
+       },
+       {
+        "near": 868,
+        "tol": 0.005,
+        "msg": "You used h. Surface area uses the slant height ℓ."
        }
       ],
       "nudges": [
-       "Reiterate the rule, substitute, then the calculator."
+       "Type the whole line into the calculator in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        330,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 165\" width=\"330\" height=\"165\" role=\"img\" aria-label=\"Sketch: a square pyramid\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M50 132 H180 L222 100\"/><path d=\"M140 16 L50 132 M140 16 L180 132 M140 16 L222 100\"/><path d=\"M222 100 H92 L50 132 M140 16 L92 100\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M140 16 L115 132\"/><path d=\"M140 16 V116 L115 132\" stroke-dasharray=\"5 4\"/></g></svg>",
+       "zones": [
+        {
+         "id": "s",
+         "x": 82,
+         "y": 152,
+         "anchor": "middle",
+         "name": "the front edge of the base"
+        },
+        {
+         "id": "h",
+         "x": 147,
+         "y": 72,
+         "anchor": "start",
+         "name": "straight up the middle"
+        },
+        {
+         "id": "l",
+         "x": 118,
+         "y": 66,
+         "anchor": "end",
+         "name": "down the middle of the front face"
+        },
+        {
+         "id": "S",
+         "x": 240,
+         "y": 70,
+         "anchor": "start",
+         "name": "beside the pyramid"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-3\">B</i> + (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5a",
+      "l": "<i class=\"ink-4\">ℓ</i>²",
+      "r": "= <i class=\"ink-6\">h</i>² + (<span class=\"fr\"><span><i class=\"ink-2\">s</i></span><span>2</span></span>)²",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "<i class=\"ink-4\">ℓ</i>",
+      "r": "= √(<i class=\"ink-6\">h</i>² + (<span class=\"fr\"><span><i class=\"ink-2\">s</i></span><span>2</span></span>)²)",
+      "note": "square root",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= √(<span class=\"ink-6\">24</span>² + (<span class=\"fr\"><span><span class=\"ink-2\">14</span></span><span>2</span></span>)²)",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-4\">25</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i class=\"ink-3\">B</i>",
+      "r": "= <i class=\"ink-2\">s</i>²",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-2\">14</span>²",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-3\">196</span>",
+      "at": [
+       3
+      ]
+     },
+     {
+      "tag": "5c",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 4<i class=\"ink-2\">s</i>",
+      "at": [
+       4
+      ]
+     },
+     {
+      "l": "",
+      "r": "= 4(<span class=\"ink-2\">14</span>)",
+      "at": [
+       4
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-5\">56</span>",
+      "at": [
+       4
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= <i class=\"ink-3\">B</i> + (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       5,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-3\">196</span> + (1/2)(<span class=\"ink-5\">56</span>)(<span class=\"ink-4\">25</span>)",
+      "at": [
+       5,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-1\">896 m²</span></span>",
+      "at": [
+       5
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">25</span>: longer than <i class=\"ink-6\">h</i> and half of <i class=\"ink-2\">s</i> ✓"
    }
   ]
  },
@@ -924,12 +2267,95 @@ K.run([
     "k": "no circle"
    }
   ],
-  "want": "S, the paper (the side only)",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the side only, in cm²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "r = 3 cm",
+      "why": "r is the radius: from the center of the base to its edge.",
+      "ink": 2
+     },
+     {
+      "t": "d = 3 cm",
+      "why": "3 cm is the radius, center to edge. d goes all the way across.",
+      "ink": 3
+     },
+     {
+      "t": "h = 4 cm",
+      "why": "h goes straight up the middle, inside the cone.",
+      "ink": 6
+     },
+     {
+      "t": "ℓ = ?",
+      "why": "ℓ runs down the outside, along the side. You find it in step 5.",
+      "ink": 4
+     },
+     {
+      "t": "ℓ = 4 cm",
+      "why": "4 cm goes straight up inside: that is h. ℓ runs down the outside.",
+      "ink": 4
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole cone, so it goes beside it, not on one line.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "r",
+      "accept": 3774216567
+     },
+     {
+      "id": "h",
+      "accept": 2791585038
+     },
+     {
+      "id": "l",
+      "accept": 1586628276
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = πrℓ",
+      "why": "No bottom, so the side only: πrℓ."
+     },
+     {
+      "t": "S = πr² + πrℓ",
+      "why": "That adds the base circle, πr². This one has no bottom: the side only."
+     },
+     {
+      "t": "S = πr² + πrh",
+      "why": "The side unrolls to πrℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)πr²h",
+      "why": "V fills the cone, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1207429754
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ? (in cm)",
     "answer": 5,
     "tol": 0.1,
     "closeBand": 0.03,
@@ -937,12 +2363,17 @@ K.run([
      {
       "near": 7,
       "tol": 0.06,
-      "msg": "ℓ is not h + r."
+      "msg": "ℓ is not h + r. Square, add, then take the square root."
      },
      {
       "near": 2.6457513110645907,
       "tol": 0.06,
-      "msg": "Add the squares; ℓ is the longest side."
+      "msg": "Add the squares. ℓ is the longest side."
+     },
+     {
+      "near": 25,
+      "tol": 0.06,
+      "msg": "That is ℓ². Take its square root."
      }
     ],
     "nudges": [
@@ -963,7 +2394,7 @@ K.run([
       "ch": 3445052713,
       "shuffle": true,
       "nudges": [
-       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Undo the square with a square root."
       ]
      },
      {
@@ -972,7 +2403,13 @@ K.run([
       "answer": 25,
       "tol": 0.005,
       "closeBand": 0.02,
-      "traps": [],
+      "traps": [
+       {
+        "near": 22,
+        "tol": 0.005,
+        "msg": "Power first: 3² is 3 · 3."
+       }
+      ],
       "nudges": [
        "Power first: 4² = 16 and 3² = 9. Then add."
       ]
@@ -998,7 +2435,7 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S ≈ ? (nearest tenth, in cm²)",
+    "label": "Plan 6: Substitute and answer. S = ? (nearest tenth, in cm²)",
     "answer": 47.12388980384689,
     "tol": 0.1,
     "closeBand": 0.03,
@@ -1006,56 +2443,37 @@ K.run([
      {
       "near": 75.39822368615503,
       "tol": 0.06,
-      "msg": "The cup has no top. Leave out the circle: S = πrℓ."
+      "msg": "No bottom: leave out the base circle, πr²."
      },
      {
       "near": 37.69911184307752,
       "tol": 0.06,
-      "msg": "You used h. Surface area uses ℓ."
+      "msg": "You used h. Surface area uses the slant height ℓ."
      }
     ],
     "nudges": [
-     "Write the rule, substitute, then type the whole line into the calculator. Use the π key, not 3.14. Type the whole line into the calculator at once."
+     "Use the π key, not 3.14. Type the whole line in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
-      "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
-      ],
-      "ch": 1207429754,
-      "shuffle": true,
-      "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
-      ]
-     },
-     {
-      "tool": "choice",
-      "stack": true,
       "label": "Plan 6: Substitute",
-      "ask": "Put the numbers in. Which is it?",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = π · 3 · 5",
-       "S = π · 3² + π · 3 · 5",
-       "S = π · 5 · 5"
+       "S = π(3)(5)",
+       "S = π(5)(3)",
+       "S = π(3)(4)"
       ],
-      "ch": 1069074763,
+      "ch": 4279268543,
       "shuffle": true,
       "nudges": [
-       "r goes where r is, ℓ where ℓ is."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 6: Calculator. S ≈ ? (nearest tenth)",
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (nearest tenth, in cm²)",
       "answer": 47.12388980384689,
       "tol": 0.1,
       "closeBand": 0.03,
@@ -1063,19 +2481,143 @@ K.run([
        {
         "near": 75.39822368615503,
         "tol": 0.06,
-        "msg": "The cup has no top. Leave out the circle: S = πrℓ."
+        "msg": "No bottom: leave out the base circle, πr²."
        },
        {
         "near": 37.69911184307752,
         "tol": 0.06,
-        "msg": "You used h. Surface area uses ℓ."
+        "msg": "You used h. Surface area uses the slant height ℓ."
        }
       ],
       "nudges": [
-       "Use the π key, not 3.14. Type the whole line into the calculator at once."
+       "Use the π key, not 3.14. Type the whole line in one go."
       ]
      }
     ]
+   }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        310,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 310 165\" width=\"310\" height=\"165\" role=\"img\" aria-label=\"Sketch: a cone\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M100 16 L44 124 M100 16 L156 124\"/><path d=\"M44 124 A56 13 0 0 0 156 124\"/><path d=\"M44 124 A56 13 0 0 1 156 124\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M100 124 H156\" stroke-dasharray=\"5 4\"/><path d=\"M100 16 V124\" stroke-dasharray=\"5 4\"/><path d=\"M100 115 H109 V124\" stroke-width=\"1.2\"/></g><circle cx=\"100\" cy=\"124\" r=\"2.3\" fill=\"currentColor\"/></svg>",
+       "zones": [
+        {
+         "id": "r",
+         "x": 128,
+         "y": 154,
+         "anchor": "middle",
+         "name": "the radius"
+        },
+        {
+         "id": "h",
+         "x": 94,
+         "y": 78,
+         "anchor": "end",
+         "name": "straight up the middle"
+        },
+        {
+         "id": "l",
+         "x": 136,
+         "y": 62,
+         "anchor": "start",
+         "name": "down the side"
+        },
+        {
+         "id": "S",
+         "x": 212,
+         "y": 100,
+         "anchor": "start",
+         "name": "beside the cone"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5",
+      "l": "<i class=\"ink-4\">ℓ</i>²",
+      "r": "= <i class=\"ink-6\">h</i>² + <i class=\"ink-2\">r</i>²",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "<i class=\"ink-4\">ℓ</i>",
+      "r": "= √(<i class=\"ink-6\">h</i>² + <i class=\"ink-2\">r</i>²)",
+      "note": "square root",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= √(<span class=\"ink-6\">4</span>² + <span class=\"ink-2\">3</span>²)",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-4\">5</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= π<i class=\"ink-2\">r</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= π(<span class=\"ink-2\">3</span>)(<span class=\"ink-4\">5</span>)",
+      "at": [
+       3,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "≈ <span class=\"wk-box\"><span class=\"ink-1\">47.1 cm²</span></span>",
+      "at": [
+       3
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">5</span>: longer than <i class=\"ink-6\">h</i> and <i class=\"ink-2\">r</i> ✓"
    }
   ]
  },
@@ -1097,25 +2639,113 @@ K.run([
     "k": "no base"
    }
   ],
-  "want": "S, the fabric (the sides only)",
-  "reference": "<div class=\"surf-label\">Formula Box — stays on screen</div><div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\">S = πr² + πrℓ<br>ℓ = √(h² + r²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\">S = B + (1/2)Pℓ, &nbsp;B = s², &nbsp;P = 4s<br>ℓ = √(h² + (s/2)²)</div></div></div><div class=\"ref-note\">h goes straight up inside. ℓ (slant height) runs down the outside face. Surface area uses ℓ. Given h? Find ℓ first. Across (diameter) = 2r. Round to the nearest tenth.</div>",
+  "want": "S, the sides only, in ft²",
   "pipeline": [
    {
+    "tool": "labels",
+    "slot": "sketch",
+    "shuffle": true,
+    "label": "Plan 1, 3, 4: Label your sketch",
+    "ask": "Put each label where it belongs on the sketch. Not every label belongs.",
+    "cards": [
+     {
+      "t": "s = 6 ft",
+      "why": "s is a side of the square base: the front edge.",
+      "ink": 2
+     },
+     {
+      "t": "s = 3 ft",
+      "why": "The side is 6 ft. Half of it, 3, is only for finding ℓ.",
+      "ink": 2
+     },
+     {
+      "t": "h = 4 ft",
+      "why": "h goes straight up the middle, inside the pyramid.",
+      "ink": 6
+     },
+     {
+      "t": "ℓ = ?",
+      "why": "ℓ runs down the middle of a face. You find it in step 5.",
+      "ink": 4
+     },
+     {
+      "t": "ℓ = 4 ft",
+      "why": "4 ft goes straight up inside: that is h. ℓ runs down the face.",
+      "ink": 4
+     },
+     {
+      "t": "S = ?",
+      "why": "S covers the whole pyramid, so it goes beside it, not on one edge.",
+      "ink": 1
+     }
+    ],
+    "zones": [
+     {
+      "id": "s",
+      "accept": 3443094501
+     },
+     {
+      "id": "h",
+      "accept": 2791585144
+     },
+     {
+      "id": "l",
+      "accept": 1586628276
+     },
+     {
+      "id": "S",
+      "accept": 233801204
+     }
+    ]
+   },
+   {
+    "tool": "model",
+    "slot": "model",
+    "shuffle": true,
+    "label": "Plan 2: The model",
+    "ask": "Which model covers this solid?",
+    "dropText": "Drag the model here",
+    "cards": [
+     {
+      "t": "S = (1/2)Pℓ",
+      "why": "No floor, so the 4 triangle faces only: (1/2)Pℓ."
+     },
+     {
+      "t": "S = B + (1/2)Pℓ",
+      "why": "That adds the base B. There is no floor: the sides only."
+     },
+     {
+      "t": "S = B + (1/2)Ph",
+      "why": "Each triangle face is (1/2) · s · ℓ: it uses the slant height ℓ, not h."
+     },
+     {
+      "t": "V = (1/3)Bh",
+      "why": "V fills the pyramid, in cubic units. This problem covers it, in square units: S."
+     }
+    ],
+    "ch": 1887519451
+   },
+   {
     "tool": "numeric",
-    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ?",
+    "label": "Plan 5: You were given h. Find ℓ first. ℓ = ? (in ft)",
     "answer": 5,
     "tol": 0.1,
     "closeBand": 0.03,
     "traps": [
      {
-      "near": 7.211102550927978,
+      "near": 7,
+      "tol": 0.06,
+      "msg": "ℓ is not h + half the side. Square, add, then take the square root."
+     },
+     {
+      "near": 7.211102550927979,
       "tol": 0.06,
       "msg": "Use half the side: s/2 = 3, not 6."
      },
      {
-      "near": 7,
+      "near": 25,
       "tol": 0.06,
-      "msg": "ℓ is not h + s/2."
+      "msg": "That is ℓ². Take its square root."
      }
     ],
     "nudges": [
@@ -1136,7 +2766,7 @@ K.run([
       "ch": 3541956028,
       "shuffle": true,
       "nudges": [
-       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Then undo the square with a square root."
+       "Pythagorean theorem: ℓ² = h² + (the bottom leg)². Undo the square with a square root."
       ]
      },
      {
@@ -1145,7 +2775,13 @@ K.run([
       "answer": 25,
       "tol": 0.005,
       "closeBand": 0.02,
-      "traps": [],
+      "traps": [
+       {
+        "near": 22,
+        "tol": 0.005,
+        "msg": "Power first: 3² is 3 · 3."
+       }
+      ],
       "nudges": [
        "Power first: 4² = 16 and 3² = 9. Then add."
       ]
@@ -1171,93 +2807,242 @@ K.run([
    },
    {
     "tool": "numeric",
-    "label": "Plan 6: Substitute and answer. S = ? (in ft²)",
-    "answer": 60,
-    "tol": 0.1,
-    "closeBand": 0.03,
+    "label": "Plan 5b: Find P, the distance around the base. P = ? (in ft)",
+    "answer": 24,
+    "tol": 0.005,
+    "closeBand": 0.02,
     "traps": [
      {
-      "near": 96,
-      "tol": 0.06,
-      "msg": "The tent has no floor. Leave out B: S = (1/2)Pℓ."
-     },
-     {
-      "near": 48,
-      "tol": 0.06,
-      "msg": "You used h. Surface area uses ℓ."
-     },
-     {
-      "near": 120,
-      "tol": 0.06,
-      "msg": "You left out the 1/2."
+      "near": 12,
+      "tol": 0.005,
+      "msg": "P goes all the way around: 4 sides, 4s."
      }
     ],
     "nudges": [
-     "Find B and P first, then substitute."
+     "P is the distance around the square: P = 4s."
+    ]
+   },
+   {
+    "tool": "numeric",
+    "label": "Plan 6: Substitute and answer. S = ? (in ft²)",
+    "answer": 60,
+    "tol": 0.005,
+    "closeBand": 0.02,
+    "traps": [
+     {
+      "near": 96,
+      "tol": 0.005,
+      "msg": "No floor: leave out B."
+     },
+     {
+      "near": 120,
+      "tol": 0.005,
+      "msg": "You left out the 1/2."
+     },
+     {
+      "near": 48,
+      "tol": 0.005,
+      "msg": "You used h. Surface area uses the slant height ℓ."
+     }
+    ],
+    "nudges": [
+     "Type the whole line into the calculator in one go."
     ],
     "sub": [
      {
       "tool": "choice",
       "stack": true,
-      "label": "Plan 2: Write the formula",
-      "ask": "Which rule fits?",
+      "label": "Plan 6: Substitute",
+      "ask": "Put the numbers into the formula. Which is it?",
       "options": [
-       "S = πr² + πrℓ",
-       "S = πrℓ",
-       "S = πr² + πrh",
-       "S = B + (1/2)Pℓ",
-       "S = (1/2)Pℓ",
-       "S = B + (1/2)Ph"
+       "S = (1/2)(24)(5)",
+       "S = (1/2)(36)(5)",
+       "S = 36 + (1/2)(24)(5)"
       ],
-      "ch": 1887519451,
+      "ch": 657594101,
       "shuffle": true,
       "nudges": [
-       "Surface area uses the slant height ℓ, not h. If a part is missing (no bottom), leave out its area."
+       "Each number goes where its letter is."
       ]
      },
      {
       "tool": "numeric",
-      "label": "Plan 5b: P = 4s = ?",
-      "answer": 24,
+      "label": "Plan 6: Answer. Simplify with the calculator, one go. S = ? (in ft²)",
+      "answer": 60,
       "tol": 0.005,
       "closeBand": 0.02,
-      "traps": [],
-      "nudges": [
-       "P is the distance around the base: 4 sides."
-      ]
-     },
-     {
-      "tool": "numeric",
-      "label": "Plan 6: Calculator. S = ? ",
-      "answer": 60,
-      "tol": 0.1,
-      "closeBand": 0.03,
       "traps": [
        {
         "near": 96,
-        "tol": 0.06,
-        "msg": "The tent has no floor. Leave out B: S = (1/2)Pℓ."
-       },
-       {
-        "near": 48,
-        "tol": 0.06,
-        "msg": "You used h. Surface area uses ℓ."
+        "tol": 0.005,
+        "msg": "No floor: leave out B."
        },
        {
         "near": 120,
-        "tol": 0.06,
+        "tol": 0.005,
         "msg": "You left out the 1/2."
+       },
+       {
+        "near": 48,
+        "tol": 0.005,
+        "msg": "You used h. Surface area uses the slant height ℓ."
        }
       ],
       "nudges": [
-       "Reiterate the rule, substitute, then the calculator."
+       "Type the whole line into the calculator in one go."
       ]
      }
     ]
    }
+  ],
+  "work": [
+   {
+    "lines": [
+     {
+      "tag": "1, 3, 4",
+      "fig": {
+       "vb": [
+        330,
+        165
+       ],
+       "svg": "<svg class=\"wk-sketch\" viewBox=\"0 0 330 165\" width=\"330\" height=\"165\" role=\"img\" aria-label=\"Sketch: a square pyramid\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M50 132 H180 L222 100\"/><path d=\"M140 16 L50 132 M140 16 L180 132 M140 16 L222 100\"/><path d=\"M222 100 H92 L50 132 M140 16 L92 100\" stroke-dasharray=\"4 5\" opacity=\".45\"/><path d=\"M140 16 L115 132\"/><path d=\"M140 16 V116 L115 132\" stroke-dasharray=\"5 4\"/></g></svg>",
+       "zones": [
+        {
+         "id": "s",
+         "x": 82,
+         "y": 152,
+         "anchor": "middle",
+         "name": "the front edge of the base"
+        },
+        {
+         "id": "h",
+         "x": 147,
+         "y": 72,
+         "anchor": "start",
+         "name": "straight up the middle"
+        },
+        {
+         "id": "l",
+         "x": 118,
+         "y": 66,
+         "anchor": "end",
+         "name": "down the middle of the front face"
+        },
+        {
+         "id": "S",
+         "x": 240,
+         "y": 70,
+         "anchor": "start",
+         "name": "beside the pyramid"
+        }
+       ]
+      },
+      "slot": "sketch"
+     }
+    ]
+   },
+   {
+    "lines": [
+     {
+      "tag": "2",
+      "slot": "model",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       1
+      ]
+     },
+     {
+      "tag": "5a",
+      "l": "<i class=\"ink-4\">ℓ</i>²",
+      "r": "= <i class=\"ink-6\">h</i>² + (<span class=\"fr\"><span><i class=\"ink-2\">s</i></span><span>2</span></span>)²",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "<i class=\"ink-4\">ℓ</i>",
+      "r": "= √(<i class=\"ink-6\">h</i>² + (<span class=\"fr\"><span><i class=\"ink-2\">s</i></span><span>2</span></span>)²)",
+      "note": "square root",
+      "at": [
+       2,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= √(<span class=\"ink-6\">4</span>² + (<span class=\"fr\"><span><span class=\"ink-2\">6</span></span><span>2</span></span>)²)",
+      "at": [
+       2,
+       1
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-4\">5</span>",
+      "at": [
+       2
+      ]
+     },
+     {
+      "tag": "5b",
+      "l": "<i class=\"ink-5\">P</i>",
+      "r": "= 4<i class=\"ink-2\">s</i>",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= 4(<span class=\"ink-2\">6</span>)",
+      "at": [
+       3
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"ink-5\">24</span>",
+      "at": [
+       3
+      ]
+     },
+     {
+      "tag": "6",
+      "l": "<i class=\"ink-1\">S</i>",
+      "r": "= (1/2)<i class=\"ink-5\">P</i><i class=\"ink-4\">ℓ</i>",
+      "at": [
+       4,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= (1/2)(<span class=\"ink-5\">24</span>)(<span class=\"ink-4\">5</span>)",
+      "at": [
+       4,
+       0
+      ]
+     },
+     {
+      "l": "",
+      "r": "= <span class=\"wk-box\"><span class=\"ink-1\">60 ft²</span></span>",
+      "at": [
+       4
+      ]
+     }
+    ]
+   }
+  ],
+  "workCheck": [
+   {
+    "tag": "Check",
+    "l": "<i class=\"ink-4\">ℓ</i>",
+    "r": "= <span class=\"ink-4\">5</span>: longer than <i class=\"ink-6\">h</i> and half of <i class=\"ink-2\">s</i> ✓"
+   }
   ]
  }
-], { layout:'split' });
+], { layout:'work', reference:"<div class=\"ref-row\"><div class=\"ref-cell\"><div class=\"rc-t\">Cone</div><div class=\"rc-s\" style=\"font-size:.85rem\">S = πr² + πrℓ<br>no bottom: S = πrℓ</div></div><div class=\"ref-cell\"><div class=\"rc-t\">Square pyramid</div><div class=\"rc-s\" style=\"font-size:.85rem\">S = B + (1/2)Pℓ<br>no floor: S = (1/2)Pℓ</div></div></div><div class=\"ref-row\" style=\"margin-top:8px\"><div class=\"ref-cell\"><div class=\"rc-t\">Given h? Find ℓ</div><div class=\"rc-s\" style=\"font-size:.78rem\">cone: ℓ = √(h² + r²)<br>pyramid: ℓ = √(h² + (s/2)²)</div></div><div class=\"ref-cell\"><div class=\"rc-t\">A square base</div><div class=\"rc-s\" style=\"font-size:.78rem\">B = s² (area)<br>P = 4s (around) &nbsp;·&nbsp; d = 2r</div></div></div><div class=\"ref-note\">h goes straight up inside; ℓ runs down the outside. Surface area uses ℓ. The Plan: 1 read and sketch · 2 write the formula · 3 name the unknown · 4 facts as math · 5 find what is missing (ℓ, r, B, P) · 6 reiterate, substitute, answer: the calculator once. Textbook: 8.1 (Pythagorean theorem), 11.5 (volumes of pyramids and cones).</div>" });
 </script>
 </body>
 </html>
